@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+/* 기본 스타일 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+	width: 100%;
+    max-width: 1300px;
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    gap: 20px;
+    margin-left: 20px;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    padding-bottom: 15px;
+}
+
+.content-header {
+    height: 100px; 
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    gap: 150px;
+    width: 100%;
+    max-width: 100%; 
+}
+
+.content-title {
+    margin: 0;
+    font-size: 30px;
+    color: #333;
+    font-weight: bold;
+}
+
+.content-body {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+   
+}
+
+/* 정보 영역 레이아웃 */
+
+.info-row {
+    display: flex;
+    margin-bottom: 25px;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.info-header {
+    width: 150px;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 15px;
+    color: #555;
+}
+
+.info-cell {
+    width: 200px;
+}
+
+.info-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* 버튼 스타일 통일 */
+.btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: #fff;  
+    color: #333;             
+    border: 1px solid #ddd;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background-color: #f0f0f0;  
+}
+
+/* 하단 버튼 영역 */
+.bottom-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    gap: 20px;
+    padding-left: 70px;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+

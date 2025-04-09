@@ -1,0 +1,249 @@
+@charset "UTF-8";
+
+
+/* 기본 스타일 */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    max-width: 1300px;
+    width: 100%;
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    gap: 20px;
+    margin-left: 20px; 
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.content-header {
+    height: 100px; 
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    gap: 150px;
+    width: 100%;
+    max-width: 100%; 
+}
+
+.content-body {
+    width: 100%;
+    max-width: 100%; 
+    flex-direction: column;
+    flex: 1;
+    
+}
+
+.content-title {
+    margin: 0;
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+/* 검색 폼 스타일 */
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.search-form form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.selectFiled {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 34px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.txt {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 160px;
+    height: 34px;
+    margin: 0 5px;
+}
+
+.search-btn {
+    padding: 6px 12px;
+    background-color: #4a6baf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    height: 34px;
+}
+
+.search-btn:hover {
+    background-color: #3a5998;
+}
+
+/* 정보 테이블 스타일 */
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.info-header .info-cell{
+    
+    font-size: 16px;
+}
+
+.info-header-child {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-header-child .info-cell{
+    
+    font-size: 16px;
+}
+
+.info-header-sitReg {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 25px;
+}
+
+.info-header-viol {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 25px;
+} 
+
+.info-header-reject {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 25px;
+}
+
+.info-header-sitReg .info-cell {
+    
+    font-size: 16px;
+}
+
+.info-header-viol .info-cell {
+    
+    font-size: 16px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:hover, .info-row-child:hover, .info-row-sitReg:hover, .info-row-viol:hover {
+    background-color: #f8f9fa;
+}
+
+.info-row-child {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    border-bottom: 1px solid #eee;
+}
+.info-row-sitReg {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border-bottom: 1px solid #eee;
+}
+
+.info-row-viol {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid #eee;
+}
+
+.info-row-reject {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    border-bottom: 1px solid #eee;
+}
+
+.info-cell {
+	display: flex;
+	justify-content: center;
+    padding: 12px 10px;
+    text-align: center;
+    align-items: center;
+    font-size: 15px;
+    height: 50px;
+}
+
+/* 버튼 스타일 통일 */
+
+.btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: #fff;  /* 기본 버튼 배경색 흰색으로 통일 */
+    color: #333;             /* 기본 텍스트 색상 */
+    border: 1px solid #ddd;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background-color: #f0f0f0;  /* 버튼 호버 시 밝은 회색으로 변경 */
+}
+
+
+/* 페이징 스타일 */
+.page {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
