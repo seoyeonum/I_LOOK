@@ -1,0 +1,93 @@
+/* 전체 페이지 스타일 */
+body {
+	font-family: Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: white;
+}
+
+/* 프로필 카드 스타일 */
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+	background-color: white;
+	border: 5px solid #ff80c0;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 350px;
+	max-width: 350px;
+	text-align: center;
+}
+
+/* 프로필 사진 스타일 */
+.photo-container {
+	margin-bottom: 20px;
+}
+
+#profile-photo {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+/* 정보 컨테이너 스타일 */
+.info-container {
+	width: 100%;
+}
+
+.info-container h2, .info-container p {
+	margin: 10px 0;
+}
+
+/* 입력 필드 스타일 */
+.input-group {
+	margin: 10px 0;
+}
+
+.input-group label {
+	display: block; /* 라벨을 블록으로 만들어 줄바꿈 */
+	margin-bottom: 5px; /* 라벨과 입력 필드 간의 간격 */
+}
+
+.input-group input {
+	padding: 8px;
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px; /* 글자 크기 통일 */
+}
+
+/* 이름과 나이 입력 필드 스타일 */
+#name-input, #age-input {
+	font-size: 14px;
+}
+
+#profile-name, #profile-age {
+	font-size: 13pt;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-family: Arial, sans-serif;
+}
+
+/* 버튼 스타일 */
+button {
+	padding: 10px 15px;
+	background-color: #ffddee;
+	color: white;
+	border: none;
+	border-radius: 11px;
+	cursor: pointer;
+	font-size: 20px;
+	width: 100%;
+	max-width: 350px;
+}
+
+button:hover {
+	background-color: #ff9dce;
+}

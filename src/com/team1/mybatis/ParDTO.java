@@ -1,0 +1,93 @@
+package com.team1.mybatis;
+// 부모 데이터 자료형 클래스
+
+public class ParDTO
+{
+	// PAR_REG_ID,NAME, PW, TEL, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE
+	// PAR_BACKUP_ID, ID, REG_DATE
+	
+	// 주요 속성 구성
+	private String par_reg_id, name, pw, tel, ssn_first,ssn_second, road_addr, detailed_addr;
+
+	public String getPar_reg_id()
+	{
+		return par_reg_id;
+	}
+
+	public void setPar_reg_id(String par_reg_id)
+	{
+		this.par_reg_id = par_reg_id;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getPw()
+	{
+		return pw;
+	}
+
+	public void setPw(String pw)
+	{
+		this.pw = pw;
+	}
+
+	public String getTel()
+	{
+		return tel;
+	}
+
+	public void setTel(String tel)
+	{
+		this.tel = tel;
+	}
+
+	public String getSsn_first()
+	{
+		return ssn_first;
+	}
+
+	public void setSsn_first(String ssn_first)
+	{
+		this.ssn_first = ssn_first;
+	}
+
+	public String getSsn_second()
+	{
+		return ssn_second;
+	}
+
+	public void setSsn_second(String ssn_second)
+	{
+		this.ssn_second = ssn_second;
+	}
+
+	public String getRoad_addr()
+	{
+		return road_addr;
+	}
+
+	public void setRoad_addr(String road_addr)
+	{
+		this.road_addr = road_addr;
+	}
+
+	public String getDetailed_addr()
+	{
+		return detailed_addr;
+	}
+
+	public void setDetailed_addr(String detailed_addr)
+	{
+		this.detailed_addr = detailed_addr;
+	}
+	
+	
+}
