@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name>mvc01</display-name>
+	<display-name>mvc00</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -13,9 +13,11 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	
+	<!-- #18. web.xml -->
+	
 	<!-- ※ Spring MVC Framework 등록 -->
-	<!--    → Front Controller 등록 -->
-	<!--    → DispatcherServlet 객체 등록 -->
+	<!-- → Front Controller 등록 -->
+	<!-- → dispatcher-servlet 객체 등록 -->
 	
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -24,7 +26,28 @@
 	
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>*.action</url-pattern>		<!-- ~action 만 되면 dispatcher servlet 에게 요청 -->
+		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
+	
+	<!-- check~!! -->
+	<!-- 필터 등록 → 인코딩 필터 등록 -->
+	<!-- → CharacterEncodingFilter -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		
+		<!-- 필터 설정 -->
+		<!-- → 필터 객체의 파라미터에 초기값 지정 -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- 등록된 필터와 요청 매핑 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
 	
 </web-app>
