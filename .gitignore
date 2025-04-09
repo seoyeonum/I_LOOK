@@ -1,0 +1,4 @@
+# Eclipse specific files
+/build/
+/.settings/
+/.project
