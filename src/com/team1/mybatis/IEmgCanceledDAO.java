@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public interface IEmgCanceledDAO
 {
 	// 긴급돌봄 취소 리스트 조회
-	public ArrayList<EmgCanceledDTO EmgCanceled> listEmgCanceled();
+	public ArrayList<EmgCanceledDTO> listEmgCanceled();
 	
 	// 긴급돌봄 환불 내역 리스트 조회
-	public ArrayList<EmgCanceledDTO EmgRefunded> listEmgRefunded();
+	public ArrayList<EmgCanceledDTO> listEmgRefunded();
 	
 	// 긴급돌봄 취소 데이터 취소 사유 리스트 조회
 	public ArrayList<String> listCanceledType();
@@ -29,9 +29,9 @@ public interface IEmgCanceledDAO
 	public int countRefunded();
 	
 	// 긴급돌봄 취소 내역 찾기
-	public EmgCanceledDTO search(String emg_canceled_id);
+	public EmgCanceledDTO searchEmgCanceled(String emg_canceled_id);
 	
 	// 긴급돌봄 환불 내역 찾기
-	public EmgCanceledDTO search(String emg_refunded_id);
+	public EmgCanceledDTO searchEmgRefunded(String emg_refunded_id);
 	
 }

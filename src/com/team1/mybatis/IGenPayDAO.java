@@ -10,19 +10,24 @@ import java.util.ArrayList;
 public interface IGenPayDAO
 {
 	// 일반 돌봄 결제 내역 추가
-	public int addGenPay(GenPayDTO e);
+	public int addGenPayRec(GenPayDTO e);
 	
 	// 일반 돌봄 결제 내역 리스트 확인
-	public ArrayList<GenPayDTO> listGenPay();
+	public ArrayList<GenPayDTO> listGenPayRec();
 	
 	// 일반 돌봄 결제 내역 확인
 	// → gen_pay_rec_id 를 활용하여 결제 내역 조회
-	public GenPayDTO searchGenPay(String gen_pay_rec_id);
+	public GenPayDTO searchGenPayRec(String gen_pay_rec_id);
 	
 	// 일반 돌봄 결제 내역 수 확인
-	public int countGenPay();
+	public int countGenPayRec();
 	
-	// 일반 돌봄 결제 수정 삭제 → (Ⅹ)
+	// 일반 돌봄 결제 내역 - 시터 읽은 날짜 기록 → (Ⅹ)
+	
+	// 일반 돌봄 결제 내역 - 부모 읽은 날짜 기록
+	// → gen_pay_rec_id 를 활용하여 par_read_date 수정
+	public int updateGenPayRecParRead(String gen_pay_rec_id, String par_read_date);
+	
 	// 일반 돌봄 결제 내역 삭제 → (Ⅹ)
 	
 	
@@ -39,7 +44,7 @@ public interface IGenPayDAO
 	// 일반 돌봄 포인트 차감 내역 수 확인
 	public int countGenPointUsed();
 	
-	// 일반 돌봄 포인트 차감 수정 삭제 → (Ⅹ)
+	// 일반 돌봄 포인트 차감 내역 수정 → (Ⅹ)
 	// 일반 돌봄 포인트 차감 내역 삭제 → (Ⅹ)
 	
 	

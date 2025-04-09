@@ -6,7 +6,7 @@ public interface IEmgConfirmedDAO
 {
 
 	// 긴급돌봄 확정 리스트 조회
-	public ArrayList<EmgConfirmedDTO emgConfirmed> listEmgConfirmed();
+	public ArrayList<EmgConfirmedDTO> listEmgConfirmed();
 	
 	// 긴급돌봄 확정 데이터 추가
 	public int addEmgConfirmed(EmgConfirmedDTO emgConfirmed);
@@ -16,19 +16,19 @@ public interface IEmgConfirmedDAO
 	
 	
 	// 긴급돌봄 확정 후 시터 메모 리스트 조회
-	public ArrayList<EmgConfirmedDTO emgConfirmed> listMemosSit();
+	public ArrayList<EmgConfirmedDTO> listMemosSit();
 	
 	// 긴급돌봄 확정 후 시터 메모 데이터 추가
 	public int addEmgMemoSit(EmgConfirmedDTO emgConfirmed);
 	
 	// 긴급돌봄 확정 후 부모 메모 리스트 조회
-	public ArrayList<EmgConfirmedDTO emgConfirmed> listMemosPar();
+	public ArrayList<EmgConfirmedDTO> listMemosPar();
 	
 	// 긴급돌봄 확정 후 부모 메모 데이터 추가
 	public int addEmgMemoPar(EmgConfirmedDTO emgConfirmed);
 	
 	// 긴급돌봄 임급 지급 내역 리스트 조회
-	public ArrayList<EmgConfirmedDTO emgConfirmed> listEmgWage();
+	public ArrayList<EmgConfirmedDTO> listEmgWage();
 	
 	// 긴급돌봄 임금 지급 내역 데이터 추가
 	public int addEmgWage(EmgConfirmedDTO emgConfirmed);

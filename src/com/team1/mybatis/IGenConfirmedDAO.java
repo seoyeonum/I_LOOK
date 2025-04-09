@@ -1,12 +1,12 @@
 /* =========================
- 	iGenConfirmedDAO.java
+ 	IGenConfirmedDAO.java
 ========================== */
 
 package com.team1.mybatis;
 
 import java.util.ArrayList;
 
-public interface iGenConfirmedDAO
+public interface IGenConfirmedDAO
 {
 	// 예약 확정 등록
 	public int add(GenConfirmedDTO gc);

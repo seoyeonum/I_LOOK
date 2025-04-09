@@ -6,7 +6,7 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
-public class ISitWithdrawedDAO
+public interface ISitWithdrawedDAO
 {
 	// 시터 탈퇴 내역 추가
 	public int add(SitWithdrawedDTO s);
