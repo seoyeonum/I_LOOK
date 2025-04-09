@@ -12,13 +12,13 @@ public interface IGenCanceledDAO
 	 */
 	
 	// 부모가 예약 확정 후 취소 건 등록
-	int addParCanceled(GenCanceledDTO gc);
+	int addParCanceled(GenCanceledDTO gen_canceled);
 	GenCanceledDTO findByReqId(String gen_req_id);
 	
 	// 부모가 예약 확정 후 취소 환불에 대해 등록
 	
 	// 시터가 예약 확정 후 취소 건 등록
-	int addSitCanceled(GenCanceledDTO gc);
+	int addSitCanceled(GenCanceledDTO gen_canceled);
 	
 	
 	
