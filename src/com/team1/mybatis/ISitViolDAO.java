@@ -6,7 +6,7 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
-public class ISitViolDAO
+public interface ISitViolDAO
 {
 	// 시터 위반 내역 추가
 	public int add(SitViolDTO s);

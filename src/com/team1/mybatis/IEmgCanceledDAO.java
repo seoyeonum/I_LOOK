@@ -29,9 +29,10 @@ public interface IEmgCanceledDAO
 	public int countRefunded();
 	
 	// 긴급돌봄 취소 내역 찾기
-	public EmgCanceledDTO searchCanceled(String emg_canceled_id);
+	public EmgCanceledDTO searchEmgCanceled(String emg_canceled_id);
 	
 	// 긴급돌봄 환불 내역 찾기
-	public EmgCanceledDTO searchRefunded(String emg_refunded_id);
+	public EmgCanceledDTO searchEmgRefunded(String emg_refunded_id);
+
 	
 }

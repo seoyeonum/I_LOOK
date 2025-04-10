@@ -22,7 +22,7 @@ public interface IEmgPointDAO
 	// 긴급 돌봄 포인트 적립 내역 수 확인
 	public int countEmgPoint();
 	
-	// 긴급 돌봄 포인트 적립 수정 삭제 → (Ⅹ)
+	// 긴급 돌봄 포인트 적립 내역 수정 → (Ⅹ)
 	// 긴급 돌봄 포인트 적립 내역 삭제 → (Ⅹ)
 	
 	
