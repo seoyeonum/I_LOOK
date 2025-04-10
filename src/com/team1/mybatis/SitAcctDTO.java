@@ -12,7 +12,7 @@ public class SitAcctDTO
 	// 주요 속성 구성
 	
 	// 시터 보유 계좌 코드, 시터 회원가입 코드, 은행 종류 코드
-	String acct_regid, sit_regid, bank_type_id;
+	String acct_reg_id, sit_reg_id, bank_type_id;
 
 	// 계좌 번호, 예금주명, 계좌 정보 등록일시
 	String acct_number, depositor, reg_date;
@@ -22,24 +22,24 @@ public class SitAcctDTO
 
 	
 	// getter / setter 구성
-	public String getAcct_regid()
+	public String getAcct_reg_id()
 	{
-		return acct_regid;
+		return acct_reg_id;
 	}
 
-	public void setAcct_regid(String acct_regid)
+	public void setAcct_reg_id(String acct_reg_id)
 	{
-		this.acct_regid = acct_regid;
+		this.acct_reg_id = acct_reg_id;
 	}
 
-	public String getSit_regid()
+	public String getSit_reg_id()
 	{
-		return sit_regid;
+		return sit_reg_id;
 	}
 
-	public void setSit_regid(String sit_regid)
+	public void setSit_reg_id(String sit_reg_id)
 	{
-		this.sit_regid = sit_regid;
+		this.sit_reg_id = sit_reg_id;
 	}
 
 	public String getBank_type_id()

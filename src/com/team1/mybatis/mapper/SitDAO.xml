@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.ISitDAO">
+
+	<!-- ○○○DAO.xml 파일 저장 경로 확인을 위한 샘플 파일 -->
+	<!-- 
+	<select id="list" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3, TOT, AVG, CH
+		FROM GRADEVIEW
+		WHERE AVG != -1 
+		ORDER BY SID
+	</select>
+	
+	<select id="countComplete" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+		WHERE AVG != -1
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+	</select>
+	
+	<select id="search" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3
+		FROM GRADEVIEW
+		WHERE SID=#{sid}
+	</select>
+	
+	<insert id="add">
+		PreparedStatement 작업 객체 활용 형태
+		INSERT INTO TBL_GRADE(SID, SUB1, SUB2, SUB3)
+		VALUES(#{sid}, #{sub1}, #{sub2}, #{sub3})
+	</insert>
+	
+
+	<update id="modify">
+		UPDATE TBL_GRADE
+		SET SUB1=#{sub1}, SUB2=#{sub2}, SUB3=#{sub3}
+		WHERE SID=#{sid}
+	</update>
+	
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_GRADE
+		WHERE SID=#{sid}
+	</delete>
+ 	-->
+ 	
+ 	
+ 	
+ 	
+ 	<select id="sitLogin">
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	<select id="sitIdSearch" resultType="com.test.mybatis.SitDTO">
+	 	SELECT "아이디", "비밀번호", "이름", "주민등록번호"
+		, "도로명 주소", "상세주소", "우편번호", "전화번호"
+		, "은행 이름", "계좌 번호", "서류 종류", "자격증 종류"
+		FROM SIT_VIEW
+		WHERE "아이디" = #{"아이디"};
+	</select>
+</mapper>
