@@ -9,13 +9,13 @@ public interface IGradesDAO
 	public ArrayList<GradesDTO> listGrade();
 	
 	// 등급 데이터 추가
-	public int add(GradesDTO grades);
+	public int addGrade(GradesDTO grades);
 	
 	// 등급 수정
 	public int modifyGrade(GradesDTO grades);
 	
 	// 등급 삭제
-	public int remove(String grade_id);
+	public int removeGrade(String grade_id);
 	
 	// 일반돌봄 시급 조회
 	public GradesDTO listGenWage(GradesDTO grades);
