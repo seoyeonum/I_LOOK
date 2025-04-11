@@ -17,6 +17,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenCanceledDTO;
+
 public interface IGenCanceledDAO
 {
 	/* 1-1.예약 확정 전 취소 내역 */
@@ -29,7 +31,7 @@ public interface IGenCanceledDAO
 	// 예약 확정 전 취소 내역 확인
 	// → gen_canceled_id 를 활용하여 취소 내역 조회
 	public GenCanceledDTO searchGenCanceled(String gen_canceled_id);
-	
+
 	// 예약 확정 전 취소 내역 수 확인
 	public int countGenCanceled();
 	

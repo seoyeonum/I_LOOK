@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.IGenRegDAO">
+	
+	<!-- 일반 돌봄 근무 등록 -->
+	<insert id="add">
+		INSERT INTO GEN_REG(GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
+		, START_TIME, END_TIME, REG_DATE, INTRODUCTION)
+		VALUES(#{gen_reg_id}, #{sit_backup_id}, #{title}
+		, #{start_date}, #{end_date}
+		, #{start_time}, #{end_time}, #{reg_date}, #{introduction})
+	</insert>
+	
+	<!-- 일반 돌봄 근무 삭제 -->
+	<delete id="remove">
+		DELETE FROM GEN_REG
+		WHERE GEN_REG_ID = #{gen_reg_id}
+	</delete>
+	
+	<!-- 시터 근무 가능 목록 -->
+	<select id="list">
+		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
+		, START_TIME, END_TIME, REG_DATE, INTRODUCTION
+		FROM GEN_REG		
+	</select>
+	
+	<!-- 전체 근무 등록 수 확인 -->
+	<select id="countGen">
+		SELECT COUNT(*) AS COUNT
+		FROM GEN_REG
+	</select>
+	
+	<!-- 특정 아이디에 따른 근무 리스트 -->
+	<select id="regList">
+		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
+		, START_TIME, END_TIME, REG_DATE, INTRODUCTION
+		FROM GEN_REG
+		WHERE GEN_REG_ID = #{gen_reg_id}	
+	</select>
+
+</mapper>

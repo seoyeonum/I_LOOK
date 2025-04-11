@@ -1,10 +1,4 @@
 # Eclipse specific files
 /build/
-<<<<<<< HEAD
-.settings/
-.classpath/
-
-=======
 /.settings/
 .classpath
->>>>>>> develop
