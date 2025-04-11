@@ -15,9 +15,10 @@
 	<!-- 공지사항 조회 -->
 	<select id="listNotice" resultType="com.team1.mybatis.NoticeDTO">
 		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
-			FROM NOTICES N
-			JOIN NOTICE_TYPE T
-		ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID;
+		FROM NOTICES N
+		JOIN NOTICE_TYPE T
+		  ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+		ORDER BY N.NOTICED_DATE DESC
 	</select>
 	
 	<!-- 공지사항 데이터 추가 -->	
@@ -44,15 +45,13 @@
 	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
 	    FROM NOTICES N
 	    JOIN NOTICE_TYPE T 
-        ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
 	    <where>
 	        <if test="subject != null and subject != ''">
 	            AND N.SUBJECT LIKE '%' || #{subject} || '%'
 	        </if>
-	        <if test="notice_type_id != null and notice_type_id != ''">
-	            AND N.NOTICE_TYPE_ID = #{notice_type_id}
-	        </if>
 	    </where>
+	    ORDER BY N.NOTICED_DATE DESC
 	</select>
 	
     <!-- 조회 수 1 씩 증가 -->
