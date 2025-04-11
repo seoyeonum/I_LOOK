@@ -17,8 +17,11 @@ public interface IChildDAO
 	// 아이 정보 삭제
 	public int remove(ChildDTO child);
 	
-	// 아이 리스트 
+	// 아이 전체 리스트 
 	public ArrayList<ChildDTO> list();
+	
+	// 특정 아이 리스트 
+	public ArrayList<ChildDTO> childList();
 	
 	// 아이 전체 인원 수 
 	public int countChild();
@@ -33,7 +36,7 @@ public interface IChildDAO
 	public int addAllergy(ChildDTO allergy);
 	
 	// 아이 알레르기 삭제
-	public int modifyAllergy(ChildDTO allergy);
+	public int removeAllergy(ChildDTO allergy);
 	
 	// 아이 장애 등록
 	public int addDisability(ChildDTO disability);

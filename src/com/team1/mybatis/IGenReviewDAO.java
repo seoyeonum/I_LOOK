@@ -38,8 +38,8 @@ public interface IGenReviewDAO
 	// 일반 돌봄 리뷰 전체 수
 	public int countRevies();
 	
-	// 돌봄 확정 아이디로 특정 리뷰 확인
-	public GenReviewDTO findByRequestId(String gen_confirmed_id);
+	// 아이디로 특정 리뷰 확인
+	public GenReviewDTO findByRequestId(String gen_review_id);
 	
 	// 객관식 응답 리스트
 

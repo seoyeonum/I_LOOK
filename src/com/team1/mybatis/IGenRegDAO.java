@@ -19,4 +19,7 @@ public interface IGenRegDAO
 	
 	// 전체 근무 등록 수 확인
 	public int countGen();
+	
+	// 특정 아이디에 따른 근무 리스트
+	public ArrayList<GenRegDTO> regList(String gen_reg_id);
 }

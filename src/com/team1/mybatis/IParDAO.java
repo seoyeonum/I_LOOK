@@ -12,7 +12,7 @@ public interface IParDAO
 	public int add(ParDTO parent);
 	
 	// 회원 탈퇴 (탈퇴 테이블에 insert)
-	public int add(ParWithdrawedDTO parent_withdrawed);
+	public int addWithdrawed(ParWithdrawedDTO parent_withdrawed);
 	
 	// 회원 수정
 	public int modify(ParDTO parent);

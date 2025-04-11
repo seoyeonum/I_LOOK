@@ -19,4 +19,7 @@ public interface IGenReqDAO
 	
 	// 신청이 등록된 전체 수 확인
 	public int countGenReq();
+	
+	// 특정 아이디의 예약 등록건 찾기
+	public int search (GenReqDTO gen_req);
 }
