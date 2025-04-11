@@ -12,9 +12,6 @@ public interface ISitRejectDAO
 	// [관리자] 승인 거절 내역 리스트 확인
 	public ArrayList<SitRejectDTO> listSitRej();
 	
-	// [관리자] 승인 거절 사유 확인
-	public ArrayList<SitRejectDTO> listReason();
-	
 	// [관리자] 승인 거절 명수 확인
 	public int countSitRej();
 	
