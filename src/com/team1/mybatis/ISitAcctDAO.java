@@ -5,6 +5,8 @@
 
 package com.team1.mybatis;
 
+import com.team1.dto.SitAcctDTO;
+
 public interface ISitAcctDAO
 {
 	// 시터 계좌 추가

@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.ParViolDTO;
+
 public interface IParViolDAO
 {
 	// 위반 사항 기록 입력 (등록)

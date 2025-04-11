@@ -8,6 +8,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.AgesPreferedDTO;
+
 public interface IAgesPreferedDAO
 {
 	// 시터 돌봄 선호 연령대 열람

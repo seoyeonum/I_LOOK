@@ -6,6 +6,9 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.ParDTO;
+import com.team1.dto.ParWithdrawedDTO;
+
 public interface IParDAO
 {
 	// 회원 등록 

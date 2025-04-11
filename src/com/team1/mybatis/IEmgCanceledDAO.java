@@ -2,6 +2,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.EmgCanceledDTO;
+
 public interface IEmgCanceledDAO
 {
 	// 긴급돌봄 취소 리스트 조회

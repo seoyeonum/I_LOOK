@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.ChildDTO;
+
 public interface IChildDAO
 {
 	// 아이 정보 등록

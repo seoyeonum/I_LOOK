@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenRegDTO;
+
 public interface IGenRegDAO
 {
 	// 일반 돌봄 근무 등록

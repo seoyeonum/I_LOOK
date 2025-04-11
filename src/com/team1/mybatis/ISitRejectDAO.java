@@ -7,6 +7,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.SitRejectDTO;
+
 public interface ISitRejectDAO
 {
 	// [관리자] 승인 거절 내역 리스트 확인
