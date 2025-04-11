@@ -21,6 +21,9 @@ public class EmgCanceledDTO
 	String refunded_date;				// 환불 일시
 	int amount, point;					// 환불 금액, 환불 포인트
 	String pg_code;						// 전자 결제 코드
+	String par_backup_id;				// 부모 백업 코드
+	String name;						// 부모 이름
+	
 	
 	// getter / setter 구성
 	public String getEmg_canceled_id()
@@ -111,7 +114,20 @@ public class EmgCanceledDTO
 	{
 		this.pg_code = pg_code;
 	}
-	
-	
-	
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 }

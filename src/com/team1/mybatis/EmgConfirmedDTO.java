@@ -19,6 +19,8 @@ public class EmgConfirmedDTO
 	String emg_wage_id;										// 긴급 돌봄 임금 지급 내역 코드
 	String wage, paid_date;									// 임금 지급액(송금액), 임금 지급일
 	String acct_number, bank_name;							// 시터 계좌 번호, 시터 계좌 은행명
+	String par_name;										// 부모 이름
+	
 	
 	
 	// getter / setter 구성
@@ -133,6 +135,14 @@ public class EmgConfirmedDTO
 	public void setBank_name(String bank_name)
 	{
 		this.bank_name = bank_name;
+	}
+	public String getPar_name()
+	{
+		return par_name;
+	}
+	public void setPar_name(String par_name)
+	{
+		this.par_name = par_name;
 	}
 	
 	

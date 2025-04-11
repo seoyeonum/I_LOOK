@@ -2,7 +2,7 @@ package com.team1.mybatis;
 
 public class NoticeDTO
 {
-	// 주요 속성 구성 -- 공지사항 유형 코드, 유형 타입, 공지사항 코드, 제목, 내용, 조회수, 작성일
+	// 주요 속성 구성 -- 공지사항 유형 코드, 유형 이름, 공지사항 코드, 제목, 내용, 조회수, 작성일
 	private String notice_type_id, type, notice_id, subject, content, noticed_date;
 	private int hitcount;
 	

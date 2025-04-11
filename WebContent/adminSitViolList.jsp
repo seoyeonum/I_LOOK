@@ -47,7 +47,6 @@ String cp = request.getContextPath();
 						<div class="info-cell">위반 코드</div>
 						<div class="info-cell">위반 내용</div>
 						<div class="info-cell">위반일</div>
-						<div class="info-cell">처리</div>
 					</div>
 
 					<!-- 데이터 행 - 실제 사용시 반복문으로 처리 -->
@@ -58,11 +57,6 @@ String cp = request.getContextPath();
 						<div class="info-cell">SVIO00001</div>
 						<div class="info-cell">부재</div>
 						<div class="info-cell">2025-04-01</div>
-						<div class="info-cell">
-							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
-							</div>
-						</div>
 					</div>
 
 					<div class="info-row-viol">
@@ -72,11 +66,6 @@ String cp = request.getContextPath();
 						<div class="info-cell">SVIO00002</div>
 						<div class="info-cell">폭행 행위</div>
 						<div class="info-cell">2025-04-03</div>
-						<div class="info-cell">
-							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
-							</div>
-						</div>
 					</div>
 					
 					<!-- 예시 데이터(실제 구현시 삭제) - 스크롤 확인용 -->
@@ -87,11 +76,6 @@ String cp = request.getContextPath();
 						<div class="info-cell">SVIO00003</div>
 						<div class="info-cell">폭언</div>
 						<div class="info-cell">2025-04-05</div>
-						<div class="info-cell">
-							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
-							</div>
-						</div>
 					</div>
 					
 					<div class="info-row-viol">
@@ -101,11 +85,6 @@ String cp = request.getContextPath();
 						<div class="info-cell">SVIO00004</div>
 						<div class="info-cell">지각</div>
 						<div class="info-cell">2025-04-06</div>
-						<div class="info-cell">
-							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
-							</div>
-						</div>
 					</div>
 					
 					<div class="info-row-viol">
@@ -115,14 +94,8 @@ String cp = request.getContextPath();
 						<div class="info-cell">SVIO00005</div>
 						<div class="info-cell">폭행 행위ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
 						<div class="info-cell">2025-04-03</div>
-						<div class="info-cell">
-							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
-							</div>
-						</div>
 					</div>
 				</div>
-				
 				<!-- 페이징 영역 -->
 				<div class="page">
 					<p>1 Prev 21 22 23 24 25 26 27 28 29 30 Next 42</p>

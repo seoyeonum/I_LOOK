@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IGradesDAO">
+
+	<!-- 긴급돌봄 확정 리스트 조회 --> 
+	<select id="listEmgConfirmed" resultType="com.team1.mybatis.EmgConfirmedDTO">
+	
+	</select>
+	
+	<!-- 긴급돌봄 확정 후 시터 메모 리스트 조회 --> 
+	<select id="listMemosSit" resultType="com.team1.mybatis.EmgConfirmedDTO">
+	
+	</select>
+	
+	<!-- 긴급돌봄 확정 후 부모 메모 리스트 조회 --> 
+	<select id="listMemosSit" resultType="com.team1.mybatis.EmgConfirmedDTO">
+	
+	</select>
+	
+	<!-- 긴급돌봄 임급 지급 내역 리스트 조회 -->
+	<select id="listEmgWage" resultType="com.team1.mybatis.EmgConfirmedDTO">
+	
+	</select>
+	
+	<!-- 긴급돌봄 취소 데이터 추가 -->
+	<insert id="addEmgConfirmed" parameterType="com.team1.mybatis.EmgConfirmedDTO">
+		INSERT INTO EMG_CANCELED VALUES(#{emg_canceled_id}, SYSDATE, NULL, #{reason_canceled_id}, #{emg_pay_rec_id});
+	</insert>
+	
+	<!-- 긴급돌봄 확정 후 시터 메모 데이터 추가 -->
+	<insert id="addEmgConfirmed" parameterType="com.team1.mybatis.EmgConfirmedDTO">
+		
+	</insert>
+	
+	<!-- 긴급돌봄 확정 후 부모 메모 데이터 추가 -->
+	<insert id="addEmgConfirmed" parameterType="com.team1.mybatis.EmgConfirmedDTO">
+		
+	</insert>
+	
+	<!-- 긴급돌봄 확정 후 부모 메모 데이터 추가 -->
+	<insert id="addEmgWage" parameterType="com.team1.mybatis.EmgConfirmedDTO">
+
+	</insert>
+	
+	<!-- 긴급돌봄 확정 리스트 갯수 -->
+	<select id="count" resultType="java.lang.Integer">
+	</select>
+	
+	<!-- 긴급돌봄 확정 내역 찾기  -->
+	<select id="search" resultType="com.team1.mybatis.EmgConfirmedDTO">
+	
+	</select>
+	
+	
+	
+</mapper>
