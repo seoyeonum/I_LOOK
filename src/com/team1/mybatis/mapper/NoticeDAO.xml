@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.INoticeDAO">
+	
+	<!-- 공지사항 유형 조회 -->
+	<select id="listType">
+		SELECT NOTICE_TYPE_ID, TYPE
+		FROM NOTICE_TYPE
+	</select>
+
+	
+	<!-- 공지사항 조회 -->
+	<select id="listNotice" resultType="com.team1.mybatis.NoticeDTO">
+		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+		FROM NOTICES N
+		JOIN NOTICE_TYPE T
+		  ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+		ORDER BY N.NOTICED_DATE DESC
+	</select>
+	
+	<!-- 공지사항 데이터 추가 -->	
+	<insert id="addNotice" parameterType="com.team1.mybatis.NoticeDTO">
+		INSERT INTO NOTICES VALUES(#{notice_id}, #{notice_type_id}, #{subject}, #{content}, 0, SYSDATE);
+	</insert>
+	
+	<!-- 공지사항 수정 -->	
+	<update id="update" parameterType="com.team1.mybatis.NoticeDTO">
+		UPDATE NOTICES
+		SET NOTICE_TYPE_ID=#{notice_type_id}, SUBJECT=#{subject}, CONTENT=#{content}
+		WHERE NOTICE_ID=#{notice_id};
+	</update>
+	
+	<!-- 공지사항 삭제 -->	
+	<delete id="remove" >
+		DELETE
+		FROM NOTICES
+		WHERE NOTICE_ID=#{notice_id};
+	</delete>
+	
+	<!-- 공지사항 검색 -->	
+	<select id="searchList" parameterType="com.team1.mybatis.NoticeDTO" resultType="com.team1.mybatis.NoticeDTO">
+	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+	    FROM NOTICES N
+	    JOIN NOTICE_TYPE T 
+          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+	    <where>
+	        <if test="subject != null and subject != ''">
+	            AND N.SUBJECT LIKE '%' || #{subject} || '%'
+	        </if>
+	    </where>
+	    ORDER BY N.NOTICED_DATE DESC
+	</select>
+	
+    <!-- 조회 수 1 씩 증가 -->
+	<update id="increaseHit" parameterType="java.lang.String">
+	    UPDATE NOTICES
+	    SET HITCOUNT = HITCOUNT + 1
+	    WHERE NOTICE_ID = #{notice_id}
+	</update>
+
+	<!-- 공지사항 게시물 수 확인 -->	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM NOTICES;
+    </select>
+</mapper>

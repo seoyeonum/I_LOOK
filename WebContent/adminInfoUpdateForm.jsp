@@ -33,7 +33,7 @@ String cp = request.getContextPath();
 					<div class="info-row">
 						<div class="info-header">아이디</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="admin" readonly>
+							<input type="text" class="info-input" value="admin" readonly disabled>
 						</div>
 					</div>
 

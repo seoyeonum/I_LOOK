@@ -6,10 +6,12 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenConfirmedDTO;
+
 public interface IGenConfirmedDAO
 {
 	// 예약 확정 등록
-	public int add(GenConfirmedDTO gc);
+	public int add(GenConfirmedDTO gen_confirmed);
 	
 	// 부모가 알림을 읽었을 때 시간 기록
 	public int updateParentReadTime(String gen_req_id, String par_read_date);
@@ -24,8 +26,15 @@ public interface IGenConfirmedDAO
 	public int countGenConfirmed();
 	
 	// 일반 돌봄 시터 기록(메모) 저장
-	public int addSitMemo(GenConfirmedDTO m);
+	public int addSitMemo(GenConfirmedDTO sit_memo);
+	
+	// 일반 돌봄 시터 기록(메모) 리스트
+	public ArrayList<GenConfirmedDTO> sitMemolist();
 	
 	// 일반 돌봄 부모 기록(메모) 저장
-	public int addParMemo(GenConfirmedDTO m);
+	public int addParMemo(GenConfirmedDTO par_memo);
+	
+	// 일반 돌봄 부모 기록(메모) 리스트
+	public ArrayList<GenConfirmedDTO> parMemolist();
+	
 }

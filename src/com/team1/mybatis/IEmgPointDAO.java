@@ -7,6 +7,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.EmgPointDTO;
+
 public interface IEmgPointDAO
 {
 	// 긴급 돌봄 포인트 적립 내역 추가

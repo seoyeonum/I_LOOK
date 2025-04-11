@@ -7,6 +7,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.EmgPayDTO;
+
 public interface IEmgPayDAO
 {
 	// 긴급 돌봄 결제 내역 추가

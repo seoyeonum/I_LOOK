@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.IEmgReqDAO">
+
+
+	<!-- 1. 관리자 입장 -->
+	
+	<!-- (부모 이름으로) 긴급 돌봄 요청 데이터 찾기 -->
+	<select id="searchNameReq" resultType="com.team1.mybatis.EmgReqDTO">
+		SELECT EMG_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
+		FROM EMG_REQ_NAME_SEARCH_VIEW
+		WHERE PAR_NAME = #{par_name}
+	</select>
+	
+	
+	<!-- 2. 시터 입장 -->
+	
+	<!-- (지원 가능한) 긴급 돌봄 요청 리스트 조회 -->
+	<select id="listAllPossibleReq" resultType="com.team1.mybatis.EmgReqDTO">
+		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
+     		 , REGION, AGE, GENDER
+		FROM EMG_REQ_POSSIBLE_VIEW
+		ORDER BY START_DATE, START_TIME
+	</select>
+	
+	<!-- (지원 가능한) 긴급 돌봄 요청 수 -->
+	<select id="countAllPossibleReq" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM EMG_REQ_POSSIBLE_VIEW
+	</select>
+	
+	<!-- (지역 선택해) 긴급 돌봄 요청 데이터 찾기 -->
+	<select id="searchPossibleReq" resultType="com.team1.mybatis.EmgReqDTO">
+		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
+		     , REGION, AGE, GENDER
+		FROM EMG_REQ_POSSIBLE_VIEW
+		WHERE REGION = ( SELECT NAME
+		                 FROM REGIONS
+		                 WHERE REGION_ID = #{region_id})		<!-- 지역 코드 선택해 찾는  -->
+		ORDER BY START_DATE, START_TIME
+	</select>
+	
+	<!-- (지역 선택해) 긴급 돌봄 요청 수 찾기 -->
+	<select id="countPossibleReq" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM EMG_REQ_POSSIBLE_VIEW
+		WHERE REGION = ( SELECT NAME
+		                 FROM REGIONS
+		                 WHERE REGION_ID = #{region_id})
+	</select>
+	
+	
+	<!-- 3. 부모 입장 -->
+	
+	<!-- 긴급 돌봄 요청 데이터 추가 -->
+	<insert id="addReq">
+		<!-- PreparedStatement 작업 객체 활용 형태 -->
+		INSERT INTO EMG_REQ (EMG_REQ_ID, START_DATE, END_DATE, START_TIME, END_TIME, PAR_MESSAGE, REQ_DATE, CHILD_BACKUP_ID)
+		VALUES (#{emg_req_id}, #{start_date}, #{end_date}, #{start_time}, #{end_time}, #{par_message}, #{req_date}, #{child_backup_id});
+	</insert>
+		
+	<!-- 긴급 돌봄 요청 데이터 삭제 -->
+	<delete id="removeReq">
+		DELETE
+		FROM EMG_REQ
+		WHERE EMG_REQ_ID = #{emg_req_id}
+	</delete>
+</mapper>

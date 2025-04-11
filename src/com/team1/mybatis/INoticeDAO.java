@@ -2,11 +2,13 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.NoticeDTO;
+
 
 public interface INoticeDAO
 {
 	// 공지사항 유형 추가
-	public int addType(NoticeDTO notice);
+	// public int addType(NoticeDTO notice);
 	
 	// 공지사항 유형 조회
 	public ArrayList<String> listType();

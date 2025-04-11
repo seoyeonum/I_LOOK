@@ -2,6 +2,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.EmgConfirmedDTO;
+
 public interface IEmgConfirmedDAO
 {
 
@@ -12,8 +14,7 @@ public interface IEmgConfirmedDAO
 	public int addEmgConfirmed(EmgConfirmedDTO emgConfirmed);
 	
 	// 긴급돌봄 확정 데이터 삭제
-	public int remove(String emg_confirmed_id);
-	
+	// public int remove(String emg_confirmed_id);
 	
 	// 긴급돌봄 확정 후 시터 메모 리스트 조회
 	public ArrayList<EmgConfirmedDTO> listMemosSit();

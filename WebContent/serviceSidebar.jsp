@@ -22,7 +22,7 @@
 			<span class="sidebar-header">시터 관리</span>
 			<div class="sidebar-menu">  
 				<a href="adminGenRegList.jsp">근무 등록 내역</a>      
-				<a href="adminGenRegList.jsp">임금 관리</a>      
+				<a href="adminWageList.jsp">임금 내역</a>      
 			</div>
 		</div>
 		

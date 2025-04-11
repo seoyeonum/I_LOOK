@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.IDocRegDAO">
+
+	<!-- ○○○DAO.xml 파일 저장 경로 확인을 위한 샘플 파일 -->
+	<!-- 
+	<select id="list" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3, TOT, AVG, CH
+		FROM GRADEVIEW
+		WHERE AVG != -1 
+		ORDER BY SID
+	</select>
+	
+	<select id="countComplete" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+		WHERE AVG != -1
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+	</select>
+	
+	<select id="search" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3
+		FROM GRADEVIEW
+		WHERE SID=#{sid}
+	</select>
+	
+	<insert id="add">
+		PreparedStatement 작업 객체 활용 형태
+		INSERT INTO TBL_GRADE(SID, SUB1, SUB2, SUB3)
+		VALUES(#{sid}, #{sub1}, #{sub2}, #{sub3})
+	</insert>
+	
+
+	<update id="modify">
+		UPDATE TBL_GRADE
+		SET SUB1=#{sub1}, SUB2=#{sub2}, SUB3=#{sub3}
+		WHERE SID=#{sid}
+	</update>
+	
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_GRADE
+		WHERE SID=#{sid}
+	</delete>
+ 	-->
+ 	
+ 	<insert id="addDoc"> <!-- // [관리자] 서류 등록 public int addDoc(DocRegDTO docreg); -->
+	 	INSERT INTO DOC_REG(DOC_REG_ID, DOC_TYPE_ID, SIT_REG_ID, FILE_PATH)
+		VALUES(${doc_reg_id}, ${doc_type_id}, ${sit_reg_id}, ${file_path});
+ 	</insert> 
+ 	
+ 	
+ 	<update id="modifyDoc"> <!-- // [관리자] 서류 수정 public int modifyDoc(DocRegDTO docreg); -->
+	 	UPDATE DOC_REG
+		SET DOC_TYPE_ID = ${doc_type_id}, FILE_PATH = ${file_path} 
+		WHERE SIT_REG_ID = ${sit_reg_id}
+ 	</update>
+ 	
+ 	
+ 	<delete id="removeDoc"> <!-- // [관리자] 서류 삭제 public int removeDoc(DocRegDTO docreg); -->
+	 	DELETE
+		FROM DOC_REG
+		WHERE SIT_REG_ID = ${sit_reg_id}
+ 	</delete>
+ 	
+ 	
+ 	<select id="search" resultType="com.test.mybatis.DocRegDTO"> <!-- // [관리자] 회원가입 코드로 테이블 찾기 public DocRegDTO search(String sit_reg_id); -->
+	 	SELECT DOC_TYPE_ID, FILE_PATH, REG_DATE
+		FROM DOC_REG
+		WHERE SIT_REG_ID =${sit_reg_id}
+ 	</select>
+ 	
+</mapper>
