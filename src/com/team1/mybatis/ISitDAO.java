@@ -39,4 +39,7 @@ public interface ISitDAO
 	// [시터] 자기 정보 찾기
 	public SitDTO sitIdSearch(String id);
 	
+	// [시터] 자기 등급 찾기
+	public SitDTO searchGrades(String id);
+	
 }
