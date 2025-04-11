@@ -20,6 +20,8 @@ public class EmgReqDTO
 	String emg_delete_id;							// 긴급 돌봄 요청 삭제 코드
 	String emg_delete_date, par_read_date;			// 긴급 돌봄 요청 삭제 날짜, 부모가 삭제에 대해 읽은 날짜
 	
+	String region_id, par_name, par_id;				//-- 속성 추가 : 지역 코드, 부모 이름, 부모 아이디 
+	
 	// getter / setter 구성
 	public String getEmg_req_id()
 	{
@@ -109,4 +111,30 @@ public class EmgReqDTO
 	{
 		this.par_read_date = par_read_date;
 	}
+	public String getRegion_id()
+	{
+		return region_id;
+	}
+	public void setRegion_id(String region_id)
+	{
+		this.region_id = region_id;
+	}
+	public String getPar_name()
+	{
+		return par_name;
+	}
+	public void setPar_name(String par_name)
+	{
+		this.par_name = par_name;
+	}
+	public String getPar_id()
+	{
+		return par_id;
+	}
+	public void setPar_id(String par_id)
+	{
+		this.par_id = par_id;
+	}
+	
+	
 }
