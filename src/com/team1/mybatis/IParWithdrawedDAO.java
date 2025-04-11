@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.ParWithdrawedDTO;
+
 public interface IParWithdrawedDAO
 {
 	// 부모 탈퇴 (탈퇴 테이블에 insert)

@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenReviewDTO;
+
 public interface IGenReviewDAO
 {
 	// 일반 돌봄 리뷰 등록

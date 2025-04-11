@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenConfirmedDTO;
+
 public interface IGenConfirmedDAO
 {
 	// 예약 확정 등록

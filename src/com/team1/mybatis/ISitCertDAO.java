@@ -5,6 +5,8 @@
 
 package com.team1.mybatis;
 
+import com.team1.dto.SitCertDTO;
+
 public interface ISitCertDAO
 {
 	// [시터] 자격증 등록

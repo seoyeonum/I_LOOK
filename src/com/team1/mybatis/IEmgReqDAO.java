@@ -2,6 +2,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.EmgReqDTO;
+
 public interface IEmgReqDAO
 {
 	// 1. 관리자 입장

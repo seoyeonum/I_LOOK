@@ -17,6 +17,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenCanceledDTO;
+
 public interface IGenCanceledDAO
 {
 	/* 1-1.예약 확정 전 취소 내역 */

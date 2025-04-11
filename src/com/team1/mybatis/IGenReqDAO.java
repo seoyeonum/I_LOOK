@@ -6,6 +6,8 @@ package com.team1.mybatis;
 
 import java.util.ArrayList;
 
+import com.team1.dto.GenReqDTO;
+
 public interface IGenReqDAO
 {
 	// 일반 돌봄 예약 신청(등록)

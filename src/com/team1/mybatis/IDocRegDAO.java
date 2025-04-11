@@ -5,6 +5,8 @@
 
 package com.team1.mybatis;
 
+import com.team1.dto.DocRegDTO;
+
 public interface IDocRegDAO
 {
 	// [관리자] 서류 등록
