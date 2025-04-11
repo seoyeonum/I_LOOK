@@ -1,5 +1,9 @@
 # Eclipse specific files
 /build/
+<<<<<<< HEAD
 /.settings/
+=======
+.settings/
+>>>>>>> feature/ayj
 .classpath
 
