@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+@font-face
+{
+	font-family: 'NoonnuBasicGothicRegular';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#wrapper
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+header
+{
+    height: 150px;
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+
+#logo
+{
+    position: relative;
+    top: -17px;
+    left: -90px;
+    height: 50px;
+    width: 200px;
+}
+
+nav
+{
+    height: 45px;
+    width: 800px;
+    display: flex;
+    vertical-align: middle;
+    position: relative;
+    top: 45px;
+    left: 260px;
+}
+
+.menuBtn
+{
+    height: 45px;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: 0 10px;
+    font-family: 'NoonnuBasicGothicRegular';
+}
+
+.presentPage
+{
+    color: rgb(226, 140, 153);
+}
+
+.menuBtn:hover
+{
+    color: rgb(226, 140, 153);
+}
+
+#notice
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 250px;
+    width: 1200px;
+    gap: 5px;
+}
+
+#notice_text
+{
+    border: 2px solid gainsboro;
+    height: 100%;
+    width: 98%;
+    border-radius: 20px;
+
+}
+
+main
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#fillter
+{
+    height: 400px;
+    width: 1170px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#select_box
+{
+    border: 2px solid gainsboro;
+    height: 100px;
+    width: 1100px;
+    border-radius: 20px;
+    margin-top: 40px;
+}

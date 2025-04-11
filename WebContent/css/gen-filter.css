@@ -1,0 +1,616 @@
+@charset "UTF-8";
+
+/* gen-filter.css */
+
+/* ========== 전체 적용 ========== */
+@font-face
+{
+	font-family: 'NoonnuBasicGothicRegular';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+*
+{
+    box-sizing: border-box;				/* 요소의 전체 크기(패딩 등 포함)로 표시 */
+    margin: 0;
+    padding: 0;
+    font-family: 'NoonnuBasicGothicRegular';
+}
+
+/* ========== 메인 제목 ========== */
+h1
+{
+	font-size: 24px;
+	padding: 20px;
+	white-space: nowrap; 				/* 텍스트가 줄 바꿈 없이 한 줄로 유지 */
+}
+
+.main-subject h1
+{
+	margin-right: 1000px; 				   /* 기본적으로 우측에 1000px 간격 */
+}
+
+
+/* ========== 서브 제목 ========== */
+h2
+{
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #333;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.sub-subject h2
+{
+	margin-right: 900px; 				   /* 기본적으로 우측에 900px 간격 */
+}
+
+/* ========== 본문 ========== */
+body
+{
+    /* background-color: #f8f9fa; */	/* 미색으로 보이는 게 나을지? */
+    color: #333;
+}
+
+#body-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px 10px;						/* 첫 번째 값은 수직 간격, 두 번째 값은 수평 간격 */
+}
+
+
+.label
+{
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+input, select
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/*
+.sitter-form
+{
+	width: 760px;
+}
+
+ */
+/* ========== 박스(box) 형태 ========== */
+/* 1차 필터 박스*/
+.box-filter
+{
+	background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px ;
+    box-shadow: 2px 2px 0 #e5e5e5;		/* 그림자 속성: (수평) (수직) (블러) (색상) */
+    width: 1100px;
+}
+
+/* 2차 필터(사이드 바) 박스 */
+.box-side
+{
+    width: 280px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    height: fit-content;				/* 내용물에 맞춰 높이 설정 */
+    position: sticky;					/* top: 20px 이후부터 고정 */
+    top: 20px;
+    /* display: none; 기본적으로 숨겨져 있음 */
+}
+
+/* 일반 돌봄 메인 페이지 하단 박스 */
+.box-main
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 545px;
+    height: 250px;
+}
+
+/* 일반 돌봄 시터 간단 정보 박스 */
+.box-preview
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 돌봄 상세 정보 박스 */
+.box-detail
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 600px;
+}
+
+/* 돌봄 신청 박스 */
+.box-req
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 결제 완료 박스 */
+.box-req-complete
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: inline;
+    text-align: center;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 긴급 돌봄 각 등록 박스 */
+.box-emg
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+
+
+
+
+
+
+#primary-filter-form
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+}
+
+.form-group
+{
+    /* margin-bottom: 15px; */
+    padding: 10px;
+}
+
+.form-group-confirm
+{
+	margin-bottom: 0px;
+    padding: 10px;
+    display: inline;
+}
+
+
+
+/* 돌봄 희망 날짜 */
+.date-range
+{
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    margin-bottom: 8px;
+}
+
+.date-range input
+{
+    flex: 1;
+    width: 152px;
+}
+
+/* 돌봄 희망 시간 */
+.time-range
+{
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    margin-bottom: 8px;
+}
+
+.time-range select
+{
+    flex: 1;
+    width: 112px;
+}
+
+/* 시간 설정 경고 문구 */
+.warning
+{
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;					/* 기본 none 으로 설정 바꾸어야 함! */
+}
+
+
+/* ========== 버튼 ========== */
+.btn
+{
+    background-color: #e28c99;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;					/* 마우스 커서가 손 모양(포인터) */
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;	/* CSS 속성값의 변화에 애니메이션 효과를 추가 */
+    /* margin-bottom: 20px; */
+}
+
+.btn:hover
+{
+    background-color: #febdb4;
+}
+
+.btn-large
+{
+	margin-bottom: 20px;
+}
+
+.gen-btn-small
+{
+	font-size: 12px;
+}
+
+.emg-btn-small
+{
+	font-size: 12px;
+	position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* 상세 보기 버튼 정렬 */
+.btn-area
+{
+	width: 600px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.btn-area-large
+{
+	width: 800px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+
+/* ========== 체크박스 ========== */
+.checkbox-group
+{
+    margin-bottom: 10px;
+}
+
+.checkbox-label
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.checkbox-label input
+{
+    width: auto;
+}
+
+.range-group
+{
+    margin-bottom: 10px;
+}
+
+.range-label
+{
+	display: flex;
+	justify-content: space-between;			/* 요소를 양 끝에 두고 간격 동일 */
+    margin-top: 5px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    gap: 0 30px;
+}
+
+#wrapper-body
+{
+	display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px 10px;	
+    width: 1100px;
+}
+
+.sub-body-form
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 1070px;
+}
+
+.sidebar
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 240px;
+}
+
+
+/* 일반 돌봄 검색 결과 */
+.gen-results
+{
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	width: 800px;
+}
+
+.gen-results-detail, .emg-results-detail
+{
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	width: 600px;
+}
+
+/* 긴급 돌봄 검색 결과 */
+.emg-results
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 1070px;
+}
+
+
+
+
+
+/* 시터 사진 */
+.sitter-photo
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;		/* 사진 원형으로 만들기 */
+    overflow: hidden;		/* 지정한 크기 초과 시 초과분 hidden */
+}
+
+.sitter-photo img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;		/* 이미지를 영역에 꽉 채우기, 비율 유지, 초과분 hidden */
+}
+
+/* 시터 정보, 일반 돌봄 등록 정보, 긴급 돌봄 등록 정보 */
+.sitter-info, .gen-info, .emg-info
+{
+    flex: 1;
+    text-align: right;
+}
+
+/* 
+.gen-info-normal
+{	
+	flex: 1;
+
+}
+ */
+.result-info
+{
+	 display: inline-flex;
+	 justify-content: center;
+	 flex: 1;
+}
+
+
+.sitter-name, .child-name, .name
+{
+	display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+
+.sitter-details, .gen-details, .emg-details
+{
+    display: inline;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.sitter-details div, .gen-details div, .emg-details div
+{
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.parent-id
+{
+	display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.gen-details input
+{
+	flex: 1;
+    /* width: 500px; */
+    margin: 5px;
+    font-weight: normal;
+    font-size: 14px;
+}
+/* 
+.payment
+{
+	font-size: 18px;
+	margin: 10px;
+}
+ */
+#check-payment
+{
+	height: 20px;
+	width: 20px;
+}
+
+
+.row-items
+{
+	display: flex;
+	justify-content: row;
+	align-items: center;
+	gap: 10px;
+}
+
+#search-name
+{
+	width: 300px;
+	margin: 0 10px;
+}
+
+.child-has
+{
+	display: inline;
+}
+
+.child-has ul
+{
+	padding: 5px 10px;
+	margin-left: 10px;
+	text-align: left;
+	list-style-type: disc;
+	
+}
+
+ul
+{
+	list-style-type: none;
+}
+
+/* 뱃지 형태의 정보 표시 */
+.badge
+{
+    display: flex;
+    background-color: #dcb9ff;
+    color: #560d7d;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.male
+{
+	background-color: #aad5ff;
+    color: #1f6c96;
+}
+
+.female
+{
+	background-color: #febdb4;
+    color: #d9534f;
+}
+
+.star
+{
+	display: flex;
+    color: #d9534f;
+    font-size: 12px;
+}
+
+/* 로고 이미지 */
+.logo-complete
+{
+	width: 300px;
+	height: 300px;
+	overflow: hidden;		/* 지정한 크기 초과 시 초과분 hidden */
+}
+
+.logo-complete img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;		/* 이미지를 영역에 꽉 채우기, 비율 유지, 초과분 hidden */
+}
+
+.complete-subject
+{
+	font-size: 20px;
+}
+
+.complete-details
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 10px;
+}

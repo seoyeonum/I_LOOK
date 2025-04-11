@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IAdminDAO">
+
+	<!-- 관리자 정보 조회 -->
+	<select id="list" resultType="com.team1.mybatis.GradesDTO">
+		SELECT ADMIN_REG_ID, ID, PW, ADMIN_ACCT_CODE, BANK_NAME
+		FROM ADMIN_REG
+	</select>
+
+	<!-- 관리자 정보 수정 -->
+	<update id="update" parameterType="com.team1.mybatis.GradesDTO">
+		UPDATE ADMIN_REG
+		SET PW=#{pw}, ADMIN_ACCT_CODE=#{admin_acct_code}, BANK_NAME=#{bank_name}
+		WHERE ADMIN_REG_ID=#{admin_reg_id}
+	</update>
+
+</mapper>
