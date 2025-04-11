@@ -1,0 +1,274 @@
+/* /* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: white;
+    flex-direction: column; 세로 방향으로 배치
+}
+
+제목 중앙 정렬
+#calendarsubject {
+    text-align: center;  텍스트를 중앙 정렬
+    font-size: 24px;      폰트 크기 설정
+    font-weight: bold;    폰트 굵게
+    margin-bottom: 30px;  아래쪽 여백
+    width: 100%;          전체 너비 사용
+}
+
+달력과 프로필을 수평으로 정렬
+#content-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;          화면 너비 100% 사용
+    max-width: 1200px;    최대 너비 제한
+}
+
+달력 컨테이너 스타일
+#calendarContainer {
+    flex: 1;  왼쪽 차지
+    padding: 20px;
+    margin-right: 20px;  프로필 카드와의 간격
+}
+
+프로필 카드 스타일
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+	background-color: white;
+	border: 5px solid #ff80c0;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 350px;
+	max-width: 350px;
+	text-align: center;
+}
+달력 테이블 스타일
+#calendar {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid green;
+}
+
+달력 셀 스타일
+#calendar td {
+    width: 14.28%;
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid green;
+}
+
+달력 제목 스타일
+#calendarTitle {
+    font-size: 20px;
+    text-align: center;
+}
+
+주말 색상
+.sunday {
+    color: #F79DC2;
+}
+
+.saturday {
+    color: skyblue;
+}
+
+profile
+
+프로필 카드 제목
+.info-container {
+    text-align: center;
+}
+
+프로필 카드 이름과 나이 스타일
+#profile-name, #profile-age {
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+파일 업로드 버튼 스타일
+input[type="file"] {
+    margin-bottom: 15px;
+}
+
+프로필 카드 입력 필드 스타일
+.input-group {
+    margin-bottom: 10px;
+}
+
+버튼 스타일
+button {
+    padding: 10px 15px;
+    background-color: #ffddee;
+    color: white;
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #ff9dce;
+}
+ */
+ /* ====================================================================================== */
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: white;
+    flex-direction: column; /* 세로 방향으로 배치 */
+}
+
+/* 제목 중앙 정렬 */
+#calendarsubject {
+    text-align: center;  /* 텍스트를 중앙 정렬 */
+    font-size: 24px;      /* 폰트 크기 설정 */
+    font-weight: bold;    /* 폰트 굵게 */
+    margin-bottom: 30px;  /* 아래쪽 여백 */
+    width: 100%;          /* 전체 너비 사용 */
+}
+
+/* 달력과 프로필을 수평으로 정렬 */
+#content-container {
+    display: flex;
+    justify-content: space-around; /* 각 항목 간격 균등 분배 */
+    width: 100%;          
+    max-width: 1200px;    /* 최대 너비 제한 */
+    height: 80%;          /* 전체 높이의 80% 사용 */
+    margin-top: 20px;
+}
+
+/* 달력 컨테이너 스타일 */
+#calendarContainer {
+    flex: 1;
+    padding: 20px;
+    margin-right: 20px;
+    margin-left: 10%; /* 여기에 margin-left 추가 */
+    max-width: 600px;
+    min-width: 400px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+/* 프로필 카드 스타일 */
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: white;
+    border: 5px solid #ff80c0;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;  /* 남은 공간을 균등하게 차지 */
+    max-width: 600px; /* 최대 너비 설정 */
+    min-width: 400px; /* 최소 너비 설정 */
+    text-align: center;
+    height: 100%;  /* 높이를 100%로 설정하여 균등하게 차지 */
+    box-sizing: border-box;
+    margin-left: 10%; /* 왼쪽 여백 추가 */
+}
+
+/* 달력 테이블 스타일 */
+#calendar {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid green;
+}
+
+/* 달력 셀 스타일 */
+#calendar td {
+    width: 14.28%;
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid green;
+}
+
+/* 달력 제목 스타일 */
+#calendarTitle {
+    font-size: 20px;
+    text-align: center;
+}
+
+/* 주말 색상 */
+.sunday {
+    color: #F79DC2;
+}
+
+.saturday {
+    color: skyblue;
+}
+
+/* 프로필 카드 제목 */
+.info-container {
+    text-align: center;
+}
+
+/* 프로필 카드 이름과 나이 스타일 */
+#profile-name, #profile-age {
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 파일 업로드 버튼 스타일 */
+input[type="file"] {
+    margin-bottom: 15px;
+}
+
+/* 프로필 카드 입력 필드 스타일 */
+.input-group {
+    margin-bottom: 10px;
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 10px 15px;
+    background-color: #ffddee;
+    color: white;
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #ff9dce;
+}
+
+/* 사진에 틀을 추가 */
+.photo-container {
+    width: 120px;
+    height: 120px;
+    border: 5px solid #ff80c0; /* 사진 테두리 */
+    border-radius: 50%; /* 원형 테두리 */
+    overflow: hidden; /* 사진이 원형 테두리 안에 들어가도록 잘라내기 */
+    margin-bottom: 20px;
+}
+
+/* 프로필 사진 크기 맞추기 */
+#profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 사진 비율을 유지하며 부모 영역에 맞게 잘라내기 */
+}

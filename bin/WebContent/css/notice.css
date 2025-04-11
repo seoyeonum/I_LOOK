@@ -1,0 +1,292 @@
+@charset "UTF-8";
+
+/* notice.css */
+
+@font-face
+{
+	font-family: 'NoonnuBasicGothicRegular';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+*
+{
+    box-sizing: border-box;				/* 요소의 전체 크기(패딩 등 포함)로 표시 */
+    margin: 0;
+    padding: 0;
+    font-family: 'NoonnuBasicGothicRegular';
+}
+
+/* ========== 메인 제목 ========== */
+h1
+{
+	font-size: 24px;
+	padding: 20px;
+	white-space: nowrap; 				/* 텍스트가 줄 바꿈 없이 한 줄로 유지 */
+}
+
+.main-subject h1
+{
+	margin-right: 1000px; 				   /* 기본적으로 우측에 1000px 간격 */
+}
+
+/* ========== 본문 ========== */
+body
+{
+    /* background-color: #f8f9fa; */	/* 미색으로 보이는 게 나을지? */
+    color: #333;
+}
+
+#body-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px 10px;						/* 첫 번째 값은 수직 간격, 두 번째 값은 수평 간격 */
+}
+
+
+#wrapper-body
+{
+	display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px 10px;	
+    width: 1100px;
+}
+
+/* ========== 게시판 header ========== */
+.board-header
+{
+    display: flex;
+    justify-content: space-between;		/* 양 끝으로 두고 간격 일정하게 */
+    align-items: center;
+    width: 1100px;
+}
+
+.search-box
+{
+    display: flex;
+    align-items: center;
+}
+
+.search-box select, .search-box input
+{
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+}
+
+.search-box select
+{
+    border-radius: 4px 0 0 4px;
+    /* background-color: #fff0ee; */
+}
+
+.search-box input
+{
+    width: 200px;
+    border-left: none;
+    border-right: none;
+}
+
+/* ========== 버튼 ========== */
+.btn
+{
+    background-color: #e28c99;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0px 2px;
+    border-radius: 5px;
+    cursor: pointer;					/* 마우스 커서가 손 모양(포인터) */
+    font-size: 14px;
+    font-weight: 500;
+    height: 35px;
+    transition: background-color 0.3s;	/* CSS 속성값의 변화에 애니메이션 효과를 추가 */
+}
+
+.btn:hover
+{
+    background-color: #febdb4;
+}
+
+
+/* ========== 게시글 리스트 영역 ========== */
+
+.board-list
+{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.board-list-header
+{
+    display: flex;
+    background-color: #fff0ee;
+    border-top: 1px solid #e28c99;
+    /* border-bottom: 1px solid #e28c99; */
+    padding: 12px 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.board-list-item, .board-list-detail
+{
+    display: flex;
+    border-bottom: 1px solid #fff0ee;
+    padding: 12px 0;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.board-list-detail
+{
+    border-top: 1px solid #e28c99;
+    /* border-bottom: 1px solid #e28c99; */
+}
+
+.board-list-item:hover
+{
+    background-color: #fff0ee;
+}
+
+.board-list-cell
+{
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.board-detail
+{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* margin-bottom: 20px; */
+    width: 1100px;
+}
+
+.board-border
+{
+	border-top: 2px solid #e28c99;
+    border-bottom: 2px solid #e28c99;
+}
+
+
+.id { width: 8%; }
+.type { width: 12%; }
+.title
+{ 
+    width: 43%; 
+    justify-content: center;
+}
+.author { width: 12%; }
+.views { width: 10%; }
+.date { width: 15%; }
+
+
+
+
+.detail-id { width: 200px; }
+.detail-type { width: 200px; }
+.detail-title
+{ 
+    width: 200px; 
+    justify-content: center;
+}
+.detail-author { width: 200px; }
+.detail-views { width: 200px; }
+.detail-date { width: 200px; }
+.detail-content { width: 1100px; }
+
+
+
+.detail-notice-id { width: 200px; }
+.detail-notice-type { width: 200px; }
+.detail-notice-title
+{ 
+    width: 500px; 
+    justify-content: center;
+}
+.detail-notice-author { width: 200px; }
+.detail-notice-views { width: 500px; }
+.detail-notice-date { width: 500px; }
+.detail-notice-content  { width: 1100px; }
+
+#type-input
+{
+	width: 180px;
+	height: 30px;
+	font-size: 14px;
+}
+
+#title-input
+{
+	width: 480px;
+	height: 30px;
+	font-size: 14px;
+}
+
+#content-input
+{
+	width: 1000px;
+	height: 500px;
+	font-size: 14px;
+}
+
+
+.badge-type
+{
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.notice
+{
+    background-color: #aad5ff;
+    color: #1f6c96;
+}
+.event
+{
+    background-color: #dcb9ff;
+    color: #560d7d;
+}
+
+/* ========== 게시글 페이지 넘버 ========== */
+
+.board-footer
+{
+	display: flex;
+	justify-content: center;
+	width: 1100px;
+}
+
+.page-number
+{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+.page-number li
+{
+    margin: 0 5px;
+}
+.page-number a
+{
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+}
+.page-number a.active
+{
+    color: #e28c99;
+}

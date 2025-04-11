@@ -1,0 +1,530 @@
+@charset "UTF-8";
+
+/* 사이드바 */
+.sidebar {
+  position: fixed; 
+  top: 230px;      
+  left: 400px;       
+  width: 220px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.4);
+  padding: 30px 15px;
+  z-index: 100;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* 메뉴 전체 */
+.menu 
+{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 메뉴 아이템 */
+.menu-item > a 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  text-decoration: none;
+  background-color: #f9f9f9;
+  padding: 10px 8px;
+  /* border: 1px solid #f2c9db; */
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.menu-item > a i 
+{
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* 서브메뉴 항상 보이도록 */
+.submenu 
+{
+  margin-top: 6px;
+  padding-left: 16px;
+  display: block;
+}
+
+/* 서브메뉴 항목 */
+.submenu a 
+{
+  display: flex;               
+  align-items: center;        
+  justify-content: center;     
+  font-size: 12px;
+  color: #777;
+  padding: 4px 6px;
+  text-decoration: none;
+  border-radius: 3px;
+  background-color: #fff;
+  transition: background-color 0.2s;
+  height: 36px; 
+}
+
+/* 서브메뉴 hover 효과 */
+.submenu a:hover 
+{
+  background-color: #fce4ec;
+  color: #222;
+}
+
+.sidebar-title 
+{
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #ffb3d9;
+  padding-bottom: 10px;
+}
+
+/* 네비게이션바 */
+
+        @font-face {
+            font-family: 'NoonnuBasicGothicRegular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        #wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        header {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            -webkit-box-shadow: 0 10px 6px -6px #777;
+            -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+            z-index: 100;
+            background-color: white;
+            
+            /* 변경 부분 */
+            margin-bottom: 80px;
+        }
+
+        #logo {
+            position: relative;
+            top: -17px;
+            left: -90px;
+            height: 50px;
+            width: 200px;
+        }
+
+        nav {
+            height: 45px;
+            width: 800px;
+            display: flex;
+            vertical-align: middle;
+            position: relative;
+            top: 45px;
+            left: 260px;
+        }
+
+        .menuBtn {
+            height: 45px;
+            font-size: 20px;
+            background: transparent;
+            border: none;
+            outline: none;
+            margin: 0 10px;
+            font-family: 'NoonnuBasicGothicRegular';
+        }
+
+        .presentPage {
+            color: rgb(226, 140, 153);
+        }
+
+        .menuBtn:hover {
+            color: rgb(226, 140, 153);
+        }
+
+        #notice {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 250px;
+            width: 1200px;
+            gap: 5px;
+        }
+
+        #notice_text {
+            border: 2px solid gainsboro;
+            height: 100%;
+            width: 98%;
+            border-radius: 20px;
+
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        #fillter {
+            height: 400px;
+            width: 1170px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        #select_box {
+            border: 2px solid gainsboro;
+            height: 100px;
+            width: 1100px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        
+/* 전체 내용 스타일 */
+.container 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    margin: 0 auto;
+    width: 900px;
+    height: auto;
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
+    gap: 20px;
+    transform: translateX(220px); /*오른쪽으로 자꾸 안가서 transform 이용*/
+    overflow: hidden; 
+   	margin-bottom: 100px; 
+}
+
+/* 시터 이용 내역 제목 스타일 */
+.title 
+{
+    text-align: center; 
+    margin-bottom: 16px;  
+    margin-left: -390px;
+}
+
+.title h2 
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: #808080;
+    margin: 0;  
+}
+
+/* 제목 스타일 */
+.page-title 
+{
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #808080;
+   	text-align: center;
+}
+
+.page-list-title
+{
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #808080;
+   	text-align: center;
+}
+
+/* 최근 이용한 시터 프로필 */
+.recent-sitter-container 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    max-width: 900px;
+    margin-left: -30px;
+    margin-top: -40px; 
+}
+
+/* 시터 프로필 컨테이너 */
+.recent-sitter-profile 
+{
+    display: flex;
+    flex-direction: row;  
+    align-items: flex-start;  
+    gap: 40px;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    width: 100%;
+    max-width: 800px;  
+    margin-top: -30px;
+}
+
+/* 시터 프로필 사진 */
+.sitter-photo-container img 
+{
+    width: 100px;  
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-left: 100px;  
+    border: 2px solid #ccc; 
+}
+
+/* 시터 정보 컨테이너 */
+.sitter-info-container 
+{
+    display: flex;
+    flex-direction: column;  
+    gap: 20px;
+    width: 100%; 
+    margin-left: 200px;   
+}
+
+/* 각 항목의 레이블 및 값 */
+.info-item 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;  
+}
+
+/* 레이블 스타일 */
+.info-label 
+{
+    font-weight: bold;
+    color: #555;
+    min-width: 90px; 
+    font-size: 12px;
+}
+
+/* 값 스타일 */
+.info-value 
+{
+    color: #555;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 상태 텍스트 색상 */
+.sitter-status 
+{
+    font-weight: bold;
+    color: #e74c3c;
+    font-size: 12px;
+}
+
+/* 이용 내역 섹션 */
+.history-section 
+{
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    max-width: 900px;
+    margin-top: -30px;
+    padding-bottom: 20px;
+}
+
+.history-title 
+{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.history-list-container 
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+   	max-height: 500px;  
+    overflow-y: auto; 
+    padding-bottom: 10px;
+}
+
+.history-item 
+{
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr 1fr 1fr 120px;
+    gap: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 테이블 헤더 */
+.history-item.header 
+{
+    font-weight: bold;
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.history-number,
+.history-date,
+.history-time,
+.history-child-name,
+.history-sitter-name,
+.history-btn 
+{
+    margin: 0;
+    font-size: 12px;
+    color: #555;
+}
+
+/* 날짜 부분을 두 줄로 표시 */
+.history-date 
+{
+    display: block;
+    text-align: center;
+}
+
+.start-date,
+.end-date
+{
+    display: block;
+    font-size: 12px;
+    color: #555;
+}
+
+/* 두 줄로 날짜가 표시되도록 추가적인 스타일 */
+.history-item 
+{
+    display: grid;
+   	grid-template-columns: 50px 2fr 1fr 1fr 1fr 120px;
+    gap: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 각 항목의 내용 중앙 정렬 */
+.history-item span, .history-item button 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.details-btn 
+{
+	padding: 4px 4px;  
+    font-size: 10px;
+    border: 2px solid #ffb3d9;
+    color: #808080; 
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 60px;
+    margin-left: 30px;
+}
+
+.details-btn:hover 
+{
+    background-color: #ffffff;
+}
+
+/* 페이지네이션 버튼 스타일 */
+.pagination-controls button 
+{
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #808080; 
+    background-color:c0c0c0;
+    border: 2px solid #c0c0c0; 
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    min-width: 40px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-controls button:hover 
+{
+    background-color: #c0c0c0; 
+    border-color: #747474; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-controls button[style="font-weight: bold;"] 
+{
+    border-color: #c0c0c0;
+    color: #808080; 
+    font-weight: bold;
+}
+
+.pagination-controls button:disabled 
+{
+    border-color: #c0c0c0;
+    cursor: not-allowed;
+    color: #808080;
+}
+
+.pagination-controls button:not(:disabled):hover 
+{
+    background-color: #c0c0c0; /* hover 시 배경색 #4994d3 */
+    border-color: #747474;
+}
+
+.pagination-controls
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.pagination-controls .page-button 
+{
+    width: 50px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.pagination-controls .page-button 
+{
+    width: 50px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
