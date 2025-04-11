@@ -144,7 +144,4 @@ public class EmgConfirmedDTO
 	{
 		this.par_name = par_name;
 	}
-	
-	
-	
 }
