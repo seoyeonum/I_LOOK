@@ -7,8 +7,9 @@ public class ParDTO
 	// PAR_BACKUP_ID, ID, REG_DATE
 	
 	// 주요 속성 구성
-	private String par_reg_id, name, pw, tel, ssn_first,ssn_second, road_addr, detailed_addr;
-
+	private String par_reg_id, par_backup_id, name, pw, tel, ssn_first,ssn_second, road_addr, detailed_addr;
+	private String id, reg_date;
+	private int zip_code;
 	public String getPar_reg_id()
 	{
 		return par_reg_id;
@@ -87,6 +88,46 @@ public class ParDTO
 	public void setDetailed_addr(String detailed_addr)
 	{
 		this.detailed_addr = detailed_addr;
+	}
+
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
+	}
+
+	public String getId()
+	{
+		return id;
+	}
+
+	public void setId(String id)
+	{
+		this.id = id;
+	}
+
+	public String getReg_date()
+	{
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date)
+	{
+		this.reg_date = reg_date;
+	}
+
+	public int getZip_code()
+	{
+		return zip_code;
+	}
+
+	public void setZip_code(int zip_code)
+	{
+		this.zip_code = zip_code;
 	}
 	
 	
