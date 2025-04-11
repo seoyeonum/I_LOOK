@@ -112,7 +112,7 @@
 		flex-direction: row-reverse;
 	}
 	
-	.confirmBtn, .modifyBtn, .resetBtn
+	.confirmBtn, .modifyBtn, .resetBtn, .certBtn, .bankBtn
 	{
 		height: 50%;
 		font-size: 16pt;
@@ -121,13 +121,13 @@
        	border-radius: 10px;
 	}
 	
-	.confirmBtn:hover, .modifyBtn:hover, .resetBtn:hover
+	.confirmBtn:hover, .modifyBtn:hover, .resetBtn:hover, .certBtn:hover, .bankBtn:hover
 	{
 		background-color: #ea9999;
        	border: 2px solid #f4cccc;
 	}
 	
-	.confirmBtn:active, .modifyBtn:active, .resetBtn:active
+	.confirmBtn:active, .modifyBtn:active, .resetBtn:active, .certBtn:active, .bankBtn:active
 	{
 		color: #ea9999;
        	background-color: #f4cccc; 
@@ -213,13 +213,49 @@
 			</div>
 			<hr />
 			<div class="form-group" >
-			주민등록번호: <input type="tel" class="form-control" readonly="readonly"/>
+			주민등록번호: 
+			<input type="number" class="form-control" readonly="readonly" name="ssn_first"/> - <input type="number" class="form-control" name="ssn_second"readonly="readonly"/>
 			</div>
 			<hr />
 			<div class="form-group" >
 			전화번호: <input type="tel" class="form-control"/>
 			<button type="button" class="confirmBtn">인증하기</button>
 			</div>
+			<hr />
+			<div class="form-group">
+			은행 종류: &nbsp;
+			 <select name="bank_type_id" id="bank_type_id">
+				<option value="001">신한은행</option>
+				<option value="002">국민은행</option>
+				<option value="003">기업은행</option>
+				<option value="004">농협은행</option>
+				<option value="005">우리은행</option>
+				<option value="006">하나은행</option>
+				<option value="007">산업은행</option>
+			</select>			
+			<br />
+			</div>
+			<div class="form-group">			
+			은행 계좌: <input type="text" class="form-control"/> <span>예시: 110-111-111111</span> &nbsp;
+			<button type="button" class="bankBtn">연결하기</button>
+			</div>
+			<hr />
+			<div  class="form-group" >
+			현재 지닌 자격증: 
+			</div>
+			<div class="form-group" >
+			자격증 등록: <input type="file" class="form-control"/>
+			<button type="button" class="certBtn">등록하기</button>
+			</div>
+			<hr />
+			<div  class="form-group" >
+			현재 지닌 보증 서류: 
+			</div>
+			<div class="form-group" >
+			서류 등록: <input type="file" class="form-control"/>
+			<button type="button" class="certBtn">등록하기</button>
+			</div>
+			
 			<br /><br />
 			<br />
 			<br />
@@ -237,7 +273,7 @@
 			<div class="form-group">
 			우편번호: <input type="text" class="form-control"/>
 			</div>
-			<br /><br />
+			
 			
 			<div class="resultBtn">
 			<button class="modifyBtn col-md-2" type="submit">수정하기</button><button class="resetBtn col-md-2" type="reset">취소</button>
