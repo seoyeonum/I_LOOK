@@ -208,7 +208,7 @@
 				<div class="row">
 					<div class="col-md-1">번호</div>
 					<div class="col-md-2">예약 신청 날짜</div>
-					<div class="col-md-2">예약 이용 시간</div>
+					<div class="col-md-2">예약 이용 날짜</div>
 					<div class="col-md-1">지역</div>
 					<div class="col-md-2">아이 성별</div>
 					<div class="col-md-2">아이 연령</div>
