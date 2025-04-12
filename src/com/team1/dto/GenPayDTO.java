@@ -19,6 +19,9 @@ public class GenPayDTO
 	String gen_point_used_id;							// 포인트 차감 코드
 	String point_subject;								// 포인트 차감 대상자
 	
+	// 속성 추가
+	String par_name;									// 부모 이름
+	
 	// getter / setter 구성
 	public String getGen_pay_rec_id()
 	{
