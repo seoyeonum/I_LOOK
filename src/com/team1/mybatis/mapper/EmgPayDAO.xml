@@ -34,7 +34,7 @@
 	</select>
 	
 	<!-- (부모 이름으로) 긴급 돌봄 포인트 차감 내역 리스트 조회 -->
-	<select id="searchNameGenPointUsed" resultType="com.team1.mybatis.EmgPayDTO">
+	<select id="searchNameEmgPointUsed" resultType="com.team1.mybatis.EmgPayDTO">
 		SELECT EMG_REQ_ID, '사용' AS TYPE, PAR_NAME
 		     , POINT
 		     , TO_CHAR(PAYED_DATE, 'YYYY-MM-DD') AS USED_DATE
