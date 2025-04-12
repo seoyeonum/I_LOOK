@@ -9,20 +9,20 @@ package com.team1.dto;
 public class EmgReqDTO
 {
 	// 주요 속성 구성
-	String emg_req_id, child_backup_id;				// 긴급 돌봄 요청 등록 코드, 아이 백업 코드
-	String start_date, end_date;					// 긴급 돌봄 시작일, 긴급 돌봄 종료일
+	private String emg_req_id, child_backup_id;				// 긴급 돌봄 요청 등록 코드, 아이 백업 코드
+	private String start_date, end_date;					// 긴급 돌봄 시작일, 긴급 돌봄 종료일
 
-	int start_time, end_time;						// 긴급 돌봄 이용 시작 시간, 긴급 돌봄 이용 종료 시간
+	private int start_time, end_time;						// 긴급 돌봄 이용 시작 시간, 긴급 돌봄 이용 종료 시간
 	
-	String par_message;								// 긴급 돌봄 요청 등록 시 부모 전달 메시지
-	String req_date;								// 긴급 돌봄 요청 등록 일자
+	private String par_message;								// 긴급 돌봄 요청 등록 시 부모 전달 메시지
+	private String req_date;								// 긴급 돌봄 요청 등록 일자
 	
-	String emg_delete_id;							// 긴급 돌봄 요청 삭제 코드
-	String emg_delete_date, par_read_date;			// 긴급 돌봄 요청 삭제 날짜, 부모가 삭제에 대해 읽은 날짜
+	private String emg_delete_id;							// 긴급 돌봄 요청 삭제 코드
+	private String emg_delete_date, par_read_date;			// 긴급 돌봄 요청 삭제 날짜, 부모가 삭제에 대해 읽은 날짜
 	
 	// 속성 추가
-	String region_id;								// 지역 코드
-	String par_backup_id, par_name, par_id;			// 부모 백업코드, 부모 이름, 부모 아이디 
+	private String region_id;								// 지역 코드
+	private String par_backup_id, par_name, par_id;			// 부모 백업코드, 부모 이름, 부모 아이디 
 	
 	// getter / setter 구성
 	public String getEmg_req_id()

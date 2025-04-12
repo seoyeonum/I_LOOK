@@ -10,7 +10,7 @@
 	<!-- 모든 일반 돌봄 결제 리스트 조회 -->
 	<select id="listAllGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
 		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
-		     , PAY_AMOUNT, ('-' || POINT) AS USED_POINT, REQ_DATE
+		     , PAY_AMOUNT, POINT, REQ_DATE
 		FROM GEN_REQ_DETAIL_VIEW
 		ORDER BY REQ_DATE
 	</select>
@@ -18,7 +18,7 @@
 	<!-- (부모 이름으로) 일반 돌봄 결제 내역 리스트 조회 -->
 	<select id="searchNameGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
 		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
-		     , PAY_AMOUNT, ('-' || POINT) AS USED_POINT, REQ_DATE
+		     , PAY_AMOUNT, POINT, REQ_DATE
 		FROM GEN_REQ_DETAIL_VIEW
 		WHERE PAR_NAME = #{par_name}
 		ORDER BY REQ_DATE
@@ -27,7 +27,7 @@
 	<!-- 모든 일반 돌봄 포인트 차감 내역 리스트 조회 -->
 	<select id="listAllGenPointUsed" resultType="com.team1.mybatis.GenPayDTO">
 		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
-		     , ('-' || POINT) AS POINT
+		     , POINT
 		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
 		FROM GEN_REQ_DETAIL_VIEW
 		ORDER BY REQ_DATE
@@ -36,7 +36,7 @@
 	<!-- (부모 이름으로) 일반 돌봄 포인트 차감 내역 리스트 조회 -->
 	<select id="searchNameGenPointUsed" resultType="com.team1.mybatis.GenPayDTO">
 		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
-		     , ('-' || POINT) AS POINT
+		     , POINT
 		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
 		FROM GEN_REQ_DETAIL_VIEW
 		WHERE PAR_NAME = #{par_name}

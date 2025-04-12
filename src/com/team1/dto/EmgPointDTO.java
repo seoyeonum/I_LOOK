@@ -9,12 +9,12 @@ package com.team1.dto;
 public class EmgPointDTO
 {
 	// 주요 속성 구성
-	String emg_point_id, emg_confirmed_id;		// 긴급 돌봄 포인트 적립 코드, 긴급 돌봄 예약 확정 코드
-	String point_subject;						// 포인트 대상자
+	private String emg_point_id, emg_confirmed_id;		// 긴급 돌봄 포인트 적립 코드, 긴급 돌봄 예약 확정 코드
+	private String point_subject;						// 포인트 대상자
 	
-	int point_amount, used_time;				// 포인트 적립액, 이용 시간
+	private int point_amount, used_time;				// 포인트 적립액, 이용 시간
 	
-	String saved_date, par_read_date;			// 포인트 적립일, 부모가 읽은 날짜
+	private String saved_date, par_read_date;			// 포인트 적립일, 부모가 읽은 날짜
 
 	// getter / setter 구성
 	public String getEmg_point_id()
