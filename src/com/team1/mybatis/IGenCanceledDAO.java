@@ -21,19 +21,35 @@ import com.team1.dto.GenCanceledDTO;
 
 public interface IGenCanceledDAO
 {
+	// 일반 돌봄 예약 취소 리스트 확인
+	public ArrayList<GenCanceledDTO> listAllCanceledReq();
+	
+	// (부모 이름으로) 일반 돌봄 예약 취소 데이터 찾기
+	public GenCanceledDTO searchNameCanceledReq(String par_name);
+	
+	// (예약 신청 번호로) 일반 돌봄 예약 취소 데이터 상세 확인
+	public GenCanceledDTO searchCanceledReqDetail(String gen_req_id);
+	
+	
 	/* 1-1.예약 확정 전 취소 내역 */
 	// 예약 확정 전 취소 내역 추가
 	public int addGenCanceled(GenCanceledDTO g);
 	
 	// 예약 확정 전 취소 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenCanceled();
+	//public ArrayList<GenCanceledDTO> listGenCanceled();
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 전 취소 내역 확인
 	// → gen_canceled_id 를 활용하여 취소 내역 조회
-	public GenCanceledDTO searchGenCanceled(String gen_canceled_id);
+	//public GenCanceledDTO searchGenCanceled(String gen_canceled_id);
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
 
 	// 예약 확정 전 취소 내역 수 확인
-	public int countGenCanceled();
+	// public int countGenCanceled();
+	//-- 『adminReqList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 전 취소 내역 - 시터 읽은 날짜 기록
 	// → gen_canceled_id 를 활용하여 sit_read_date 수정
@@ -51,14 +67,21 @@ public interface IGenCanceledDAO
 	public int addGenSitConfirmedCanceled(GenCanceledDTO g);
 	
 	// 예약 확정 후 (시터의) 취소 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenSitConfirmedCanceled();
+	//public ArrayList<GenCanceledDTO> listGenSitConfirmedCanceled();
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (시터의) 취소 내역 확인
 	// → gen_sit_confirmed_canceled_id 를 활용하여 취소 내역 조회
-	public GenCanceledDTO searchGenSitConfirmedCanceled(String gen_sit_confirmed_canceled_id);
+	//public GenCanceledDTO searchGenSitConfirmedCanceled(String gen_sit_confirmed_canceled_id);
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
+	
 	
 	// 예약 확정 후 (시터의) 취소 내역 수 확인
-	public int countGenSitConfirmedCanceled();
+	//public int countGenSitConfirmedCanceled();
+	//-- 『adminReqList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (시터의) 취소 내역 - 시터 읽은 날짜 기록
 	// → gen_sit_confirmed_canceled_id 를 활용하여 sit_read_date 수정
@@ -76,14 +99,20 @@ public interface IGenCanceledDAO
 	public int addGenParConfirmedCanceled(GenCanceledDTO g);
 	
 	// 예약 확정 후 (부모의) 취소 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenParConfirmedCanceled();
+	//public ArrayList<GenCanceledDTO> listGenParConfirmedCanceled();
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 내역 확인
 	// → gen_par_confirmed_canceled_id 를 활용하여 취소 내역 조회
-	public GenCanceledDTO searchGenParConfirmedCanceled(String gen_par_confirmed_canceled_id);
+	//public GenCanceledDTO searchGenParConfirmedCanceled(String gen_par_confirmed_canceled_id);
+	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 내역 수 확인
-	public int countGenParConfirmedCanceled();
+	//public int countGenParConfirmedCanceled();
+	//-- 『adminReqList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 내역 - 시터 읽은 날짜 기록
 	// → gen_par_confirmed_canceled_id 를 활용하여 sit_read_date 수정
@@ -101,14 +130,20 @@ public interface IGenCanceledDAO
 	public int addGenRefunded(GenCanceledDTO g);
 	
 	// 예약 확정 전 취소 환불 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenRefunded();
+	//public ArrayList<GenCanceledDTO> listGenRefunded();
+	//-- 『adminPayRecList.jsp』 에 환불 내역 리스트 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 전 취소 환불 내역 확인
 	// → gen_refunded_id 를 활용하여 환불 내역 조회
-	public GenCanceledDTO searchGenCRefunded(String gen_refunded_id);
+	//public GenCanceledDTO searchGenCRefunded(String gen_refunded_id);
+	//-- 『adminPayRecDetail.jsp』 에 환불 내역 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 전 취소 환불 내역 수 확인
-	public int countGenCanceledRefunded();
+	//public int countGenCanceledRefunded();
+	//-- 『adminPayRecList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 전 취소 환불 내역 - 시터 읽은 날짜 기록 → (Ⅹ)
 	
@@ -124,14 +159,20 @@ public interface IGenCanceledDAO
 	public int addGenSitConfirmedRefunded(GenCanceledDTO g);
 	
 	// 예약 확정 후 (시터의) 취소 환불 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenSitConfirmedRefunded();
+	//public ArrayList<GenCanceledDTO> listGenSitConfirmedRefunded();
+	//-- 『adminPayRecList.jsp』 에 환불 내역 리스트 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (시터의) 취소 환불 내역 확인
 	// → gen_sit_confirmed_refunded_id 를 활용하여 취소 환불 내역 조회
-	public GenCanceledDTO searchGenSitConfirmedRefunded(String gen_sit_confirmed_refunded_id);
+	//public GenCanceledDTO searchGenSitConfirmedRefunded(String gen_sit_confirmed_refunded_id);
+	//-- 『adminPayRecDetail.jsp』 에 환불 내역 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (시터의) 취소 환불 내역 수 확인
-	public int countGenSitConfirmedRefunded();
+	//public int countGenSitConfirmedRefunded();
+	//-- 『adminPayRecList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (시터의) 취소 환불 내역 - 시터 읽은 날짜 기록 → (Ⅹ)
 
@@ -147,14 +188,20 @@ public interface IGenCanceledDAO
 	public int addGenParConfirmedRefunded(GenCanceledDTO g);
 	
 	// 예약 확정 후 (부모의) 취소 환불 내역 리스트 확인
-	public ArrayList<GenCanceledDTO> listGenParConfirmedRefunded();
+	//public ArrayList<GenCanceledDTO> listGenParConfirmedRefunded();
+	//-- 『adminPayRecList.jsp』 에 환불 내역 리스트 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 환불 내역 확인
 	// → gen_par_confirmed_refunded_id 를 활용하여 취소 환불 내역 조회
-	public GenCanceledDTO searchGenParConfirmedRefunded(String gen_par_confirmed_refunded_id);
+	//public GenCanceledDTO searchGenParConfirmedRefunded(String gen_par_confirmed_refunded_id);
+	//-- 『adminPayRecDetail.jsp』 에 환불 내역 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 환불 내역 수 확인
-	public int countGenParConfirmedRefunded();
+	//public int countGenParConfirmedRefunded();
+	//-- 『adminPayRecList.jsp』 에 내역 수 확인 항목 없어서 배제
+	//   → 필요 시 추가해주세요!
 	
 	// 예약 확정 후 (부모의) 취소 환불 내역 - 시터 읽은 날짜 기록 → (Ⅹ)
 
