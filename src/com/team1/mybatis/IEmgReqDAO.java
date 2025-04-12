@@ -14,16 +14,13 @@ public interface IEmgReqDAO
 	public int countAllReq();
 	
 	// (부모 이름으로) 긴급 돌봄 요청 데이터 찾기
-	public EmgReqDTO searchnNameReq(String par_name);
+	public EmgReqDTO searchNameReq(String par_name);
 	
 	// (부모 이름으로) 긴급 돌봄 요청 찾은 건수
-	public int countNameReq(String par_name);
-	
-	// (부모 아이디로) 긴급 돌봄 요청 데이터 찾기
-	public EmgReqDTO searchIdReq(String par_id);
-	
-	// (부모 아이디로) 긴급 돌봄 요청 찾은 건수
-	public int countIdReq(String par_id);
+	// public int countNameReq(String par_name);
+	//--『adminGenRegList.jsp』 기준 요청 건수 없어서 + 필요 없다고 하여 배제
+	//→ 필요 시 추가 작성!
+
 	
 	// 2. 시터 입장
 	
@@ -47,4 +44,10 @@ public interface IEmgReqDAO
 	
 	// 긴급 돌봄 요청 데이터 삭제
 	public int removeReq(String emg_req_id);
+	
+	// (부모 백업코드로) 긴급 돌봄 요청 데이터 찾기
+	public EmgReqDTO searchBackupIdReq(String par_backup_id);
+		
+	// (부모 백업코드로) 긴급 돌봄 요청 찾은 건수
+	public int countBackupIdReq(String par_backup_id);
 }

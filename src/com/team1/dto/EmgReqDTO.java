@@ -20,7 +20,9 @@ public class EmgReqDTO
 	String emg_delete_id;							// 긴급 돌봄 요청 삭제 코드
 	String emg_delete_date, par_read_date;			// 긴급 돌봄 요청 삭제 날짜, 부모가 삭제에 대해 읽은 날짜
 	
-	String region_id, par_name, par_id;				//-- 속성 추가 : 지역 코드, 부모 이름, 부모 아이디 
+	// 속성 추가
+	String region_id;								// 지역 코드
+	String par_backup_id, par_name, par_id;			// 부모 백업코드, 부모 이름, 부모 아이디 
 	
 	// getter / setter 구성
 	public String getEmg_req_id()

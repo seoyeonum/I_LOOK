@@ -68,4 +68,19 @@
 		FROM EMG_REQ
 		WHERE EMG_REQ_ID = #{emg_req_id}
 	</delete>
+	
+	<!-- (부모 백업 아이디로) 긴급 돌봄 요청 데이터 찾기 -->
+	<select id="searchBackupIdReq" resultType="com.team1.dto.EmgReqDTO">
+		SELECT EMG_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
+		FROM EMG_REQ_NAME_SEARCH_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+		ORDER BY EMG_REQ_ID DESC
+	</select>
+		
+	<!-- (부모 백업 아이디로) 긴급 돌봄 요청 찾은 건수 -->
+	<select id="countBackupIdReq" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM EMG_REQ_NAME_SEARCH_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
 </mapper>
