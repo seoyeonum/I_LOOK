@@ -23,10 +23,64 @@ public class SitDTO
 		 , tel, file_path;
 	
 	// 승인 일자
-	String chk_date;
+	String sit_chk_id, chk_date;
+	
+	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 가진 등급
+	int totalworktime, totalrating, month3rating;
+	String grade;
 
 	
 	// getter / setter 구성
+	public int getTotalworktime()
+	{
+		return totalworktime;
+	}
+
+	public void setTotalworktime(int totalworktime)
+	{
+		this.totalworktime = totalworktime;
+	}
+
+	public int getTotalrating()
+	{
+		return totalrating;
+	}
+
+	public void setTotalrating(int totalrating)
+	{
+		this.totalrating = totalrating;
+	}
+
+	public int getMonth3rating()
+	{
+		return month3rating;
+	}
+
+	public void setMonth3rating(int month3rating)
+	{
+		this.month3rating = month3rating;
+	}
+
+	public String getGrade()
+	{
+		return grade;
+	}
+
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
+
+	public String getSit_chk_id()
+	{
+		return sit_chk_id;
+	}
+
+	public void setSit_chk_id(String sit_chk_id)
+	{
+		this.sit_chk_id = sit_chk_id;
+	}
+
 	public String getSit_backup_id()
 	{
 		return sit_backup_id;

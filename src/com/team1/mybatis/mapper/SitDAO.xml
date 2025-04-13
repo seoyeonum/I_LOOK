@@ -54,18 +54,76 @@
  	
  	<!-- SitDAO.xml -->
  	
- 	<select id="list"> <!-- public ArrayList<SitDTO> list(); -->
- 	
+ 	<select id="list" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 리스트 public ArrayList<SitDTO> list(); -->
+ 		SELECT
+		SREG.NAME, SREG.TEL,
+		  T.SIT_BACKUP_ID,
+		  T.총근무시간,
+		  CASE
+		    WHEN T.총근무시간 <![CDATA[<]]> 120 THEN '신입'
+		    WHEN T.총근무시간 <![CDATA[<]]> 1000 THEN '브론즈'
+		    WHEN T.총근무시간 <![CDATA[<]]> 5000 THEN '실버'
+		    WHEN T.총근무시간 <![CDATA[<]]> 10000 THEN '골드'
+		    ELSE '플래티넘'
+		  END AS 등급
+		, SREG.SIT_REG_ID
+		, SCHK.CHK_DATE
+		FROM
+		(
+		    SELECT
+		        SIT_BACKUP_ID,
+		        SUM(근무시간) AS 총근무시간
+		    FROM 
+		(
+		    -- 일반 돌봄 근무 시간
+		    SELECT
+		    G.SIT_BACKUP_ID,
+		    SUM((Q.END_DATE - Q.START_DATE +1) * LEAST((Q.END_TIME - Q.START_TIME), 8)) AS 근무시간
+		    FROM GEN_CONFIRMED C
+		    JOIN GEN_REQ Q ON C.GEN_REQ_ID = Q.GEN_REQ_ID
+		    JOIN GEN_REG R ON Q.GEN_REG_ID = R.GEN_REG_ID
+		    JOIN GEN_REG G ON R.GEN_REG_ID = G.GEN_REG_ID
+		    WHERE R.START_DATE IS NOT NULL
+		        AND R.END_DATE IS NOT NULL
+		        AND NOT EXISTS
+		        (
+		            SELECT 1 
+		            FROM GEN_PAR_CONFIRMED_CANCELED PC
+		            WHERE PC.GEN_CONFIRMED_ID = C.GEN_CONFIRMED_ID
+		        )
+		        AND NOT EXISTS
+		        (
+		            SELECT 1 FROM GEN_SIT_CONFIRMED_CANCELED SC
+		            WHERE SC.GEN_CONFIRMED_ID = C.GEN_CONFIRMED_ID
+		        )
+		    GROUP BY G.SIT_BACKUP_ID
+		    
+		    UNION ALL
+		    
+		    -- 긴급 돌봄 근무 시간
+		    SELECT 
+		    E.SIT_BACKUP_ID, 
+		    SUM((R.END_DATE - R.START_DATE +1) * LEAST((R.END_TIME - R.START_TIME), 8)) AS 근무시간
+		    FROM EMG_CONFIRMED E
+		    JOIN EMG_REQ R ON E.EMG_REQ_ID = R.EMG_REQ_ID
+		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL   -- NULL 값은 그냥 반영하지 않겠다.
+		    GROUP BY E.SIT_BACKUP_ID
+		    )
+		    GROUP BY SIT_BACKUP_ID
+		) T 
+		JOIN SIT_REG SREG ON SREG.SIT_BACKUP_ID = T.SIT_BACKUP_ID
+		JOIN SIT_CHK SCHK ON SREG.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
+		ORDER BY T.SIT_BACKUP_ID
  	</select>
  	
  	
- 	<select id="countSit"> <!-- public int countSit(); -->
+ 	<select id="countSit" resultType="java.lang.Integer"> <!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
  		SELECT COUNT (*) AS COUNT
 		FROM SIT_CHK
  	</select>
  	
  	
- 	<select id="countSitReg"> <!-- public int countSitReg(); -->
+ 	<select id="countSitReg" resultType="java.lang.Integer"> <!-- // [관리자] 시터 회원 등록 요청 개수 확인 public int countSitReg(); -->
  		SELECT COUNT(*) AS COUNT
 		FROM SIT_CHK SCHK, SIT_BACKUP SBAC, SIT_REJECTED SREJ
 		WHERE SBAC.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
@@ -75,72 +133,162 @@
  	</select>
  	
  	
- 	<insert id="sitReg"> <!-- public int sitReg(SitDTO dto); -->
+ 	<insert id="sitReg" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
 		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
-		VALUES(#{SIT_BACKUP_ID}, #{REG_DATE}, #{ID});
+		VALUES(#{sit_backup_id}, #{reg_date}, #{id});
 		
  		INSERT INTO SIT_REG(SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH)
-		VALUES(#{SIT_REG_ID}, #{SIT_BACKUP_ID}, #{PW}, #{NAME});
+		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, #{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code}, #{tel}, #{file_path});
 		
 		<!-- 트랜잭션 처리할 것. -->
  	</insert>
  	
  	
- 	<insert id="sitChk"> <!-- public int sitChk(String sit_backup_id); -->
+ 	<insert id="sitChk"> <!-- // [관리자] 시터 회원 승인 public int sitChk(String sit_backup_id); -->
 	 	INSERT INTO SIT_CHK(SIT_CHK_ID, SIT_BACKUP_ID, CHK_DATE)
-		VALUES();
+		VALUES(#{sit_chk_id}, #{sit_backup_id}, #{chk_date});
  	
  	</insert>
  	
  	
- 	<update id="modifySit"> <!-- public int modifySit(SitDTO sitter); -->
+ 	<update id="modifySit"> <!-- // [시터] 시터 회원 정보 수정  public int modifySit(SitDTO sitter); -->
  		UPDATE SIT_REG 
 		 RIGHT JOIN SIT_BACKUP ON (SIT_REG.SIT_BACKUP_ID = SIT_BACKUP.SIT_BACKUP_ID)
-		   SET SIT_REG.PW = 
-		     , SIT_REG,NAME = 
-		     , SIT_REG,ROAD_ADDR = 
-		     , SIT_REG.DETAILED_ADDR = 
-		     , SIT_REG.ZIP_CODE = 
-		     , SIT_REG.TEL =  
-		WHERE SIT_BACKUP_ID = 
+		   SET SIT_REG.PW = #{pw}
+		     , SIT_REG,NAME = #{name}
+		     , SIT_REG,ROAD_ADDR = #{road_addr}
+		     , SIT_REG.DETAILED_ADDR = #{detailed_addr}
+		     , SIT_REG.ZIP_CODE = #{zip_code}
+		     , SIT_REG.TEL =  #{tel}
+		WHERE SIT_BACKUP_ID = #{sit_backup_id}
  	</update>
  	
  	
- 	<select id="sitNameSearch"> <!-- public SitDTO sitNameSearch(String name); -->
+ 	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
  		SELECT SIT_BACKUP_ID, REG_DATE, ID, PW, NAME
  		, SIT_CHK_ID, CHK_DATE, SSN_FIRST
  		, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR
  		, ZIP_CODE, TEL, BANK_TYPE, ACCT_NUMBER
 		FROM SIT_VIEW
-		WHERE NAME LIKE '%김%';
- 	
+		WHERE NAME LIKE '%#{name}%';
  	</select>
  	
  	
- 	<select id="sitSearch"> <!-- public SitDTO sitSearch(String sit_backup_id); -->
+ 	<select id="sitSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 백업 코드 검색 public SitDTO sitSearch(String sit_backup_id); -->
  		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
 		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
 		, BANK_TYPE, ACCT_NUMBER, DOC_TYPE, CERT_TYPE
 		FROM SIT_VIEW
-		WHERE ID = #{ID};
+		WHERE ID = #{id};
  	</select>
  	
  	
- 	<select id="sitLogin"> <!-- public String sitLogin(String id, String pw); -->
+ 	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
  		SELECT SREG.NAME
 		FROM SIT_REG SREG, SIT_BACKUP SBAC
 		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
-		AND SBAC.ID = #{ID}
-		AND SREG.PW = #{PW}
+		AND SBAC.ID = #{id}
+		AND SREG.PW = #{pw}
  	</select>
  	
  	
  	
- 	<select id="sitIdSearch" resultType="com.test.mybatis.SitDTO"> <!-- public SitDTO sitIdSearch(String id); -->
+ 	<select id="sitIdSearch" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 정보 찾기 public SitDTO sitIdSearch(String id); -->
 	 	SELECT SIT_BACKUP_ID, ID, PW, NAME, SSN_FIRST, SSN_SECOND
 		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
 		, BANK_TYPE, ACCT_NUMBER, DOC_TYPE, CERT_TYPE
 		FROM SIT_VIEW
-		WHERE ID = #{ID}
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="searchGrades" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 등급 찾기 public SitDTO searchGrades(String id); -->
+			SELECT
+		  T.SIT_BACKUP_ID,
+		  T.TOTALWORKTIME,
+		  CASE
+		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 120 THEN '신입'
+		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 1000 THEN '브론즈'
+		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 5000 THEN '실버'
+		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 10000 THEN '골드'
+		    ELSE '플래티넘'
+		  END AS GRADE
+		FROM
+		(
+		    SELECT
+		        SIT_BACKUP_ID,
+		        SUM(근무시간) AS TOTALWORKTIME
+		    FROM 
+		(
+		    -- 일반 돌봄 근무 시간
+		    SELECT
+		    G.SIT_BACKUP_ID,
+		    SUM((Q.END_DATE - Q.START_DATE +1) * LEAST((Q.END_TIME - Q.START_TIME), 8)) AS 근무시간
+		    FROM GEN_CONFIRMED C
+		    JOIN GEN_REQ Q ON C.GEN_REQ_ID = Q.GEN_REQ_ID
+		    JOIN GEN_REG R ON Q.GEN_REG_ID = R.GEN_REG_ID
+		    JOIN GEN_REG G ON R.GEN_REG_ID = G.GEN_REG_ID
+		    WHERE R.START_DATE IS NOT NULL
+		        AND R.END_DATE IS NOT NULL
+		        AND NOT EXISTS
+		        (
+		            SELECT 1 
+		            FROM GEN_PAR_CONFIRMED_CANCELED PC
+		            WHERE PC.GEN_CONFIRMED_ID = C.GEN_CONFIRMED_ID
+		        )
+		        AND NOT EXISTS
+		        (
+		            SELECT 1 FROM GEN_SIT_CONFIRMED_CANCELED SC
+		            WHERE SC.GEN_CONFIRMED_ID = C.GEN_CONFIRMED_ID
+		        )
+		    GROUP BY G.SIT_BACKUP_ID
+		    
+		    UNION ALL
+		    
+		    -- 긴급 돌봄 근무 시간
+		    SELECT 
+		    E.SIT_BACKUP_ID, 
+		    SUM((R.END_DATE - R.START_DATE +1) * LEAST((R.END_TIME - R.START_TIME), 8)) AS 근무시간
+		    FROM EMG_CONFIRMED E
+		    JOIN EMG_REQ R ON E.EMG_REQ_ID = R.EMG_REQ_ID
+		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL   -- NULL 값은 그냥 반영하지 않겠다.
+		    GROUP BY E.SIT_BACKUP_ID
+		    )
+		    GROUP BY SIT_BACKUP_ID
+		) T
+		WHERE T.SIT_BACKUP_ID = #{id}
+	</select>
+	
+	<select id="searchRating" resultType="java.lang.Integer"> <!-- // [시터] 아이디로 자신의 평균 점수 찾기 public int searchRating(String id); -->
+	SELECT AVG(GREV.RATING) AS RATING
+	FROM GEN_REVIEWS GREV, GEN_CONFIRMED GCON, GEN_REQ GREQ, GEN_REG GREG, SIT_BACKUP SBAC
+	WHERE GREV.GEN_CONFIRMED_ID = GCON.GEN_CONFIRMED_ID
+	AND GCON.GEN_REQ_ID = GREQ.GEN_REQ_ID
+	AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
+	AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+	AND SBAC.ID = #{id}
+	GROUP BY SBAC.ID;
+	</select>
+	
+	<select id="searchBupRating" resultType="java.lang.Integer"> <!-- // [시터 혹은 관리자] 백업 코드로 자신의 평균 점수 찾기 public int searchBupRating(String sit_backup_id); -->
+		SELECT AVG(GREV.RATING) AS RATING
+		FROM GEN_REVIEWS GREV, GEN_CONFIRMED GCON, GEN_REQ GREQ, GEN_REG GREG, SIT_BACKUP SBAC
+		WHERE GREV.GEN_CONFIRMED_ID = GCON.GEN_CONFIRMED_ID
+		AND GCON.GEN_REQ_ID = GREQ.GEN_REQ_ID
+		AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
+		AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND GREG.SIT_BACKUP_ID = #{sit_backup_id}
+		GROUP BY GREG.SIT_BACKUP_ID;
+	</select>
+	
+	<select id="searchM3Rating" resultType="java.lang.Integer"> <!-- // [시터] 아이디로 자신의 최근 3개월 평균 점수 찾기	public int searchM3Rating(String id); -->
+		SELECT AVG(GREV.RATING) AS RATING
+		FROM GEN_REVIEWS GREV, GEN_CONFIRMED GCON, GEN_REQ GREQ, GEN_REG GREG, SIT_BACKUP SBAC
+		WHERE GREV.GEN_CONFIRMED_ID = GCON.GEN_CONFIRMED_ID
+		AND GCON.GEN_REQ_ID = GREQ.GEN_REQ_ID
+		AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
+		AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND SBAC.ID = #{id}
+		AND GREV.REVIEWED_DATE <![CDATA[<=]]>  ADD_MONTHS(SYSDATE, -3)
+		GROUP BY SBAC.ID;
 	</select>
 </mapper>
