@@ -6,13 +6,13 @@
 <mapper namespace="com.team1.mybatis.IAdminDAO">
 
 	<!-- 관리자 정보 조회 -->
-	<select id="list" resultType="com.team1.mybatis.GradesDTO">
+	<select id="list" resultType="com.team1.dto.GradesDTO">
 		SELECT ADMIN_REG_ID, ID, PW, ADMIN_ACCT_CODE, BANK_NAME
 		FROM ADMIN_REG
 	</select>
 
 	<!-- 관리자 정보 수정 -->
-	<update id="update" parameterType="com.team1.mybatis.GradesDTO">
+	<update id="update" parameterType="com.team1.dto.GradesDTO">
 		UPDATE ADMIN_REG
 		SET PW=#{pw}, ADMIN_ACCT_CODE=#{admin_acct_code}, BANK_NAME=#{bank_name}
 		WHERE ADMIN_REG_ID=#{admin_reg_id}
