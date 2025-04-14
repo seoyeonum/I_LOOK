@@ -1,0 +1,384 @@
+@charset "UTF-8";
+
+.sidebar {
+  position: fixed; 
+  top: 230px;      
+  left: 400px;       
+  width: 220px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(192, 192, 192, 0.4);
+  padding: 30px 15px;
+  z-index: 100;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* 메뉴 전체 */
+.menu 
+{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 메뉴 아이템 */
+.menu-item > a 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  text-decoration: none;
+  background-color: #f9f9f9;
+  padding: 10px 8px;
+  /* border: 1px solid #f2c9db; */
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.menu-item > a i 
+{
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* 서브메뉴 항상 보이도록 */
+.submenu 
+{
+  margin-top: 6px;
+  padding-left: 16px;
+  display: block;
+}
+
+/* 서브메뉴 항목 */
+.submenu a 
+{
+  display: flex;               
+  align-items: center;        
+  justify-content: center;     
+  font-size: 12px;
+  color: #777;
+  padding: 4px 6px;
+  text-decoration: none;
+  border-radius: 3px;
+  background-color: #fff;
+  transition: background-color 0.2s;
+  height: 36px; 
+}
+
+/* 서브메뉴 hover 효과 */
+.submenu a:hover 
+{
+  background-color: #fce4ec;
+  color: #222;
+}
+
+.sidebar-title 
+{
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #ffb3d9;
+  padding-bottom: 10px;
+}
+
+/* 네비게이션바 */
+
+        @font-face {
+            font-family: 'NoonnuBasicGothicRegular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        #wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        header {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            -webkit-box-shadow: 0 10px 6px -6px #777;
+            -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+            z-index: 100;
+            background-color: white;
+            
+            /* 변경 부분 */
+            margin-bottom: 80px;
+        }
+
+        #logo {
+            position: relative;
+            top: -17px;
+            left: -90px;
+            height: 50px;
+            width: 200px;
+        }
+
+        nav {
+            height: 45px;
+            width: 800px;
+            display: flex;
+            vertical-align: middle;
+            position: relative;
+            top: 45px;
+            left: 260px;
+        }
+
+        .menuBtn {
+            height: 45px;
+            font-size: 20px;
+            background: transparent;
+            border: none;
+            outline: none;
+            margin: 0 10px;
+            font-family: 'NoonnuBasicGothicRegular';
+        }
+
+        .presentPage {
+            color: rgb(226, 140, 153);
+        }
+
+        .menuBtn:hover {
+            color: rgb(226, 140, 153);
+        }
+
+        #notice {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 250px;
+            width: 1200px;
+            gap: 5px;
+        }
+
+        #notice_text {
+            border: 2px solid gainsboro;
+            height: 100%;
+            width: 98%;
+            border-radius: 20px;
+
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        #fillter {
+            height: 400px;
+            width: 1170px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        #select_box {
+            border: 2px solid gainsboro;
+            height: 100px;
+            width: 1100px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        
+/* 전체 내용 스타일 */
+#wrapper 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    margin: 0 auto;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
+    gap: 30px;
+    transform: translateX(170px); /*오른쪽으로 자꾸 안가서 transform 이용*/
+    margin-bottom: 100px;
+}
+
+/* 헤더 부분 */
+#review-header 
+{
+    text-align: center !important;
+    margin-bottom: 16px;
+    transform: translateX(-208px);
+}
+
+#review-header h2 
+{
+    font-size: 20px;
+    /* font-weight: bold; */
+    color: #808080;
+    margin: 0;
+    margin-bottom: 10px;
+}
+/* 별점 부여 섹션 스타일 */
+.rating-section 
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    gap: 4px;
+}
+
+.rating-section h2 
+{
+    font-size: 12pt;
+    color: #333;
+    text-align: center;
+}
+
+.stars 
+{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star 
+{
+    color: #ccc;
+}
+
+.star.selected 
+{
+    color: #ffcce6; 
+}
+
+#ratingValue 
+{
+    text-align: center;
+    font-size: 10pt;
+    color: #808080;
+    margin-top: 6px;
+}
+
+/* 리뷰 항목 선택 섹션 스타일 */
+.review-section 
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    gap: 6px;
+}
+
+.review-section h2 
+{
+    font-size: 12pt;
+    color: #333;
+    text-align: center;
+}
+
+.review-options 
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.review-button 
+{
+    background-color: #ffffff;
+    color: #808080;
+    border: 2px solid #ffb3d9;
+    padding: 6px 16px;
+    font-size: 10pt;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.review-button:hover 
+{
+    background-color: #f2f2f2;
+}
+
+.review-button.selected 
+{
+    background-color: #f2f2f2; /* 선택된 버튼 색상 */
+}
+
+#reviewValue 
+{
+    text-align: center;
+    font-size: 10pt;
+    color: #808080;
+    margin-top: 6px;
+}
+
+/* 선택된 정보 표시 */
+.selected-info 
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    gap: 6px;
+}
+
+.selected-info div 
+{
+    font-size: 10pt;
+    color: #808080;
+}
+
+/* 제출 버튼 섹션 */
+.submit-section 
+{
+    text-align: center;
+    width: 100%;
+    background-color: #fff;
+    padding: 12px;
+}
+
+#submitBtn 
+{
+    background-color: #ffffff;
+    color: #808080;
+    border: none;
+    padding: 6px 10px;
+    font-size: 10pt;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    border: 2px solid #c0c0c0;
+}
+
+#submitBtn:hover 
+{
+    background-color: #e5e5e5;
+}
+

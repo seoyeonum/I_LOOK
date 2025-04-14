@@ -161,6 +161,9 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+
+
+ 
 </script>
 </head>
 
@@ -241,10 +244,10 @@
 		<form action="" class="" style="font-size: 16pt;">
 		비밀번호 입력: <input type="password" style="border-color: white"/><br />
 		탈퇴 사유<br />
-		<label>입금이 늦다. <input type="checkbox" /></label><br />
-		매칭 시스템이 마음에 들지 않았다. <input type="checkbox" /><br />
-		<input type="checkbox" />
-		<input type="checkbox" />
+		<label>입금이 늦다. <input type="checkbox" value=""/></label><br />
+		<label>매칭 시스템이 마음에 들지 않았다. <input type="checkbox" value=""/></label> <br />
+		<label>이유3 <input type="checkbox" value=""/></label><br />
+		<label>이유4 <input type="checkbox" value=""/></label><br />
 		<div class="withdraw info button" style="display: flex; flex-direction: row-reverse; margin-top: 20px; margin-right: 20%;">
 		<button class="withdrawBtn" type="submit" >탈퇴하기</button> <button class="resetBtn" type="reset">취소</button>
 		</div>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.ISitDAO">
+
+	<!-- ○○○DAO.xml 파일 저장 경로 확인을 위한 샘플 파일 -->
+	<!-- 
+	<select id="list" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3, TOT, AVG, CH
+		FROM GRADEVIEW
+		WHERE AVG != -1 
+		ORDER BY SID
+	</select>
+	
+	<select id="countComplete" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+		WHERE AVG != -1
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+	</select>
+	
+	<select id="search" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3
+		FROM GRADEVIEW
+		WHERE SID=#{sid}
+	</select>
+	
+	<insert id="add">
+		PreparedStatement 작업 객체 활용 형태
+		INSERT INTO TBL_GRADE(SID, SUB1, SUB2, SUB3)
+		VALUES(#{sid}, #{sub1}, #{sub2}, #{sub3})
+	</insert>
+	
+
+	<update id="modify">
+		UPDATE TBL_GRADE
+		SET SUB1=#{sub1}, SUB2=#{sub2}, SUB3=#{sub3}
+		WHERE SID=#{sid}
+	</update>
+	
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_GRADE
+		WHERE SID=#{sid}
+	</delete>
+ 	-->
+ 	
+ 	<!-- SitDAO.xml -->
+ 	
+ 	<select id="list"> <!-- public ArrayList<SitDTO> list(); -->
+ 	
+ 	</select>
+ 	
+ 	
+ 	<select id="countSit"> <!-- public int countSit(); -->
+ 		SELECT COUNT (*) AS COUNT
+		FROM SIT_CHK
+ 	</select>
+ 	
+ 	
+ 	<select id="countSitReg"> <!-- public int countSitReg(); -->
+ 		SELECT COUNT(*) AS COUNT
+		FROM SIT_CHK SCHK, SIT_BACKUP SBAC, SIT_REJECTED SREJ
+		WHERE SBAC.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
+		AND SBAC.SIT_BACKUP_ID = SREJ.SIT_BACKUP_ID
+		AND SCHK.SIT_BACKUP_ID IS NULL
+		AND SREJ.SIT_BACKUP_ID IS NULL
+ 	</select>
+ 	
+ 	
+ 	<insert id="sitReg"> <!-- public int sitReg(SitDTO dto); -->
+		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
+		VALUES(#{SIT_BACKUP_ID}, #{REG_DATE}, #{ID});
+		
+ 		INSERT INTO SIT_REG(SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH)
+		VALUES(#{SIT_REG_ID}, #{SIT_BACKUP_ID}, #{PW}, #{NAME});
+		
+		<!-- 트랜잭션 처리할 것. -->
+ 	</insert>
+ 	
+ 	
+ 	<insert id="sitChk"> <!-- public int sitChk(String sit_backup_id); -->
+	 	INSERT INTO SIT_CHK(SIT_CHK_ID, SIT_BACKUP_ID, CHK_DATE)
+		VALUES();
+ 	
+ 	</insert>
+ 	
+ 	
+ 	<update id="modifySit"> <!-- public int modifySit(SitDTO sitter); -->
+ 		UPDATE SIT_REG 
+		 RIGHT JOIN SIT_BACKUP ON (SIT_REG.SIT_BACKUP_ID = SIT_BACKUP.SIT_BACKUP_ID)
+		   SET SIT_REG.PW = 
+		     , SIT_REG,NAME = 
+		     , SIT_REG,ROAD_ADDR = 
+		     , SIT_REG.DETAILED_ADDR = 
+		     , SIT_REG.ZIP_CODE = 
+		     , SIT_REG.TEL =  
+		WHERE SIT_BACKUP_ID = 
+ 	</update>
+ 	
+ 	
+ 	<select id="sitNameSearch"> <!-- public SitDTO sitNameSearch(String name); -->
+ 		SELECT SIT_BACKUP_ID, REG_DATE, ID, PW, NAME
+ 		, SIT_CHK_ID, CHK_DATE, SSN_FIRST
+ 		, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR
+ 		, ZIP_CODE, TEL, BANK_TYPE, ACCT_NUMBER
+		FROM SIT_VIEW
+		WHERE NAME LIKE '%김%';
+ 	
+ 	</select>
+ 	
+ 	
+ 	<select id="sitSearch"> <!-- public SitDTO sitSearch(String sit_backup_id); -->
+ 		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
+		, BANK_TYPE, ACCT_NUMBER, DOC_TYPE, CERT_TYPE
+		FROM SIT_VIEW
+		WHERE ID = #{ID};
+ 	</select>
+ 	
+ 	
+ 	<select id="sitLogin"> <!-- public String sitLogin(String id, String pw); -->
+ 		SELECT SREG.NAME
+		FROM SIT_REG SREG, SIT_BACKUP SBAC
+		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND SBAC.ID = #{ID}
+		AND SREG.PW = #{PW}
+ 	</select>
+ 	
+ 	
+ 	
+ 	<select id="sitIdSearch" resultType="com.test.mybatis.SitDTO"> <!-- public SitDTO sitIdSearch(String id); -->
+	 	SELECT SIT_BACKUP_ID, ID, PW, NAME, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
+		, BANK_TYPE, ACCT_NUMBER, DOC_TYPE, CERT_TYPE
+		FROM SIT_VIEW
+		WHERE ID = #{ID}
+	</select>
+</mapper>

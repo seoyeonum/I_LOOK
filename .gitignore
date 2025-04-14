@@ -1,6 +1,6 @@
 # Eclipse specific files
 /build/
-/.settings/
+.settings/
 .classpath
 /bin/
 .turn-project/

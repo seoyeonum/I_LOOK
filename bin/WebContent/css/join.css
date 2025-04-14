@@ -1,0 +1,165 @@
+/* 전체 레이아웃 설정 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1; /* 연한 회색 배경 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* 세로로 배치 */
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* I, Look 글자 스타일 */
+#title {
+    font-size: 60px; /* 글자 크기 약간 줄임 */
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px; /* 폼과의 간격 조정 */
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 필수 입력란에 주황색 점 추가 */
+.required::before {
+    content: "●"; /* 주황색 점을 내용으로 추가 */
+    color: orange; /* 점의 색상을 주황색으로 설정 */
+    margin-right: 5px; /* 점과 텍스트 사이의 간격을 5px로 설정 */
+    font-size: 16px; /* 점의 크기를 약간 줄임 */
+}
+
+/* 필수 입력란의 텍스트 스타일 */
+.required {
+    font-weight: bold;
+    text-align: left;
+    color: #333;
+}
+
+.form-container {
+    background-color: #e0e0e0; /* 연한 회색 */
+    padding: 12px; /* 패딩 크기를 줄여서 크기 감소 */
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px; /* 최대 너비를 400px로 줄임 */
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px; /* 제목과 다른 요소들 간의 간격을 줄임 */
+    font-size: 30px; /* 제목 크기 줄임 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+table {
+    width: 100%;
+    border-spacing: 2px;
+    background-color: #c0c0c0;
+    border: 2px solid black;
+    padding: 12px; /* 내부 패딩을 줄여서 크기 축소 */
+    box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+/* 상세주소 입력란과 가입하기 버튼 사이에 여백 추가 */
+tr:last-child {
+    margin-top: 20px; /* 여백 크기 줄임 */
+}
+
+/* '가입하기' 버튼의 아래쪽 여백 추가 */
+#submit-btn {
+    margin-top: 20px; /* 여백 크기 줄임 */
+}
+
+/* 입력란의 테두리를 검정색으로 설정 */
+.text, #address {
+    width: 100%;
+    padding: 6px; /* 입력란 패딩을 줄여서 크기 축소 */
+    margin: 3px 0;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 14px; /* 글자 크기 줄임 */
+}
+
+/* 버튼 스타일 */
+button, input[type="submit"] {
+    background-color: #888;
+    color: white;
+    padding: 10px 20px; /* 버튼 패딩을 줄여서 크기 감소 */
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px; /* 버튼 글자 크기 줄임 */
+}
+
+/* 버튼 hover 시 색상 변경 */
+button:hover, input[type="submit"]:hover {
+    background-color: #555;
+    border: 2px solid #444;
+}
+
+#error-message {
+    font-size: 12px;
+    color: red;
+}
+
+/* 입력란과 버튼을 가로로 배치 */
+.input-container, .address-container, .ssn-container, .phone-container {
+    display: flex; /* 가로로 배치 */
+    justify-content: space-between; /* 공간을 고르게 분배 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%; /* 부모 요소 너비에 맞게 설정 */
+}
+
+.input-container input, .ssn-container input, .phone-container input {
+    width: 80%; /* 입력란의 너비를 80%로 설정 */
+}
+
+.input-container button, .address-container button {
+    width: 18%; /* 버튼 너비를 18%로 설정 */
+    padding: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 5px; /* 버튼과 입력란 사이의 간격을 줄였습니다 */
+}
+
+button.duplicate-check {
+    font-size: 14px;
+}
+
+#address[readonly] {
+    background-color: #f1f1f1; /* readonly 상태일 때 배경색을 연한 회색으로 설정 */
+}
+
+/* 반응형 디자인 (화면 크기에 따라 레이아웃 조정) */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 6px; /* 패딩을 더 줄여서 작은 화면에서 적절한 여백 제공 */
+    }
+    table {
+        width: 100%;
+    }
+    .text, input[type="submit"], button {
+        width: 100%; /* 모든 요소의 너비를 100%로 설정 */
+    }
+    .input-container input, .ssn-container input, .phone-container input {
+        width: 100%; /* 작은 화면에서는 각 입력란의 너비를 100%로 설정 */
+        margin: 3px 0;
+    }
+    .input-container button, .address-container button {
+        width: 100%; /* 작은 화면에서는 버튼 너비를 100%로 설정 */
+        margin-left: 0; /* 작은 화면에서는 버튼과 입력란 간의 간격 제거 */
+    }
+}
