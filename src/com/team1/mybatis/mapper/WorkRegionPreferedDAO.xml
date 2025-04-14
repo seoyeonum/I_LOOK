@@ -55,7 +55,7 @@
  	
  	<!-- - 시터 선호 근무 지역 데이터 자료형 클래스 -->
  	
- 	<select id="listRegions" resultType="java.util.ArrayList"> <!-- public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
+ 	<select id="listRegions" resultType="com.team1.dto.WorkRegionPreferedDTO"> <!-- public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
  		SELECT WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID
 		FROM WORK_REGION_PREFERED
 		WHERE GEN_REG_ID = #{gen_reg_id}
