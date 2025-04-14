@@ -71,7 +71,7 @@
 	</update>
 	
 	<!-- 긴급 돌봄 포인트 차감 내역 추가 -->
-	<insert id="addEmgPayRec">
+	<insert id="addUsedPointUsed">
 		INSERT INTO EMG_POINT_USED (EMG_POINT_USED_ID, EMG_PAY_REC_ID, POINT_SUBJECT, POINT)
 		VALUES (#{emg_point_used_id}
 		        ,#{emg_pay_rec_id}
