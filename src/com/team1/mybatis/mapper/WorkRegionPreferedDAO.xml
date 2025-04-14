@@ -3,61 +3,14 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.test.mybatis.ISampeDAO">
-
-	<!-- ○○○DAO.xml 파일 저장 경로 확인을 위한 샘플 파일 -->
-	<!-- 
-	<select id="list" resultType="com.test.mybatis.GradeDTO">
-		SELECT SID, NAME, SUB1, SUB2, SUB3, TOT, AVG, CH
-		FROM GRADEVIEW
-		WHERE AVG != -1 
-		ORDER BY SID
-	</select>
-	
-	<select id="countComplete" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT
-		FROM GRADEVIEW
-		WHERE AVG != -1
-	</select>
-	
-	<select id="countAll" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT
-		FROM GRADEVIEW
-	</select>
-	
-	<select id="search" resultType="com.test.mybatis.GradeDTO">
-		SELECT SID, NAME, SUB1, SUB2, SUB3
-		FROM GRADEVIEW
-		WHERE SID=#{sid}
-	</select>
-	
-	<insert id="add">
-		PreparedStatement 작업 객체 활용 형태
-		INSERT INTO TBL_GRADE(SID, SUB1, SUB2, SUB3)
-		VALUES(#{sid}, #{sub1}, #{sub2}, #{sub3})
-	</insert>
-	
-
-	<update id="modify">
-		UPDATE TBL_GRADE
-		SET SUB1=#{sub1}, SUB2=#{sub2}, SUB3=#{sub3}
-		WHERE SID=#{sid}
-	</update>
-	
-	
-	<delete id="remove">
-		DELETE
-		FROM TBL_GRADE
-		WHERE SID=#{sid}
-	</delete>
- 	-->
- 	
+<mapper namespace="com.team1.mybatis.IWorkRegionPreferedDAO">
  	
  	<!-- - 시터 선호 근무 지역 데이터 자료형 클래스 -->
  	
- 	<select id="listRegions" resultType="java.util.ArrayList;"> <!-- public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
+ 	<select id="listRegions" resultType="com.team1.dto.WorkRegionPreferedDTO"> <!-- public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
  		SELECT WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID
 		FROM WORK_REGION_PREFERED
+		WHERE GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	
@@ -69,19 +22,14 @@
  	
  	<update id="modifyRegions"> <!-- public int modifyRegions(WorkRegionPreferedDTO regions); -->
 	 	UPDATE WORK_REGION_PREFERED
-		SET REGION_ID = ${region_id}
-		WHERE GEN_REG_ID = ${gen_reg_id}
+		SET REGION_ID = #{region_id}
+		WHERE GEN_REG_ID = #{gen_reg_id}
  	</update>
  	
  	
  	<delete id="removeRegions"> <!-- public int removeRegions(String gen_reg_id); -->
 	 	DELETE
 		FROM WORK_REGION_PREFERED
-		WHERE GEN_REG_ID = ${gen_reg_id} 
+		WHERE GEN_REG_ID = #{gen_reg_id} 
  	</delete>
- 	
- 	
- 	
- 	
- 	
 </mapper>

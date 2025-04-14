@@ -19,7 +19,7 @@
 	</update>
 	
 	<!-- 특정 예약 신청 코드로 조회 -->
-	<select id="findByRequestId" resultType="com.team1.mybatis.GenConfirmedDTO">
+	<select id="findByRequestId" resultType="com.team1.dto.GenConfirmedDTO">
 		SELECT GEN_CONFIRMED_ID, GEN_REQ_ID, CONFIRMED_DATE, PAR_READ_DATE
 		FROM GEN_CONFIRMED
 		WHERE GEN_REQ_ID = #{gen_confirmed_id}
@@ -51,14 +51,14 @@
 	</insert>
 	
 	<!-- 일반 돌봄 시터 기록(메모) 리스트 -->
-	<select id="sitMemolist" resultType="com.team1.mybatis.GenConfirmedDTO">
+	<select id="sitMemolist" resultType="com.team1.dto.GenConfirmedDTO">
 		SELECT GEN_MEMOS_SIT_ID, GEN_CONFIRMED_ID, REC_DATE, CONTENT
 		FROM GEN_MEMOS_SIT
 		ORDER BY REC_DATE DES
 	</select>
 	
 	<!-- 일반 돌봄 부모 기록(메모) 리스트 -->
-	<select id="parMemolist" resultType="com.team1.mybatis.GenConfirmedDTO">
+	<select id="parMemolist" resultType="com.team1.dto.GenConfirmedDTO">
 		SELECT GEN_MEMOS_PAR_ID, GEN_CONFIRMED_ID, REC_DATE, CONTENT
 		FROM GEN_MEMOS_PAR
 		ORDER BY REC_DATE DESC

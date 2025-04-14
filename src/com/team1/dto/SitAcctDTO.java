@@ -12,13 +12,13 @@ public class SitAcctDTO
 	// 주요 속성 구성
 	
 	// 시터 보유 계좌 코드, 시터 회원가입 코드, 은행 종류 코드
-	String acct_reg_id, sit_reg_id, bank_type_id;
+	private String acct_reg_id, sit_reg_id, bank_type_id;
 
 	// 계좌 번호, 예금주명, 계좌 정보 등록일시
-	String acct_number, depositor, reg_date;
+	private String acct_number, depositor, reg_date;
 	
 	// 은행 종류
-	String type;
+	private String type;
 
 	
 	// getter / setter 구성

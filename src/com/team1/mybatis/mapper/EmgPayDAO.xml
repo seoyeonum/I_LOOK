@@ -3,12 +3,12 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.team.mybatis.IEmgPayDAO">
+<mapper namespace="com.team1.mybatis.IEmgPayDAO">
 	
 	<!-- 1. 관리자 입장 -->
 	
 	<!-- 모든 긴급 돌봄 결제 리스트 조회 -->
-	<select id="listAllEmgPayRec" resultType="com.team1.mybatis.EmgPayDTO">
+	<select id="listAllEmgPayRec" resultType="com.team1.dto.EmgPayDTO">
 		SELECT EMG_REQ_ID, '긴급' AS TYPE, STATUS, PAR_NAME
 		     , AMOUNT, POINT, REQ_DATE
 		FROM EMG_REQ_DETAIL_VIEW
@@ -16,7 +16,7 @@
 	</select>
 	
 	<!-- (부모 이름으로) 긴급 돌봄 결제 내역 리스트 조회 -->
-	<select id="searchNameEmgPayRec" resultType="com.team1.mybatis.EmgPayDTO">
+	<select id="searchNameEmgPayRec" resultType="com.team1.dto.EmgPayDTO">
 		SELECT EMG_REQ_ID, '긴급' AS TYPE, STATUS, PAR_NAME
 		     , AMOUNT, POINT, REQ_DATE
 		FROM EMG_REQ_DETAIL_VIEW
@@ -25,7 +25,7 @@
 	</select>
 	
 	<!-- 모든 긴급 돌봄 포인트 차감 내역 리스트 조회 -->
-	<select id="listAllEmgPointUsed" resultType="com.team1.mybatis.EmgPayDTO">
+	<select id="listAllEmgPointUsed" resultType="com.team1.dto.EmgPayDTO">
 		SELECT EMG_REQ_ID, '사용' AS TYPE, PAR_NAME
 		     , POINT
 		     , TO_CHAR(PAYED_DATE, 'YYYY-MM-DD') AS USED_DATE
@@ -34,7 +34,7 @@
 	</select>
 	
 	<!-- (부모 이름으로) 긴급 돌봄 포인트 차감 내역 리스트 조회 -->
-	<select id="searchNameEmgPointUsed" resultType="com.team1.mybatis.EmgPayDTO">
+	<select id="searchNameEmgPointUsed" resultType="com.team1.dto.EmgPayDTO">
 		SELECT EMG_REQ_ID, '사용' AS TYPE, PAR_NAME
 		     , POINT
 		     , TO_CHAR(PAYED_DATE, 'YYYY-MM-DD') AS USED_DATE
@@ -71,7 +71,7 @@
 	</update>
 	
 	<!-- 긴급 돌봄 포인트 차감 내역 추가 -->
-	<insert id="addUsedPointUsed">
+	<insert id="addEmgPointUsed">
 		INSERT INTO EMG_POINT_USED (EMG_POINT_USED_ID, EMG_PAY_REC_ID, POINT_SUBJECT, POINT)
 		VALUES (#{emg_point_used_id}
 		        ,#{emg_pay_rec_id}

@@ -16,17 +16,71 @@ public class SitDTO
 	// 주요 속성
 	
 	// 시터 백업 코드, 등록일, 아이디, 시터 회원가입 코드, 비밀번호, 이름
-	String sit_backup_id, reg_date, id, sit_reg_id, pw, name;
+	private String sit_backup_id, reg_date, id, sit_reg_id, pw, name;
 	
 	// 주민등록번호 앞자리, 뒷자리, 도로명 주소, 상세주소, 우편번호, 전화번호, 이미지 경로
-	String ssn_first, ssn_second, road_addr, detailed_addr, zip_code
+	private String ssn_first, ssn_second, road_addr, detailed_addr, zip_code
 		 , tel, file_path;
 	
 	// 승인 일자
-	String chk_date;
+	private String sit_chk_id, chk_date;
+	
+	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 가진 등급
+	private int totalworktime, totalrating, month3rating;
+	private String grade;
 
 	
 	// getter / setter 구성
+	public int getTotalworktime()
+	{
+		return totalworktime;
+	}
+
+	public void setTotalworktime(int totalworktime)
+	{
+		this.totalworktime = totalworktime;
+	}
+
+	public int getTotalrating()
+	{
+		return totalrating;
+	}
+
+	public void setTotalrating(int totalrating)
+	{
+		this.totalrating = totalrating;
+	}
+
+	public int getMonth3rating()
+	{
+		return month3rating;
+	}
+
+	public void setMonth3rating(int month3rating)
+	{
+		this.month3rating = month3rating;
+	}
+
+	public String getGrade()
+	{
+		return grade;
+	}
+
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
+
+	public String getSit_chk_id()
+	{
+		return sit_chk_id;
+	}
+
+	public void setSit_chk_id(String sit_chk_id)
+	{
+		this.sit_chk_id = sit_chk_id;
+	}
+
 	public String getSit_backup_id()
 	{
 		return sit_backup_id;

@@ -21,7 +21,7 @@
 			<button type="button" class="menuBtn" onclick="location.href='adminMain.jsp'">홈</button>
 			<button type="button" class="menuBtn" onclick="location.href='adminSitRegList.jsp'">회원 관리</button>
 			<button type="button" class="menuBtn" onclick="location.href='adminGenRegList.jsp'">서비스 관리</button>				
-			<button type="button" class="menuBtn" onclick="location.href='adminInfo.jsp'">마이 페이지</button>
+			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/admininfo.action'">마이 페이지</button>
 			<button type="button" class="menuBtn">로그아웃</button>
 		</nav>
 	</header>

@@ -13,10 +13,10 @@ public class SitCertDTO
 	// 주요 속성 구성
 	
 	// 자격증 코드, 자격증 종류 코드, 시터 회원가입 카드, 첨부파일 저장 경로, 자격증 등록일
-	String cert_reg_id, cert_type_id, sit_reg_id, file_path, reg_date;
+	private String cert_reg_id, cert_type_id, sit_reg_id, file_path, reg_date;
 	
 	// 자격증 종류
-	String type;
+	private String type;
 
 	
 	// getter / setter 구성
