@@ -13,10 +13,10 @@ public class SitWithdrawedDTO
 	// 주요 속성 구성
 	
 	// 시터 탈퇴 코드, 탈퇴 사유 코드
-	String sit_withdrawed_id, reason_withdrawed_id;
+	private String sit_withdrawed_id, reason_withdrawed_id;
 	
 	// 시터 백업 코드, 탈퇴일, 탈퇴 사유
-	String sit_backup_id, withdrawed_date, type;
+	private String sit_backup_id, withdrawed_date, type;
 
 	
 	// getter / setter 구성

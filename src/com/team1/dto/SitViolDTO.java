@@ -14,10 +14,10 @@ public class SitViolDTO
 	// 주요 속성 구성
 	
 	// 시터 위반 내역 코드, 시터 백업 코드
-	String sit_viol_rec_id, sit_backup_id;
+	private String sit_viol_rec_id, sit_backup_id;
 	
 	// 위반 내역 종류 코드, 시터 위반 발생 일시, 위반 내역 종류
-	String viol_type_id, recorded_date, type;
+	private String viol_type_id, recorded_date, type;
 
 	
 	// getter / setter 구성 
