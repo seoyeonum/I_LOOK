@@ -27,6 +27,9 @@ public interface IEmgReqDAO
 	// (지원 가능한) 긴급 돌봄 요청 리스트 조회
 	public ArrayList<EmgReqDTO> listAllPossibleReq();
 	
+	// (긴급 돌봄 요청 코드로) 특정 긴급 돌봄 요청 조회
+	public EmgReqDTO searchPossibleReqDetail();	
+	
 	// (지원 가능한) 긴급 돌봄 요청 수
 	public int countAllPossibleReq();
 	
