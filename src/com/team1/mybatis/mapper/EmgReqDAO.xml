@@ -9,7 +9,7 @@
 	<!-- 1. 관리자 입장 -->
 	
 	<!-- (부모 이름으로) 긴급 돌봄 요청 데이터 찾기 -->
-	<select id="searchNameReq" resultType="com.team1.mybatis.EmgReqDTO">
+	<select id="searchNameReq" resultType="com.team1.dto.EmgReqDTO">
 		SELECT EMG_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
 		FROM EMG_REQ_NAME_SEARCH_VIEW
 		WHERE PAR_NAME = #{par_name}
@@ -19,7 +19,7 @@
 	<!-- 2. 시터 입장 -->
 	
 	<!-- (지원 가능한) 긴급 돌봄 요청 리스트 조회 -->
-	<select id="listAllPossibleReq" resultType="com.team1.mybatis.EmgReqDTO">
+	<select id="listAllPossibleReq" resultType="com.team1.dto.EmgReqDTO">
 		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
      		 , REGION, AGE, GENDER
 		FROM EMG_REQ_POSSIBLE_VIEW
@@ -33,7 +33,7 @@
 	</select>
 	
 	<!-- (지역 선택해) 긴급 돌봄 요청 데이터 찾기 -->
-	<select id="searchPossibleReq" resultType="com.team1.mybatis.EmgReqDTO">
+	<select id="searchPossibleReq" resultType="com.team1.dto.EmgReqDTO">
 		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
 		     , REGION, AGE, GENDER
 		FROM EMG_REQ_POSSIBLE_VIEW
@@ -68,4 +68,19 @@
 		FROM EMG_REQ
 		WHERE EMG_REQ_ID = #{emg_req_id}
 	</delete>
+	
+	<!-- (부모 백업 아이디로) 긴급 돌봄 요청 데이터 찾기 -->
+	<select id="searchBackupIdReq" resultType="com.team1.dto.EmgReqDTO">
+		SELECT EMG_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
+		FROM EMG_REQ_NAME_SEARCH_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+		ORDER BY EMG_REQ_ID DESC
+	</select>
+		
+	<!-- (부모 백업 아이디로) 긴급 돌봄 요청 찾은 건수 -->
+	<select id="countBackupIdReq" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM EMG_REQ_NAME_SEARCH_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
 </mapper>

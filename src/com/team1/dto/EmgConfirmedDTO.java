@@ -10,16 +10,17 @@ package com.team1.dto;
 public class EmgConfirmedDTO
 {
 	// 주요 속성 구성
-	String emg_confirmed_id, emg_req_id, sit_backup_id;		// 긴급 돌봄 예약 확정 코드, 긴급 돌봄 요청 코드, 
-	String confirmed_date, par_read_date;					// 시터 백업 코드, 예약 확정일, 부모가 읽은 날짜
+	String emg_confirmed_id, emg_req_id, sit_backup_id;				// 긴급 돌봄 예약 확정 코드, 긴급 돌봄 요청 코드, 
+	String confirmed_date, par_read_date;							// 시터 백업 코드, 예약 확정일, 부모가 읽은 날짜
 	
-	String emg_memo_sit_id, emg_memos_par_id;				// 긴급 시터 기록 코드, 긴급 돌봄 부모 기록 코드
-	String rec_date, content;								// 기록 날짜, 기록 내용
+	String emg_memo_sit_id, emg_memos_par_id;						// 긴급 돌봄 시터 기록 코드, 긴급 돌봄 부모 기록 코드
+	String sit_rec_datge, par_rec_date, par_content, sit_contnet;	// 시터 기록 날짜, 부모 기록 날짜, 시터 기록 내용, 부모 기록 내용
+
 	
 	String emg_wage_id;										// 긴급 돌봄 임금 지급 내역 코드
 	String wage, paid_date;									// 임금 지급액(송금액), 임금 지급일
 	String acct_number, bank_name;							// 시터 계좌 번호, 시터 계좌 은행명
-	String par_name;										// 부모 이름
+	String par_name, sit_name;								// 부모 이름, 시터 이름
 	
 	
 	
@@ -80,22 +81,7 @@ public class EmgConfirmedDTO
 	{
 		this.emg_memos_par_id = emg_memos_par_id;
 	}
-	public String getRec_date()
-	{
-		return rec_date;
-	}
-	public void setRec_date(String rec_date)
-	{
-		this.rec_date = rec_date;
-	}
-	public String getContent()
-	{
-		return content;
-	}
-	public void setContent(String content)
-	{
-		this.content = content;
-	}
+	
 	public String getEmg_wage_id()
 	{
 		return emg_wage_id;
@@ -144,7 +130,46 @@ public class EmgConfirmedDTO
 	{
 		this.par_name = par_name;
 	}
-	
+	public String getPar_content()
+	{
+		return par_content;
+	}
+	public void setPar_content(String par_content)
+	{
+		this.par_content = par_content;
+	}
+	public String getSit_contnet()
+	{
+		return sit_contnet;
+	}
+	public void setSit_contnet(String sit_contnet)
+	{
+		this.sit_contnet = sit_contnet;
+	}
+	public String getSit_name()
+	{
+		return sit_name;
+	}
+	public void setSit_name(String sit_name)
+	{
+		this.sit_name = sit_name;
+	}
+	public String getSit_rec_datge()
+	{
+		return sit_rec_datge;
+	}
+	public void setSit_rec_datge(String sit_rec_datge)
+	{
+		this.sit_rec_datge = sit_rec_datge;
+	}
+	public String getPar_rec_date()
+	{
+		return par_rec_date;
+	}
+	public void setPar_rec_date(String par_rec_date)
+	{
+		this.par_rec_date = par_rec_date;
+	}
 	
 	
 }

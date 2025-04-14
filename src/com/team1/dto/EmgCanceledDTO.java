@@ -10,19 +10,21 @@ package com.team1.dto;
 public class EmgCanceledDTO
 {
 	// 주요 속성 구성
-	String emg_canceled_id;				// 긴급 돌봄 요청 취소 코드
-	String emg_pay_rec_id;				// 긴급 돌봄 결제 코드
-	String canceled_date;				// 긴급 돌봄 요청 취소 일자
-	String par_read_date;				// 부모가 읽은 날짜
+	private String emg_canceled_id;				// 긴급 돌봄 요청 취소 코드
+	private String emg_pay_rec_id;				// 긴급 돌봄 결제 코드
+	private String canceled_date;				// 긴급 돌봄 요청 취소 일자
+	private String par_read_date;				// 부모가 읽은 날짜
+	private String emg_req_id;					// 긴급돌봄 요청 코드
 
-	String reason_canceled_id, type;	// 취소 사유 코드, 취소 타입
+
+	private String reason_canceled_id, type;	// 취소 사유 코드, 취소 타입
 	
-	String emg_refunded_id;				// 긴급 요청 환불 코드
-	String refunded_date;				// 환불 일시
-	int amount, point;					// 환불 금액, 환불 포인트
-	String pg_code;						// 전자 결제 코드
-	String par_backup_id;				// 부모 백업 코드
-	String name;						// 부모 이름
+	private String emg_refunded_id;				// 긴급 요청 환불 코드
+	private String refunded_date;				// 환불 일시
+	private int amount, point;					// 환불 금액, 환불 포인트
+	private String pg_code;						// 전자 결제 코드
+	private String par_backup_id;				// 부모 백업 코드
+	private String name;						// 부모 이름
 	
 	
 	// getter / setter 구성

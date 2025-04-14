@@ -34,9 +34,8 @@
 					<div class="content-filter">
 						<!-- 돌봄 유형 필터 -->
 						<div class="filter-group care-type-filter">
-							<label><input type="checkbox" name="careType"
-								value="general" checked>일반돌봄</label> <label><input
-								type="checkbox" name="careType" value="emergency" checked>긴급돌봄</label>
+							<label><input type="radio" name="careType" value="general" checked>일반돌봄</label> 
+							<label><input type="radio" name="careType" value="emergency" checked>긴급돌봄</label>
 						</div>
 
 						<!-- 예약 상태 필터 -->
@@ -53,13 +52,20 @@
 						<!-- 날짜 필터 -->
 						<div class="filter-group date-filter">
 							<select name="dateRange" class="selectField">
-								<option value="all">날짜: 전체</option>
+								<option value="week">기본 1주일</option>
 								<option value="today">1일</option>
-								<option value="week">1주일</option>
 								<option value="month">1개월</option>
+								<option value="3month">3개월</option>
+								<option value="custom">사용자 지정</option>
 							</select>
 						</div>
-
+						
+						<!-- 날짜 사용자 지정 -->
+						<div id="customDate" style="display: none; margin-top: 10px;">
+							<label>시작일: <input type="date" name="startDate" id="startDate"></label>
+							<label>종료일: <input type="date" name="endDate" id="endDate"></label>
+						</div>
+						
 						<!-- 검색 폼 -->
 						<div class="search-form">
 							<form action="" name="searchForm" method="post">

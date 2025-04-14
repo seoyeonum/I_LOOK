@@ -10,6 +10,31 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>adminParDetail.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/parDetail.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function()
+{
+	
+	$("#doc1").click(function()
+	{
+	    var imagePath = "<%=cp%>/upload/${adminInfo.profile_img}";  // 저장된 파일 경로
+	    var imageWindow = window.open(imagePath, "_blank");
+		
+	});
+	
+	var ssnFirst = "${parDto.ssn_first}";
+    var ssnSecond = "${parDto.ssn_second}";
+   	
+    // 뒷자리 1자리만 보여주고 나머지 마스킹
+    var maskedSecond = ssnSecond.substring(0, 1) + "*".repeat(ssnSecond.length - 1);
+
+    document.getElementById("ssn").value = ssnFirst + "-" + maskedSecond;
+	
+	
+});
+
+</script>
 </head>
 <body>
 	<div class="wrap">
@@ -40,6 +65,13 @@ String cp = request.getContextPath();
 							<div class="info-header">이름</div>
 							<div class="info-cell">
 								<input type="text" class="info-input" value="이도치" readonly>
+							</div>
+						</div>
+						
+						<div class="info-row">
+							<div class="info-header">주민등록번호</div>
+							<div class="info-cell">
+								<input type="text" class="info-input" id="ssn" value="" readonly>
 							</div>
 						</div>
 

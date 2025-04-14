@@ -29,9 +29,27 @@ String cp = request.getContextPath();
 				<div class="content-body">
 					<div class="info-section">
 						<div class="info-row">
-							<div class="info-header">예약 코드</div>
+							<div class="info-header">일반돌봄 예약 코드</div>
 							<div class="info-cell">
 								<input type="text" class="info-input" value="GREQ00002" readonly>
+							</div>
+						</div>
+						<div class="info-row">
+							<div class="info-header">일반돌봄 결제 코드</div>
+							<div class="info-cell">
+								<input type="text" class="info-input" value="GREQ00002" readonly>
+							</div>
+						</div>
+						<div class="info-row">
+							<div class="info-header">긴급돌봄 요청 코드</div>
+							<div class="info-cell">
+								<input type="text" class="info-input" value="EREQ00002" readonly>
+							</div>
+						</div>
+						<div class="info-row">
+							<div class="info-header">긴급돌봄 결제 코드</div>
+							<div class="info-cell">
+								<input type="text" class="info-input" value="EREQ00002" readonly>
 							</div>
 						</div>
 						<div class="info-row">

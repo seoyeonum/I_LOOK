@@ -6,4 +6,5 @@
 .settings/
 >>>>>>> feature/ayj
 .classpath
-
+/bin/
+.turn-project/

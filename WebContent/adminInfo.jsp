@@ -10,6 +10,7 @@ String cp = request.getContextPath();
 <meta charset="UTF-8">
 <title>adminInfo.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/adminInfo.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 </head>
 <body>
 
