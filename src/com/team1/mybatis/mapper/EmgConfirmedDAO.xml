@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.team1.mybatis.IGradesDAO">
+<mapper namespace="com.team1.mybatis.IEmgConfirmedDAO">
 
 	<!-- 긴급돌봄 확정 리스트 조회 --> 
 	<select id="listEmgConfirmed" resultType="com.team1.dto.EmgConfirmedDTO">
@@ -200,7 +200,7 @@
 	</select>
 	
 	<!-- 긴급돌봄 임급 지급 내역 리스트 검색 -->
-	<select id="updateReadDate" resultType="com.team1.dto.EmgConfirmedDTO">
+	<select id="searchEmgWage" resultType="com.team1.dto.EmgConfirmedDTO">
 		SELECT EW.EMG_WAGE_ID as emg_wage_id, CF.EMG_CONFIRMED_ID AS emg_confirmed_id, CF.CONFIRMED_DATE AS confirmed_date
 		     , SB.SIT_BACKUP_ID AS sit_backup_id, SR.NAME as sit_name, EW.WAGE as wage, EW.BANK_NAME as bank_name
 		     , EW.ACCT_NUMBER as acct_number, PAID_DATE as paid_date
