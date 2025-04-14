@@ -33,9 +33,14 @@ public class adminMainController
 	{
 		String result = null;
 		
+		IAdminDAO admin = sqlSession.getMapper(IAdminDAO.class);
+		
+		model.addAttribute("admin", admin.list());
 		result = "WEB-INF/view/adminInfo.jsp";
 		
 		return result;
 	}
+	
+	
 	
 }

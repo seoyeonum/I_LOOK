@@ -21,7 +21,7 @@
 		<div class="sidebar-section">
 			<span class="sidebar-header">관리자 정보</span>
 			<div class="sidebar-menu">  
-				<a href="adminInfoUpdateForm.jsp">관리자 정보 수정</a>      
+				<a href="<%=cp %>/admininfo.action">관리자 정보 조회</a>
 			</div>
 		</div>
 	</div>

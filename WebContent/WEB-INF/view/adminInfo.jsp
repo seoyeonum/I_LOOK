@@ -11,6 +11,19 @@ String cp = request.getContextPath();
 <title>adminInfo.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/adminInfo.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		$(".update-btn").click(function()
+		{
+			$(location).attr("href", "admininfoupdateform.action?admin_reg_id=" + $(this).val());
+		});
+		
+	});
+
+</script>
+
 </head>
 <body>
 
@@ -18,7 +31,8 @@ String cp = request.getContextPath();
 	<header>
 		<c:import url="/WEB-INF/view/adminHeader.jsp"></c:import>
 	</header>
-
+	
+	
 	<div class="container">
 		<!--사이드바 영역 -->
 		<c:import url="/WEB-INF/view/myPageSidebar.jsp"></c:import>
@@ -28,41 +42,47 @@ String cp = request.getContextPath();
 			<div class="content-header">
 				<h1 class="content-title">관리자 정보</h1>
 			</div>
-
+			
+			<c:forEach var="admin" items="${admin }">
 			<div class="content-body">
 				<div class="info-section">
 					<div class="info-row">
 						<div class="info-header">아이디</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="admin" readonly>
+							<input type="text" class="info-input" value="${admin.id }" readonly>
 						</div>
 					</div>
 
 					<div class="info-row">
 						<div class="info-header">비밀번호</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="1234567" readonly>
+							<input type="text" class="info-input" value="${admin.pw }" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">은행명</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="국민은행" readonly>
+							<input type="text" class="info-input" value="${admin.bank_name }" readonly>
 						</div>
 					</div>
 					<div class="info-row">
 						<div class="info-header">계좌번호</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="312-1114-4444-41" readonly>
+							<input type="text" class="info-input" value="${admin.admin_acct_code }" readonly>
+						</div>
 					</div>
+					
+					<div class="bottom-btn">
+						<button type="button" class="btn update-btn" value="${admin.admin_reg_id }" >수정</button>
 					</div>
-
 					
 				</div>
 			</div>
+			</c:forEach>
 		</main>
 	</div>
+	
 </div>
 
 </body>
