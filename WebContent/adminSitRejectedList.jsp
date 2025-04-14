@@ -30,7 +30,6 @@ String cp = request.getContextPath();
 						<form action="" name="searchForm" method="post">
 							<select name="searchKey" class="selectFiled">
 								<option value="sitterName">이름</option>
-								<option value="requestCode">요청 코드</option>
 							</select> <input type="text" name="searchValue" class="txt" value="">
 							<input type="button" value="검색" class="btn search-btn"
 								onclick="sendIt()">

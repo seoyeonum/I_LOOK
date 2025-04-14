@@ -34,9 +34,8 @@
 					<div class="content-filter">
 						<!-- 돌봄 유형 필터 -->
 						<div class="filter-group care-type-filter">
-							<label><input type="checkbox" name="careType"
-								value="general" checked>일반돌봄</label> <label><input
-								type="checkbox" name="careType" value="emergency" checked>긴급돌봄</label>
+							<label><input type="radio" name="careType" value="general" checked>일반돌봄</label> 
+							<label><input type="radio" name="careType" value="emergency" checked>긴급돌봄</label>
 						</div>
 
 						<!-- 날짜 필터 -->

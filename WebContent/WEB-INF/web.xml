@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name>mvc00</display-name>
+	<display-name>mvc01</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
@@ -13,11 +13,11 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<!-- #18. web.xml -->
+	<!-- web.xml -->
 	
 	<!-- ※ Spring MVC Framework 등록 -->
-	<!-- → Front Controller 등록 -->
-	<!-- → dispatcher-servlet 객체 등록 -->
+	<!--    → Front Controller 등록 -->
+	<!--    → DispatcherServlet 객체 등록 -->
 	
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -27,9 +27,13 @@
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>*.action</url-pattern>
+		<!-- 『*.action』 : 무슨 액션인지 몰라도 ~~.action 의 구조라면 servlet-name == dispatcher 로 인계한다. -->
 	</servlet-mapping>
 	
-	<!-- check~!! -->
+	
+	<!-- web.xml에 필터를 등록해보자. -->
+	
+	<!-- check~!!! -->
 	<!-- 필터 등록 → 인코딩 필터 등록 -->
 	<!-- → CharacterEncodingFilter -->
 	<filter>
@@ -48,6 +52,6 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>
 	
 </web-app>
