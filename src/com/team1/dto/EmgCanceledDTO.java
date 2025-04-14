@@ -14,6 +14,8 @@ public class EmgCanceledDTO
 	private String emg_pay_rec_id;				// 긴급 돌봄 결제 코드
 	private String canceled_date;				// 긴급 돌봄 요청 취소 일자
 	private String par_read_date;				// 부모가 읽은 날짜
+	private String emg_req_id;					// 긴급돌봄 요청 코드
+
 
 	private String reason_canceled_id, type;	// 취소 사유 코드, 취소 타입
 	

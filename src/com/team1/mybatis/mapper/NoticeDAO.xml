@@ -13,7 +13,7 @@
 
 	
 	<!-- 공지사항 조회 -->
-	<select id="listNotice" resultType="com.team1.mybatis.NoticeDTO">
+	<select id="listNotice" resultType="com.team1.dto.NoticeDTO">
 		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
 		FROM NOTICES N
 		JOIN NOTICE_TYPE T
@@ -22,12 +22,12 @@
 	</select>
 	
 	<!-- 공지사항 데이터 추가 -->	
-	<insert id="addNotice" parameterType="com.team1.mybatis.NoticeDTO">
+	<insert id="addNotice" parameterType="com.team1.dto.NoticeDTO">
 		INSERT INTO NOTICES VALUES(#{notice_id}, #{notice_type_id}, #{subject}, #{content}, 0, SYSDATE);
 	</insert>
 	
 	<!-- 공지사항 수정 -->	
-	<update id="update" parameterType="com.team1.mybatis.NoticeDTO">
+	<update id="update" parameterType="com.team1.dto.NoticeDTO">
 		UPDATE NOTICES
 		SET NOTICE_TYPE_ID=#{notice_type_id}, SUBJECT=#{subject}, CONTENT=#{content}
 		WHERE NOTICE_ID=#{notice_id};
@@ -41,7 +41,7 @@
 	</delete>
 	
 	<!-- 공지사항 검색 -->	
-	<select id="searchList" parameterType="com.team1.mybatis.NoticeDTO" resultType="com.team1.mybatis.NoticeDTO">
+	<select id="searchList" parameterType="com.team1.dto.NoticeDTO" resultType="com.team1.dto.NoticeDTO">
 	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
 	    FROM NOTICES N
 	    JOIN NOTICE_TYPE T 
