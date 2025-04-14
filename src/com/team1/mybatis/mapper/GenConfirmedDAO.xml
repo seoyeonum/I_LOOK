@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.team.mybatis.IGenConfirmedDAO">
+<mapper namespace="com.team1.mybatis.IGenConfirmedDAO">
 
 	<!-- 예약 확정 등록 -->
 	<insert id="add">
