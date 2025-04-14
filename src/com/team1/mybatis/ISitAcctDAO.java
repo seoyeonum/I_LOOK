@@ -5,10 +5,15 @@
 
 package com.team1.mybatis;
 
+import java.util.ArrayList;
+
 import com.team1.dto.SitAcctDTO;
 
 public interface ISitAcctDAO
 {
+	// 시터 계좌 열람
+	public ArrayList<SitAcctDTO> list(String sit_regid);
+	
 	// 시터 계좌 추가
 	public int addAcct(SitAcctDTO acct);
 	
