@@ -12,4 +12,7 @@ public interface IAdminDAO
 	// 관리자 정보 수정
 	public int update(AdminDTO admin);
 	
+	// 관리자 찾기
+	public AdminDTO search(String admin_reg_id);
+	
 }
