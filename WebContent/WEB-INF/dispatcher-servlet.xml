@@ -15,7 +15,7 @@
 	<!--    - 『class=""』 속성은 Controller 객체의 클래스 경로 및 이름을 등록한다. -->
 	
 	<!-- ① 기존 annotation 을 활용하며 사용했던 코드 -->
-	<context:component-scan	base-package="com.team1.mybatis" />
+	<context:component-scan	base-package="com.team1.controller" />
 	
 	<!-- ③ mybatis 등록 과정에서 생겨나는 추가 코드 『2』 -->
 	<!--    ※ mybatis 를 사용하기 위한 환경 설정을 추가하는 과정에서 -->

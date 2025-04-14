@@ -3,19 +3,19 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.team.mybatis.IEmgPointDAO">
+<mapper namespace="com.team1.mybatis.IEmgPointDAO">
 	
 	<!-- 1. 관리자 입장 -->
 	
 	<!-- 모든 긴급 돌봄 포인트 적립 내역 리스트 조회 -->
-	<select id="listAllEmgPointSaved" resultType="com.team1.mybatis.EmgPointDTO">
+	<select id="listAllEmgPointSaved" resultType="com.team1.dto.EmgPointDTO">
 		SELECT EMG_REQ_ID, PAR_NAME, POINT, SAVED_DATE
 		FROM EMG_POINT_SAVED_VIEW
 		ORDER BY Q.SAVED_DATE
 	</select>
 	
 	<!-- (부모 이름으로) 긴급 돌봄 포인트 적립 내역 리스트 조회 -->
-	<select id="searchNameEmgPointSaved" resultType="com.team1.mybatis.EmgPointDTO">
+	<select id="searchNameEmgPointSaved" resultType="com.team1.dto.EmgPointDTO">
 		SELECT EMG_REQ_ID, PAR_NAME, POINT, SAVED_DATE
 		FROM EMG_POINT_SAVED_VIEW
 		WHERE PR.PAR_NAME = #{par_name}
@@ -46,7 +46,7 @@
 	
 	
 	<!-- 긴급 돌봄 포인트 적립 내역 확인 -->
-	<select id="searchEmgPoint" resultType="com.team1.mybatis.EmgPointDTO">
+	<select id="searchEmgPoint" resultType="com.team1.dto.EmgPointDTO">
 		SELECT POINT
 		FROM EMG_POINT_SAVED_VIEW
 		WHERE EMG_CONFIRMED_ID = #{emg_confirmed_id} 

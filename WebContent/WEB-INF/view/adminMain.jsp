@@ -53,7 +53,7 @@ String cp = request.getContextPath();
 <body>
 	<div class="wrap">
 		<header>
-			<c:import url="adminHeader.jsp"></c:import>
+			<c:import url="/WEB-INF/view/adminHeader.jsp"></c:import>
 		</header>
 
 		<div class="container">

@@ -16,12 +16,12 @@ String cp = request.getContextPath();
 
 <div class="wrap">
 	<header>
-		<c:import url="adminHeader.jsp"></c:import>
+		<c:import url="/WEB-INF/view/adminHeader.jsp"></c:import>
 	</header>
 
 	<div class="container">
 		<!--사이드바 영역 -->
-		<c:import url="myPageSidebar.jsp"></c:import>
+		<c:import url="/WEB-INF/view/myPageSidebar.jsp"></c:import>
 
 		<!-- 메인 콘텐츠 영역 -->
 		<main class="main-content">
