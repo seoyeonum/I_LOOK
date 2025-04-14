@@ -2,5 +2,6 @@
 /build/
 /.settings/
 .classpath
-.turn-project/
 /bin/
+.turn-project/
+
