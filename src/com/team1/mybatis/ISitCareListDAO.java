@@ -1,0 +1,36 @@
+/*==============================
+	ISitCareListDAO.java
+	- 안예지가 만든 시터 마이페이지에서
+	  근무 등록 내역 확인, 같은 페이지의 상세 정보 AJAX 처리,
+	  돌봄 제공 내역 확인, 같은 페이지의 상세 정보 새창 처리,
+	  돌봄 완료 내역 확인(일반 혹은 긴급)
+	  에 필요한 모든 메소드를 담아놓는 IDAO.
+==========================*/
+
+package com.team1.mybatis;
+
+import java.util.ArrayList;
+
+import com.team1.dto.SitCareListDTO;
+
+public interface ISitCareListDAO
+{
+	// 근무 등록 내역 확인
+	public ArrayList<SitCareListDTO> regList();
+	
+	// 근무 등록 내역 확인의 상세 정보 AJAX 처리
+	public ArrayList<SitCareListDTO> regDetailedList();
+	
+	// 돌봄 제공 내역 확인
+	
+	
+	// 돌봄 제공 내역 확인의 상세 정보 새창 처리
+	
+	// 돌봄 완료 내역 확인(일반)
+	
+	// 돌봄 완료 내역 확인(긴급)
+	
+	
+	
+	
+}

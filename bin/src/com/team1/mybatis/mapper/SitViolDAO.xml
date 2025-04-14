@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.ISampeDAO">
+
+	<!-- ○○○DAO.xml 파일 저장 경로 확인을 위한 샘플 파일 -->
+	<!-- 
+	<select id="list" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3, TOT, AVG, CH
+		FROM GRADEVIEW
+		WHERE AVG != -1 
+		ORDER BY SID
+	</select>
+	
+	<select id="countComplete" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+		WHERE AVG != -1
+	</select>
+	
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GRADEVIEW
+	</select>
+	
+	<select id="search" resultType="com.test.mybatis.GradeDTO">
+		SELECT SID, NAME, SUB1, SUB2, SUB3
+		FROM GRADEVIEW
+		WHERE SID=#{sid}
+	</select>
+	
+	<insert id="add">
+		PreparedStatement 작업 객체 활용 형태
+		INSERT INTO TBL_GRADE(SID, SUB1, SUB2, SUB3)
+		VALUES(#{sid}, #{sub1}, #{sub2}, #{sub3})
+	</insert>
+	
+
+	<update id="modify">
+		UPDATE TBL_GRADE
+		SET SUB1=#{sub1}, SUB2=#{sub2}, SUB3=#{sub3}
+		WHERE SID=#{sid}
+	</update>
+	
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_GRADE
+		WHERE SID=#{sid}
+	</delete>
+ 	-->
+ 	
+ 	<insert id="add"> <!-- // 시터 위반 내역 추가 public int add(SitViolDTO s); -->
+ 		INSERT INTO SIT_VIOL_REC(SIT_VIOL_REC_ID, SIT_BACKUP_ID, VIOL_TYPE_ID, )
+		VALUES()
+ 	</insert>
+ 	
+ 	<select id="list" resultType="java.util.ArrayList"> <!-- // 시터 위반 내역 리스트 확인 public ArrayList<SitViolDTO> list(); -->
+	 	SELECT SREG.NAME, SVIO.SIT_BACKUP_ID
+	    , SVIO.SIT_VIOL_REC_ID, VTYPE.TYPE, SVIO.REC_DATE
+		FROM SIT_VIOL_REC SVIO, SIT_BACKUP SBAC, SIT_REG SREG, VIOL_TYPES VTYPE
+		WHERE SVIO.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND SBAC.SIT_BACKUP_ID = SREG.SIT_BACKUP_ID
+		AND SVIO.VIOL_TYPE_ID = VTYPE.VIOL_TYPE_ID
+		ORDER BY SVIO.REC_DATE DESC
+ 	</select>
+ 	
+ 	<select id="searchName" resultType="com.team1.mybatis.SitViolDTO">
+ 	<!-- // 시터 위반 내역 확인
+	// → 이름을 활용하여 시터 위반 내역 조회
+	public SitViolDTO searchName(String name); -->
+ 		SELECT SREG.NAME, SVIO.SIT_BACKUP_ID
+	    , SVIO.SIT_VIOL_REC_ID, VTYPE.TYPE, SVIO.REC_DATE
+		FROM SIT_VIOL_REC SVIO, SIT_BACKUP SBAC, SIT_REG SREG, VIOL_TYPES VTYPE
+		WHERE SVIO.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND SBAC.SIT_BACKUP_ID = SREG.SIT_BACKUP_ID
+		AND SVIO.VIOL_TYPE_ID = VTYPE.VIOL_TYPE_ID
+		AND SREG.NAME LIKE #{name}
+		ORDER BY SVIO.REC_DATE DESC
+ 	</select>
+ 	
+ 	<select id="searchSitcode" resultType="com.team1.mybatis.SitViolDTO">
+ 	<!-- // 시터 위반 내역 확인
+	// → 시터 코드를 활용하여 시터 위반 내역 조회
+	public SitViolDTO searchSitcode(String sit_backup_id); -->
+	 	SELECT SREG.NAME, SVIO.SIT_BACKUP_ID
+	    , SVIO.SIT_VIOL_REC_ID, VTYPE.TYPE, SVIO.REC_DATE
+		FROM SIT_VIOL_REC SVIO, SIT_BACKUP SBAC, SIT_REG SREG, VIOL_TYPES VTYPE
+		WHERE SVIO.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
+		AND SBAC.SIT_BACKUP_ID = SREG.SIT_BACKUP_ID
+		AND SVIO.VIOL_TYPE_ID = VTYPE.VIOL_TYPE_ID
+		AND SVIO.SIT_BACKUP_ID = #{sit_backup_id}
+		ORDER BY SVIO.REC_DATE DESC
+ 	</select>
+ 	
+ 	<select id="count" resultType="java.lang.Integer"> <!-- // 시터 위반 내역 수 확인 public int count(); -->
+	 	SELECT COUNT(*) AS COUNT
+		FROM SIT_VIOL_REC
+ 	</select>
+ 	
+ 	
+</mapper>

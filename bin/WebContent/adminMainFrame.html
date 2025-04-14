@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>adminMainFrame.html</title>
+<link rel="stylesheet" type="text/css" href="css/mainFrame.css">
+</head>
+<body>
+<div id="wrapper">
+    <!-- 헤더 부분은 공용으로 모든 뷰페이지에 사용(메인 부분만 변경) -->
+    <!-- 각 뷰페이지 헤더 부분 같도록 하여 통일감 주기 위함 -->
+    <!-- 단, 관리자와 부모/시터 회원간의 헤더 항목 다르게 표시해야 함 -->
+    <header>
+        <div id="logo">
+            <img src="images/logo.png" height="120px">
+        </div>
+        <nav>
+            <button type="button" class="menuBtn presentPage">홈</button>
+            <button type="button" class="menuBtn">로그아웃</button>
+            
+            <!-- 일반 회원 -->
+            <!-- <button type="button" class="menuBtn">스케줄러</button> -->
+            <!-- <button type="button" class="menuBtn">긴급돌봄서비스</button> -->
+            
+            <!-- 관리자 회원 -->
+            <button type="button" class="menuBtn">회원 관리</button>
+            <button type="button" class="menuBtn">서비스 관리</button>
+            
+            <button type="button" class="menuBtn">마이페이지</button>
+            <button type="button" class="menuBtn">알림함</button>
+        </nav>
+  	</header>
+  	<!-- 
+    <main>
+    
+        <section id="fillter">
+            <section id="select_box">
+                부모회원으로 로그인 시 1차 필터(날짜, 시간)
+                <br>
+                시터회원으로 로그인 시 긴급돌봄요청 목록 
+            </section>
+        </section>
+        <section id="notice">
+            <section id="notice_text">
+                운영자의 공지사항
+            </section>
+        </section>
+   
+    </main>
+     -->
+</div>
+</body>
+</html>

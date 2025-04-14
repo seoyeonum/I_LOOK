@@ -13,10 +13,10 @@ public class SitRejectDTO
 	// 주요 속성 구성
 	
 	// 시터 승인 거절 코드, 시터 백업 코드, 거절 사유 코드, 거절 일자
-	String sit_rejected_id, sit_backup_id, sit_rejected_reason_id, rejected_date;
+	private String sit_rejected_id, sit_backup_id, sit_rejected_reason_id, rejected_date;
 	
 	// 거절 사유
-	String reason;
+	private String reason;
 
 	
 	// getter / setter 구성
