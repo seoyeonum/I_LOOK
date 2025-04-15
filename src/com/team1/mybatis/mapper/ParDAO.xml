@@ -44,4 +44,28 @@
 			ZIP_CODE = #{zip_code}
 		WHERE PAR_REG_ID = '#{par_reg_id};
 	</update>
+	
+	
+	<!-- (부모 백업 코드로) 현재 보유 포인트 조회 -->
+	<select id = "searchPoint" resultType="java.lang.Integer">
+		SELECT SUM( CASE 
+		            WHEN TYPE IN ('일반적립', '일반환불', '긴급적립', '긴급환불') THEN POINT
+		            WHEN TYPE IN ('일반차감', '긴급차감') THEN -POINT
+		            ELSE 0
+		            END ) AS TOTAL_POINT
+		FROM TOTAL_POINT_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+
+	<!-- (부모 백업 코드로) 특정 시점 보유 포인트 -->
+	<select id = "searchPointAt" resultType="java.lang.Integer">
+		SELECT SUM( CASE 
+		            WHEN TYPE IN ('일반적립', '일반환불', '긴급적립', '긴급환불') THEN POINT
+		            WHEN TYPE IN ('일반차감', '긴급차감') THEN -POINT
+		            ELSE 0
+		            END ) AS TOTAL_POINT
+		FROM TOTAL_POINT_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+		  AND CHANGED_DATE &lt; #{date};
+	</select>
 </mapper>
