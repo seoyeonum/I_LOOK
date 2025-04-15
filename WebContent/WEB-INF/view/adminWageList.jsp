@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>adminReqList.jsp</title>
+<title>adminWageList.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/adminReqList.css">
 </head>
 <body>
@@ -20,13 +20,13 @@
 
 		<div class="container">
 			<!--사이드바 영역 -->
-			<c:import url="serviceSidebar.jsp"></c:import>
+			<c:import url="sidebarService.jsp"></c:import>
 
 			<!-- 메인 콘텐츠 영역 -->
 			<main class="main-content">
 				<!-- 타이틀 영역 -->
 				<div class="content-header">
-					<h1 class="content-title">예약 신청 내역</h1>
+					<h1 class="content-title">임금 내역</h1>
 				</div>
 
 				<!-- 필터 영역 -->
@@ -38,34 +38,16 @@
 							<label><input type="radio" name="careType" value="emergency" checked>긴급돌봄</label>
 						</div>
 
-						<!-- 예약 상태 필터 -->
-						<div class="filter-group status-filter">
-							<select name="reservationStatus" class="selectField">
-								<option value="all">예약 상태: 전체</option>
-								<option value="request">예약 신청</option>
-								<option value="confirmed">예약 확정</option>
-								<option value="completed">예약 완료</option>
-								<option value="canceled">예약 취소</option>
-							</select>
-						</div>
-
 						<!-- 날짜 필터 -->
 						<div class="filter-group date-filter">
 							<select name="dateRange" class="selectField">
-								<option value="week">기본 1주일</option>
+								<option value="all">날짜: 전체</option>
 								<option value="today">1일</option>
+								<option value="week">1주일</option>
 								<option value="month">1개월</option>
-								<option value="3month">3개월</option>
-								<option value="custom">사용자 지정</option>
 							</select>
 						</div>
-						
-						<!-- 날짜 사용자 지정 -->
-						<div id="customDate" style="display: none; margin-top: 10px;">
-							<label>시작일: <input type="date" name="startDate" id="startDate"></label>
-							<label>종료일: <input type="date" name="endDate" id="endDate"></label>
-						</div>
-						
+
 						<!-- 검색 폼 -->
 						<div class="search-form">
 							<form action="" name="searchForm" method="post">

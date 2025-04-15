@@ -20,7 +20,7 @@
 
 	<div class="container">
 		<!--사이드바 영역 -->
-		<c:import url="serviceSidebar.jsp"></c:import>
+		<c:import url="sidebarService.jsp"></c:import>
 
 		 <!-- 메인 콘텐츠 영역 -->
 		<main class="main-content">

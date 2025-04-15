@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>serviceSidebar.jsp</title>
+<title>sidebarMypage.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/sidebar.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 </head>

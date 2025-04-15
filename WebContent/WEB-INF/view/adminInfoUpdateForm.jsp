@@ -35,6 +35,11 @@ String cp = request.getContextPath();
             validatePasswordMatch();
         });
         
+        $("#admin_acct_code").on("input", function()
+		{
+			vaildateAccountNumber();	
+		})
+        
         // 수정 버튼 클릭 시 유효성 검사
         $("#submitBtn").click(function()
         {
@@ -43,7 +48,7 @@ String cp = request.getContextPath();
             var accountNumber = $("#admin_acct_code").val().trim();
 
             // 비밀번호 검사
-            if (password === "") 
+            if (password == "") 
             {
                 $("#pwError").text("비밀번호를 입력해주세요.");
                 $("#pwError").show();
@@ -57,7 +62,7 @@ String cp = request.getContextPath();
             }
 
             // 비밀번호 재확인 검사
-            if (pwConfirm === "") 
+            if (pwConfirm == "") 
             {
                 $("#pwConfirmError").text("비밀번호 재확인을 입력해주세요.");
                 $("#pwConfirmError").show();
@@ -71,7 +76,7 @@ String cp = request.getContextPath();
             }
 
             // 계좌번호 검사
-            if (accountNumber === "") 
+            if (accountNumber == "") 
             {
                 $("#accountError").text("계좌번호를 입력해주세요.");
                 $("#accountError").show();
@@ -94,7 +99,7 @@ String cp = request.getContextPath();
         var pwError = $("#pwError");
         
         // 빈 값인 경우
-        if (password.trim() === "") 
+        if (password.trim() == "") 
         {
             pwError.hide();
             return false;
@@ -129,7 +134,7 @@ String cp = request.getContextPath();
         var confirmError = $("#pwConfirmError");
         
         // 빈 값인 경우
-        if (confirmPassword.trim() === "") 
+        if (confirmPassword.trim() == "") 
         {
             confirmError.hide();
             return false;
@@ -146,7 +151,31 @@ String cp = request.getContextPath();
         // 비밀번호 일치
         confirmError.hide();
         return true;
-    }    
+    } 
+    
+    // 계좌번호 유효성 검사 함수
+    function vaildateAccountNumber()
+	{
+		var accountNumber = $("#admin_acct_code").val();
+		var accountError = $("#accountError");
+		
+		if (accountNumber.trim() == "")
+		{
+			accountError.hide();
+			return false;
+		}
+		
+		if (!/^\d{10,}$/.test(accountNumber)) 
+		{
+			accountError.text("10자리 이상 입력해야 합니다.");
+			accountError.show();
+		    return false;
+		}
+		else 
+		{
+			accountError.hide();
+		}
+	}
 </script>
 
 </head>
@@ -159,7 +188,7 @@ String cp = request.getContextPath();
 
     <div class="container">
         <!--사이드바 영역 -->
-        <c:import url="myPageSidebar.jsp"></c:import>
+        <c:import url="sidebarMypage.jsp"></c:import>
 
         <!-- 메인 콘텐츠 영역 -->
         <main class="main-content">
@@ -177,7 +206,7 @@ String cp = request.getContextPath();
                         <div class="info-row">
                             <div class="info-header">아이디</div>
                             <div class="info-cell">
-                                <input type="text" name="id" class="info-input" value="${admin.id}" readonly disabled>
+                                <input type="text" name="id" class="info-input" value="${admin.id}" style="background-color: #E2E2E2;" readonly disabled>
                             </div>
                         </div>
     

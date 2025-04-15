@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>adminEmgReqDetail.jsp</title>
+<title>adminGenReqDetail.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/adminGenRegDetail.css"> 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 </head>
@@ -20,11 +20,11 @@
 
 	<div class="container">
 		<!-- 사이드바 영역 -->
-        <c:import url="serviceSidebar.jsp"></c:import>
+        <c:import url="sidebarService.jsp"></c:import>
 
 		<main class="main-content">
 			<div class="content-header">
-				<div class="content-title">긴급돌봄 신청 상세 정보</div>
+				<div class="content-title">일반돌봄 신청 상세 정보</div>
 			</div> 	
 				
 			<div class="content-body">
@@ -44,7 +44,14 @@
 					<div class="info-row">
 						<div class="info-header">예약 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="EREQ00001" readonly>
+							<input type="text" class="info-input" value="GREQ00001" readonly>
+						</div>
+					</div>
+					
+					<div class="info-row">
+						<div class="info-header">근무 등록 코드</div>
+						<div class="info-cell">
+							<input type="text" class="info-input" value="GREG00001" onclick="location.href='adminGenRegDetail.jsp'" readonly>
 						</div>
 					</div>
 					
