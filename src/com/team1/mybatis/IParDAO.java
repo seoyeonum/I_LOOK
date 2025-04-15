@@ -25,4 +25,10 @@ public interface IParDAO
 	
 	// 회원 전체 인원 수
 	public int countMember();
+	
+	// (부모 백업 코드로) 현재 보유 포인트 조회
+	public int searchPoint(String par_backup_id);
+	
+	// (부모 백업 코드로) 특정 시점 보유 포인트
+	public int searchPointAt(String par_backup_id, String date);
 }
