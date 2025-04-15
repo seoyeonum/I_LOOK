@@ -24,7 +24,11 @@
 
 		<main class="main-content">
 			<div class="content-header">
+<<<<<<< HEAD
 				<div class="content-title">예약 신청 상세 정보</div>
+=======
+				<div class="content-title">일반돌봄 신청 상세 정보</div>
+>>>>>>> origin/develop
 			</div> 	
 				
 			<div class="content-body">

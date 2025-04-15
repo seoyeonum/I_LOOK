@@ -5,10 +5,21 @@
 
 package com.team1.mybatis;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+
+>>>>>>> origin/develop
 import com.team1.dto.SitCertDTO;
 
 public interface ISitCertDAO
 {
+<<<<<<< HEAD
+=======
+	// [시터] 자격증 열람
+	public ArrayList<SitCertDTO> list(String sit_reg_id);
+	
+>>>>>>> origin/develop
 	// [시터] 자격증 등록
 	public int addCert(SitCertDTO sitcert);
 	

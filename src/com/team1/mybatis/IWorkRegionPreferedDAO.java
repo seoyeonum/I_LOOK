@@ -12,7 +12,11 @@ import com.team1.dto.WorkRegionPreferedDTO;
 public interface IWorkRegionPreferedDAO
 {
 	// 근무 지역 열람
+<<<<<<< HEAD
 	public ArrayList<WorkRegionPreferedDTO> listRegions();
+=======
+	public ArrayList<WorkRegionPreferedDTO> listRegions(String gen_reg_id);
+>>>>>>> origin/develop
 	
 	// 근무 지역 추가
 	public int addRegions(WorkRegionPreferedDTO regions);

@@ -207,39 +207,73 @@
 			<div class="reservation thead" style="border-top-left-radius: 10px; border-top-right-radius: 10px; width: inherit;">
 				<div class="row">
 					<div class="col-md-1">번호</div>
+<<<<<<< HEAD
 					<div class="col-md-2">예약 신청 날짜</div>
 					<div class="col-md-2">예약 이용 날짜</div>
 					<div class="col-md-1">지역</div>
 					<div class="col-md-2">아이 성별</div>
+=======
+					<div class="col-md-1">일반/긴급</div>
+					<div class="col-md-2">예약 신청 날짜</div>
+					<div class="col-md-2">예약 이용 날짜</div>
+					<div class="col-md-1">지역</div>
+					<div class="col-md-1">아이<br />성별</div>
+>>>>>>> origin/develop
 					<div class="col-md-2">아이 연령</div>
 					<div class="col-md-2">상세 정보</div>
 				</div>   
 			</div>
 			<div class="reservation tbody" style="padding: 10px 0; width: inherit;">
+<<<<<<< HEAD
 				<div class="row" id="number1">
 					<div class="col-md-1">1</div>
 					<div class="col-md-2">2025.03.30</div>
 					<div class="col-md-2">04.06 ~ 04.07</div>
 					<div class="col-md-1">강남구</div>
 					<div class="col-md-2">남아</div>
+=======
+				<div class="row" id="number1" >
+					<div class="col-md-1">1</div>
+					<div class="col-md-1">일반</div>
+					<div class="col-md-2">2025.03.30</div>
+					<div class="col-md-2">04.06 ~ 04.07</div>
+					<div class="col-md-1">강남구</div>
+					<div class="col-md-1">남아</div>
+>>>>>>> origin/develop
 					<div class="col-md-2">3세</div>
 					<div class="col-md-2"><button class="reservation-btn" value="1">상세 정보</button></div>
 				</div>
 				<div class="row" id="number2">
 					<div class="col-md-1">2</div>
+<<<<<<< HEAD
 					<div class="col-md-2">2025.03.28</div>
 					<div class="col-md-2">04.01 ~ 04.05</div>
 					<div class="col-md-1">동작구</div>
 					<div class="col-md-2">여아</div>
+=======
+					<div class="col-md-1">일반</div>
+					<div class="col-md-2">2025.03.28</div>
+					<div class="col-md-2">04.01 ~ 04.05</div>
+					<div class="col-md-1">동작구</div>
+					<div class="col-md-1">여아</div>
+>>>>>>> origin/develop
 					<div class="col-md-2">4세</div>
 					<div class="col-md-2"><button class="reservation-btn" value="2">상세 정보</button></div>
 				</div>
 				<div class="row" id="number3">
 					<div class="col-md-1">3</div>
+<<<<<<< HEAD
 					<div class="col-md-2">2024.03.20</div>
 					<div class="col-md-2">03.25 ~ 03.30</div>
 					<div class="col-md-1">동작구</div>
 					<div class="col-md-2">남아</div>
+=======
+					<div class="col-md-1">일반</div>
+					<div class="col-md-2">2024.03.20</div>
+					<div class="col-md-2">03.25 ~ 03.30</div>
+					<div class="col-md-1">동작구</div>
+					<div class="col-md-1">남아</div>
+>>>>>>> origin/develop
 					<div class="col-md-2">1세</div>
 					<div class="col-md-2"><button class="reservation-btn" value="3">상세 정보</button></div>
 				</div>

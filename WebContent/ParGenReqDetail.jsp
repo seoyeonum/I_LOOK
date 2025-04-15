@@ -60,6 +60,13 @@
 				<td>2025.03.30</td>
 			</tr>
 			<tr>
+<<<<<<< HEAD
+=======
+				<td class="key">신청자 이름</td>
+				<td>김주황</td>
+			</tr>
+			<tr>
+>>>>>>> origin/develop
 				<td class="key">돌봄 기간</td>
 				<td>04.06 ~ 04.07</td>
 			</tr>

@@ -3,7 +3,11 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<<<<<<< HEAD
 <mapper namespace="com.test.mybatis.IEmgReqDAO">
+=======
+<mapper namespace="com.team1.mybatis.IEmgReqDAO">
+>>>>>>> origin/develop
 
 
 	<!-- 1. 관리자 입장 -->
@@ -18,7 +22,11 @@
 	
 	<!-- 2. 시터 입장 -->
 	
+<<<<<<< HEAD
 	<!-- (지원 가능한) 긴급 돌봄 요청 리스트 조회 -->
+=======
+	<!-- 지원 가능 긴급 돌봄 요청 리스트 조회 -->
+>>>>>>> origin/develop
 	<select id="listAllPossibleReq" resultType="com.team1.dto.EmgReqDTO">
 		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
      		 , REGION, AGE, GENDER
@@ -26,13 +34,21 @@
 		ORDER BY START_DATE, START_TIME
 	</select>
 	
+<<<<<<< HEAD
 	<!-- (지원 가능한) 긴급 돌봄 요청 수 -->
+=======
+	<!-- 지원 가능 긴급 돌봄 요청 수 -->
+>>>>>>> origin/develop
 	<select id="countAllPossibleReq" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM EMG_REQ_POSSIBLE_VIEW
 	</select>
 	
+<<<<<<< HEAD
 	<!-- (지역 선택해) 긴급 돌봄 요청 데이터 찾기 -->
+=======
+	<!-- (지역 선택해) 지원 가능 긴급 돌봄 요청 데이터 찾기 -->
+>>>>>>> origin/develop
 	<select id="searchPossibleReq" resultType="com.team1.dto.EmgReqDTO">
 		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
 		     , REGION, AGE, GENDER
@@ -43,7 +59,11 @@
 		ORDER BY START_DATE, START_TIME
 	</select>
 	
+<<<<<<< HEAD
 	<!-- (지역 선택해) 긴급 돌봄 요청 수 찾기 -->
+=======
+	<!-- (지역 선택해) 지원 가능 긴급 돌봄 요청 수 찾기 -->
+>>>>>>> origin/develop
 	<select id="countPossibleReq" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM EMG_REQ_POSSIBLE_VIEW
@@ -52,6 +72,17 @@
 		                 WHERE REGION_ID = #{region_id})
 	</select>
 	
+<<<<<<< HEAD
+=======
+	<!-- (긴급 돌봄 요청 코드로) 지원 가능 특정 긴급 돌봄 요청 조회 -->
+	<select id="searchPossibleReqDetail" resultType="com.team1.dto.EmgReqDTO">
+		SELECT EMG_REQ_ID, PAR_ID, START_DATE, END_DATE, START_TIME, END_TIME
+     		 , REGION, AGE, GENDER
+		FROM EMG_REQ_POSSIBLE_VIEW
+		WHERE EMG_REQ_ID = #{emg_req_id}
+	</select>
+	
+>>>>>>> origin/develop
 	
 	<!-- 3. 부모 입장 -->
 	

@@ -4,6 +4,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정할 수 있는 경로
 %>
+<<<<<<< HEAD
+=======
+<%
+	String gen_req_id = "";
+
+%>
+>>>>>>> origin/develop
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +97,11 @@
 	}
 	
 	/* 버튼 */
+<<<<<<< HEAD
 	.answerBtn, .reservation-btn, .detailBtn
+=======
+	.answerBtn, .reservation-btn, .detailBtn, .rejectBtn
+>>>>>>> origin/develop
 	{
 		font-size: 16pt;
        	background-color: #f4cccc; 
@@ -98,13 +109,21 @@
        	border-radius: 10px;
 	}
 	
+<<<<<<< HEAD
 	.answerBtn:hover, .reservation-btn:hover, .detailBtn:hover
+=======
+	.answerBtn:hover, .reservation-btn:hover, .detailBtn:hover, .rejectBtn:hover
+>>>>>>> origin/develop
 	{
 		background-color: #ea9999;
        	border: 2px solid #f4cccc;
 	}
 	
+<<<<<<< HEAD
 	.answerBtn:active, .reservation-btn:active, .detailBtn:active
+=======
+	.answerBtn:active, .reservation-btn:active, .detailBtn:active, .rejectBtn:active
+>>>>>>> origin/develop
 	{
 		color: #ea9999;
        	background-color: #f4cccc; 
@@ -163,6 +182,15 @@
 		//alert("asdf");
 		
 		$(".answerBtn").css("display", "none");
+<<<<<<< HEAD
+=======
+		$(".rejectBtn").css("display", "none");
+		
+		$(".detailBtn").click(function()
+		{
+			
+		});
+>>>>>>> origin/develop
 		
 		$(".reservation-btn").click(function() 
 		{
@@ -170,6 +198,10 @@
 			//alert("number1");
 			
 			$(".answerBtn").css("display", "inline");
+<<<<<<< HEAD
+=======
+			$(".rejectBtn").css("display", "inline");
+>>>>>>> origin/develop
 			
 			var str = "";
 			var message = "";
@@ -238,9 +270,27 @@
 		
 		$(".answerBtn").click(function()
 		{
+<<<<<<< HEAD
 			confirm("정말 예약하시겠습니까?");
 			
 			$(location).attr("href", "SitterGenReqAnsweredList.jsp");
+=======
+			if (confirm("정말 예약하시겠습니까?"))
+			{
+				
+				$(location).attr("href", "SitterGenReqAnsweredList.jsp");
+			}
+			
+		});
+		
+		$(".rejectBtn").click(function()
+		{
+			if (confirm("정말 거절하시겠습니까?"))
+			{
+				$(location).attr("href", "SitterGenReqAnsweredList.jsp");
+			}
+			
+>>>>>>> origin/develop
 		});
 		
 				
@@ -336,7 +386,11 @@
 			</div> <!-- .info.table -->
 			
 			<div class="answerBtndiv" style="align-items: center;">
+<<<<<<< HEAD
 			<button class="answerBtn">예약하기</button> <button class="answerBtn">거절</button>
+=======
+			<button class="answerBtn" value="1">예약하기</button> <button class="rejectBtn" value="0">거절</button>
+>>>>>>> origin/develop
 			</div>
 		</div>
 	
@@ -352,7 +406,11 @@
 					<div class="col-md-2">선호 근무 지역</div>
 					<div class="col-md-2">자기소개글</div>
 					<div class="col-md-1">상세 정보</div>
+<<<<<<< HEAD
 					<div class="col-md-1">예약 상태</div>
+=======
+					<div class="col-md-1">신청 상태</div>
+>>>>>>> origin/develop
 				</div>   
 			</div>
 			<div class="reservation tbody" style="padding: 10px 0; padding-right: 10px;">
@@ -362,7 +420,11 @@
 					<div class="col-md-2">04.06 ~ 04.07</div>
 					<div class="col-md-2">13:00 ~ 17:00</div>
 					<div class="col-md-2">동대문구</div>
+<<<<<<< HEAD
 					<div class="col-md-2"><button class="detailBtn">자세히 보기</button></div>
+=======
+					<div class="col-md-2"><button class="detailBtn" value="<%= gen_req_id%>">자세히 보기</button></div>
+>>>>>>> origin/develop
 					<div class="col-md-1"><button class="reservation-btn" value="1">상세 정보</button></div>
 					<div class="col-md-1">신청 없음</div>
 				</div>

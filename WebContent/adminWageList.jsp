@@ -68,7 +68,10 @@
 						<div class="info-header">
 							<div class="info-cell">번호</div>
 							<div class="info-cell">예약 번호</div>
+<<<<<<< HEAD
 							<div class="info-cell">돌봄 유형</div>
+=======
+>>>>>>> origin/develop
 							<div class="info-cell">상태</div>
 							<div class="info-cell">부모 이름</div>
 							<div class="info-cell">시터 이름</div>
@@ -82,7 +85,10 @@
 						<div class="info-row">
 							<div class="info-cell">3</div>
 							<div class="info-cell">GREQ00002</div>
+<<<<<<< HEAD
 							<div class="info-cell">일반</div>
+=======
+>>>>>>> origin/develop
 							<div class="info-cell">예약 신청</div>
 							<div class="info-cell">김민준</div>
 							<div class="info-cell">이시연</div>
@@ -104,7 +110,10 @@
 						<div class="info-row">
 							<div class="info-cell">2</div>
 							<div class="info-cell">EREQ00002</div>
+<<<<<<< HEAD
 							<div class="info-cell">긴급</div>
+=======
+>>>>>>> origin/develop
 							<div class="info-cell">예약 신청</div>
 							<div class="info-cell">홍길동</div>
 							<div class="info-cell">임꺽정</div>
@@ -126,7 +135,10 @@
 						<div class="info-row">
 							<div class="info-cell">1</div>
 							<div class="info-cell">GREQ00001</div>
+<<<<<<< HEAD
 							<div class="info-cell">일반</div>
+=======
+>>>>>>> origin/develop
 							<div class="info-cell">예약 확정</div>
 							<div class="info-cell">고지섭</div>
 							<div class="info-cell">풋사과</div>

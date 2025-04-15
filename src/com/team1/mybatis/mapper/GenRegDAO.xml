@@ -3,7 +3,11 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<<<<<<< HEAD
 <mapper namespace="com.test.mybatis.IGenRegDAO">
+=======
+<mapper namespace="com.team1.mybatis.IGenRegDAO">
+>>>>>>> origin/develop
 	
 	<!-- 일반 돌봄 근무 등록 -->
 	<insert id="add">
@@ -21,20 +25,32 @@
 	</delete>
 	
 	<!-- 시터 근무 가능 목록 -->
+<<<<<<< HEAD
 	<select id="list">
+=======
+	<select id="list" resultType="com.team1.dto.GenRegDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION
 		FROM GEN_REG		
 	</select>
 	
 	<!-- 전체 근무 등록 수 확인 -->
+<<<<<<< HEAD
 	<select id="countGen" resultType="java.lang.Integer"> 
+=======
+	<select id="countGen" resultType="java.lang.Integer">
+>>>>>>> origin/develop
 		SELECT COUNT(*) AS COUNT
 		FROM GEN_REG
 	</select>
 	
 	<!-- 특정 아이디에 따른 근무 리스트 -->
+<<<<<<< HEAD
 	<select id="regList">
+=======
+	<select id="regList" resultType="com.team1.dto.GenRegDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION
 		FROM GEN_REG

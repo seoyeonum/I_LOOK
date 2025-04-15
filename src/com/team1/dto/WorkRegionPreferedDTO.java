@@ -13,10 +13,17 @@ public class WorkRegionPreferedDTO
 	// 주요 속성
 	
 	// 선호 근무 지역 코드, 지역 코드, 일반 돌봄 근무 등록 코드
+<<<<<<< HEAD
 	String work_region_prefered_id, region_id, gen_reg_id;
 	
 	// 지역 코드, 지역 이름, 지역 분류
 	String name, district;
+=======
+	private String work_region_prefered_id, region_id, gen_reg_id;
+	
+	// 지역 코드, 지역 이름, 지역 분류
+	private String name, district;
+>>>>>>> origin/develop
 
 	// getter / setter 구성
 	public String getWork_region_prefered_id()

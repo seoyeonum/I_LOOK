@@ -14,6 +14,7 @@ public interface IGenPayDAO
 	// 1. 관리자 입장
 	
 	// 모든 일반 돌봄 결제 리스트 조회
+<<<<<<< HEAD
 	//-- 예약신청번호, 유형, 상태, 부모이름, 결제금액, 포인트내역, 예약일
 	public ArrayList<GenPayDTO> listAllGenPayRec();
 	
@@ -48,6 +49,19 @@ public interface IGenPayDAO
 	//→ 필요 시 추가 작성!
 	
 	
+=======
+	public ArrayList<GenPayDTO> listAllGenPayRec();
+	
+	// (부모 이름으로) 일반 돌봄 결제 내역 리스트 조회
+	public ArrayList<GenPayDTO> searchNameGenPayRec();
+	
+	// 모든 일반 돌봄 포인트 차감 내역 리스트 조회
+	public ArrayList<GenPayDTO> listAllGenPointUsed();
+	
+	// (부모 이름으로) 일반 돌봄 포인트 차감 내역 리스트 조회
+	public GenPayDTO searchNameGenPointUsed(String par_name);
+	
+>>>>>>> origin/develop
 	
 	// 2. 시터 입장 → 별도로 존재 Ⅹ
 	
@@ -60,6 +74,7 @@ public interface IGenPayDAO
 	// 일반 돌봄 결제 내역 추가
 	public int addGenPayRec(GenPayDTO e);
 	
+<<<<<<< HEAD
 	// 일반 돌봄 결제 내역 수정 → (Ⅹ)
 	// 일반 돌봄 결제 내역 삭제 → (Ⅹ)
 	
@@ -72,10 +87,16 @@ public interface IGenPayDAO
 	//--『ChildUsed.jsp』 기준 요청 사항 없어서 배제
 	//→ 필요 시 추가 작성!
 	
+=======
+	// (일반 돌봄 예약 신청 코드로) 특정 일반 돌봄 결제 내역 상세 열람
+	public GenPayDTO searchBackupIdGenPayRec(String par_backup_id);
+	
+>>>>>>> origin/develop
 	// 일반 돌봄 결제 내역 - 부모 읽은 날짜 기록
 	// → gen_pay_rec_id 를 활용하여 par_read_date 수정
 	public int updateGenPayRecParRead(String gen_pay_rec_id, String par_read_date);
 	
+<<<<<<< HEAD
 	
 	// 일반 돌봄 포인트 차감 내역 추가
 	public int addGenPointUsed(GenPayDTO e);
@@ -102,6 +123,13 @@ public interface IGenPayDAO
 	
 	// (현재 시점에서의) 특정 부모의 잔여 포인트 조회
 	public int searchTotalPoint(String par_backup_id);
+=======
+	// 일반 돌봄 포인트 차감 내역 추가
+	public int addGenPointUsed(GenPayDTO e);
+	
+	// (현재 시점에서의) 특정 부모의 잔여 포인트 조회→ ParDAO 로 이동 
+	//public int searchTotalPoint(String par_backup_id);
+>>>>>>> origin/develop
 	
 	
 }

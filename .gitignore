@@ -1,0 +1,7 @@
+# Eclipse specific files
+/build/
+.settings/
+.classpath
+/bin/
+.turn-project/
+.project

@@ -13,7 +13,11 @@
 	</insert>
 	
 	<!-- 탈퇴 회원 리스트 확인 -->
+<<<<<<< HEAD
 	<select id="list" resultType="com.team1.mybatis.ParWithdrawedDTO">
+=======
+	<select id="list" resultType="com.team1.dto.ParWithdrawedDTO">
+>>>>>>> origin/develop
 		SELECT PAR_WITHDRAWED_ID, WITHDRAWED_DATE
 		, PAR_BACKUP_ID, REASON_WITHDRAWED_ID
 		FROM PAR_WITHDRAWED

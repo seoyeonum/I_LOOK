@@ -13,10 +13,17 @@ public class AgesPreferedDTO
 	// 주요 속성 구성
 	
 	// 돌봄 선호 연령대 종류 코드, 일반 돌봄 근무 등록 코드, 연령대 종류 코드
+<<<<<<< HEAD
 	String age_prefered_id, gen_reg_id, age_type_id;
 	
 	// 연령대 종류
 	String type;
+=======
+	private String age_prefered_id, gen_reg_id, age_type_id;
+	
+	// 연령대 종류
+	private String type;
+>>>>>>> origin/develop
 
 	
 	// getter / setter 구성

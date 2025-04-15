@@ -20,7 +20,11 @@ public class GenPayDTO
 	private String point_subject;								// 포인트 차감 대상자
 	
 	// 속성 추가
+<<<<<<< HEAD
 	String type, status, par_name, req_date;					// 돌봄유형, 예약상태, 부모이름, 예약신청일
+=======
+	private String type, status, par_name, req_date;			// 돌봄유형, 예약상태, 부모이름, 예약신청일
+>>>>>>> origin/develop
 
 	// getter / setter 구성
 	public String getGen_pay_rec_id() {

@@ -169,7 +169,11 @@ body {
 
 .info-header {
     display: grid;
+<<<<<<< HEAD
     grid-template-columns: repeat(10, 1fr);
+=======
+    grid-template-columns: repeat(9, 1fr);
+>>>>>>> origin/develop
     background-color: #f5f5f5;
     font-weight: 600;
     border-bottom: 1px solid #ddd;
@@ -187,7 +191,11 @@ body {
 
 .info-row {
     display: grid;
+<<<<<<< HEAD
     grid-template-columns: repeat(10, 1fr);
+=======
+    grid-template-columns: repeat(9, 1fr);
+>>>>>>> origin/develop
     border-bottom: 1px solid #eee;
 }
 

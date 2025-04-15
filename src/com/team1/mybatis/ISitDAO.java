@@ -44,4 +44,16 @@ public interface ISitDAO
 	// [시터] 자기 등급 찾기
 	public SitDTO searchGrades(String id);
 	
+<<<<<<< HEAD
+=======
+	// [시터] 아이디로 자신의 평균 점수 찾기
+	public int searchRating(String id);
+	
+	// [시터 혹은 관리자] 백업 코드로 자신의 평균 점수 찾기
+	public int searchBupRating(String sit_backup_id);
+	
+	// [시터] 아이디로 자신의 최근 3개월 평균 점수 찾기
+	public int searchM3Rating(String id);
+	
+>>>>>>> origin/develop
 }

@@ -3,12 +3,20 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<<<<<<< HEAD
 <mapper namespace="com.team.mybatis.IGenPayDAO">
+=======
+<mapper namespace="com.team1.mybatis.IGenPayDAO">
+>>>>>>> origin/develop
 	
 	<!-- 1. 관리자 입장 -->
 	
 	<!-- 모든 일반 돌봄 결제 리스트 조회 -->
+<<<<<<< HEAD
 	<select id="listAllGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
+=======
+	<select id="listAllGenPayRec" resultType="com.team1.dto.GenPayDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
 		     , PAY_AMOUNT, POINT, REQ_DATE
 		FROM GEN_REQ_DETAIL_VIEW
@@ -16,7 +24,11 @@
 	</select>
 	
 	<!-- (부모 이름으로) 일반 돌봄 결제 내역 리스트 조회 -->
+<<<<<<< HEAD
 	<select id="searchNameGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
+=======
+	<select id="searchNameGenPayRec" resultType="com.team1.dto.GenPayDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
 		     , PAY_AMOUNT, POINT, REQ_DATE
 		FROM GEN_REQ_DETAIL_VIEW
@@ -25,7 +37,11 @@
 	</select>
 	
 	<!-- 모든 일반 돌봄 포인트 차감 내역 리스트 조회 -->
+<<<<<<< HEAD
 	<select id="listAllGenPointUsed" resultType="com.team1.mybatis.GenPayDTO">
+=======
+	<select id="listAllGenPointUsed" resultType="com.team1.dto.GenPayDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
 		     , POINT
 		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
@@ -34,7 +50,11 @@
 	</select>
 	
 	<!-- (부모 이름으로) 일반 돌봄 포인트 차감 내역 리스트 조회 -->
+<<<<<<< HEAD
 	<select id="searchNameGenPointUsed" resultType="com.team1.mybatis.GenPayDTO">
+=======
+	<select id="searchNameGenPointUsed" resultType="com.team1.dto.GenPayDTO">
+>>>>>>> origin/develop
 		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
 		     , POINT
 		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
@@ -71,7 +91,11 @@
 	</update>
 	
 	<!-- 일반 돌봄 포인트 차감 내역 추가 -->
+<<<<<<< HEAD
 	<insert id="addGenPayRec">
+=======
+	<insert id="addGenPointUsed">
+>>>>>>> origin/develop
 		INSERT INTO GEN_POINT_USED (GEN_POINT_USED_ID, GEN_PAY_REC_ID, POINT_SUBJECT, POINT)
 		VALUES (#{gen_point_used_id}
 		        ,#{gen_pay_rec_id}
@@ -88,7 +112,12 @@
 		        , #{point})
 	</insert>
 	
+<<<<<<< HEAD
 	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 -->
+=======
+	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 → ParDAO 로 이동 -->
+	<!-- 
+>>>>>>> origin/develop
 	<select id="searchTotalPoint" resultType="java.lang.Integer">
 		SELECT NVL((SELECT POINT FROM SUM_GEN_GOT_POINT_VIEW WHERE PAR_BACKUP_ID = #{par_backup_id}), 0)
 		     + NVL((SELECT POINT FROM SUM_GEN_REFUNDED_POINT_VIEW WHERE PAR_BACKUP_ID = #{par_backup_id}), 0)
@@ -99,5 +128,9 @@
 		     AS TOTAL_POINT
 		FROM DUAL
 	</select>
+<<<<<<< HEAD
 	
+=======
+	 -->
+>>>>>>> origin/develop
 </mapper>

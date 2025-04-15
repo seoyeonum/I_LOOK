@@ -6,7 +6,10 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/develop
 import com.team1.dto.SitRejectDTO;
 
 public interface ISitRejectDAO
@@ -14,9 +17,12 @@ public interface ISitRejectDAO
 	// [관리자] 승인 거절 내역 리스트 확인
 	public ArrayList<SitRejectDTO> listSitRej();
 	
+<<<<<<< HEAD
 	// [관리자] 승인 거절 사유 확인
 	public ArrayList<SitRejectDTO> listReason();
 	
+=======
+>>>>>>> origin/develop
 	// [관리자] 승인 거절 명수 확인
 	public int countSitRej();
 	
