@@ -45,6 +45,20 @@
 		FROM EMG_MIN_WAGE
 	</select>
 	
+	<!-- (마지막으로 등록한) 일반 돌봄 시급 조회 -->
+	<select id="searchGenWageLately" resultType="java.lang.Integer">
+		SELECT GEN_MIN_WAGE
+		FROM GEN_MIN_WAGE
+		WHERE CHANGED_DATE = (SELECT MAX(CHANGED_DATE) FROM GEN_MIN_WAGE)
+	</select>
+	
+	<!-- (마지막으로 등록한) 긴급 돌봄 시급 조회 -->
+	<select id="searchEmgWageLately" resultType="java.lang.Integer">
+		SELECT EMG_MIN_WAGE
+		FROM EMG_MIN_WAGE
+		WHERE CHANGED_DATE = (SELECT MAX(CHANGED_DATE) FROM EMG_MIN_WAGE)
+	</select>
+	
 	<!-- 일반 돌봄 시급 수정 -->
 	<update id="modifyGenWage" parameterType="com.team1.dto.GradesDTO">
 		UPDATE GEN_MIN_WAGE
