@@ -25,21 +25,20 @@ public class SitCareListDTO
 	private String gen_req_id, req_date;
 	// 이용 시작 날짜, 이용 종료 날짜, 이용 시작 시각, 이용 종료 시각
 	private String par_start_date, par_end_date, par_start_time, par_end_time; 
-	// 구까지만 잘린 주소
+	// 구까지만 잘린 주소, 아이 성별, 아이 연령
 	private String gu_addr, child_gender, child_age;
 	// 아이 지병, 아이 알레르기, 아이 장애, 신청시 전달 메시지
 	private String medical_type, allergie_type, disability_type, message;
 	
 	
-	// 전체 주소
-	private String road_addr, height, weight, blood_type;
+	// 전체 주소, 상세 주소, 아이 키, 아이 몸무게, 아이 혈액형
+	private String road_addr, detailed_addr, height, weight, blood_type;
 	// 특이사항
 	private String speical_notes;
 	
 	
-	
-	// 긴급 요청 코드, 신청 부모 이름, 
-	private String emg_req_id, name;
+	// 긴급 요청 코드, 신청 부모 이름, 아이 이름
+	private String emg_req_id, par_name, chi_name;
 
 
 	// getter / setter 구성
@@ -68,21 +67,15 @@ public class SitCareListDTO
 		return reg_date;
 	}
 
-
-
 	public void setReg_date(String reg_date)
 	{
 		this.reg_date = reg_date;
 	}
 
-
-
 	public String getTitle()
 	{
 		return title;
 	}
-
-
 
 	public void setTitle(String title)
 	{
@@ -339,16 +332,35 @@ public class SitCareListDTO
 		this.emg_req_id = emg_req_id;
 	}
 
-	public String getName()
+	public String getDetailed_addr()
 	{
-		return name;
+		return detailed_addr;
 	}
 
-	public void setName(String name)
+	public void setDetailed_addr(String detailed_addr)
 	{
-		this.name = name;
+		this.detailed_addr = detailed_addr;
 	}
-	
-	
+
+	public String getPar_name()
+	{
+		return par_name;
+	}
+
+	public void setPar_name(String par_name)
+	{
+		this.par_name = par_name;
+	}
+
+	public String getChi_name()
+	{
+		return chi_name;
+	}
+
+	public void setChi_name(String chi_name)
+	{
+		this.chi_name = chi_name;
+	}
+
 	
 }

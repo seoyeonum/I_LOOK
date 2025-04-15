@@ -25,7 +25,7 @@ public interface ISitCareListDAO
 	public ArrayList<SitCareListDTO> answerList(String sit_backup_id);
 	
 	// 돌봄 제공 내역 확인의 상세 정보 새창 처리
-	public ArrayList<SitCareListDTO> answerDetailedList(String gen_req_id);
+	public SitCareListDTO answerDetailedList(String gen_req_id);
 	
 	// 돌봄 완료 내역 확인(일반)
 	public ArrayList<SitCareListDTO> genCompleteList(String sit_backup_id);

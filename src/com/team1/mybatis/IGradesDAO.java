@@ -30,4 +30,6 @@ public interface IGradesDAO
 	
 	// 긴급돌봄 시급 수정
 	public int modifyEmgWage(GradesDTO grades);
+	
+	
 }

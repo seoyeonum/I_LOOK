@@ -148,8 +148,10 @@
 		
 		$(".reservation-btn").click(function() 
 		{
-			var popup = window.open("ParGenReqDetail.jsp", '일반 돌봄 상세 정보', 'scrollbars=yes');
+			var popup = window.open("pargenreqdetail.action?gen_req_id=" + this.value, '일반 돌봄 상세 정보', 'scrollbars=yes');
 		});
+		
+		
 		
 	});
 
@@ -182,13 +184,13 @@
 			<ul class="side-menu" >
 				<li><a href="">시터 마이 페이지</a>
 					<ul>
-						<li><a href="SitterinfoList.jsp">개인정보 수정</a></li>
-						<li><a href="GradesCheck.jsp">등급 확인</a></li>
+						<li><a href="sitterinfolist.action">개인정보 수정</a></li>
+						<li><a href="gradescheck.action?">등급 확인</a></li>
 						<li><a href="">근무 등록</a></li>
-						<li><a href="GenRegList.jsp">근무 등록 내역 확인</a></li>
-						<li><a href="SitterGenReqAnsweredList.jsp">돌봄 제공 내역 확인</a></li>
-						<li><a href="CareCompleteList.jsp" style="font-weight: bold; color: #1AB223">돌봄 완료 내역 확인</a></li>
-						<li><a href="SitterWithdraw.jsp">회원 탈퇴</a></li>
+						<li><a href="genreglist.action">근무 등록 내역 확인</a></li>
+						<li><a href="sittergenreqansweredlist.action">돌봄 제공 내역 확인</a></li>
+						<li><a href="carecompletelist.action" style="font-weight: bold; color: #1AB223">돌봄 완료 내역 확인</a></li>
+						<li><a href="sitterwithdraw.action">회원 탈퇴</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -202,24 +204,29 @@
 		시터님이 돌봄을 완료하신 리스트를 시간 제한 없이 보여드립니다. <br />
 		무한히 확인 가능합니다. 
 		</div>
+
+		<form action="">
+		<div class="chooseMode">		
+		<label>일반 돌봄 <input type="radio" name="caretype" value="" checked="checked" /></label> &nbsp;
+		<label>긴급 돌봄 <input type="radio" name="caretype" value=""  /></label>
+		</div>
+		</form>
 		
 		<div class="reservation table" style="margin-left: -10px;">
 			<div class="reservation thead" style="border-top-left-radius: 10px; border-top-right-radius: 10px; width: inherit;">
 				<div class="row">
 					<div class="col-md-1">번호</div>
-					<div class="col-md-1">일반/긴급</div>
 					<div class="col-md-2">예약 신청 날짜</div>
 					<div class="col-md-2">예약 이용 날짜</div>
-					<div class="col-md-1">지역</div>
+					<div class="col-md-2">지역</div>
 					<div class="col-md-1">아이<br />성별</div>
 					<div class="col-md-2">아이 연령</div>
 					<div class="col-md-2">상세 정보</div>
 				</div>   
 			</div>
-			<div class="reservation tbody" style="padding: 10px 0; width: inherit;">
+			<%-- <div class="reservation tbody" style="padding: 10px 0; width: inherit;">
 				<div class="row" id="number1" >
 					<div class="col-md-1">1</div>
-					<div class="col-md-1">일반</div>
 					<div class="col-md-2">2025.03.30</div>
 					<div class="col-md-2">04.06 ~ 04.07</div>
 					<div class="col-md-1">강남구</div>
@@ -229,7 +236,6 @@
 				</div>
 				<div class="row" id="number2">
 					<div class="col-md-1">2</div>
-					<div class="col-md-1">일반</div>
 					<div class="col-md-2">2025.03.28</div>
 					<div class="col-md-2">04.01 ~ 04.05</div>
 					<div class="col-md-1">동작구</div>
@@ -239,7 +245,6 @@
 				</div>
 				<div class="row" id="number3">
 					<div class="col-md-1">3</div>
-					<div class="col-md-1">일반</div>
 					<div class="col-md-2">2024.03.20</div>
 					<div class="col-md-2">03.25 ~ 03.30</div>
 					<div class="col-md-1">동작구</div>
@@ -247,7 +252,28 @@
 					<div class="col-md-2">1세</div>
 					<div class="col-md-2"><button class="reservation-btn" value="3">상세 정보</button></div>
 				</div>
-			</div>
+			</div> --%>
+			
+			<c:choose>
+				<c:when test="">
+				
+				</c:when>
+				
+				<c:otherwise>
+					<c:forEach var="carelist" items="${completeList }">
+					<div class="row" id="${carelist.gen_req_id }">
+						<div class="col-md-1">1</div>
+						<div class="col-md-2">${carelist.req_date }</div>
+						<div class="col-md-2">${carelist.par_start_date } ~ ${carelist.par_end_date }</div>
+						<div class="col-md-2">${carelist.gu_addr }</div>
+						<div class="col-md-1">${carelist.child_gender }</div>
+						<div class="col-md-2">${carelist.child_age }세</div>
+						<div class="col-md-2"><button class="reservation-btn" value="${carelist.gen_req_id }">상세 정보</button></div>
+					</div>
+			</c:forEach>
+				</c:otherwise>		
+			</c:choose>
+			
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->
 
