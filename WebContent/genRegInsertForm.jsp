@@ -298,7 +298,7 @@ input[type="file"] {
         
         <!-- 본문 -->
         <div id="main">
-        	<form action="sitterGeneralRegisterInsertForm.action" enctype="multipart/form-data" method="post">
+        	<form action="sittergeneralregisterinsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="get">
 	        	<div class="regTitle">
 		        	<h2 class="title">근무 등록</h2>
 			        <div class="verification"></div>
@@ -397,7 +397,7 @@ input[type="file"] {
 					</div>
 	        	</div>
 
-	        	<!-- 사진 첨부 -->
+	        	<!-- <!-- 사진 첨부
 	        	<div class="container">
 	        		<div class="container-title">
 	        			<h3>사진 업로드</h3>
@@ -408,7 +408,7 @@ input[type="file"] {
 	        		<div class="file-upload">
 						<input type="file" name="uploadFile" id="uploadFile">
 					</div>
-	        	</div>   
+	        	</div>    -->
 	        	
 	        	<!-- 자기소개 -->
 	        	<div class="container">

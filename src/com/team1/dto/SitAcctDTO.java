@@ -18,7 +18,7 @@ public class SitAcctDTO
 	private String acct_number, depositor, reg_date;
 	
 	// 은행 종류
-	private String type;
+	private String bank_type;
 
 	
 	// getter / setter 구성
@@ -82,14 +82,14 @@ public class SitAcctDTO
 		this.reg_date = reg_date;
 	}
 
-	public String getType()
+	public String getBank_type()
 	{
-		return type;
+		return bank_type;
 	}
 
-	public void setType(String type)
+	public void setBank_type(String bank_type)
 	{
-		this.type = type;
+		this.bank_type = bank_type;
 	}
 
 	

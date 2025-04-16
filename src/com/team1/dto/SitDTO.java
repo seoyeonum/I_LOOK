@@ -22,15 +22,37 @@ public class SitDTO
 	private String ssn_first, ssn_second, road_addr, detailed_addr, zip_code
 		 , tel, file_path;
 	
-	// 승인 일자
+	// 승인 아이디, 승인 일자
 	private String sit_chk_id, chk_date;
 	
-	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 가진 등급
-	private int totalworktime, totalrating, month3rating;
+	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 그동안 맡은 일반 돌봄 서비스 수, 시터가 그동안 맡은 긴급 돌봄 서비스 수
+	private int totalworktime, totalrating, month3rating, genCareCount, emgCareCount;
+	
+	// 시터가 가진 등급
 	private String grade;
 
 	
 	// getter / setter 구성
+	public int getGenCareCount()
+	{
+		return genCareCount;
+	}
+
+	public void setGenCareCount(int genCareCount)
+	{
+		this.genCareCount = genCareCount;
+	}
+
+	public int getEmgCareCount()
+	{
+		return emgCareCount;
+	}
+
+	public void setEmgCareCount(int emgCareCount)
+	{
+		this.emgCareCount = emgCareCount;
+	}
+	
 	public int getTotalworktime()
 	{
 		return totalworktime;

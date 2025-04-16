@@ -5,22 +5,20 @@
 
 package com.team1.mybatis;
 
-import java.util.ArrayList;
-
 import com.team1.dto.SitAcctDTO;
 
 public interface ISitAcctDAO
 {
-	// 시터 계좌 열람
-	public ArrayList<SitAcctDTO> list(String sit_regid);
+	// [시터] 시터 계좌 열람
+	public SitAcctDTO list(String sit_reg_id);
 	
-	// 시터 계좌 추가
-	public int addAcct(SitAcctDTO acct);
+	// [시터] 시터 계좌 추가
+	public String addAcct(SitAcctDTO acct);
 	
-	// 시터 계좌 수정
-	public int modifyAcct(SitAcctDTO acct);
+	// [시터] 시터 계좌 수정
+	public String modifyAcct(SitAcctDTO acct);
 	
-	// 시터 계좌 제거
-	public int removeAcct(String sit_regid);
+	// [시터] 시터 계좌 제거
+	public String removeAcct(String sit_reg_id);
 	
 }
