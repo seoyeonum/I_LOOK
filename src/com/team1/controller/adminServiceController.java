@@ -66,14 +66,14 @@ public class adminServiceController
 	
 	// 등급 추가
 	@RequestMapping(value = "/gradeinsert.action", method = RequestMethod.POST)
-	public String addGrade(GradesDTO grade, @RequestParam("file_path") MultipartFile uploadFile 
+	public String addGrade(GradesDTO grade, @RequestParam("uploadFile") MultipartFile uploadFile 
             			 , HttpServletRequest request) throws Exception
 	{
 		String result = null;
 		
 		// 파일 업로드 처리
 		// 업로드 경로 지정 (/WebContent/images/grades/)
-	    String uploadDir = request.getServletContext().getRealPath("/images/grades");
+		String uploadDir = request.getServletContext().getRealPath("/images/grades");
 		
 		File dir = new File(uploadDir);
 		if (!dir.exists())
@@ -92,9 +92,9 @@ public class adminServiceController
 	            uploadFile.transferTo(saveFile);
 	            
 	            System.out.println("업로드된 파일 이름: " + fileName);
-	            
+	            System.out.println("업로드된 파일 경로 : " + uploadDir);
 	            // 파일 경로를 DTO의 file_path에 설정
-	            grade.setFile_path("/images/grades/" + fileName);
+	            grade.setFile_path("images/grades/" + fileName);
 	        }
 	        
 	        IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
@@ -111,10 +111,7 @@ public class adminServiceController
 		return result;
 	}
 	
-	
 	// 등급 수정 폼으로 이동 및 데이터 전송
-	
-	
 	
 	
 	// 시급 목록으로 이동
