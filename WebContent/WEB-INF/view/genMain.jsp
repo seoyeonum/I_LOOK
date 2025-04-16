@@ -13,31 +13,6 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
-    // 페이지가 로드되면 parentMainFrame.html을 불러오기
-    // jQuery
-    /* 
-    $(document).ready(function()
-    {
-    	// 헤더가 로드된 후 버튼 클래스 변경
-        // menuBtn 와 presentPage를 클래스로 가지는 엘리먼트에서 presentPage 클래스 제거
-        var firstButton = document.querySelector('.menuBtn.presentPage');
-        if (firstButton)
-        {
-            firstButton.classList.remove('presentPage');
-        }
-        
-        // menuBtn 을 클래스로 가지는 엘리먼트 중
-        var buttons = document.querySelectorAll('.menuBtn');
-        if (buttons.length >= 2)
-        {
-        	// 0번째 엘리먼트에 presentPage 클래스 추가 (0부터 시작)
-            buttons[0].classList.add('presentPage');
-        }
-    	
-    	
-	});
-    */
-    
     // 이 페이지 로드 시,
     document.addEventListener('DOMContentLoaded', function()
     {
@@ -188,11 +163,11 @@
 				<h2>1차 필터</h2>
 			</div>
 			<div class="sub-body">
-			    <form action="./genSearchResult.jsp" id="primary-filter-form">
+			    <form action="gensearchresult.action" id="primary-filter-form" method="post" >
 			    	<div class="form-group">
 				        <div class="label">돌봄 희망 아이</div>
 				        <div class="child-range">
-				        	<select id="child-name" required="required">
+				        	<select name='child-name' id="child-name" required="required">
 					             <option value="">아이 선택</option>
 					             <option value="1">김창식</option>
 					             <option value="2">김충식</option>
@@ -205,9 +180,9 @@
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" id="date-start" required="required">
+				        	<input type="date" name="date-start" id="date-start" required="required">
 				        	<span>부터</span>
-				        	<input type="date" id="date-end" required="required">
+				        	<input type="date" name="date-end" id="date-end" required="required">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
@@ -215,7 +190,7 @@
 				    <div class="form-group">
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
-				        	<select id="time-start" required="required">
+				        	<select name="time-start" id="time-start" required="required">
 					             <option value="">시작 시간</option>
 					             <option value="8">오전 8:00</option>
 					             <option value="9">오전 9:00</option>
@@ -230,7 +205,7 @@
 					             <option value="18">오후 6:00</option>
 					    	</select>
 					      	<span>부터</span>
-					      	<select id="time-end" required="required">
+					      	<select name="time-end" id="time-end" required="required">
 					             <option value="">종료 시간</option>
 					             <option value="9">오전 9:00</option>
 					             <option value="10">오전 10:00</option>
