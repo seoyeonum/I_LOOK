@@ -184,13 +184,13 @@
 			<ul class="side-menu" >
 				<li><a href="">시터 마이 페이지</a>
 					<ul>
-						<li><a href="sitterinfolist.action">개인정보 수정</a></li>
-						<li><a href="gradescheck.action?">등급 확인</a></li>
+						<li><a href="sitterinfolist.action?sit_backup_id=${completeList.sit_backup_id }">개인정보 수정</a></li>
+						<li><a href="gradescheck.action?sit_backup_id=${completeList.sit_backup_id }">등급 확인</a></li>
 						<li><a href="">근무 등록</a></li>
-						<li><a href="genreglist.action">근무 등록 내역 확인</a></li>
-						<li><a href="sittergenreqansweredlist.action">돌봄 제공 내역 확인</a></li>
-						<li><a href="carecompletelist.action" style="font-weight: bold; color: #1AB223">돌봄 완료 내역 확인</a></li>
-						<li><a href="sitterwithdraw.action">회원 탈퇴</a></li>
+						<li><a href="genreglist.action?sit_backup_id=${completeList.sit_backup_id }">근무 등록 내역 확인</a></li>
+						<li><a href="sittergenreqansweredlist.action?sit_backup_id=${completeList.sit_backup_id }">돌봄 제공 내역 확인</a></li>
+						<li><a href="carecompletelist.action?sit_backup_id=${completeList.sit_backup_id }" style="font-weight: bold; color: #1AB223">돌봄 완료 내역 확인</a></li>
+						<li><a href="sitterwithdraw.action?sit_backup_id=${completeList.sit_backup_id }">회원 탈퇴</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -171,7 +171,7 @@
 		
 		$(".detailBtn").click(function()
 		{
-			
+			alert(this.value);
 		});
 		
 		$(".reservation-btn").click(function() 
@@ -182,6 +182,7 @@
 			$(".answerBtn").css("display", "inline");
 			$(".rejectBtn").css("display", "inline");
 			
+			/*
 			var str = "";
 			var message = "";
 			
@@ -208,42 +209,12 @@
 				//alert(message);
 				$("#message").html(message);
 				
-			}
-			else if (this.value == 2) 
-			{
-				
-				str += "<div class='row'>"
-					+ "<div class='col-md-1'>고현석</div>"
-					+ "<div class='col-md-2'>03.25 ~ 03.30</div>"
-					+ "<div class='col-md-2'>동작구</div>"
-					+ "<div class='col-md-1'>여아</div>"
-					+ "<div class='col-md-1'>4세</div>"
-					+ "<div class='col-md-1'>무</div>"
-					+ "<div class='col-md-1'>무</div>"
-					+ "<div class='col-md-1'>유 - 계란 알레르기</div>"
-					+ "<div class='col-md-12'>밥은 잘 먹으니 걱정하지 마세요. 지나치게 활동적이라 많이 놀아달라고 할 거예요. 장난감으로 잘 놀아주시면 감사하겠습니다. RC카 대결해주시면 좋아해요.</div>"
-					+ "</div>";
-				
-				$("#detailInfo").html(str);
-				
-			} 
-			else if (this.value == 3)
-			{
-				str += "<div class='row'>"
-					+ "<div class='col-md-1'>방충식</div>"
-					+ "<div class='col-md-2'>04.06 ~ 04.07</div>"
-					+ "<div class='col-md-2'>동작구</div>"
-					+ "<div class='col-md-1'>남아</div>"
-					+ "<div class='col-md-1'>1세</div>"
-					+ "<div class='col-md-1'>무</div>"
-					+ "<div class='col-md-1'>무</div>"
-					+ "<div class='col-md-1'>무</div>"
-					+ "</div>";
-					
-				$("#detailInfo").html(str);
-				
 				
 			}
+			*/
+			
+			
+			// AJAX 처리 
 		});
 		
 		
@@ -300,13 +271,13 @@
 			<ul class="side-menu" >
 				<li><a href="">시터 마이 페이지</a>
 					<ul>
-						<li><a href="SitterinfoList.jsp">개인정보 수정</a></li>
-						<li><a href="GradesCheck.jsp">등급 확인</a></li>
+						<li><a href="sitterinfolist.action?sit_backup_id=${sit_backup_id }">개인정보 수정</a></li>
+						<li><a href="gradescheck.action?sit_backup_id=${sit_backup_id }">등급 확인</a></li>
 						<li><a href="">근무 등록</a></li>
-						<li><a href="GenRegList.jsp" style="font-weight: bold; color: #1AB223">근무 등록 내역 확인</a></li>
-						<li><a href="SitterGenReqAnsweredList.jsp">돌봄 제공 내역 확인</a></li>
-						<li><a href="CareCompleteList.jsp" >돌봄 완료 내역 확인</a></li>
-						<li><a href="SitterWithdraw.jsp">회원 탈퇴</a></li>
+						<li><a href="genreglist.action?sit_backup_id=${sit_backup_id }" style="font-weight: bold; color: #1AB223">근무 등록 내역 확인</a></li>
+						<li><a href="sittergenreqansweredlist.action?sit_backup_id=${sit_backup_id }">돌봄 제공 내역 확인</a></li>
+						<li><a href="carecompletelist.action?sit_backup_id=${sit_backup_id }" >돌봄 완료 내역 확인</a></li>
+						<li><a href="sitterwithdraw.action?sit_backup_id=${sit_backup_id }">회원 탈퇴</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -379,7 +350,7 @@
 				</div>   
 			</div>
 			<div class="reservation tbody" style="padding: 10px 0; padding-right: 10px;">
-				<div class="row" id="number1" >
+				<%-- <div class="row" id="number1" >
 					<div class="col-md-1">1</div>
 					<div class="col-md-1">끈기를 지닌 안예지입니다.</div>
 					<div class="col-md-2">04.06 ~ 04.07</div>
@@ -408,7 +379,19 @@
 					<div class="col-md-2"><button class="detailBtn">자세히 보기</button></div>
 					<div class="col-md-1"><button class="reservation-btn" value="3">상세 정보</button></div>
 					<div class="col-md-1">신청 있음</div>
+				</div> --%>
+			<c:forEach var="reg" items="${regList }">
+				<div class="row" id="${reg.gen_req_id }" >
+					<div class="col-md-1">1</div>
+					<div class="col-md-1">${reg.title }</div>
+					<div class="col-md-2">${reg.sit_start_date } ~ ${reg.sit_end_date }</div>
+					<div class="col-md-2">${reg.sit_start_time } ~ ${reg.sit_end_time }</div>
+					<div class="col-md-2">동대문구</div>
+					<div class="col-md-2"><button class="detailBtn" value="${reg.introduction }" type="button">자세히 보기</button></div>
+					<div class="col-md-1"><button class="reservation-btn" value="${reg.gen_reg_id }" type="button">상세 정보</button></div>
+					<div class="col-md-1">${reg.request_result }</div>
 				</div>
+			</c:forEach>
 			</div>
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->

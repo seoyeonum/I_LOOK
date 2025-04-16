@@ -84,10 +84,45 @@ public class SitterMypageController
 	
 	
 	// 근무 등록 내역 확인 컨트롤러
+	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
+	public String GenRegList(Model model, String sit_backup_id)
+	{
+		String result = null;
+		
+		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
+		
+		model.addAttribute("regList", sitcarelistDao.regList(sit_backup_id));
+		
+		model.addAttribute("sit_backup_id", sit_backup_id);
+		
+		result = "/WEB-INF/view/GenRegList.jsp";
+		return result;
+	}
+	
+	// 근무 등록 내역 상세보기 누르면 나오는 컨트롤러 >> AJAX 처리
+	@RequestMapping(value = "/genregdetail.action", method = RequestMethod.GET)
+	public String GenRegDetailList(@RequestParam("gen_req_id") String sit_backup_id, Model model) 
+	{
+		String result = null;
+		
+		
+		
+		result = "/WEB-INF/view/ParGenReqList.jsp";
+		
+		return result;
+	}
 	
 	
-	// 
-	// 돌봄 완료 내역 확인 >> 일반 돌봄 클릭 >> 상세 정보 버튼 클릭 >> 새창으로 나오는 상세 정보.
+	// 돌봄 제공 내역 확인 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
+	public String AnswerList(Model model, String sit_backup_id) 
+	{
+		return "/WEB-INF/view/ParGenReqDetail.jsp";
+	}
+	
+	
+	// 돌봄 제공 내역 확인 상세 정보 새창 처리 컨트롤러
+	// 돌봄 완료 내역 확인 + 돌봄 제공 내역 확인 >> 일반 돌봄 클릭 >> 상세 정보 버튼 클릭 >> 새창으로 나오는 상세 정보.
 	@RequestMapping(value = "/pargenreqdetail.action", method = RequestMethod.GET)
 	public String ParGenReqDetailList(@RequestParam("gen_req_id") String gen_req_id, Model model)
 	{
@@ -101,11 +136,11 @@ public class SitterMypageController
 	
 	// 돌봄 완료 내역 확인 띄우기
 	@RequestMapping(value = "/carecompletelist.action", method = RequestMethod.GET)
-	public String CareCompleteList(Model model)
+	public String CareCompleteList(Model model, String gen_req_id)
 	{
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
-		model.addAttribute("completeList", sitCareListDao.genCompleteList("SBAC0007"));
+		model.addAttribute("completeList", sitCareListDao.genCompleteList(gen_req_id));
 		
 		
 		return "/WEB-INF/view/CareCompleteList.jsp";
