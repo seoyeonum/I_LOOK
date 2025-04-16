@@ -17,5 +17,12 @@
 		SET PW=#{pw}, ADMIN_ACCT_CODE=#{admin_acct_code}, BANK_NAME=#{bank_name}
 		WHERE ADMIN_REG_ID=#{admin_reg_id}
 	</update>
+	
+	<!-- 관리자 정보 찾기 -->
+	<select id="search" resultType="com.team1.dto.AdminDTO">
+		SELECT ADMIN_REG_ID, ID, PW, ADMIN_ACCT_CODE, BANK_NAME
+	    FROM ADMIN_REG
+	    WHERE ADMIN_REG_ID = #{admin_reg_id}
+	</select>
 
 </mapper>

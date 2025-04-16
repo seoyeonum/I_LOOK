@@ -55,7 +55,7 @@ body {
 }
 
 .image {
-    width: 100%;
+    width: 250px;
     height: 250px;
     border: 1px solid #ccc;
     display: flex;
@@ -64,6 +64,7 @@ body {
     justify-content: center;
     border-radius: 4px;
     background-color: #f8f8f8;
+    overflow: hidden; /* 이미지가 영역을 벗어나지 않도록 설정 */
 }
 
 .grade-image {
@@ -76,13 +77,12 @@ body {
 
 /* 이미지 미리보기 영역 */
 .image-preview {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px auto;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
     display: none; /* 처음에는 숨김 */
     overflow: hidden; /* 이미지가 영역을 벗어나지 않도록 설정 */
+    
 }
 
 .intro-section {

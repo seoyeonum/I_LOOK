@@ -116,12 +116,12 @@ body {
 .info-row input.txt {
     width: 100px;           
     height: 35px;
-    padding: 5px 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     margin: 0 auto;        
     display: block;       
+    text-align: center;
 }
 
 
@@ -136,6 +136,15 @@ body {
     text-align: center;
     align-items: center;
     font-size: 15px;
+    flex-direction: column;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    text-align: center;
+    display: none;
 }
 
 

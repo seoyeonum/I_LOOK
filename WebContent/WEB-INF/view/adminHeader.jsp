@@ -15,12 +15,12 @@
 <div id="top-nav">
 	<header>
 		<div id="logo">
-			<img src="<%=cp %>/imgs/logo.png" height="120px">
+			<img src="<%=cp %>/images/logo.png" height="120px" onclick="location.href='<%=cp%>/adminmain.action'">
 		</div>
 		<nav>
-			<button type="button" class="menuBtn" onclick="location.href='adminMain.jsp'">홈</button>
-			<button type="button" class="menuBtn" onclick="location.href='adminSitRegList.jsp'">회원 관리</button>
-			<button type="button" class="menuBtn" onclick="location.href='adminGenRegList.jsp'">서비스 관리</button>				
+			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/adminmain.action'">홈</button>
+			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/adminsitreglist.action'">회원 관리</button>
+			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/admingenreglist.action'">서비스 관리</button>				
 			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/admininfo.action'">마이 페이지</button>
 			<button type="button" class="menuBtn">로그아웃</button>
 		</nav>

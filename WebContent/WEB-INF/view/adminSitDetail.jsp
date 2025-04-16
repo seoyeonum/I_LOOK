@@ -43,7 +43,7 @@ $(document).ready(function()
 
 		<div class="container">
 			<!-- 사이드바 영역 -->
-			<c:import url="memberSidebar.jsp"></c:import>
+			<c:import url="sidebarMember.jsp"></c:import>
 
 			<main class="main-content">
 				<div class="content-header">
