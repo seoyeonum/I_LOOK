@@ -11,16 +11,16 @@ import com.team1.dto.WorkRegionPreferedDTO;
 
 public interface IWorkRegionPreferedDAO
 {
-	// 근무 지역 열람
+	// 시터가 근무 등록 때 선택한 근무 지역 열람
 	public ArrayList<WorkRegionPreferedDTO> listRegions(String gen_reg_id);
 	
-	// 근무 지역 추가
+	// 시터가 근무 등록 때 근무 지역 추가
 	public int addRegions(WorkRegionPreferedDTO regions);
 
-	// 근무 지역 수정
+	// 시터가 근무 등록 때 근무 지역 수정
 	public int modifyRegions(WorkRegionPreferedDTO regions);
 
-	// 근무 지역 삭제
+	// 시터가 근무 등록 때 근무 지역 삭제
 	public int removeRegions(String gen_reg_id);
 
 }

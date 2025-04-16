@@ -6,6 +6,9 @@
  =============================*/
 package com.team1.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.team1.dto.SitCareListDTO;
 import com.team1.dto.SitDTO;
 import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IGradesDAO;
@@ -21,6 +25,7 @@ import com.team1.mybatis.ISitAcctDAO;
 import com.team1.mybatis.ISitCareListDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.ISitDAO;
+import com.team1.mybatis.IWorkRegionPreferedDAO;
 
 @Controller
 public class SitterMypageController
@@ -82,19 +87,63 @@ public class SitterMypageController
 		return "/WEB-INF/view/GradesCheck.jsp";
 	}
 	
+	// 폼으로 가는 링크
+	@RequestMapping(value = "/genreginsertform.action", method = RequestMethod.GET)
+	public String SitGenRegInsertForm(Model model, String sit_backup_id)
+	{
+		String result = null;
+		
+		result = "/WEB-INF/view/genRegInsertForm.jsp";
+		
+		return result;
+	}
+	
+	// 근무 등록 테이블에 넣는 액션
+	@RequestMapping(value = "/genreginsert.action", method = RequestMethod.GET)
+	public String GenRegList(Model model, String sit_backup_id, String gen_req_id)
+	{
+		String result = null;
+		
+		result = "/WEB-INF/view/genRegInsertFormComplete.jsp";
+		
+		return result;
+	}
+	
 	
 	// 근무 등록 내역 확인 컨트롤러
 	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
 	public String GenRegList(Model model, String sit_backup_id)
 	{
+		// 주소
 		String result = null;
 		
+		// sqlSession 으로 의존성 주입
 		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
+		IWorkRegionPreferedDAO regionDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
 		
+		// 근무 등록 내역 리스트 보내주기
 		model.addAttribute("regList", sitcarelistDao.regList(sit_backup_id));
 		
+		// 사이드바 이용을 위한 시터 백업 아이디 보내주기
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
+		// 근무 등록 내역 리스트를 정렬화해서 리스트로 만듦.
+		Iterator<SitCareListDTO> it = sitcarelistDao.regList(sit_backup_id).iterator();
+		
+		// 꺼내서 DTO로 만들고 그 안에 있는 근무 등록 아이디를 가져온다.
+		while (it.hasNext())
+		{
+			int i = 1;
+			// 근무 등록 내역 1건에 있는 그 근무 등록 아이디로 
+			// 시터가 근무 등록 때 선택한 근무 지역을 열람한다.
+			String gen_reg_id = it.next().getGen_reg_id();
+			
+			regionDao.listRegions(gen_reg_id);
+		}
+		
+		// 시터가 선택한 근무 지역 보내주기
+		
+		// 주소 지정
 		result = "/WEB-INF/view/GenRegList.jsp";
 		return result;
 	}
@@ -104,7 +153,6 @@ public class SitterMypageController
 	public String GenRegDetailList(@RequestParam("gen_req_id") String sit_backup_id, Model model) 
 	{
 		String result = null;
-		
 		
 		
 		result = "/WEB-INF/view/ParGenReqList.jsp";
@@ -117,7 +165,17 @@ public class SitterMypageController
 	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
 	public String AnswerList(Model model, String sit_backup_id) 
 	{
-		return "/WEB-INF/view/ParGenReqDetail.jsp";
+		String result = null;
+		
+		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
+		
+		model.addAttribute("answerList", sitcarelistDao.answerList(sit_backup_id));
+		
+		model.addAttribute("sit_backup_id", sit_backup_id);
+		
+		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
+		
+		return result;
 	}
 	
 	
