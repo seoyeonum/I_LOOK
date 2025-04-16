@@ -13,20 +13,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.team1.dto.GradesDTO;
 import com.team1.mybatis.IGradesDAO;
 
 
 @Controller
-public class serviceController
+public class adminServiceController
 {
 
 	@Autowired
 	private SqlSession sqlSession;
 	
-	// 상단 서비스관리 누를 시 근무 등록 내역(기본값)으로 이동
+	// 상단 서비스관리 누를 시 근무 등록 내역(기본값)으로 이동 및 데이터 전송
 	@RequestMapping(value = "/admingenreglist.action", method = RequestMethod.GET)
 	public String adminGenRegList(Model model)
 	{

@@ -27,7 +27,7 @@ public class adminMainController
 		return result;
 	}		
 	
-	// 관리자 마이페이지로 이동 
+	// 관리자 마이페이지로 이동 및 데이터 전송
 	@RequestMapping(value = "/admininfo.action", method = RequestMethod.GET)
 	public String adminInfo(Model model)
 	{
