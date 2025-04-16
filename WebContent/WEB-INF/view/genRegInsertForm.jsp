@@ -249,35 +249,21 @@ input[type="file"] {
 		// 하나만 선택가능, 선택 후 배경색 변환
 	    $(".startTimeBtn").click(function() 
 	    {
-	    	if (얘 등급이 신입일 경우)
-			{
-				
-			}
-	    	
-	    	
 	        $(".startTimeBtn").removeClass("active");
 	        $(this).addClass("active");
+	        
 	        var selectedTime = $(this).val();
 			$("#startTime").val(selectedTime);
 	    });
 
-		// 끝나는 시간 버튼
 	    $(".endTimeBtn").click(function() 
 	    {
-	    	if (condition)
-			{
-				
-			}
-	    	
-	    	
-	    	
 	        $(".endTimeBtn").removeClass("active");
 	        $(this).addClass("active");
 	        var selectedTime = $(this).val();
 			$("#endTime").val(selectedTime);
 	    });
 	    
-	    // 나이 버튼
 	    $(".ageBtn").click(function() 
 	    {
 	        $(".ageBtn").removeClass("active");
@@ -285,14 +271,6 @@ input[type="file"] {
 	        var preferedAge = $(this).val();
 			$("#preferedAge").val(preferedAge);
 	    });
-	    
-	    
-	    
-	    // 등록 버튼 누르면 벌어지는 일.
-	    $(".uploadBtn").click.(function()
-		{
-			
-		});
 	   
 	});
 	
@@ -320,7 +298,7 @@ input[type="file"] {
         
         <!-- 본문 -->
         <div id="main">
-        	<form action="sittergeneralregisterinsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="post">
+        	<form action="sittergeneralregisterinsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="get">
 	        	<div class="regTitle">
 		        	<h2 class="title">근무 등록</h2>
 			        <div class="verification"></div>
@@ -339,42 +317,44 @@ input[type="file"] {
 	        			<!-- 근무 시작 구역 -->
 	        			<div class="container-half">
 			        		<div class="container-panel">근무 시작일</div>
-			            	<input type="text" id="start_date" name="start_date" placeholder="날짜 선택">
+			            	<input type="text" id="startDate" name="startDate" placeholder="날짜 선택">
 			            
 				            <div class="container-panel">근무 시작 시간</div>
 				        	<div class="TimeGrid start-time">
-				        		<button type="button" class="timeBtn startTimeBtn" value="8">08:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="9">09:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="10">10:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="11">11:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="12">12:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="13">13:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="14">14:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="15">15:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="16">16:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="17">17:00</button>
-				        		<button type="button" class="timeBtn startTimeBtn" value="18">18:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="08:00">08:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="09:00">09:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="10:00">10:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="11:00">11:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="12:00">12:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="13:00">13:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="14:00">14:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="15:00">15:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="16:00">16:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="17:00">17:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="18:00">18:00</button>
+				        		<button type="button" class="timeBtn startTimeBtn" value="19:00">19:00</button>
 				        	</div>                      
 		           		</div>
 		           		
 		            	<!-- 종료 구역 -->
 			            <div class="container-group-date">
 			        		<div class="container-panel">근무 종료일</div>
-			            	<input type="text" id="end_date" name="end_date" placeholder="날짜 선택">
+			            	<input type="text" id="endDate" name="endDate" placeholder="날짜 선택">
 			          
 				            <div class="container-panel">근무 종료 시간</div>
 				        	<div class="TimeGrid end-time">
-				        		<button type="button" class="timeBtn endTimeBtn" value="9">09:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="10">10:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="11">11:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="12">12:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="13">13:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="14">14:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="15">15:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="16">16:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="17">17:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="18">18:00</button>
-				        		<button type="button" class="timeBtn endTimeBtn" value="19">19:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="08:00">08:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="09:00">09:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="10:00">10:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="11:00">11:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="12:00">12:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="13:00">13:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="14:00">14:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="15:00">15:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="16:00">16:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="17:00">17:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="18:00">18:00</button>
+				        		<button type="button" class="timeBtn endTimeBtn" value="19:00">19:00</button>
 				        	</div>                                        
 			            </div>
 		            </div> <!-- container-half -->
@@ -389,10 +369,10 @@ input[type="file"] {
 	        		
 	        		<div class="container-panel">연령 선택</div>
 	        		<div class="age-buttons">
-		        		<button type="button" class="ageBtn" value="001">영아(0~2세)</button>
-		        		<button type="button" class="ageBtn" value="002">유아(2~5세)</button>
-		        		<button type="button" class="ageBtn" value="003">학령전 아동(5~7세)</button>
-		        		<button type="button" class="ageBtn" value="004">아동(7세~)</button>
+		        		<button type="button" class="ageBtn" value="1">영아(0~2세)</button>
+		        		<button type="button" class="ageBtn" value="2">유아(2~5세)</button>
+		        		<button type="button" class="ageBtn" value="3">학령전 아동(5~7세)</button>
+		        		<button type="button" class="ageBtn" value="4">아동(7세~)</button>
 	        		</div>
 	        	</div>
 	        	
@@ -446,12 +426,12 @@ input[type="file"] {
 	        	</div>
 	        	
 	        	<!-- 히든 필드 -->
-	        	<input type="hidden" name="start_time" id="start_time">
-        		<input type="hidden" name="end_time" id="end_time">
-				<input type="hidden" name="age_type_id" id="age_type_id">		
+	        	<input type="hidden" name="startTime" id="startTime">
+        		<input type="hidden" name="endTime" id="endTime">
+				<input type="hidden" name="preferedAge" id="preferedAge">		
 	        	
 	        	<!-- 등록 버튼 -->
-	        	<button type="button" id="uploadBtn">등록하기</button>
+	        	<button type="submit" id="uploadBtn">등록하기</button>
         	</form> 
         </div> <!-- end main -->
     </div> <!-- end wrapper -->
