@@ -16,13 +16,13 @@
  	
  	<select id="listRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
- 	
- 	
+ 		SELECT REGION_ID, NAME  
+		FROM REGIONS
  	</select>
  	
  	
  	<insert id="addRegions"> <!-- public int addRegions(WorkRegionPreferedDTO regions); -->
-	 	INSERT INTO WORK_REGION_PREFERED(WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID)
+	 	INSERT INTO WORK_REGION_PREFERED(WOR K_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID)
 		VALUES(#{work_region_prefered_id}, #{region_id}, #{gen_reg_id})
  	</insert>
  	

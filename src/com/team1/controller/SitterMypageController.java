@@ -98,14 +98,19 @@ public class SitterMypageController
 		
 		IAgesPreferedDAO agePreferdao = sqlSession.getMapper(IAgesPreferedDAO.class);
 		IWorkRegionPreferedDAO workRegionPreferedDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
+		ISitDAO sitDao = sqlSession.getMapper(ISitDAO.class);
 		
 		// 시터 백업 아이디 갖다 놓기.
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
-		// 선호 연령대 가져오기
-		model.addAttribute("", agePreferdao.)
+		// 신입인지 아닌지 알려주기 위해 등급 갖다 놓기
+		model.addAttribute("grade", sitDao.searchGrades(sit_backup_id).getGrade());
 		
-		// 선호 지역 가져오기
+		// 전체 선호 연령대 가져오기
+		model.addAttribute("agesList", agePreferdao.listAges());
+		
+		// 전체 선호 지역 가져오기
+		model.addAttribute("regionList", workRegionPreferedDao.listRegions());
 		
 		// 파일 가져오기
 		result = "/WEB-INF/view/genRegInsertForm.jsp";

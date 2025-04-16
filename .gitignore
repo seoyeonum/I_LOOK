@@ -1,7 +1,16 @@
 # Eclipse specific files
-/build/
-.settings/
 .classpath
-/bin/
-.turn-project/
 .project
+.settings/
+.buildpath
+.turn-project/
+
+# Build output folders
+/bin/
+/build/
+/target/
+
+# Maven specific
+/logs/
+dependency-reduced-pom.xml
+release.properties
