@@ -40,5 +40,33 @@
 		FROM GEN_REG
 		WHERE GEN_REG_ID = #{gen_reg_id}	
 	</select>
-
+	
+	<!-- (부모가 보는) 1차 필터 결과 리스트 -->
+	<select id="listPrimaryGenReg" resultType="com.team1.dto.GenRegDTO">
+		SELECT R.GEN_REG_ID, R.NAME, R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME
+		     , CASE WHEN NOT EXISTS 
+		                (
+		                    SELECT 1
+		                    FROM GEN_REQ Q
+		                    WHERE R.GEN_REG_ID = Q.GEN_REG_ID
+		                ) THEN '예약중'
+		            ELSE '예약가능'
+		            END AS STATUS
+		FROM GEN_REG_POSSIBLE_VIEW R
+		WHERE R.START_DATE &lt;= #{start_date}
+		  AND R.END_DATE &gt;= #{end_date}
+		  AND R.START_TIME &lt;= #{start_time}
+		  AND R.END_TIME &gt;= #{end_time}
+	</select>
+	
+	<!-- (부모가 보는) 1차 필터 결과 리스트 건수 -->
+	<select id="countPrimaryGenReg" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GEN_REG_POSSIBLE_VIEW R
+		WHERE R.START_DATE &lt;= #{start_date}
+		  AND R.END_DATE &gt;= #{end_date}
+		  AND R.START_TIME &lt;= #{start_time}
+		  AND R.END_TIME &gt;= #{end_time}
+	</select>
+	
 </mapper>

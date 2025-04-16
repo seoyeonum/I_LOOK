@@ -24,4 +24,10 @@ public interface IGenRegDAO
 	
 	// 특정 아이디에 따른 근무 리스트
 	public ArrayList<GenRegDTO> regList(String gen_reg_id);
+	
+	// (부모가 보는) 1차 필터 결과 리스트
+	public ArrayList<GenRegDTO> listPrimaryGenReg();
+	
+	// (부모가 보는) 1차 필터 결과 리스트 건수
+	public int countPrimaryGenReg();
 }
