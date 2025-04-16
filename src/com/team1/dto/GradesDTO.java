@@ -9,8 +9,11 @@ public class GradesDTO
 	// 등급 -- 등급 코드, 이름, 등급 이미지 사진 경로, 변경일
 	private String grade_id, name, file_path;
 	
-	// 최소시간, 최대시간, 등급별 시급배수 , 일일 최대 근무 시간
-	private int min_range, max_range, grade_pay, daily_max_time;
+	// 최소시간, 최대시간, 일일 최대 근무 시간
+	private int min_range, max_range, daily_max_time;
+	
+	// 등급별 시급배수
+	private double grade_pay;
 	
 	// 긴급돌봄 시급 -- 긴급돌봄 시급 코드, 긴급돌봄 시급, 변경일
 	private String emg_min_wage_id;
@@ -69,14 +72,6 @@ public class GradesDTO
 	{
 		this.max_range = max_range;
 	}
-	public int getGrade_pay()
-	{
-		return grade_pay;
-	}
-	public void setGrade_pay(int grade_pay)
-	{
-		this.grade_pay = grade_pay;
-	}
 	public int getDaily_max_time()
 	{
 		return daily_max_time;
@@ -117,4 +112,15 @@ public class GradesDTO
 	{
 		this.gen_min_wage = gen_min_wage;
 	}
+	public double getGrade_pay()
+	{
+		return grade_pay;
+	}
+	public void setGrade_pay(double grade_pay)
+	{
+		this.grade_pay = grade_pay;
+	}
+	
+	
+	
 }

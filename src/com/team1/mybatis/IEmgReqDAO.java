@@ -24,18 +24,21 @@ public interface IEmgReqDAO
 	
 	// 2. 시터 입장
 	
-	// (지원 가능한) 긴급 돌봄 요청 리스트 조회
+	// 지원 가능 긴급 돌봄 요청 리스트 조회
 	public ArrayList<EmgReqDTO> listAllPossibleReq();
 	
-	// (지원 가능한) 긴급 돌봄 요청 수
+	// 지원 가능 긴급 돌봄 요청 수
 	public int countAllPossibleReq();
-	
-	// (지역 선택해) 긴급 돌봄 요청 데이터 찾기
-	//public EmgReqDTO search(String emg_req_id);
+		
+	// (지역 선택해) 지원 가능 긴급 돌봄 요청 데이터 찾기
 	public ArrayList<EmgReqDTO> searchPossibleReq(String region_id);
 	
-	// (지역 선택해) 긴급 돌봄 요청 수
+	// (지역 선택해) 지원 가능 긴급 돌봄 요청 수 찾기
 	public int countPossibleReq();
+	
+	// (긴급 돌봄 요청 코드로) 지원 가능 특정 긴급 돌봄 요청 조회
+	public EmgReqDTO searchPossibleReqDetail();	
+	
 	
 	// 3. 부모 입장
 	

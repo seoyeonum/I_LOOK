@@ -1,0 +1,133 @@
+@charset "UTF-8";
+body {
+    background-color: #ffffff; /* 전체 배경은 흰색 */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #d67ca3; /* 연분홍 계열 */
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.signup-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f4f6f8; /* 연한 회색 */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 5%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+label.required::after {
+    content: " *";
+    color: red;
+}
+
+.text {
+    height: 38px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.input-container,
+.phone-container,
+.ssn-container,
+.address-container {
+    display: flex;
+    gap: 10px;
+}
+
+.ssn-container input,
+.phone-container input {
+    width: 100%;
+    flex: 1;
+}
+
+.dash {
+    font-size: 18px;
+    line-height: 38px;
+}
+
+.duplicate-check {
+    height: 36px;
+    padding: 0 15px;
+    white-space: nowrap;
+    background-color: #ff92b2; /* 연분홍 버튼 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.duplicate-check:hover {
+    background-color: #e77c9b;
+}
+
+.address-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.address-container input {
+    flex: 1; /* 두 input 요소의 크기를 동일하게 설정 */
+    height: 38px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    width: 100% !important; /* 강제로 너비를 100%로 설정 */
+}
+
+.address-container button {
+    height: 38px;
+    padding: 0 15px;
+    background-color: #bbb; /* 중간 회색 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn {
+    width: 100%;
+    height: 40px;
+    background-color: #ff92b2; /* 연분홍 */
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e77c9b;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}

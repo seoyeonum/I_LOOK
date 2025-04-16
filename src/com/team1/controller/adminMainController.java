@@ -27,15 +27,20 @@ public class adminMainController
 		return result;
 	}		
 	
-	// 관리자 마이페이지로 이동 
+	// 관리자 마이페이지로 이동 및 데이터 전송
 	@RequestMapping(value = "/admininfo.action", method = RequestMethod.GET)
 	public String adminInfo(Model model)
 	{
 		String result = null;
 		
+		IAdminDAO admin = sqlSession.getMapper(IAdminDAO.class);
+		
+		model.addAttribute("admin", admin.list());
 		result = "WEB-INF/view/adminInfo.jsp";
 		
 		return result;
 	}
+	
+	
 	
 }

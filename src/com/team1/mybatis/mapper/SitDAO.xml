@@ -89,8 +89,12 @@
 		VALUES(#{sit_backup_id}, #{reg_date}, #{id})
 		
  		INSERT INTO SIT_REG(SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH)
+<<<<<<< HEAD
 		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, #{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code}, #{tel}, #{file_path})
 		
+=======
+		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, #{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code}, #{tel}, #{file_path})	
+>>>>>>> develop
 		<!-- 트랜잭션 처리할 것. -->
  	</insert>
  	

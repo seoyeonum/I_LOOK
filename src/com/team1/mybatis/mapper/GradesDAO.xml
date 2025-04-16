@@ -14,16 +14,18 @@
 	
 	<!-- 등급 데이터 추가 --> 
 	<insert id="addGrade" parameterType="com.team1.dto.GradesDTO">
-		INSERT INTO GRADES (GRADE_ID, NAME, MIN_RANGE, MAX_RANGE, GRADE_PAY
-          , FILE_PATH, DAILY_MAX_TIME, CHANGED_DATE)
-       VALUES (#{grade_id}, #{name}, #{min_range}, #{max_range}, #{grade_pay}, #{file_path}, #{daily_max_time}, SYSDATE);
+    	INSERT INTO GRADES 
+        (GRADE_ID, NAME, MIN_RANGE, MAX_RANGE, GRADE_PAY, FILE_PATH, DAILY_MAX_TIME, CHANGED_DATE)
+    	VALUES 
+        (LPAD(GRADE_ID_SEQ.NEXTVAL, 3, '0')
+        , #{name}, #{min_range}, #{max_range}, #{grade_pay}, #{file_path}, #{daily_max_time}, SYSDATE)
 	</insert>
-	
+
 	<!-- 등급 수정 -->
 	<update id="modifyGrade" parameterType="com.team1.dto.GradesDTO">
 		SET NAME=#{name}, MIN_RANGE=#{min_range}, MAX_RANGE=#{max_range}, GRADE_PAY=#{grade_pay}
 	      , FILE_PATH=#{file_path}, DAILY_MAX_TIME=#{daily_max_time}, CHANGED_DATE = SYSDATE
-		WHERE GRADE_ID = 1;
+		WHERE GRADE_ID = #{grade_id}
 	</update>
 	
 	<!-- 등급 삭제 -->

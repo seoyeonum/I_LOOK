@@ -88,7 +88,8 @@
 		        , #{point})
 	</insert>
 	
-	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 -->
+	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 → ParDAO 로 이동 -->
+	<!-- 
 	<select id="searchTotalPoint" resultType="java.lang.Integer">
 		SELECT NVL((SELECT POINT FROM SUM_GEN_GOT_POINT_VIEW WHERE PAR_BACKUP_ID = #{par_backup_id}), 0)
 		     + NVL((SELECT POINT FROM SUM_GEN_REFUNDED_POINT_VIEW WHERE PAR_BACKUP_ID = #{par_backup_id}), 0)
@@ -99,5 +100,5 @@
 		     AS TOTAL_POINT
 		FROM DUAL
 	</select>
-	
+	 -->
 </mapper>

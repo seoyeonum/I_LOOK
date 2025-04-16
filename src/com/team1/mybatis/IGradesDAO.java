@@ -20,13 +20,13 @@ public interface IGradesDAO
 	public int removeGrade(String grade_id);
 	
 	// 일반돌봄 시급 조회
-	public GradesDTO listGenWage(GradesDTO grades);
+	public GradesDTO listGenWage();
 	
 	// 일반돌봄 시급 수정
 	public int modifyGenWage(GradesDTO grades);
 	
 	// 긴급돌봄 시급 조회
-	public GradesDTO listEmgWage(GradesDTO grades);
+	public GradesDTO listEmgWage();
 	
 	// 긴급돌봄 시급 수정
 	public int modifyEmgWage(GradesDTO grades);

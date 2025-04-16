@@ -22,8 +22,9 @@ public class EmgReqDTO
 	
 	// 속성 추가
 	private String region_id;								// 지역 코드
-	private String par_backup_id, par_name, par_id;			// 부모 백업코드, 부모 이름, 부모 아이디 
+	private String par_backup_id, par_name, par_id;			// 부모 백업코드, 부모 이름, 부모 아이디
 	
+
 	// getter / setter 구성
 	public String getEmg_req_id()
 	{
@@ -121,6 +122,14 @@ public class EmgReqDTO
 	{
 		this.region_id = region_id;
 	}
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
+	}
 	public String getPar_name()
 	{
 		return par_name;
@@ -137,6 +146,5 @@ public class EmgReqDTO
 	{
 		this.par_id = par_id;
 	}
-	
 	
 }
