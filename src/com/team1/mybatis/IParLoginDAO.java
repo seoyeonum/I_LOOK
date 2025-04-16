@@ -6,7 +6,7 @@ package com.team1.mybatis;
 
 import com.team1.dto.ParDTO;
 
-public interface IParentLoginDAO
+public interface IParLoginDAO
 {
 	// 부모 아이디
 	//public int parid(ParDTO parId);

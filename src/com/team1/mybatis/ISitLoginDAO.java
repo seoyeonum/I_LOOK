@@ -6,7 +6,7 @@ package com.team1.mybatis;
 
 import com.team1.dto.SitDTO;
 
-public interface ISitterLoginDAO
+public interface ISitLoginDAO
 {
 	// 시터 아이디
 	// public int sitid(SitDTO sitId);
