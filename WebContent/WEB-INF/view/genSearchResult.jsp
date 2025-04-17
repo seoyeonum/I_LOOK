@@ -159,15 +159,19 @@
   	    
 	  	$(document).ready(function()
 	  	{
-	  		$('#secondary-searh-btn').on('click', function()
+	  		$('#secondary-search-btn').on('click', function()
 	  		{
+	  			
 	  			var grades = ['A', 'B', 'C']; 				// 예: 여러 등급을 배열로 저장
 	  			var regions = ['SEOUL', 'BUSAN', 'DAEGU'];  // 예: 여러 지역을 배열로 저장
-		
+				
+				
 		  	    $.ajax({
-		  	      			url: 'genreglist.action'
+		  	      			url: 'genregpossiblelist.action'
 		  	     			, method: 'POST'
-		  	      			, data: { grade : grades, region : regions }  //category=A&type=premium 식으로 전달
+		  	     			, traditional: true
+		  	      			, data: { grades : grades, regions : regions }  //category=A&type=premium 식으로 전달
+		  	      			, dataType: 'html'
 		  	      			, success: function(response)
 		  	      			{
 		  	        			$('#resultArea').html(response); // 응답으로 받은 HTML 조각을 리스트 영역에 삽입
@@ -219,11 +223,12 @@
     }
  	
  	// 함수 3.돌봄 신청 클릭 시 새 창(genRegDetail.jsp) 열기
-    function openDetailWindow(sitterId)
+    function openDetailWindow(genRegId)
  	{
-        // 두 번째 파라미터 : '_blank' → 새 창 열기
+    	// 두 번째 파라미터 : '_blank' → 새 창 열기
         // 세 번째 파라미터 : 창 옵션 (크기, 스크롤바 등)
-        window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500');
+        /* window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500'); */
+        window.open('genregpossibledetail.action?genRegId=' + genRegId, '_blank', 'width=640,height=500');
     }
   
 </script>
@@ -492,7 +497,7 @@
 			        </div>
 				</div>
 	
-				<button type="submit" class="btn" id="secondary-searh-btn">필터 적용</button>
+				<button type="button" class="btn" id="secondary-search-btn">필터 적용</button>
 			</form>
 			</div>
 		</div>
@@ -504,7 +509,7 @@
 	        </div>
 	        
 	        <!-- 일반 돌봄 각 등록 건 -->
-	       	<!-- <form action="./genRegDetail.jsp"> -->
+	       	<!-- <form action="genregdetail.action" method="post" target="_blank"> -->
 		        <div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit01.jpg" alt="시터 사진">
@@ -519,8 +524,10 @@
 		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
 		                </div>
 		                <button type="submit" class="btn gen-btn-small" onclick="openDetailWindow(1)">돌봄 신청</button>
+
 		            </div>
 		        </div>
+		    
 				<div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit02.jpg" alt="시터 사진">
@@ -537,6 +544,8 @@
 		                <button type="submit" class="btn gen-btn-small"  onclick="openDetailWindow(2)">돌봄 신청</button>
 		            </div>
 		        </div>
+		    
+		    
 		        <div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit03.jpg" alt="시터 사진">
@@ -551,7 +560,7 @@
 		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
 		                </div>
 		                <button type="button" class="btn gen-btn-small" onclick="openDetailWindow(3)">돌봄 신청</button>
-		            </div>
+		             </div>
 		        </div>
 		    <!-- </form> -->
 	    </div>
