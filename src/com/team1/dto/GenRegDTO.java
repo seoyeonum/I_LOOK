@@ -7,9 +7,12 @@ public class GenRegDTO
 	// START_TIME, END_TIME
 	// REG_DATE, INTRODUCTION
 	
-	// 주요 속성 구성
+	// 주요 속성 구성 	
+	// 근무 등록 코드, 시터 백업 코드, 제목 
 	private String gen_reg_id, sit_backup_id, title;
+	// 근무 시작 가능 날짜, 근무 종료 가능 날짜, 근무 등록 날짜, 자기소개
 	private String start_date, end_date, reg_date, introduction;
+	// 근무 시작 가능 시간, 근무 
 	private int start_time, end_time;
 	
 	// getter / setter 구성

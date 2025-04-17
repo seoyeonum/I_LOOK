@@ -14,7 +14,7 @@
  	</select>
  	
  	
- 	<select id="listRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
+ 	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
  		SELECT REGION_ID, NAME  
 		FROM REGIONS

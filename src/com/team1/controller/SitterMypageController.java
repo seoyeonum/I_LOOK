@@ -11,15 +11,19 @@ import java.util.Iterator;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.team1.dto.AgesPreferedDTO;
 import com.team1.dto.GenRegDTO;
 import com.team1.dto.SitCareListDTO;
 import com.team1.dto.SitDTO;
+import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IAgesPreferedDAO;
 import com.team1.mybatis.IGenRegDAO;
@@ -107,26 +111,35 @@ public class SitterMypageController
 		model.addAttribute("grade", sitDao.searchGrades(sit_backup_id).getGrade());
 		
 		// 전체 선호 연령대 가져오기
-		model.addAttribute("agesList", agePreferdao.listAges());
+		model.addAttribute("agesList", agePreferdao.listAllAges());
 		
 		// 전체 선호 지역 가져오기
-		model.addAttribute("regionList", workRegionPreferedDao.listRegions());
+		model.addAttribute("regionList", workRegionPreferedDao.listAllRegions());
 		
 		// 파일 가져오기
 		result = "/WEB-INF/view/genRegInsertForm.jsp";
 		return result;
 	}
 	
+	
 	// 근무 등록 테이블에 넣는 액션
 	@RequestMapping(value = "/genreginsert.action", method = RequestMethod.POST)
-	public String GenRegList(String sit_backup_id, GenRegDTO genRegdto, 지역dto, 연령대dto)
+	public String GenRegList(String sit_backup_id, @ModelAttribute GenRegDTO genRegdto
+												, @ModelAttribute WorkRegionPreferedDTO workRPDto
+												, @ModelAttribute AgesPreferedDTO agePDto)
 	{
 		String result = null;
 
 		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
+		IWorkRegionPreferedDAO workRPDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
+		IAgesPreferedDAO agesPDao = sqlSession.getMapper(IAgesPreferedDAO.class);
 
+		// 그런데 이 genRegdto에는 sit_backup_id가 없다.
+		genRegdto.setSit_backup_id(sit_backup_id);
 		// int 나오니까 이걸로 분기 처리 가능.
 		genRegDao.add(genRegdto);
+		workRPDao.addRegions(workRPDto);
+		agesPDao.addAges(agePDto);
 		
 		result = "/WEB-INF/view/genRegInsertFormComplete.jsp";
 		
@@ -174,16 +187,44 @@ public class SitterMypageController
 	
 	// 근무 등록 내역 상세보기 누르면 나오는 컨트롤러 >> AJAX 처리
 	@RequestMapping(value = "/genregdetail.action", method = RequestMethod.GET)
-	public String GenRegDetailList(@RequestParam("gen_req_id") String sit_backup_id, Model model) 
+	public String GenRegDetailList(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model) 
 	{
 		String result = null;
 		
 		model.addAttribute("sit_backup_id", sit_backup_id);
+		model.addAttribute("gen_req_id", gen_req_id);
 		
 		result = "/WEB-INF/view/ParGenReqList.jsp";
 		
 		return result;
 	}
+	
+	// 돌봄 예스 누르면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
+	public String AnswerYes()
+	{
+		String result = null;
+		
+		// 돌봄 확정에 insert
+		
+		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
+		
+		return result;
+	}
+	
+	
+	// 돌봄 취소하면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
+	public String AnswerNo()
+	{
+		String result = null;
+		
+		// 돌봄 취소에 insert
+		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
+		
+		return result;
+	}
+	
 	
 	
 	// 돌봄 제공 내역 확인 컨트롤러

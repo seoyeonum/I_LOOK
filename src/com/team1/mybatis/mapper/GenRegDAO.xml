@@ -11,7 +11,7 @@
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION)
 		VALUES(#{gen_reg_id}, #{sit_backup_id}, #{title}
 		, #{start_date}, #{end_date}
-		, #{start_time}, #{end_time}, #{reg_date}, #{introduction})
+		, #{start_time}, #{end_time}, SYSDATE, #{introduction})
 	</insert>
 	
 	<!-- 일반 돌봄 근무 삭제 -->

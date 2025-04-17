@@ -16,7 +16,7 @@ public interface IAgesPreferedDAO
 	public ArrayList<AgesPreferedDTO> listAges(String gen_reg_id);
 	
 	// 시터 돌봄 선호 연령대 전체 열람
-	public ArrayList<AgesPreferedDTO> listAges();
+	public ArrayList<AgesPreferedDTO> listAllAges();
 	
 	// 시터 돌봄 선호 연령대 추가
 	public int addAges(AgesPreferedDTO ages);

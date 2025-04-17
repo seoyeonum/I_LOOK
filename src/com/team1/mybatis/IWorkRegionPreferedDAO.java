@@ -15,7 +15,7 @@ public interface IWorkRegionPreferedDAO
 	public ArrayList<WorkRegionPreferedDTO> listRegions(String gen_reg_id);
 	
 	// 근무 지역 전체 열람
-	public ArrayList<WorkRegionPreferedDTO> listRegions();
+	public ArrayList<WorkRegionPreferedDTO> listAllRegions();
 	
 	// 근무 지역 추가
 	public int addRegions(WorkRegionPreferedDTO regions);
