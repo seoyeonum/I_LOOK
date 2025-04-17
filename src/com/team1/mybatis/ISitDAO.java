@@ -6,6 +6,9 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.team1.dto.SitDTO;
 
@@ -15,7 +18,13 @@ public interface ISitDAO
 	public ArrayList<SitDTO> list();
 	
 	// 시터 회원가입 요청 목록
-	public ArrayList<SitDTO> listAdminSitReg();
+	public List<SitDTO> listSitReg(@Param("start") int start, @Param("end") int end);
+	
+	// [관리자] 시터 회원 이름 검색
+	public List<SitDTO> sitNameSearch(String name); 
+	
+	// [관리자] 시터 회원 전화번호 검색
+	public SitDTO sitTelSearch(String tel); 
 	
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
@@ -31,9 +40,6 @@ public interface ISitDAO
 	
 	// [시터] 시터 회원 정보 수정 
 	public int modifySit(SitDTO sitter);
-	
-	// [관리자] 시터 회원 이름 검색
-	public SitDTO sitNameSearch(String name);
 	
 	// [관리자] 시터 회원 백업 코드 검색
 	public SitDTO sitSearch(String sit_backup_id);

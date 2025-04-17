@@ -1,5 +1,7 @@
 package com.team1.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team1.dto.AdminDTO;
+import com.team1.dto.SitDTO;
 import com.team1.mybatis.ISitDAO;
+import com.team1.util.PageHandler;
 
 
 @Controller
@@ -22,7 +27,8 @@ public class AdminMemberController
 	
     // 상단 회원 관리 및 사이드바 누를 시 시터 등록요청 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/adminsitreglist.action", method = RequestMethod.GET) 
-    public String adminSitRegList(Model model, HttpSession session) 
+    public String adminSitRegList(@RequestParam(value="page", defaultValue="1") int page
+    							, Model model, HttpSession session)
     { 
 	    String result = null;
 	  
@@ -34,8 +40,16 @@ public class AdminMemberController
 		AdminDTO dto = getLoginAdmin(session);
 		model.addAttribute("admin", dto);
 		  
-		model.addAttribute("sitReg", dao.listAdminSitReg());
+		// 총 등록 요청 수
+		int totalCount = dao.countSitReg();
+        
+		PageHandler paging = new PageHandler(page, totalCount);
 		
+        List<SitDTO> sitRegList = dao.listSitReg(paging.getStart(), paging.getEnd());
+        
+        model.addAttribute("sitRegList", sitRegList);
+        model.addAttribute("paging", paging);
+        
 		result = "WEB-INF/view/adminSitRegList.jsp";
 	  
 		return result;

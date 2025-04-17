@@ -63,3 +63,48 @@ nav {
 	color: rgb(226, 140, 153);
 }
 
+
+
+/* 페이징 스타일 */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    padding: 15px 0;
+}
+
+.page a, .page strong {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    padding: 8px 14px;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page a {
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.page a:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+}
+
+.page strong {
+    background-color: #4a6baf;
+    color: white;
+    border: 1px solid #4a6baf;
+}
+
+.page a.prev, .page a.next {
+    font-weight: 500;
+}

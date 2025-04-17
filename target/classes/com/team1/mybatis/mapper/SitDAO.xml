@@ -11,10 +11,10 @@
 		  T.SIT_BACKUP_ID,
 		  T.총근무시간,
 		  CASE
-		    WHEN T.총근무시간 <![CDATA[<]]> 120 THEN '신입'
-		    WHEN T.총근무시간 <![CDATA[<]]> 1000 THEN '브론즈'
-		    WHEN T.총근무시간 <![CDATA[<]]> 5000 THEN '실버'
-		    WHEN T.총근무시간 <![CDATA[<]]> 10000 THEN '골드'
+		    WHEN T.총근무시간 &lt; 120 THEN '신입'
+		    WHEN T.총근무시간 &lt; 1000 THEN '브론즈'
+		    WHEN T.총근무시간 &lt; 5000 THEN '실버'
+		    WHEN T.총근무시간 &lt; 10000 THEN '골드'
 		    ELSE '플래티넘'
 		  END AS 등급
 		, SREG.SIT_REG_ID
@@ -66,10 +66,51 @@
  	</select>
  	
  	<!-- 시터 회원 등록 요청 목록 확인 -->
- 	<select id="listAdminSitReg" resultType="com.team1.dto.SitDTO">
-		SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
-		     , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL  
-		FROM ADMIN_SIT_REG_VIEW
+ 	<select id="listSitReg" resultType="com.team1.dto.SitDTO">
+	 	SELECT *
+		FROM 
+		(
+		    SELECT ROWNUM RN, S.*
+		    FROM 
+		    (
+		        SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
+				     , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH  
+				FROM ADMIN_SIT_REG_VIEW
+		        ORDER BY SIT_BACKUP_ID DESC
+		    ) S
+		    WHERE ROWNUM &lt; #{end}
+		)
+		WHERE RN &gt; #{start}
+ 	</select>
+ 	
+ 	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
+ 		SELECT *
+	    FROM SIT_VIEW
+	    WHERE NAME LIKE '%' || #{name} || '%'  
+	    ORDER BY SIT_BACKUP_ID DESC
+ 	</select>
+ 	
+ 	<select id="sitTelSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 전화번호 검색 public SitDTO sitSearch(String tel); -->
+ 		SELECT *
+		FROM SIT_VIEW
+		WHERE TEL = #{tel}
+		ORDER BY SIT_BACKUP_ID DESC
+ 	</select>
+ 	
+ 	<!-- // [관리자] 시터 회원 등록 요청 개수 확인 public int countSitReg(); -->
+ 	<select id="countSitReg" resultType="java.lang.Integer"> 
+ 		SELECT COUNT(*) AS COUNT
+		FROM SIT_REG RG
+		JOIN SIT_BACKUP BK
+		ON RG.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
+		WHERE 
+		    BK.REG_DATE >= SYSDATE - 8 
+		    AND NOT EXISTS (
+		        SELECT 1 FROM SIT_CHK CK WHERE CK.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
+		    )
+		    AND NOT EXISTS (
+		        SELECT 1 FROM SIT_REJECTED RJ WHERE RJ.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
+		    )
  	</select>
  	
  	<select id="countSit" resultType="java.lang.Integer"> <!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
@@ -77,15 +118,14 @@
 		FROM SIT_CHK
  	</select>
  	
- 	
- 	<select id="countSitReg" resultType="java.lang.Integer"> <!-- // [관리자] 시터 회원 등록 요청 개수 확인 public int countSitReg(); -->
- 		SELECT COUNT(*) AS COUNT
-		FROM SIT_CHK SCHK, SIT_BACKUP SBAC, SIT_REJECTED SREJ
-		WHERE SBAC.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
-		AND SBAC.SIT_BACKUP_ID = SREJ.SIT_BACKUP_ID
-		AND SCHK.SIT_BACKUP_ID IS NULL
-		AND SREJ.SIT_BACKUP_ID IS NULL
+ 	<select id="sitSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 백업 코드 검색 public SitDTO sitSearch(String sit_backup_id); -->
+ 		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
+		, BANK_TYPE, ACCT_NUMBER
+		FROM SIT_VIEW
+		WHERE ID = #{id}
  	</select>
+ 	
  	
  	
  	<insert id="sitReg" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
@@ -116,25 +156,6 @@
 		     , SIT_REG.TEL =  #{tel}
 		WHERE SIT_BACKUP_ID = #{sit_backup_id}
  	</update>
- 	
- 	
- 	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
- 		SELECT SIT_BACKUP_ID, REG_DATE, ID, PW, NAME
- 		, SIT_CHK_ID, CHK_DATE, SSN_FIRST
- 		, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR
- 		, ZIP_CODE, TEL, BANK_TYPE, ACCT_NUMBER
-		FROM SIT_VIEW
-		WHERE NAME LIKE '%#{name}%'
- 	</select>
- 	
- 	
- 	<select id="sitSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 백업 코드 검색 public SitDTO sitSearch(String sit_backup_id); -->
- 		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
-		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
-		, BANK_TYPE, ACCT_NUMBER
-		FROM SIT_VIEW
-		WHERE ID = #{id}
- 	</select>
  	
  	
  	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
