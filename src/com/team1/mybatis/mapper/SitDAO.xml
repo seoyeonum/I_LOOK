@@ -120,7 +120,7 @@
  		, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR
  		, ZIP_CODE, TEL, BANK_TYPE, ACCT_NUMBER
 		FROM SIT_VIEW
-		WHERE NAME LIKE '%#{name}%';
+		WHERE NAME LIKE '%#{name}%'
  	</select>
  	
  	
@@ -134,11 +134,27 @@
  	
  	
  	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
- 		SELECT SREG.NAME
+<!--  		SELECT SREG.NAME
 		FROM SIT_REG SREG, SIT_BACKUP SBAC
 		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND SBAC.ID = #{id}
-		AND SREG.PW = #{pw}
+		AND SREG.PW = #{pw} -->
+		SELECT 
+		R.SIT_REG_ID, 
+		R.SIT_BACKUP_ID,
+		B.ID,
+		R.PW,
+		R.NAME,
+		R.SSN_FIRST,
+		R.SSN_SECOND,
+		R.ROAD_ADDR,
+		R.DETAILED_ADDR,
+		R.ZIP_CODE,
+		R.TEL,
+		R.FILE_PATH
+		FROM SIT_REG R
+		JOIN SIT_BACKUP B ON B.SIT_BACKUP_ID = R.SIT_BACKUP_ID
+		WHERE ID = #{id} AND PW = #{pw}
  	</select>
  	
  	
@@ -216,7 +232,7 @@
 	AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
 	AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 	AND SBAC.ID = #{id}
-	GROUP BY SBAC.ID;
+	GROUP BY SBAC.ID
 	</select>
 	
 	<select id="searchBupRating" resultType="java.lang.Integer"> <!-- // [시터 혹은 관리자] 백업 코드로 자신의 평균 점수 찾기 public int searchBupRating(String sit_backup_id); -->
@@ -227,7 +243,7 @@
 		AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
 		AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND GREG.SIT_BACKUP_ID = #{sit_backup_id}
-		GROUP BY GREG.SIT_BACKUP_ID;
+		GROUP BY GREG.SIT_BACKUP_ID
 	</select>
 	
 	<select id="searchM3Rating" resultType="java.lang.Integer"> <!-- // [시터] 아이디로 자신의 최근 3개월 평균 점수 찾기	public int searchM3Rating(String id); -->
@@ -239,6 +255,6 @@
 		AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND SBAC.ID = #{id}
 		AND GREV.REVIEWED_DATE <![CDATA[<=]]>  ADD_MONTHS(SYSDATE, -3)
-		GROUP BY SBAC.ID;
+		GROUP BY SBAC.ID
 	</select>
 </mapper>

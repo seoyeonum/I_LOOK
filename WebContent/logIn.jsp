@@ -141,7 +141,7 @@
 			<span id="logoName">아이.룩</span>
         </div>
 
-        <form method="post" action="/login.action" id="login-form">
+        <form method="post" action="login.action" id="login-form">
             <!-- 회원 유형 선택 -->
             <select name="userType" required>
                 <option value="">회원 유형 선택</option>
@@ -151,8 +151,8 @@
             </select>
 
             <!-- 아이디, 비밀번호 -->
-            <input type="text" name="id" placeholder="아이디" required>
-            <input type="password" name="pw" placeholder="비밀번호" required>
+            <input type="text" name="id" id="id" placeholder="아이디" required>
+            <input type="password" id="pw" name="pw" placeholder="비밀번호" required>
             <input type="submit" value="Login">
 
             <div id="loginMenu">

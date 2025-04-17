@@ -16,28 +16,26 @@ public class LoginController
     @RequestMapping(value = "/login.action", method = RequestMethod.POST)
     public void loginRedirect(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-    	System.out.println("후와");
         String userType = request.getParameter("userType");
-        String id = request.getParameter("id");
+		/* String id = request.getParameter("id"); */
         String pw = request.getParameter("pw");
+        String id = request.getParameter("id");
 
         String redirectUrl = "";
-        
-        System.out.println("와이");
 
         switch (userType)
         {
             case "admin":
-                redirectUrl = "/adminlogin.action";
+                redirectUrl = "adminlogin.action";
                 break;
             case "parent":
-                redirectUrl = "/parentlogin.action";
+                redirectUrl = "parentlogin.action";
                 break;
             case "sitter":
-                redirectUrl = "/sitterlogin.action";
+                redirectUrl = "sitterlogin.action";
                 break;
             default:
-                response.sendRedirect("loginform.action?error=1");
+                response.sendRedirect("login.action?error=1");
                 return;
         }
 

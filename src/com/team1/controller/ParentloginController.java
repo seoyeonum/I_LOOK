@@ -29,12 +29,12 @@ public class ParentloginController
     {
     	IParLoginDAO dao = sqlSession.getMapper(IParLoginDAO.class);
 
-    	ParDTO admin = dao.loginCheck(id, pw);
+    	ParDTO parent = dao.loginCheck(id, pw);
 
-        if (admin != null)
+        if (parent != null)
         {
-            session.setAttribute("loginParent", admin);
-            return "WEB-INF/view/genMain.jsp";
+            session.setAttribute("loginParent", parent);
+            return "genMain.jsp";
         }
         else 
         {
