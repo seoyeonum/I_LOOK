@@ -26,7 +26,6 @@
 		        SUM(근무시간) AS 총근무시간
 		    FROM 
 		(
-		    -- 일반 돌봄 근무 시간
 		    SELECT
 		    G.SIT_BACKUP_ID,
 		    SUM((Q.END_DATE - Q.START_DATE +1) * LEAST((Q.END_TIME - Q.START_TIME), 8)) AS 근무시간
@@ -51,13 +50,12 @@
 		    
 		    UNION ALL
 		    
-		    -- 긴급 돌봄 근무 시간
 		    SELECT 
 		    E.SIT_BACKUP_ID, 
 		    SUM((R.END_DATE - R.START_DATE +1) * LEAST((R.END_TIME - R.START_TIME), 8)) AS 근무시간
 		    FROM EMG_CONFIRMED E
 		    JOIN EMG_REQ R ON E.EMG_REQ_ID = R.EMG_REQ_ID
-		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL   -- NULL 값은 그냥 반영하지 않겠다.
+		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL
 		    GROUP BY E.SIT_BACKUP_ID
 		    )
 		    GROUP BY SIT_BACKUP_ID
@@ -67,6 +65,12 @@
 		ORDER BY T.SIT_BACKUP_ID
  	</select>
  	
+ 	<!-- 시터 회원 등록 요청 목록 확인 -->
+ 	<select id="listAdminSitReg" resultType="com.team1.dto.SitDTO">
+		SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
+		     , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL  
+		FROM ADMIN_SIT_REG_VIEW
+ 	</select>
  	
  	<select id="countSit" resultType="java.lang.Integer"> <!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
  		SELECT COUNT (*) AS COUNT
@@ -134,11 +138,27 @@
  	
  	
  	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
- 		SELECT SREG.NAME
+<!--  		SELECT SREG.NAME
 		FROM SIT_REG SREG, SIT_BACKUP SBAC
 		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND SBAC.ID = #{id}
-		AND SREG.PW = #{pw}
+		AND SREG.PW = #{pw} -->
+		SELECT 
+		R.SIT_REG_ID, 
+		R.SIT_BACKUP_ID,
+		B.ID,
+		R.PW,
+		R.NAME,
+		R.SSN_FIRST,
+		R.SSN_SECOND,
+		R.ROAD_ADDR,
+		R.DETAILED_ADDR,
+		R.ZIP_CODE,
+		R.TEL,
+		R.FILE_PATH
+		FROM SIT_REG R
+		JOIN SIT_BACKUP B ON B.SIT_BACKUP_ID = R.SIT_BACKUP_ID
+		WHERE ID = #{id} AND PW = #{pw}
  	</select>
  	
  	
@@ -295,4 +315,12 @@
 		AND SBAC.SIT_BACKUP_ID = #{sit_backup_id}
 		ORDER BY EREQ.END_DATE DESC
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

@@ -14,6 +14,9 @@ public interface ISitDAO
 	// [관리자] 시터 회원 리스트
 	public ArrayList<SitDTO> list();
 	
+	// 시터 회원가입 요청 목록
+	public ArrayList<SitDTO> listAdminSitReg();
+	
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
 	

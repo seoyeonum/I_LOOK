@@ -9,6 +9,7 @@
 		SELECT PAR_REG_ID, PAR_BACKUP_ID, NAME, PW, TEL, SSN_FIRST, SSN_SECOND
 		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE
 		FROM PAR_REG
+		WHERE PAR_REG_ID = #{par_reg_id}
 	</select>
 	
 	<!-- 부모 회원 정보 리스트 전체 수 -->
@@ -42,7 +43,7 @@
 			ROAD_ADDR = #{road_addr} 
 			DETAILED_ADDR = #{detailed_addr}
 			ZIP_CODE = #{zip_code}
-		WHERE PAR_REG_ID = '#{par_reg_id};
+		WHERE PAR_REG_ID = #{par_reg_id}
 	</update>
 	
 	

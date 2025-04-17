@@ -35,6 +35,7 @@ header {
 	left: -90px;
 	height: 50px;
 	width: 200px;
+	cursor: pointer;
 }
 
 nav {
