@@ -126,7 +126,8 @@ public class SitterMypageController
 	@RequestMapping(value = "/genreginsert.action", method = RequestMethod.POST)
 	public String GenRegList(String sit_backup_id, @ModelAttribute GenRegDTO genRegdto
 												, @ModelAttribute WorkRegionPreferedDTO workRPDto
-												, @ModelAttribute AgesPreferedDTO agePDto)
+												, @ModelAttribute AgesPreferedDTO agePDto
+												, Model model)
 	{
 		String result = null;
 
@@ -140,6 +141,9 @@ public class SitterMypageController
 		genRegDao.add(genRegdto);
 		workRPDao.addRegions(workRPDto);
 		agesPDao.addAges(agePDto);
+		
+		// 사이드바 이용을 위한 시터 백업 아이디 보내주기
+		model.addAttribute("sit_backup_id", sit_backup_id);
 		
 		result = "/WEB-INF/view/genRegInsertFormComplete.jsp";
 		
@@ -199,28 +203,31 @@ public class SitterMypageController
 		return result;
 	}
 	
-	// 돌봄 예스 누르면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
-	public String AnswerYes()
+	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredyes.action", method = RequestMethod.GET)
+	public String AnswerYes(String sit_backup_id, Model model)
 	{
 		String result = null;
 		
 		// 돌봄 확정에 insert
 		
-		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
+		// 돌봄 제공 내역으로 리다이렉트
+		result = "redirect:sittergenreqansweredlist.action";
 		
 		return result;
 	}
 	
 	
-	// 돌봄 취소하면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
-	public String AnswerNo()
+	// 근무 등록 내역에서 돌봄 취소하면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredno.action", method = RequestMethod.GET)
+	public String AnswerNo(String sit_backup_id, Model model)
 	{
 		String result = null;
 		
 		// 돌봄 취소에 insert
-		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
+		
+		// 돌봄 제공 내역으로 리다이렉트
+		result = "redirect:sittergenreqansweredlist.action";
 		
 		return result;
 	}
@@ -258,13 +265,25 @@ public class SitterMypageController
 		return "/WEB-INF/view/ParGenReqDetail.jsp";
 	}
 	
-	// 돌봄 완료 내역 확인 띄우기
+	// 돌봄 제공 내역 확인 >> 자기소개서 자세히 보기 클릭 >> 새창으로 나오는 자기소개
+	@RequestMapping(value = "/sitterregintroduction.action", method = RequestMethod.GET)
+	public String SitterRegIntroduction(@RequestParam("gen_reg_id") String gen_reg_id, Model model)
+	{
+		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
+		
+		model.addAttribute("register", genRegDao.regList(gen_reg_id));
+		
+		return "/WEB-INF/view/SitterRegIntroduction.jsp";
+	}
+	
+	// 돌봄 완료 내역 띄우기
 	@RequestMapping(value = "/carecompletelist.action", method = RequestMethod.GET)
-	public String CareCompleteList(Model model, String gen_req_id)
+	public String CareCompleteList(Model model, String sit_backup_id)
 	{
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
-		model.addAttribute("completeList", sitCareListDao.genCompleteList(gen_req_id));
+		model.addAttribute("completeList", sitCareListDao.genCompleteList(sit_backup_id));
+		model.addAttribute("sit_backup_id", sit_backup_id);
 		
 		
 		return "/WEB-INF/view/CareCompleteList.jsp";
