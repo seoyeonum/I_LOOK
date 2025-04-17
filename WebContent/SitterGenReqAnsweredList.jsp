@@ -163,9 +163,9 @@
 		
 		$(".reservation-btn").click(function() 
 		{
-			var popup = window.open("ParGenReqDetail.jsp", '일반 돌봄 상세 정보', 'scrollbars=yes');
+			var popup = window.open("pargenreqdetail.action?gen_req_id=" + this.value, '일반 돌봄 상세 정보', 'scrollbars=yes');
 		});
-		
+
 	});
 </script>
 </head>
@@ -229,7 +229,7 @@
 				</div>   
 			</div>
 			<div class="reservation tbody" style="padding: 10px 0;">
-				<div class="row" id="number1">
+				<%-- <div class="row" id="number1">
 					<div class="col-md-1">1</div>
 					<div class="col-md-2">2025.03.30</div>
 					<div class="col-md-2">04.06 ~ 04.07</div>
@@ -258,7 +258,9 @@
 					<div class="col-md-1">1세</div>
 					<div class="col-md-2"><button class="reservation-btn" value="3">상세 정보</button></div>
 					<div class="col-md-2">예약 취소</div>
-				</div>
+				</div> --%>
+				
+				
 			</div>
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->

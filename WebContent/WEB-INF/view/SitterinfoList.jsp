@@ -180,13 +180,13 @@
 			<ul class="side-menu" >
 				<li><a href="">시터 마이 페이지</a>
 					<ul>
-						<li><a href="SitterinfoList.jsp" style="font-weight: bold; color: #1AB223">개인정보 수정</a></li>
-						<li><a href="GradesCheck.jsp">등급 확인</a></li>
+						<li><a href="sitterinfolist.action?sit_backup_id=${list.sit_backup_id }" style="font-weight: bold; color: #1AB223">개인정보 수정</a></li>
+						<li><a href="gradescheck.action?sit_backup_id=${list.sit_backup_id }">등급 확인</a></li>
 						<li><a href="">근무 등록</a></li>
-						<li><a href="GenRegList.jsp" >근무 등록 내역 확인</a></li>
-						<li><a href="SitterGenReqAnsweredList.jsp">돌봄 제공 내역 확인</a></li>
-						<li><a href="CareCompleteList.jsp" >돌봄 완료 내역 확인</a></li>
-						<li><a href="SitterWithdraw.jsp">회원 탈퇴</a></li>
+						<li><a href="genreglist.action?sit_backup_id=${list.sit_backup_id }" >근무 등록 내역 확인</a></li>
+						<li><a href="sittergenreqansweredlist.action?sit_backup_id=${list.sit_backup_id }">돌봄 제공 내역 확인</a></li>
+						<li><a href="carecompletelist.action?sit_backup_id=${list.sit_backup_id }" >돌봄 완료 내역 확인</a></li>
+						<li><a href="sitterwithdraw.action?sit_backup_id=${list.sit_backup_id }">회원 탈퇴</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -199,44 +199,40 @@
 			<h2 class="category">개인정보 수정하기</h2>
 			<br />
 			<div class="form-group">
-			이름:  <input type="text" class="form-control" />
+			이름:  <input type="text" class="form-control" value="${list.name }" />
 			</div>
 			<hr />
 			<div class="form-group">
-			아이디: <input type="text" class="form-control" readonly="readonly" />
+			아이디: <input type="text" class="form-control" readonly="readonly" value="${list.id }" />
 			<span class="errMsg">아이디는 변경할 수 없습니다.</span>
 			</div>
 			<hr />
 			<div class="form-group" >
-			비밀번호: <input type="password" class="form-control" />
+			비밀번호: <input type="password" class="form-control" value="${list.pw }" />
 			<span>비밀번호는 영어 대소문자, 숫자 조합으로 8자 이상 16자 이하로 입력해 주십시오.</span>
 			</div>
 			<hr />
 			<div class="form-group" >
 			주민등록번호: 
-			<input type="number" class="form-control" readonly="readonly" name="ssn_first"/> - <input type="number" class="form-control" name="ssn_second"readonly="readonly"/>
+			<input type="number" class="form-control" readonly="readonly" name="ssn_first" value="${list.ssn_first }" /> - <input type="password" class="form-control" name="ssn_second"readonly="readonly" value=${list.ssn_second } />
 			</div>
 			<hr />
 			<div class="form-group" >
-			전화번호: <input type="tel" class="form-control"/>
+			전화번호: <input type="tel" class="form-control" value="${list.tel }" />
 			<button type="button" class="confirmBtn">인증하기</button>
 			</div>
 			<hr />
 			<div class="form-group">
 			은행 종류: &nbsp;
-			 <select name="bank_type_id" id="bank_type_id">
-				<option value="001">신한은행</option>
-				<option value="002">국민은행</option>
-				<option value="003">기업은행</option>
-				<option value="004">농협은행</option>
-				<option value="005">우리은행</option>
-				<option value="006">하나은행</option>
-				<option value="007">산업은행</option>
+			<select>
+				<c:forEach var="acctdto" items="${banklist }" >
+					<option value="${acctdto.bank_type_id }" selected="selected" ${acctdto.type == bank.bank_type ? 'selected="selected"' : '' }>${acctdto.type }</option>
+				</c:forEach>
 			</select>			
 			<br />
 			</div>
 			<div class="form-group">			
-			은행 계좌: <input type="text" class="form-control"/> <span>예시: 110-111-111111</span> &nbsp;
+			은행 계좌: <input type="text" class="form-control" value="${bank.acct_number }" /> <span>예시: 110-111-111111</span> &nbsp;
 			<button type="button" class="bankBtn">연결하기</button>
 			</div>
 			<hr />
@@ -263,15 +259,15 @@
 			<h2 class="category">주소 수정하기</h2>
 			<br />
 			<div class="form-group">
-			도로명 주소: <input type="text" class="form-control" />
+			도로명 주소: <input type="text" class="form-control" value="${list.road_addr }" />
 			</div>
 			<hr />
 			<div class="form-group" >
-			상세주소: <input type="text" class="form-control"/>
+			상세주소: <input type="text" class="form-control" value="${list.detailed_addr }" />
 			</div>
 			<hr />
 			<div class="form-group">
-			우편번호: <input type="text" class="form-control"/>
+			우편번호: <input type="text" class="form-control" value="${list.zip_code }" />
 			</div>
 			
 			

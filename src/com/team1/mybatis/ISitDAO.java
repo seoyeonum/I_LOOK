@@ -38,19 +38,28 @@ public interface ISitDAO
 	// [시터] 로그인
 	public String sitLogin(String id, String pw);
 	
-	// [시터] 자기 정보 찾기
-	public SitDTO sitIdSearch(String id);
+	// [시터] 백업 아이디로 자기 정보 찾기
+	public SitDTO sitIdSearch(String sit_backup_id);
 	
 	// [시터] 자기 등급 찾기
-	public SitDTO searchGrades(String id);
+	public SitDTO searchGrades(String sit_backup_id);
 	
-	// [시터] 아이디로 자신의 평균 점수 찾기
-	public int searchRating(String id);
+	// [시터] 자기 등급 이름을 넣고 승급 시간 계산.
+	public int searchNextTime(String grade);
+	
+	// [시터] 백업 아이디로 자신의 평균 점수 찾기
+	public int searchRating(String sit_backup_id);
 	
 	// [시터 혹은 관리자] 백업 코드로 자신의 평균 점수 찾기
 	public int searchBupRating(String sit_backup_id);
 	
-	// [시터] 아이디로 자신의 최근 3개월 평균 점수 찾기
-	public int searchM3Rating(String id);
+	// [시터] 백업 아이디로 자신의 최근 3개월 평균 점수 찾기
+	public int searchM3Rating(String sit_backup_id);
+	
+	// [시터가 그동안 맡은 일반 돌봄 서비스 수]
+	public int genCareCount(String sit_backup_id);
+	
+	// [시터가 그동안 맡은 긴급 돌봄 서비스 수]
+	public int emgCareCount(String sit_backup_id);
 	
 }

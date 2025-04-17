@@ -22,12 +22,20 @@ public interface IGradesDAO
 	// 일반돌봄 시급 조회
 	public GradesDTO listGenWage();
 	
+	// (마지막으로 등록한) 일반 돌봄 시급 조회
+	public int searchGenWageLately();
+	
 	// 일반돌봄 시급 수정
 	public int modifyGenWage(GradesDTO grades);
 	
 	// 긴급돌봄 시급 조회
 	public GradesDTO listEmgWage();
 	
+	// (마지막으로 등록한) 긴급 돌봄 시급 조회
+	public int searchEmgWageLately();
+	
 	// 긴급돌봄 시급 수정
 	public int modifyEmgWage(GradesDTO grades);
+	
+	
 }

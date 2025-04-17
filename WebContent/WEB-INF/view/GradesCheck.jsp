@@ -191,13 +191,13 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 					<ul class="side-menu">
 						<li><a href="" style="font-size: 1.7rem">시터 마이 페이지</a>
 							<ul>
-								<li><a href="SitterinfoList.jsp" style="">개인정보 수정</a></li>
-								<li><a href="GradesCheck.jsp" style="font-weight: bold; color: #1AB223">등급 확인</a></li>
+								<li><a href="sitterinfolist.action?sit_backup_id=${list.sit_backup_id }" style="">개인정보 수정</a></li>
+								<li><a href="gradescheck.action?sit_backup_id=${list.sit_backup_id }" style="font-weight: bold; color: #1AB223">등급 확인</a></li>
 								<li><a href="">근무 등록</a></li>
-								<li><a href="GenRegList.jsp">근무 등록 내역 확인</a></li>
-								<li><a href="SitterGenReqAnsweredList.jsp">돌봄 제공 내역 확인</a></li>
-								<li><a href="CareCompleteList.jsp">돌봄 완료 내역 확인</a></li>
-								<li><a href="SitterWithdraw.jsp">회원 탈퇴</a></li>
+								<li><a href="genreglist.action?sit_backup_id=${list.sit_backup_id }">근무 등록 내역 확인</a></li>
+								<li><a href="sittergenreqansweredlist.action?sit_backup_id=${list.sit_backup_id }">돌봄 제공 내역 확인</a></li>
+								<li><a href="carecompletelist.action?sit_backup_id=${list.sit_backup_id }">돌봄 완료 내역 확인</a></li>
+								<li><a href="sitterwithdraw.action?sit_backup_id=${list.sit_backup_id }">회원 탈퇴</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -215,20 +215,21 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 					</div>
 					<div class="grades rank col-md-2">
 						<img src="./images/logoimg.png" alt="" height="130" /> <br />
-						OOO님의 등급은 브론즈입니다.
+						${list.name }님의 등급은 ${mygrade.grade }입니다.
 					</div>
 					<div class="sitters info col-md-2" style="font-size: 16pt; width: 30%; padding: 20px;">
-						가입일: <br />
-						그동안 맡은 돌봄 서비스 수: <br />
-						전체 평균 점수: <br />
-						최근 3개월간 평균 점수:
+						가입일: ${mygrade.chk_date }<br />
+						그동안 ${list.name }님이 맡으신 돌봄 서비스 수는 일반 ${genCareCount }개, 긴급 ${emgCareCount }개, 총합 ${genCareCount + emgCareCount }개 입니다.<br />
+						전체 평균 점수: ${totalrating }점<br />
+						최근 3개월간 평균 점수: ${month3rating }점
 					</div>
 			</div><!-- .grades main -->
 
 			<div class="row grades time" style="margin-top: 40px;">
 				<div class="rankup info col-md-12 col-sm-12" style="font-size: 18pt; border: 2px solid #ea9999;
 				border-radius: 10px; padding: 20px; width: 50%; margin: 0 25%;">
-					총 근무 시간: <br /> 현재 근무 시간: <br /> 다음 등급까지 XXX 시간 남았습니다.
+					총 근무 시간: ${mygrade.totalworktime }시간<br /> 
+					다음 등급까지 ${promotion - mygrade.totalworktime} 시간 남았습니다.
 				</div> 
 			</div>
 				<div class="row grades info" style="margin-top: 40px; margin-bottom: 40px;">
