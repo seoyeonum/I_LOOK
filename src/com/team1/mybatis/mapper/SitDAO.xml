@@ -134,11 +134,27 @@
  	
  	
  	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
- 		SELECT SREG.NAME
+<!--  		SELECT SREG.NAME
 		FROM SIT_REG SREG, SIT_BACKUP SBAC
 		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND SBAC.ID = #{id}
-		AND SREG.PW = #{pw}
+		AND SREG.PW = #{pw} -->
+		SELECT 
+		R.SIT_REG_ID, 
+		R.SIT_BACKUP_ID,
+		B.ID,
+		R.PW,
+		R.NAME,
+		R.SSN_FIRST,
+		R.SSN_SECOND,
+		R.ROAD_ADDR,
+		R.DETAILED_ADDR,
+		R.ZIP_CODE,
+		R.TEL,
+		R.FILE_PATH
+		FROM SIT_REG R
+		JOIN SIT_BACKUP B ON B.SIT_BACKUP_ID = R.SIT_BACKUP_ID
+		WHERE ID = #{id} AND PW = #{pw}
  	</select>
  	
  	
