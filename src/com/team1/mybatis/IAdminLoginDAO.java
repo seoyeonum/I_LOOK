@@ -3,6 +3,8 @@
   ======================== */
 package com.team1.mybatis;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.team1.dto.AdminDTO;
 
 public interface IAdminLoginDAO
@@ -14,5 +16,6 @@ public interface IAdminLoginDAO
 	// public int adminpw(AdminDTO adminPw);
 
 	// 관리자 아이디, 비밀번호 로그인 정보 확인
-	public AdminDTO loginCheck(String id, String pw);
+	//public AdminDTO loginCheck(String id, String pw);
+	public AdminDTO loginCheck(@Param("id") String id, @Param("pw") String pw);
 }
