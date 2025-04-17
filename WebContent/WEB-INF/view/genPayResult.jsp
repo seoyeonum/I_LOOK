@@ -19,32 +19,35 @@
 	//이 페이지 로드 시,
 	$(document).ready(function()
 	{
-		// 헤더가 로드된 후 버튼 클래스 변경
-        // menuBtn 와 presentPage를 클래스로 가지는 엘리먼트에서 presentPage 클래스 제거
+		//=================== 헤더 버튼 클래스 변경 ==================
+		
+        // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
         var firstButton = document.querySelector('.menuBtn.presentPage');
         if (firstButton)
         {
             firstButton.classList.remove('presentPage');
         }
-        
-        // menuBtn 을 클래스로 가지는 엘리먼트 중
-        var buttons = document.querySelectorAll('.menuBtn');
-        if (buttons.length >= 2)
+       
+        // id가 'gen'인 버튼을 선택
+        var button = document.querySelector('#gen');
+
+        // 만약 버튼이 존재하면
+        if (button)
         {
-        	// 0번째 엘리먼트에 presentPage 클래스 추가 (0부터 시작)
-            buttons[0].classList.add('presentPage');
+            // 'presentPage' 클래스 추가
+            button.classList.add('presentPage');
         }
         
         //---------------------------------------------
 		
 		$("#home").click(function()
 		{
-			window.location.href = "genmain.action?id=" + ${id};
+			window.location.href = "genmain.action?id=${id}";
 		});
 		
 		$("#myPage").click(function()
 		{
-			window.location.href = "childused.action?id=" + ${id};
+			window.location.href = "childused.action?id=${id}";
 		});
 	});
   
@@ -56,7 +59,9 @@
 
 <!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<c:import url="./parentMainFrame.html" charEncoding="UTF-8" />
+	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
+	<!-- → action 처리로 변경 -->
+	<c:import url="/parentheader.action"/>
 </div>
 
 <div id="body-container">
