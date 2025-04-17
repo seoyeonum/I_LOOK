@@ -4,8 +4,9 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 	
-	String id = (String) request.getAttribute("id"); 
+	// String id = (String) session.getAttribute("id"); 
 %>
+<c:set var="id" value="${sessionScope.id}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,12 +39,12 @@
 		
 		$("#home").click(function()
 		{
-			window.location.href = "genmain.action?id=" + userId;
+			window.location.href = "genmain.action?id=" + ${id};
 		});
 		
 		$("#myPage").click(function()
 		{
-			window.location.href = "childused.action";
+			window.location.href = "childused.action?id=" + ${id};
 		});
 	});
   

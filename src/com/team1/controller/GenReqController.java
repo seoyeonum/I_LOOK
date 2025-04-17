@@ -35,7 +35,10 @@ public class GenReqController
 		// (부모 id 기반으로 아이 이름 조회)
 		
 		session.setAttribute("id", id);
-		result = "redirect:WEB-INF/view/genMain.jsp";
+		result = "WEB-INF/view/genMain.jsp";
+		
+		System.out.println("Session ID: " + session.getId());
+		System.out.println("Parent ID in Session: " + session.getAttribute("id"));
 		
 		return result;
 	}
@@ -159,6 +162,9 @@ public class GenReqController
 		
 		session.getAttribute("id");
 		result = "WEB-INF/view/genPayResult.jsp";
+		
+		System.out.println("Session ID: " + session.getId());
+		System.out.println("Parent ID in Session: " + session.getAttribute("id"));
 		
 		return result;
 	}
