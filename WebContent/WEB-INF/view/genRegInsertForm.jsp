@@ -226,7 +226,7 @@ input[type="file"] {
     border-color: #ccc;
 }
 
-
+/* 주의 사항 */
 .required
 {
 	font-size: small;
@@ -324,6 +324,17 @@ input[type="file"] {
             }
             
             // 날짜 계산해서 31일 이상이면 선택 못하게 막기.
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+            
+            //alert(startDate);
+            //alert(endDate - startDate);
+            if (getDateDiff(startDate, endDate) >= 31)
+			{
+				alert("시터는 근무 기간을 31일 이상 설정할 수 없습니다.");
+				$('#start_date').val(endDate);
+			}
+            
         });
         
         
@@ -332,8 +343,22 @@ input[type="file"] {
         $("#introduction").keyup(function()
 		{
         	var len = $(this).val().length; 	//입력된 값의 길이 확인
-        	var maxlen = $("#introduction")
+        	var remain = 500 - len;				// 남은 값
         	
+        	$("#limit").html(len);
+        	
+        	if (remain <=10 && remain >= 1)
+			{
+				$("#limit").css("color", "orange");		// h1 이 주황색으로 
+			}
+        	else if (remain <= 0)
+			{
+				$("#limit").css("color", "red");
+			}
+        	else
+        	{
+				$("#limit").css("color", "black");
+        	}
         	
 		});
         
@@ -378,6 +403,12 @@ input[type="file"] {
 				return;
 			}
 	    	
+	    	
+	    	if ($("#introduction").val().length > 500)
+			{
+				alert("자기소개는 500자를 초과해 작성하실 수 없습니다.");
+				return;
+			}
 	    	
 	    	// 모든 걸 통과해야 제출할 수 있음.
 			$("#genRegInsert").submit();
@@ -447,6 +478,18 @@ input[type="file"] {
         return false;
     }
 	
+ 	function getDateDiff(d1, d2)
+	{
+ 		const date1 = new Date(d1);
+		const date2 = new Date(d2);
+		
+		const diffDate = date2.getTime() - date1.getTime();
+		
+		return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
+	}
+
+ 	
+ 	
 	
 </script>
 
@@ -595,7 +638,7 @@ input[type="file"] {
 	        		<div class="intro-area">
 		        		<textarea id="introduction" name="introduction" rows="6" cols="60" 
 		        		maxlength="500" placeholder="자기소개를 입력하세요"></textarea>
-		        		<div class="char-limit">500자 제한</div>
+		        		<div class="char-limit" style="display: flex;">500자 제한이 존재합니다. 현재 &nbsp;<div id="limit" >0</div>자 쓰셨습니다.</div>
 	        		</div>
 	        	</div>
 	        	

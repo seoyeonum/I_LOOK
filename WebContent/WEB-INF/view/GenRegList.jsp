@@ -380,17 +380,19 @@
 					<div class="col-md-1"><button class="reservation-btn" value="3">상세 정보</button></div>
 					<div class="col-md-1">신청 있음</div>
 				</div> --%>
+			<c:forEach var="wrpdto" items="${wRPdtoList }">
 			<c:forEach var="reg" items="${regList }">
 				<div class="row" id="${reg.gen_req_id }" >
 					<div class="col-md-1">1</div>
 					<div class="col-md-1">${reg.title }</div>
 					<div class="col-md-2">${reg.sit_start_date } ~ ${reg.sit_end_date }</div>
 					<div class="col-md-2">${reg.sit_start_time } ~ ${reg.sit_end_time }</div>
-					<div class="col-md-2">동대문구</div>
+					<div class="col-md-2">${wrpdto.name }</div>
 					<div class="col-md-2"><button class="detailBtn" value="${reg.introduction }" type="button">자세히 보기</button></div>
 					<div class="col-md-1"><button class="reservation-btn" value="${reg.gen_reg_id }" type="button">상세 정보</button></div>
 					<div class="col-md-1">${reg.request_result }</div>
 				</div>
+			</c:forEach>
 			</c:forEach>
 			</div>
 		</div><!-- .reservation-table -->

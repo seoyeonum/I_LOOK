@@ -18,6 +18,11 @@
  	</select>
  	
  	<insert id="addAges">
+ 	<selectKey keyProperty="age_prefered_id"
+               resultType="String"
+               order="BEFORE">
+      SELECT 'SAGE' || LPAD(SEQ_SAGE.NEXTVAL, 4, '0') FROM DAUL
+	</selectKey>
  		INSERT INTO AGES_PREFERED(AGE_PREFERED_ID, GEN_REG_ID, AGE_TYPE_ID)
 		VALUES(#{age_prefered_id}, #{gen_reg_id}, #{age_type_id})
  	</insert>
