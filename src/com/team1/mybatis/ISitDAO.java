@@ -6,6 +6,10 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+
 import com.team1.dto.SitDTO;
 
 public interface ISitDAO
@@ -13,11 +17,20 @@ public interface ISitDAO
 	// [관리자] 시터 회원 리스트
 	public ArrayList<SitDTO> list();
 	
+	// [관리자] 시터 회원가입 요청 목록
+	public List<SitDTO> listSitReg(@Param("start") int start
+								 , @Param("end") int end
+	                             , @Param("searchKey") String searchKey
+	                             , @Param("searchValue") String searchValue);
+	
+	// [관리자] 시터 회원 등록 요청 개수 확인
+	public int countSitReg(@Param("searchKey") String searchKey
+			             , @Param("searchValue") String searchValue);
+
+	
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
 	
-	// [관리자] 시터 회원 등록 요청 개수 확인
-	public int countSitReg();
 	
 	// [관리자] 시터 회원 등록 요청
 	public int sitReg(SitDTO dto);
@@ -27,9 +40,6 @@ public interface ISitDAO
 	
 	// [시터] 시터 회원 정보 수정 
 	public int modifySit(SitDTO sitter);
-	
-	// [관리자] 시터 회원 이름 검색
-	public SitDTO sitNameSearch(String name);
 	
 	// [관리자] 시터 회원 백업 코드 검색
 	public SitDTO sitSearch(String sit_backup_id);
@@ -55,10 +65,10 @@ public interface ISitDAO
 	// [시터] 백업 아이디로 자신의 최근 3개월 평균 점수 찾기
 	public int searchM3Rating(String sit_backup_id);
 	
-	// [시터가 그동안 맡은 일반 돌봄 서비스 수]
+	// [시터가 그동안 맡은 일반 돌봄 서비스 수
 	public int genCareCount(String sit_backup_id);
 	
-	// [시터가 그동안 맡은 긴급 돌봄 서비스 수]
+	// [시터가 그동안 맡은 긴급 돌봄 서비스 수
 	public int emgCareCount(String sit_backup_id);
 	
 	// [시터 회원가입 ▶ 백업코드 insert]
@@ -69,4 +79,5 @@ public interface ISitDAO
 	
 	// [시터 회원 가입 중복 체크 중복 체크
 	public int checkId(String sit_reg_id);
+
 }

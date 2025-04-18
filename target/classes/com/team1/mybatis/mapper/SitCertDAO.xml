@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.ISitCertDAO">
+
+ 	<insert id="addCert"> <!-- public int addCert(SitCertDTO sitcert); -->
+	 	INSERT INTO CERT_REG(CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID)
+		VALUES(#{cert_reg_id}, #{cert_type_id}, #{sit_reg_id})
+ 	</insert>
+ 	
+ 	<update id="modifyCert"> <!-- public int modifyCert(SitCertDTO sitcert); -->
+	 	UPDATE CERT_REG
+		SET CERT_TYPE_ID = #{cert_reg_id}, FILE_PATH = #{file_path} 
+		WHERE SIT_REG_ID = #{sit_reg_id}
+ 	</update>
+ 	
+ 	<delete id="removeCert"> <!-- public int removeCert(String sit_reg_id); -->
+	 	DELETE
+		FROM CERT_REG
+		WHERE SIT_REG_ID = #{sit_reg_id}
+ 	</delete>
+ 	
+ 	<select id="countCert" resultType="java.lang.Integer"> <!-- public int countCert(String sit_reg_id); -->
+	 	SELECT COUNT(*) AS COUNT
+		FROM CERT_REG
+		WHERE SIT_REG_ID = #{sit_reg_id}
+ 	</select>
+ 	
+ 	<select id="searchCert" resultType="com.team1.dto.SitCertDTO"> <!-- public SitCertDTO searchCert(String sit_reg_id); -->
+	 	SELECT CERT_TYPE_ID, FILE_PATH
+		FROM CERT_REG
+		WHERE SIT_REG_ID = #{sit_reg_id}
+ 	</select>
+ 	
+ 	
+</mapper>

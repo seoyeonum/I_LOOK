@@ -11,14 +11,12 @@
 		  T.SIT_BACKUP_ID,
 		  T.총근무시간,
 		  CASE
-		    WHEN T.총근무시간 <![CDATA[<]]> 120 THEN '신입'
-		    WHEN T.총근무시간 <![CDATA[<]]> 1000 THEN '브론즈'
-		    WHEN T.총근무시간 <![CDATA[<]]> 5000 THEN '실버'
-		    WHEN T.총근무시간 <![CDATA[<]]> 10000 THEN '골드'
+		    WHEN T.총근무시간 &lt; 120 THEN '신입'
+		    WHEN T.총근무시간 &lt; 1000 THEN '브론즈'
+		    WHEN T.총근무시간 &lt; 5000 THEN '실버'
+		    WHEN T.총근무시간 &lt; 10000 THEN '골드'
 		    ELSE '플래티넘'
-		  END AS 등급
-		, SREG.SIT_REG_ID
-		, SCHK.CHK_DATE
+		    AND AS 등급
 		FROM
 		(
 		    SELECT
@@ -26,7 +24,6 @@
 		        SUM(근무시간) AS 총근무시간
 		    FROM 
 		(
-		    -- 일반 돌봄 근무 시간
 		    SELECT
 		    G.SIT_BACKUP_ID,
 		    SUM((Q.END_DATE - Q.START_DATE +1) * LEAST((Q.END_TIME - Q.START_TIME), 8)) AS 근무시간
@@ -51,13 +48,12 @@
 		    
 		    UNION ALL
 		    
-		    -- 긴급 돌봄 근무 시간
 		    SELECT 
 		    E.SIT_BACKUP_ID, 
 		    SUM((R.END_DATE - R.START_DATE +1) * LEAST((R.END_TIME - R.START_TIME), 8)) AS 근무시간
 		    FROM EMG_CONFIRMED E
 		    JOIN EMG_REQ R ON E.EMG_REQ_ID = R.EMG_REQ_ID
-		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL   -- NULL 값은 그냥 반영하지 않겠다.
+		    WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL
 		    GROUP BY E.SIT_BACKUP_ID
 		    )
 		    GROUP BY SIT_BACKUP_ID
@@ -67,30 +63,70 @@
 		ORDER BY T.SIT_BACKUP_ID
  	</select>
  	
+ 	<!-- 시터 회원 등록 요청 목록 확인 -->
+	<select id="listSitReg" resultType="com.team1.dto.SitDTO">
+		SELECT *
+		FROM (
+		    SELECT S.*, ROWNUM RN
+		    FROM (
+		        SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
+		             , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH
+		        FROM ADMIN_SIT_REG_VIEW
+		        WHERE 1=1
+		        <if test="searchKey != null and searchValue != null and searchValue != ''">
+		            <if test="searchKey = 'name'">
+		                AND NAME LIKE '%' || #{searchValue} || '%'
+		            </if>
+		            <if test="searchKey = 'tel'">
+		                AND TEL LIKE '%' || #{searchValue} || '%'
+		            </if>
+		        </if>
+		        ORDER BY SIT_BACKUP_ID DESC
+		    ) S
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
+
+	</select>
+		
+
+ 	<!-- // [관리자] 시터 회원 등록 요청 개수 -->
+ 	<select id="countSitReg" resultType="int">
+		SELECT COUNT(*) AS COUNT
+		FROM ADMIN_SIT_REG_VIEW
+		WHERE 1=1
+		<if test="searchKey != null and searchValue != null and searchValue != ''">
+			<if test="searchKey == 'name'">
+                AND NAME LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchKey == 'tel'">
+                AND TEL LIKE '%' || #{searchValue} || '%'
+            </if>
+		</if>
+	</select>
+
  	
  	<select id="countSit" resultType="java.lang.Integer"> <!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
  		SELECT COUNT (*) AS COUNT
 		FROM SIT_CHK
  	</select>
  	
- 	
- 	<select id="countSitReg" resultType="java.lang.Integer"> <!-- // [관리자] 시터 회원 등록 요청 개수 확인 public int countSitReg(); -->
- 		SELECT COUNT(*) AS COUNT
-		FROM SIT_CHK SCHK, SIT_BACKUP SBAC, SIT_REJECTED SREJ
-		WHERE SBAC.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
-		AND SBAC.SIT_BACKUP_ID = SREJ.SIT_BACKUP_ID
-		AND SCHK.SIT_BACKUP_ID IS NULL
-		AND SREJ.SIT_BACKUP_ID IS NULL
+ 	<select id="sitSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 백업 코드 검색 public SitDTO sitSearch(String sit_backup_id); -->
+ 		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
+		, BANK_TYPE, ACCT_NUMBER
+		FROM SIT_VIEW
+		WHERE ID = #{id}
  	</select>
+ 	
+ 	<insert id="sitBac" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
+		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
+		VALUES(#{sit_backup_id}, #{reg_date}, #{id})
+ 	</insert>
  	
  	
  	<insert id="sitReg" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
-		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
-		VALUES(#{sit_backup_id}, #{reg_date}, #{id})
-		
  		INSERT INTO SIT_REG(SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH)
 		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, #{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code}, #{tel}, #{file_path})	
-		<!-- 트랜잭션 처리할 것. -->
  	</insert>
  	
  	
@@ -105,14 +141,13 @@
  		UPDATE SIT_REG 
 		 RIGHT JOIN SIT_BACKUP ON (SIT_REG.SIT_BACKUP_ID = SIT_BACKUP.SIT_BACKUP_ID)
 		   SET SIT_REG.PW = #{pw}
-		     , SIT_REG,NAME = #{name}
-		     , SIT_REG,ROAD_ADDR = #{road_addr}
+		     , SIT_REG.NAME = #{name}
+		     , SIT_REG.ROAD_ADDR = #{road_addr}
 		     , SIT_REG.DETAILED_ADDR = #{detailed_addr}
 		     , SIT_REG.ZIP_CODE = #{zip_code}
 		     , SIT_REG.TEL =  #{tel}
 		WHERE SIT_BACKUP_ID = #{sit_backup_id}
  	</update>
- 	
  	
  	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
  		SELECT SIT_BACKUP_ID, REG_DATE, ID, PW, NAME
@@ -168,15 +203,16 @@
 	</select>
 	
 	<select id="searchGrades" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 등급 찾기 public SitDTO searchGrades(String id); -->
+	<![CDATA[
 		SELECT
 		SREG.NAME, SREG.TEL,
 		T.SIT_BACKUP_ID,
 		T.TOTALWORKTIME,
 		  CASE
-		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 120 THEN '신입'
-		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 1000 THEN '브론즈'
-		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 5000 THEN '실버'
-		    WHEN T.TOTALWORKTIME <![CDATA[<]]> 10000 THEN '골드'
+		    WHEN T.TOTALWORKTIME < 120 THEN '신입'
+		    WHEN T.TOTALWORKTIME < 1000 THEN '브론즈'
+		    WHEN T.TOTALWORKTIME < 5000 THEN '실버'
+		    WHEN T.TOTALWORKTIME < 10000 THEN '골드'
 		    ELSE '플래티넘'
 		  END AS GRADE
 		, SREG.SIT_REG_ID
@@ -188,7 +224,6 @@
 		        SUM(근무시간) AS TOTALWORKTIME
 		    FROM 
 		    (
-		        -- 일반 돌봄 근무 시간
 		        SELECT
 		        G.SIT_BACKUP_ID,
 		        SUM((Q.END_DATE - Q.START_DATE +1) * LEAST((Q.END_TIME - Q.START_TIME), 8)) AS 근무시간
@@ -213,13 +248,12 @@
 		        
 		        UNION ALL
 		        
-		        -- 긴급 돌봄 근무 시간
 		        SELECT 
 		        E.SIT_BACKUP_ID, 
 		        SUM((R.END_DATE - R.START_DATE +1) * LEAST((R.END_TIME - R.START_TIME), 8)) AS 근무시간
 		        FROM EMG_CONFIRMED E
 		        JOIN EMG_REQ R ON E.EMG_REQ_ID = R.EMG_REQ_ID
-		        WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL   -- NULL 값은 그냥 반영하지 않겠다.
+		        WHERE R.START_DATE IS NOT NULL AND R.END_DATE IS NOT NULL
 		        GROUP BY E.SIT_BACKUP_ID
 		    )
 		    GROUP BY SIT_BACKUP_ID
@@ -227,6 +261,7 @@
 		JOIN SIT_REG SREG ON SREG.SIT_BACKUP_ID = T.SIT_BACKUP_ID
 		JOIN SIT_CHK SCHK ON SREG.SIT_BACKUP_ID = SCHK.SIT_BACKUP_ID
 		WHERE T.SIT_BACKUP_ID = #{sit_backup_id}
+    ]]>
 	</select>
 	
 	<select id="searchNextTime" resultType="java.lang.Integer"> <!-- // [시터] 자기 등급 이름을 넣고 승급 시간 계산. public int searchNextTime(String gradeName); -->
@@ -237,7 +272,6 @@
 		                    FROM GRADES
 		                    WHERE NAME = #{grade}
 		                 )
-	
 	</select>
 	
 	<select id="searchRating" resultType="java.lang.Integer"> <!-- // [시터] 백업 아이디로 자신의 평균 점수 찾기 public int searchRating(String id); -->
@@ -262,6 +296,7 @@
 	</select>
 	
 	<select id="searchM3Rating" resultType="java.lang.Integer"> <!-- // [시터] 백업 아이디로 자신의 최근 3개월 평균 점수 찾기	public int searchM3Rating(String sit_backup_id); -->
+	<![CDATA[
 		SELECT NVL(ROUND(AVG(GREV.RATING), 1), 0) AS MONTH3RATING
 		FROM GEN_REVIEWS GREV, GEN_CONFIRMED GCON, GEN_REQ GREQ, GEN_REG GREG, SIT_BACKUP SBAC
 		WHERE GREV.GEN_CONFIRMED_ID = GCON.GEN_CONFIRMED_ID
@@ -269,11 +304,13 @@
 		AND GREQ.GEN_REG_ID = GREG.GEN_REG_ID
 		AND GREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
 		AND SBAC.SIT_BACKUP_ID = #{sit_backup_id}
-		AND GREV.REVIEWED_DATE <![CDATA[<]]> ADD_MONTHS(SYSDATE, -3)
+		AND GREV.REVIEWED_DATE < ADD_MONTHS(SYSDATE, -3)
+		]]>
 	</select>
 	
 	<select id="genCareCount" resultType="java.lang.Integer">
 	<!-- // [시터가 그동안 맡은 일반 돌봄 서비스 수] public int genCareCount(String sit_backup_id); -->
+	<![CDATA[
 		SELECT COUNT(*) AS COUNT
 		FROM GEN_REG GREG, GEN_REQ GREQ, GEN_CONFIRMED GCON
 		, CHILD_BACKUP CBAC, CHILD_REG CREG, PAR_BACKUP PBAC, PAR_REG PREG
@@ -288,13 +325,15 @@
 		AND GCON.GEN_CONFIRMED_ID = GSCC.GEN_CONFIRMED_ID(+)
 		AND GPCC.GEN_PAR_CONFIRMED_CANCELED_ID IS NULL
 		AND GSCC.GEN_SIT_CONFIRMED_CANCELED_ID IS NULL
-		AND GREQ.END_DATE <![CDATA[<]]> SYSDATE
+		AND GREQ.END_DATE < SYSDATE
 		AND GREG.SIT_BACKUP_ID = #{sit_backup_id}
 		ORDER BY GREQ.END_DATE DESC
+		]]>
 	</select>
 	
 	<select id="emgCareCount" resultType="java.lang.Integer">
 	<!-- // [시터가 그동안 맡은 긴급 돌봄 서비스 수] public int emgCareCount(String sit_backup_id); -->
+	<![CDATA[
 		SELECT COUNT(*) AS COUNT
 		FROM SIT_BACKUP SBAC, CHILD_BACKUP CBAC, CHILD_REG CREG
 		, PAR_BACKUP PBAC, PAR_REG PREG, EMG_REQ EREQ
@@ -308,9 +347,10 @@
 		AND EREQ.EMG_REQ_ID = EPAY.EMG_REQ_ID
 		AND EPAY.EMG_PAY_REC_ID = ECAN.EMG_PAY_REC_ID(+)
 		AND ECAN.EMG_PAY_REC_ID IS NULL
-		AND EREQ.END_DATE <![CDATA[<]]> SYSDATE
+		AND EREQ.END_DATE < SYSDATE
 		AND SBAC.SIT_BACKUP_ID = #{sit_backup_id}
 		ORDER BY EREQ.END_DATE DESC
+		]]>
 	</select>
 	
 	<!-- ① 시터 백업 삽입 (addBackup) -->
