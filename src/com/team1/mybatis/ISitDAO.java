@@ -6,7 +6,6 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
-
 import com.team1.dto.SitDTO;
 
 public interface ISitDAO
@@ -62,4 +61,12 @@ public interface ISitDAO
 	// [시터가 그동안 맡은 긴급 돌봄 서비스 수]
 	public int emgCareCount(String sit_backup_id);
 	
+	// [시터 회원가입 ▶ 백업코드 insert]
+	public int addBackup(SitDTO sitter);
+	
+	// [시터 회원가입 ▶ 회원 등록]
+	public int add(SitDTO sitter);
+	
+	// [시터 회원 가입 중복 체크 중복 체크
+	public int checkId(String sit_reg_id);
 }

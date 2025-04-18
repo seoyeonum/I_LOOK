@@ -33,7 +33,7 @@
             return;
         }
 
-         fetch("<c:url value='/checkId.action'/>?userId=" + encodeURIComponent(userId))
+        fetch("<c:url value='/checkId.action'/>?userId=" + encodeURIComponent(userId))
         .then(res => res.json())
         .then(data => {
             if (data === "duplicate") {
@@ -48,7 +48,7 @@
             console.error("중복 확인 중 오류 발생:", error);
             messageSpan.style.color = "red";
             messageSpan.textContent = "서버 오류로 중복 확인에 실패했습니다.";
-        }); 
+        });
 
     }
 
@@ -124,7 +124,7 @@
 
 <div id="title">I,Look</div>
 
-<form action="<%=cp %>/parentInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="<c:url value='/parentInsert.action'/>" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
     <div class="form-section">
         <h2>회원가입</h2>
     </div>
@@ -133,7 +133,7 @@
     <div class="form-group">
         <label class="required" for="userId">아이디</label>
         <div class="input-container">
-            <input type="text" class="text" id="userId" name="id" required>
+            <input type="text" class="text" id="userId" name="par_reg_id" required>
             <button type="button" class="duplicate-check" onclick="checkId()">중복체크</button>
         </div>
         <span id="id-check-message"></span>

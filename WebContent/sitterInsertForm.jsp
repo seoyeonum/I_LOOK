@@ -117,7 +117,7 @@
 
 <div id="title">I,Look</div>
 
-<form action="${cp}/sitterRegister" method="post" enctype="multipart/form-data" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="<%=cp %>/sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
     <div class="form-section">
         <h2>회원요청</h2>
     </div>
@@ -126,7 +126,7 @@
     <div class="form-group">
         <label class="required" for="userId">아이디</label>
         <div class="input-container">
-            <input type="text" class="text" id="userId" name="userId" required>
+            <input type="text" class="text" id="userId" name="id" required>
             <button type="button" class="duplicate-check" onclick="checkId()">중복체크</button>
         </div>
         <span id="id-check-message"></span>
@@ -135,7 +135,7 @@
     <!-- 비밀번호 -->
     <div class="form-group">
         <label class="required" for="password">비밀번호</label>
-        <input type="password" class="text" id="password" name="password" required oninput="checkPassword()">
+        <input type="password" class="text" id="password" name="pw" required oninput="checkPassword()">
         <span id="password-error" class="error-message"></span>
     </div>
 
@@ -156,9 +156,9 @@
     <div class="form-group">
         <label class="required">주민등록번호</label>
         <div class="ssn-container">
-            <input type="text" class="text" id="ssn1" name="ssn1" placeholder="앞자리 6자리" maxlength="6" required>
+            <input type="text" class="text" id="ssn1" name="ssn_first" placeholder="앞자리 6자리" maxlength="6" required>
             <span class="dash">-</span>
-            <input type="password" class="text" id="ssn2" name="ssn2" placeholder="뒷자리 7자리" maxlength="7" required>
+            <input type="password" class="text" id="ssn2" name="ssn_second" placeholder="뒷자리 7자리" maxlength="7" required>
         </div>
     </div>
 
@@ -166,31 +166,34 @@
     <div class="form-group">
         <label>연락처</label>
         <div class="phone-container">
-            <input type="text" class="text" id="phone1" name="phone1" placeholder="010" maxlength="3">
+            <input type="text" class="text" id="phone1" maxlength="3">
             <span class="dash">-</span>
-            <input type="text" class="text" id="phone2" name="phone2" placeholder="1234" maxlength="4">
+            <input type="text" class="text" id="phone2" maxlength="4">
             <span class="dash">-</span>
-            <input type="text" class="text" id="phone3" name="phone3" placeholder="5678" maxlength="4">
+            <input type="text" class="text" id="phone3" maxlength="4">
         </div>
+        <!-- 숨겨진 tel 필드 -->
+        <input type="hidden" name="tel" id="tel">
     </div>
 
-	<!-- 주소 -->
-	<div class="form-group">
-	    <label>주소</label>
-	    <div class="address-container">
-	        <input type="text" id="postcode" value="우편번호" disabled> <!-- 우편번호 -->
-	        <button type="button" onclick="searchAddress()">주소 검색</button>
-	    </div>
-	    <div class="address-container">
-	        <input type="text" id="address" value="도로명 주소" disabled> <!-- 도로명 주소 -->
-	    </div>
-	</div>
+    <!-- 주소 -->
+    <div class="form-group">
+        <label>주소</label>
+        <div class="address-container">
+            <input type="text" id="postcode" name="zip_code" readonly>
+            <button type="button" onclick="searchAddress()">주소 검색</button>
+        </div>
+        <div class="address-container">
+            <input type="text" id="address" name="road_addr" readonly>
+        </div>
+    </div>
 
     <!-- 상세주소 -->
     <div class="form-group">
         <label>상세주소</label>
-        <input type="text" class="text" name="detailAddress" placeholder="상세주소 입력">
+        <input type="text" class="text" id="detailAddress" name="detail[]ed_addr" placeholder="상세주소 입력">
     </div>
+
 
     <!-- 보건증 첨부 -->
     <div class="form-group">
