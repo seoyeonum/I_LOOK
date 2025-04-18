@@ -28,6 +28,16 @@
 			location.reload();
 		}
 	}
+	
+    function confirmAndRedirect() {
+        // 사용자에게 경고 메시지 표시
+        var userConfirmed = confirm('아이 정보 등록하시겠습니까?');
+
+        // 사용자가 확인을 클릭한 경우에만 페이지 이동
+        if (userConfirmed) {
+            window.location.href = 'ChildInsertForm.jsp'; // 페이지 이동
+        }
+    }
 </script>
 </head>
 <body>
@@ -108,7 +118,7 @@
   </div>
   
   <div class="insert">
-  	<button type="button" class="insert-btn" id="btn" onclick="alert('아이 정보 등록하시겠습니까?')">등록하기</button>
+  	<button type="button" class="insert-btn" id="btn" onclick="confirmAndRedirect()">등록하기</button>
   </div>
 
 </body>
