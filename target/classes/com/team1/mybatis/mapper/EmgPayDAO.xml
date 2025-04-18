@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IEmgPayDAO">
+	
+	<!-- 1. 관리자 입장 -->
+	
+	<!-- 모든 긴급 돌봄 결제 리스트 조회 -->
+	<select id="listAllEmgPayRec" resultType="com.team1.dto.EmgPayDTO">
+		SELECT EMG_REQ_ID, '긴급' AS TYPE, STATUS, PAR_NAME
+		     , AMOUNT, POINT, REQ_DATE
+		FROM EMG_REQ_DETAIL_VIEW
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- (부모 이름으로) 긴급 돌봄 결제 내역 리스트 조회 -->
+	<select id="searchNameEmgPayRec" resultType="com.team1.dto.EmgPayDTO">
+		SELECT EMG_REQ_ID, '긴급' AS TYPE, STATUS, PAR_NAME
+		     , AMOUNT, POINT, REQ_DATE
+		FROM EMG_REQ_DETAIL_VIEW
+		WHERE PAR_NAME = #{par_name}
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- 모든 긴급 돌봄 포인트 차감 내역 리스트 조회 -->
+	<select id="listAllEmgPointUsed" resultType="com.team1.dto.EmgPayDTO">
+		SELECT EMG_REQ_ID, '사용' AS TYPE, PAR_NAME
+		     , POINT
+		     , TO_CHAR(PAYED_DATE, 'YYYY-MM-DD') AS USED_DATE
+		FROM EMG_REQ_DETAIL_VIEW
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- (부모 이름으로) 긴급 돌봄 포인트 차감 내역 리스트 조회 -->
+	<select id="searchNameEmgPointUsed" resultType="com.team1.dto.EmgPayDTO">
+		SELECT EMG_REQ_ID, '사용' AS TYPE, PAR_NAME
+		     , POINT
+		     , TO_CHAR(PAYED_DATE, 'YYYY-MM-DD') AS USED_DATE
+		FROM EMG_REQ_DETAIL_VIEW
+		WHERE PAR_NAME = #{par_name}
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- 2. 시터 입장 → 별도로 존재 Ⅹ -->
+	
+	
+	<!-- 3. 부모 입장 -->
+	
+	<!-- 긴급 돌봄 결제 내역 추가 -->
+	<insert id="addEmgPayRec">
+		INSERT INTO EMG_PAY_REC (EMG_PAY_REC_ID, EMG_REQ_ID, AMOUNT, PG_CODE)
+		VALUES (#{emg_pay_rec_id}, #{emg_req_id}, #{amount}, #{pg_code})
+	</insert>
+	
+	<!-- (긴급 돌봄 예약 신청 코드로) 특정 긴급 돌봄 결제 내역 상세 열람 -->
+	<!--
+	<select id="searchBackupIdEmgPayRec" resultType="com.team1.mybatis.EmgPayDTO">
+		
+	</select>
+	-->
+	<!-- → 보유 포인트까지 한 쿼리에 넣었더니 TOO MANY VALUES 에러 발생 -->
+
+	
+	<!-- 긴급 돌봄 결제 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateEmgPayRecParRead">
+		UPDATE EMG_PAY_REC
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE EMG_PAY_REC_ID = #{emg_pay_rec_id}					<!-- emg_pay_rec_id 를 활용 -->
+	</update>
+	
+	<!-- 긴급 돌봄 포인트 차감 내역 추가 -->
+	<insert id="addEmgPointUsed">
+		INSERT INTO EMG_POINT_USED (EMG_POINT_USED_ID, EMG_PAY_REC_ID, POINT_SUBJECT, POINT)
+		VALUES (#{emg_point_used_id}
+		        ,#{emg_pay_rec_id}
+		        , ( SELECT P.PAR_BACKUP_ID
+		            FROM EMG_POINT_USED PU RIGHT JOIN EMG_PAY_REC PAY
+		            ON PU.EMG_PAY_REC_ID = PAY.EMG_PAY_REC_ID
+		                JOIN EMG_REQ Q
+		                ON PAY.EMG_REQ_ID = Q.EMG_REQ_ID
+		                    JOIN CHILD_BACKUP C
+		                    ON C.CHILD_BACKUP_ID = Q.CHILD_BACKUP_ID
+		                        JOIN PAR_BACKUP P
+		                        ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+		            WHERE PAY.EMG_PAY_REC_ID = #{emg_pay_rec_id})
+		        , #{point})
+	</insert>
+	
+	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 → ParDAO.xml -->
+	
+	
+</mapper>

@@ -133,7 +133,7 @@ String cp = request.getContextPath();
 
 							<div class="intro-section">
 								<div class="intro-header">등급 사진 업로드</div>
-								<input type="file" name="file_path" id="file_path" accept="image/*" style="display: none;">
+								<input type="file" name="uploadFile" id="file_path" accept="image/*" style="display: none;">
 								<button type="button" class="btn upload-btn" id="upload-btn">업로드</button>
 							</div>
 						</div>

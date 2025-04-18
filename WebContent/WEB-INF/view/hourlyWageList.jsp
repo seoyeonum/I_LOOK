@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>wageList.jsp</title>
+<title>	hourlyWageList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/css/WageList.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">

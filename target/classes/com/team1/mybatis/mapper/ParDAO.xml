@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IParDAO"> 
+	<!-- 부모 회원 정보 리스트 -->
+	<select id = "list" resultType="com.team1.dto.ParDTO">
+		SELECT PAR_REG_ID, PAR_BACKUP_ID, NAME, PW, TEL, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE
+		FROM PAR_REG
+		WHERE PAR_REG_ID = #{par_reg_id}
+	</select>
+	
+	<!-- 부모 회원 정보 리스트 전체 수 -->
+	<select id="countMember" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM PAR_REG
+	</select>
+	
+	<!-- 부모 회원 정보 등록 -->
+	<insert id="add" parameterType="com.team1.dto.ParDTO">
+		INSERT INTO PAR_REG (
+		PAR_REG_ID, PAR_BACKUP_ID, NAME, PW, TEL, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE)
+		VALUES (#{par_reg_id}, #{par_backup_id}, #{name}, #{pw}, #{tel}
+		, #{ssn_first}, #{ssn_second}
+		, #{road_addr}, #{detailed_addr}, #{zip_code})
+	</insert>
+	
+	<!-- 부모 회원 탈퇴 (탈퇴 테이블로) -->
+	<insert id="addWithdrawed" parameterType="com.team1.dto.ParWithdrawedDTO">
+		INSERT INTO PAR_WITHDRAWED (PAR_WITHDRAWED_ID, WITHDRAWED_DATE, PAR_BACKUP_ID, REASON_WITHDRAWED_ID)
+		VALUES (#{par_withdrawed_id}, SYSDATE, #{par_backup_id}, #{reason_withdrawed_id}
+	</insert>
+
+	<!-- 부모 회원 수정 -->
+	<update id="modify">
+		UPDATE PAR_REG 
+		SET NAME = #{name}
+			PW = #{pw}
+			TEL = #{tel}
+			ROAD_ADDR = #{road_addr} 
+			DETAILED_ADDR = #{detailed_addr}
+			ZIP_CODE = #{zip_code}
+		WHERE PAR_REG_ID = #{par_reg_id}
+	</update>
+	
+	
+	<!-- (부모 백업 코드로) 현재 보유 포인트 조회 -->
+	<select id = "searchPoint" resultType="java.lang.Integer">
+		SELECT SUM( CASE 
+		            WHEN TYPE IN ('일반적립', '일반환불', '긴급적립', '긴급환불') THEN POINT
+		            WHEN TYPE IN ('일반차감', '긴급차감') THEN -POINT
+		            ELSE 0
+		            END ) AS TOTAL_POINT
+		FROM TOTAL_POINT_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+
+	<!-- (부모 백업 코드로) 특정 시점 보유 포인트 -->
+	<select id = "searchPointAt" resultType="java.lang.Integer">
+		SELECT SUM( CASE 
+		            WHEN TYPE IN ('일반적립', '일반환불', '긴급적립', '긴급환불') THEN POINT
+		            WHEN TYPE IN ('일반차감', '긴급차감') THEN -POINT
+		            ELSE 0
+		            END ) AS TOTAL_POINT
+		FROM TOTAL_POINT_VIEW
+		WHERE PAR_BACKUP_ID = #{par_backup_id}
+		  AND CHANGED_DATE &lt; #{date};
+	</select>
+</mapper>
