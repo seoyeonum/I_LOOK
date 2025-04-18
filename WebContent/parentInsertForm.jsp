@@ -33,22 +33,23 @@
             return;
         }
 
-        fetch("<c:url value='/CheckDuplicateIdServlet'/>?userId=" + encodeURIComponent(userId))
-            .then(res => res.json())
-            .then(data => {
-                if (data.exists) {
-                    messageSpan.style.color = "red";
-                    messageSpan.textContent = "이미 사용 중인 아이디입니다.";
-                } else {
-                    messageSpan.style.color = "green";
-                    messageSpan.textContent = "사용 가능한 아이디입니다!";
-                }
-            })
-            .catch(error => {
-                console.error("중복 확인 중 오류 발생:", error);
+         fetch("<c:url value='/checkId.action'/>?userId=" + encodeURIComponent(userId))
+        .then(res => res.json())
+        .then(data => {
+            if (data === "duplicate") {
                 messageSpan.style.color = "red";
-                messageSpan.textContent = "서버 오류로 중복 확인에 실패했습니다.";
-            });
+                messageSpan.textContent = "이미 사용 중인 아이디입니다.";
+            } else {
+                messageSpan.style.color = "green";
+                messageSpan.textContent = "사용 가능한 아이디입니다!";
+            }
+        })
+        .catch(error => {
+            console.error("중복 확인 중 오류 발생:", error);
+            messageSpan.style.color = "red";
+            messageSpan.textContent = "서버 오류로 중복 확인에 실패했습니다.";
+        }); 
+
     }
 
     // 비밀번호 검증
@@ -92,9 +93,16 @@
             alert("비밀번호가 일치하지 않습니다.");
             return false;
         }
+        // 전화번호 합치기
+        const phone1 = document.getElementById("phone1").value.trim();
+        const phone2 = document.getElementById("phone2").value.trim();
+        const phone3 = document.getElementById("phone3").value.trim();
+        document.getElementById("tel").value = phone1 + "-" + phone2 + "-" + phone3;
 
         return true;
     }
+    
+
 </script>
 
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -116,7 +124,7 @@
 
 <div id="title">I,Look</div>
 
-<form action="login.html" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="<%=cp %>/parentInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
     <div class="form-section">
         <h2>회원가입</h2>
     </div>
@@ -125,15 +133,16 @@
     <div class="form-group">
         <label class="required" for="userId">아이디</label>
         <div class="input-container">
-            <input type="text" class="text" id="userId" required>
+            <input type="text" class="text" id="userId" name="id" required>
             <button type="button" class="duplicate-check" onclick="checkId()">중복체크</button>
         </div>
+        <span id="id-check-message"></span>
     </div>
 
     <!-- 비밀번호 -->
     <div class="form-group">
         <label class="required" for="password">비밀번호</label>
-        <input type="password" class="text" id="password" required oninput="checkPassword()">
+        <input type="password" class="text" id="password" name="pw" required oninput="checkPassword()">
         <span id="password-error" class="error-message"></span>
     </div>
 
@@ -147,16 +156,16 @@
     <!-- 이름 -->
     <div class="form-group">
         <label class="required">이름</label>
-        <input type="text" class="text" required>
+        <input type="text" class="text" name="name" required>
     </div>
 
     <!-- 주민등록번호 -->
     <div class="form-group">
         <label class="required">주민등록번호</label>
         <div class="ssn-container">
-            <input type="text" class="text" id="ssn1" placeholder="앞자리 6자리" maxlength="6" required>
+            <input type="text" class="text" name="ssn_first" placeholder="앞자리 6자리" maxlength="6" required>
             <span class="dash">-</span>
-            <input type="password" class="text" id="ssn2" placeholder="뒷자리 7자리" maxlength="7" required>
+            <input type="password" class="text" name="ssn_second" placeholder="뒷자리 7자리" maxlength="7" required>
         </div>
     </div>
 
@@ -164,30 +173,32 @@
     <div class="form-group">
         <label>연락처</label>
         <div class="phone-container">
-            <input type="text" class="text" id="phone1" placeholder="010" maxlength="3">
+            <input type="text" class="text" id="phone1" maxlength="3">
             <span class="dash">-</span>
-            <input type="text" class="text" id="phone2" placeholder="1234" maxlength="4">
+            <input type="text" class="text" id="phone2" maxlength="4">
             <span class="dash">-</span>
-            <input type="text" class="text" id="phone3" placeholder="5678" maxlength="4">
+            <input type="text" class="text" id="phone3" maxlength="4">
         </div>
+        <!-- 숨겨진 tel 필드 -->
+        <input type="hidden" name="tel" id="tel">
     </div>
 
-	<!-- 주소 -->
-	<div class="form-group">
-	    <label>주소</label>
-	    <div class="address-container">
-	        <input type="text" id="postcode" value="우편번호" disabled> <!-- 우편번호 -->
-	        <button type="button" onclick="searchAddress()">주소 검색</button>
-	    </div>
-	    <div class="address-container">
-	        <input type="text" id="address" value="도로명 주소" disabled> <!-- 도로명 주소 -->
-	    </div>
-	</div>
+    <!-- 주소 -->
+    <div class="form-group">
+        <label>주소</label>
+        <div class="address-container">
+            <input type="text" id="postcode" name="zip_code" readonly>
+            <button type="button" onclick="searchAddress()">주소 검색</button>
+        </div>
+        <div class="address-container">
+            <input type="text" id="address" name="road_addr" readonly>
+        </div>
+    </div>
 
     <!-- 상세주소 -->
     <div class="form-group">
         <label>상세주소</label>
-        <input type="text" class="text" id="detailAddress" placeholder="상세주소 입력">
+        <input type="text" class="text" id="detailAddress" name="detailed_addr" placeholder="상세주소 입력">
     </div>
 
     <!-- 가입 버튼 -->

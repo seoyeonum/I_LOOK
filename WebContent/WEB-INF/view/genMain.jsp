@@ -20,6 +20,7 @@
     	//=================== 헤더 버튼 클래스 변경 ==================
     		
         // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
+
         var firstButton = document.querySelector('.menuBtn.presentPage');
         if (firstButton)
         {
@@ -36,7 +37,6 @@
             button.classList.add('presentPage');
         }
     });
-    
 </script>
 </head>
 <body>
@@ -48,7 +48,6 @@
 	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
-
 
 <div id="body-container">
 	<div id="wrapper-header">
@@ -74,7 +73,6 @@
 					            <option value="${name.child_backup_id}">${name.name}</option>
 								</c:forEach>
 					    	</select>
-					    	
 				    	</div>
 				    </div>
 				    

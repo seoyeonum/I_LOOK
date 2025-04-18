@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IGenPayDAO">
+	
+	<!-- 1. 관리자 입장 -->
+	
+	<!-- 모든 일반 돌봄 결제 리스트 조회 -->
+	<select id="listAllGenPayRec" resultType="com.team1.dto.GenPayDTO">
+		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
+		     , PAY_AMOUNT, POINT, REQ_DATE
+		FROM GEN_REQ_DETAIL_VIEW
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- (부모 이름으로) 일반 돌봄 결제 내역 리스트 조회 -->
+	<select id="searchNameGenPayRec" resultType="com.team1.dto.GenPayDTO">
+		SELECT GEN_REQ_ID, '일반' AS TYPE, STATUS, PAR_NAME
+		     , PAY_AMOUNT, POINT, REQ_DATE
+		FROM GEN_REQ_DETAIL_VIEW
+		WHERE PAR_NAME = #{par_name}
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- 모든 일반 돌봄 포인트 차감 내역 리스트 조회 -->
+	<select id="listAllGenPointUsed" resultType="com.team1.dto.GenPayDTO">
+		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
+		     , POINT
+		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
+		FROM GEN_REQ_DETAIL_VIEW
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- (부모 이름으로) 일반 돌봄 포인트 차감 내역 리스트 조회 -->
+	<select id="searchNameGenPointUsed" resultType="com.team1.dto.GenPayDTO">
+		SELECT GEN_REQ_ID, '사용' AS TYPE, PAR_NAME
+		     , POINT
+		     , TO_CHAR(PAY_DATE, 'YYYY-MM-DD') AS USED_DATE
+		FROM GEN_REQ_DETAIL_VIEW
+		WHERE PAR_NAME = #{par_name}
+		ORDER BY REQ_DATE
+	</select>
+	
+	<!-- 2. 시터 입장 → 별도로 존재 Ⅹ -->
+	
+	
+	<!-- 3. 부모 입장 -->
+	
+	<!-- 일반 돌봄 결제 내역 추가 -->
+	<insert id="addGenPayRec">
+		INSERT INTO GEN_PAY_REC (GEN_PAY_REC_ID, GEN_REQ_ID, PAY_AMOUNT, PG_CODE)
+		VALUES (#{gen_pay_rec_id}, #{gen_req_id}, #{pay_amount}, #{pg_code})
+	</insert>
+	
+	<!-- (일반 돌봄 예약 신청 코드로) 특정 일반 돌봄 결제 내역 상세 열람 -->
+	<!--
+	<select id="searchBackupIdGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
+		
+	</select>
+	-->
+	<!-- → 보유 포인트까지 한 쿼리에 넣었더니 TOO MANY VALUES 에러 발생 -->
+
+	
+	<!-- 일반 돌봄 결제 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenPayRecParRead">
+		UPDATE GEN_PAY_REC
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_PAY_REC_ID = #{gen_pay_rec_id}					<!-- gen_pay_rec_id 를 활용 -->
+	</update>
+	
+	<!-- 일반 돌봄 포인트 차감 내역 추가 -->
+	<insert id="addGenPointUsed">
+		INSERT INTO GEN_POINT_USED (GEN_POINT_USED_ID, GEN_PAY_REC_ID, POINT_SUBJECT, POINT)
+		VALUES (#{gen_point_used_id}
+		        ,#{gen_pay_rec_id}
+		        , ( SELECT P.PAR_BACKUP_ID
+		            FROM GEN_POINT_USED PU RIGHT JOIN GEN_PAY_REC PAY
+		            ON PU.GEN_PAY_REC_ID = PAY.GEN_PAY_REC_ID
+		                JOIN GEN_REQ Q
+		                ON PAY.GEN_REQ_ID = Q.GEN_REQ_ID
+		                    JOIN CHILD_BACKUP C
+		                    ON C.CHILD_BACKUP_ID = Q.CHILD_BACKUP_ID
+		                        JOIN PAR_BACKUP P
+		                        ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+		            WHERE PAY.GEN_PAY_REC_ID = #{gen_pay_rec_id})
+		        , #{point})
+	</insert>
+	
+	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 → ParDAO.xml 로 이동 -->
+	
+</mapper>

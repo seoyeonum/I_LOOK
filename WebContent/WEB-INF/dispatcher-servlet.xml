@@ -2,11 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:context="http://www.springframework.org/schema/context" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		
 	
 	
 	<!-- ※ 사용자 정의 Controller 객체 등록 및 URL 매칭 주소 등록 -->
@@ -16,6 +17,7 @@
 	
 	<!-- ① 기존 annotation 을 활용하며 사용했던 코드 -->
 	<context:component-scan	base-package="com.team1.controller" />
+	<!-- <mvc:annotation-driven /> -->
 	
 	<!-- ③ mybatis 등록 과정에서 생겨나는 추가 코드 『2』 -->
 	<!--    ※ mybatis 를 사용하기 위한 환경 설정을 추가하는 과정에서 -->
@@ -56,12 +58,16 @@
 		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<!-- 
+	
 	<bean id="multipartResolver"
 	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	    <property name="defaultEncoding" value="utf-8"/>
-	    <property name="maxUploadSize" value="5242880"/> 5MB
+	    <property name="maxUploadSize" value="5242880"/>
 	</bean>
- 	-->
+
+	<!-- mapper 인터페이스 스캔 설정 (반드시 추가해야 DAO 인식함!) -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="basePackage" value="com.team1.mybatis" />
+	</bean>
 	
 </beans>

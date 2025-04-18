@@ -14,6 +14,16 @@ public interface IParDAO
 	// 회원 등록 
 	public int add(ParDTO parent);
 	
+	// 백업 코드
+	public int addBackup(ParDTO parent);
+	
+	// 부모 백업 코드 리스트
+	//public String search(String id);
+	public ParDTO search(String par_backup_id);
+	
+	// 회원가입 중복 체크
+	public int checkId(String par_reg_id);
+	
 	// 회원 탈퇴 (탈퇴 테이블에 insert)
 	public int addWithdrawed(ParWithdrawedDTO parent_withdrawed);
 	
