@@ -1,6 +1,7 @@
 package com.team1.dto;
 // 부모 데이터 자료형 클래스
 
+
 public class ParDTO
 {
 	// PAR_REG_ID,NAME, PW, TEL, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE
@@ -10,6 +11,8 @@ public class ParDTO
 	private String par_reg_id, par_backup_id, name, pw, tel, ssn_first,ssn_second, road_addr, detailed_addr;
 	private String id, reg_date;
 	private int zip_code;
+	
+	// getter / setter 구성
 	public String getPar_reg_id()
 	{
 		return par_reg_id;

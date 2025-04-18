@@ -149,8 +149,27 @@
 		WHERE SIT_BACKUP_ID = #{sit_backup_id}
  	</update>
  	
+ 	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
+ 		SELECT SIT_BACKUP_ID, REG_DATE, ID, PW, NAME
+ 		, SIT_CHK_ID, CHK_DATE, SSN_FIRST
+ 		, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR
+ 		, ZIP_CODE, TEL, BANK_TYPE, ACCT_NUMBER
+		FROM SIT_VIEW
+		WHERE NAME LIKE '%#{name}%'
+ 	</select>
  	
- 	<select id="sitLogin" resultType="java.lang.String"> <!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
+ 	
+ 	<select id="sitSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 백업 코드 검색 public SitDTO sitSearch(String sit_backup_id); -->
+ 		SELECT  ID, PW, NAME, SSN_FIRST, SSN_SECOND
+		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL
+		, BANK_TYPE, ACCT_NUMBER
+		FROM SIT_VIEW
+		WHERE ID = #{id}
+ 	</select>
+ 	
+ 	
+ 	<select id="sitLogin" resultType="java.lang.String"> 
+ 	<!-- // [시터] 로그인 public String sitLogin(String id, String pw); -->
 <!--  		SELECT SREG.NAME
 		FROM SIT_REG SREG, SIT_BACKUP SBAC
 		WHERE SREG.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID
@@ -333,4 +352,26 @@
 		ORDER BY EREQ.END_DATE DESC
 		]]>
 	</select>
+	
+	<!-- ① 시터 백업 삽입 (addBackup) -->
+	<insert id="addBackup" parameterType="com.team1.dto.SitDTO">
+	<selectKey keyProperty="sit_backup_id" resultType="String" order="BEFORE">
+		SELECT 'SBAC' || LPAD(SIT_BACKUP_SEQ.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
+		INSERT INTO SIT_BACKUP (SIT_BACKUP_ID, ID, REG_DATE)
+		VALUES (#{sit_backup_id}, #{id}, SYSDATE)
+	</insert>
+	
+	<!-- ② 시터 백업 코드로 SIT_REG 확인 및 회원 등록 -->
+	<insert id="add" parameterType="com.team1.dto.SitDTO">
+	<selectKey keyProperty="sit_reg_id" resultType="String" order="BEFORE">
+		SELECT 'SREG' || LPAD(SIT_REG_SEQ.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
+		INSERT INTO SIT_REG (SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, 
+		SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE)
+		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, 
+		#{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code})
+	</insert>
 </mapper>

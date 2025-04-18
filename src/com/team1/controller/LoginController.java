@@ -5,7 +5,9 @@
 package com.team1.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,5 +43,15 @@ public class LoginController
 
         // 요청 전달
         request.getRequestDispatcher(redirectUrl).forward(request, response);
+    }
+    
+    @RequestMapping(value = "iLook.action", method = RequestMethod.GET) 
+    public String iLookRedirect(Model model) throws Exception
+    {
+    	String result = "";
+    	
+    	result = "WEB-INF/view/logIn.jsp";
+    	
+    	return result;
     }
 }
