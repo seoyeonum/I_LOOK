@@ -15,6 +15,9 @@ public class GenRegDTO
 	// 근무 시작 가능 시간, 근무 
 	private int start_time, end_time;
 	
+	// 속성 추가
+	private String name;		//-- 시터 이름
+	
 	// getter / setter 구성
 	public String getGen_reg_id()
 	{
@@ -87,6 +90,14 @@ public class GenRegDTO
 	public void setEnd_time(int end_time)
 	{
 		this.end_time = end_time;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 	
 	

@@ -22,6 +22,9 @@ public interface IChildDAO
 	// 아이 전체 리스트 
 	public ArrayList<ChildDTO> list();
 	
+	// 아이 이름 리스트
+	public ArrayList<ChildDTO> listName(String id);
+	
 	// 특정 아이 리스트 
 	public ArrayList<ChildDTO> childList();
 	

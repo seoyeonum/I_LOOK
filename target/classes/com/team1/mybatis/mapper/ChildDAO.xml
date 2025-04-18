@@ -36,6 +36,16 @@
 		FROM V_CHILD_INFO
 	</select>
 	
+	<!-- 아이 이름 리스트 -->
+	<select id="listName" resultType="com.team1.dto.ChildDTO">
+		SELECT C.CHILD_BACKUP_ID, CR.NAME
+		FROM PAR_BACKUP P JOIN CHILD_BACKUP C
+		ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+		    JOIN CHILD_REG CR
+		    ON C.CHILD_BACKUP_ID = CR.CHILD_BACKUP_ID
+		WHERE P.ID = #{id}
+	</select>
+	
 	<!-- 특정 아이 리스트 -->
 		<select id="childList" resultType="com.team1.dto.ChildDTO">
 		SELECT *
