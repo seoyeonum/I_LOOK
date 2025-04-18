@@ -3,7 +3,7 @@
 .project
 .settings/
 .buildpath
-.turn-project/
+.tern-project
 
 # Build output folders
 /bin/
