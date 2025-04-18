@@ -147,26 +147,29 @@
 				<h2>1차 필터</h2>
 			</div>
 			<div class="sub-body">
-			    <form action="" id="primary-filter-form">
+			    <form action="gensearchresult.action" id="primary-filter-form" method="post" >
 			    	<div class="form-group">
 				        <div class="label">돌봄 희망 아이</div>
 				        <div class="child-range">
-				        	<select id="child-name" required="required">
-					             <option value="">아이 선택</option>
-					             <option value="1">김창식</option>
-					             <option value="2">김충식</option>
-					             <option value="3">김민식</option>
-					             <option value="4">김주식</option>
+				        	<select name="child_backup_id" id="child-name" required="required">
+								<option value="">아이 선택</option>
+					    		<c:forEach var="name" items="${listName}">
+					            <option value="${name.child_backup_id}" 
+					            ${name.child_backup_id == childBackupId ? "selected" : ""}>${name.name}</option>
+								</c:forEach>
 					    	</select>
+					    	
 				    	</div>
 				    </div>
 				    
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" id="date-start" required="required">
+				        	<input type="date" name="start_date" id="date-start" required="required"
+				        	value="${dateStart}">
 				        	<span>부터</span>
-				        	<input type="date" id="date-end" required="required">
+				        	<input type="date" name="end_date" id="date-end" required="required"
+				        	value="${dateEnd}">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
@@ -174,45 +177,35 @@
 				    <div class="form-group">
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
-				        	<select id="time-start" required="required">
-					             <option value="">시작 시간</option>
-					             <option value="8">오전 8:00</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
-					    	</select>
+				        	<select name="start_time" id="time-start" required="required">
+					            <option value="">시작 시간</option>
+				        		<c:forEach var="i" begin="8" end="11" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="18" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
+							</select>
 					      	<span>부터</span>
-					      	<select id="time-end" required>
-					             <option value="">종료 시간</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
+					      	<select name="end_time" id="time-end" required="required">
+					            <option value="">종료 시간</option>
+				        		<c:forEach var="i" begin="9" end="11" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="19" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
 				    		</select>
 				        	<span>까지</span>
 				        </div>
-				        <div class="warning" id="time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="max-time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 2시간부터 이용 가능합니다.</div>
 				    </div>
 				
-				    <button type="submit" class="btn" id="primary-search-btn">시터 찾기</button>
+				    <button type="submit" class="btn btn-large" id="primary-search-btn">시터 찾기</button>
 			    </form>
 			</div>
-		</div>
+		</div>		
 	</div>
 	
 	<div id="wrapper-body">
@@ -398,12 +391,49 @@
 		<!-- 검색 결과 -->
 	    <div class="gen-results" id='resultArea'>
 	    	<div class="sub-subject">
-	        	<h2>검색 결과 (3)</h2>
+	        	<h2>검색 결과 (${countPrimaryGenReg})</h2>
 	        </div>
-	        
 	        <!-- 일반 돌봄 각 등록 건 -->
 	       	<!-- <form action="genregdetail.action" method="post" target="_blank"> -->
+	        <!-- 
+	        listPrimaryGenReg 
+	         R.GEN_REG_ID, R.NAME, R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME, STATUS
+	         -->
+	       	<c:forEach var="genReg" items="${listPrimaryGenReg}">
+	       	
+	       	
 		        <div class="box-preview">
+		            <div class="sitter-photo">
+		                <img src="./images/sit01.jpg" alt="시터 사진">
+		            </div>
+		            <div class="sitter-info">
+		                <div class="sitter-name">${genReg.name }</div>
+		                <div class="sitter-details">
+		                    <div><img src="" alt="🥉">브론즈 시터</div>		<!-- 대체 텍스트 수정 필요 -->
+		                	<div>최근 평점 ⭐4.9 (7건)</div>
+		                    <div>전체 평점 ⭐4.76 (123건)</div>
+		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
+		                    <div>돌봄 등록 시간: ⏰
+		                    <c:choose>
+							    <c:when test="${genReg.start_date < 12}">
+							        오전 ${genReg.start_date}시
+							    </c:when>
+							    <c:otherwise>
+							        오후 ${genReg.start_date == 12 ? 12 : genReg.start_date-12}시
+							    </c:otherwise>
+							</c:choose></div>
+		                </div>
+		                <button type="submit" class="btn gen-btn-small"
+		                onclick="openDetailWindow(${genReg.gen_reg_id})">돌봄 신청</button>
+		            </div>
+		        </div>
+		    
+	       	</c:forEach>
+		    
+		    <!-- -------------------------------------------------------------------------------------------------- -->
+		    
+		    
+		    	<div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit01.jpg" alt="시터 사진">
 		            </div>
@@ -420,7 +450,8 @@
 
 		            </div>
 		        </div>
-		    
+		        
+		        
 				<div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit02.jpg" alt="시터 사진">

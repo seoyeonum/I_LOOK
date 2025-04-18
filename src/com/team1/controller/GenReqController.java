@@ -22,12 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
-import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenRegDAO;
-import com.team1.mybatis.ISitAcctDAO;
-import com.team1.mybatis.ISitCertDAO;
-import com.team1.mybatis.ISitDAO;
 
 @Controller
 public class GenReqController
@@ -42,37 +38,52 @@ public class GenReqController
 		String result = null;
 		
 		// 부모 id 기반으로 아이 이름 조회
-		IChildDAO dao = sqlSession.getMapper(IChildDAO.class);
+		IChildDAO ChildDao = sqlSession.getMapper(IChildDAO.class);
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
-		
-		listName = dao.listName(id);
+		listName = ChildDao.listName(id);
 		
 		model.addAttribute("listName", listName);
 		session.setAttribute("id", id);
 		
 		result = "WEB-INF/view/genMain.jsp";
-		
 		return result;
 	}
 	
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
-	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto, Model model)
+	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
+								, Model model, HttpSession session)
 	{
 		String result = null;
 		
-		// 입력값 기반으로 1차 필터 수행
-		IGenRegDAO dao = sqlSession.getMapper(IGenRegDAO.class);
-		ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
+		// 입력값 기반으로 1차 필터 유지
+		IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
+		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
+		String id = (String) session.getAttribute("id");
+		listName = childDao.listName(id);
 		
-		listPrimaryGenReg = dao.listPrimaryGenReg(dto);
-		
-		model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
-		
+		model.addAttribute("listName", listName);
 		model.addAttribute("childBackupId", childBackupId);
 		model.addAttribute("dateStart", dto.getStart_date());
 		model.addAttribute("dateEnd", dto.getEnd_date());
 		model.addAttribute("timeStart", dto.getStart_time());
 		model.addAttribute("timeEnd", dto.getEnd_time());
+		
+		
+		// 입력값 기반으로 1차 필터 수행 결과 건수
+		IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
+		int countPrimaryGenReg = RegDao.countPrimaryGenReg(dto);
+		
+		// 입력값 기반으로 1차 필터 수행 결과 리스트
+		//IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
+		ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
+		listPrimaryGenReg = RegDao.listPrimaryGenReg(dto);
+		
+		// 확인
+		System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
+		System.out.println("listPrimaryGenReg size: " + listPrimaryGenReg.size());
+		
+		model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
+		model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
 		
 		result = "WEB-INF/view/genSearchResult.jsp";
 		

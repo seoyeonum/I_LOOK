@@ -81,9 +81,9 @@
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" name="date-start" id="date-start" required="required">
+				        	<input type="date" name="start_date" id="date-start" required="required">
 				        	<span>부터</span>
-				        	<input type="date" name="date-end" id="date-end" required="required">
+				        	<input type="date" name="end_date" id="date-end" required="required">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
@@ -91,7 +91,7 @@
 				    <div class="form-group">
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
-				        	<select name="time-start" id="time-start" required="required">
+				        	<select name="start_time" id="time-start" required="required">
 					             <option value="">시작 시간</option>
 					             <option value="8">오전 8:00</option>
 					             <option value="9">오전 9:00</option>
@@ -106,7 +106,7 @@
 					             <option value="18">오후 6:00</option>
 					    	</select>
 					      	<span>부터</span>
-					      	<select name="time-end" id="time-end" required="required">
+					      	<select name="end_time" id="time-end" required="required">
 					             <option value="">종료 시간</option>
 					             <option value="9">오전 9:00</option>
 					             <option value="10">오전 10:00</option>

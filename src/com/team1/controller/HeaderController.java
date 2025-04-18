@@ -66,7 +66,7 @@ public class HeaderController
 	}
 	*/
 	
-	@RequestMapping(value="/parentheader.action", method = RequestMethod.GET)
+	@RequestMapping(value="/parentheader.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String parentHeader(Model model, HttpSession session)
 	{
 		String result = null;
@@ -82,7 +82,7 @@ public class HeaderController
 	    return result;
 	}
 	
-	@RequestMapping(value="/sitterheader.action", method = RequestMethod.GET)
+	@RequestMapping(value="/sitterheader.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String sitterHeader(Model model, HttpSession session)
 	{
 		String result = null;
