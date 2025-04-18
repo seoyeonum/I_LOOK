@@ -31,7 +31,6 @@ public interface ISitDAO
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
 	
-	
 	// [관리자] 시터 회원 등록 요청
 	public int sitReg(SitDTO dto);
 	
