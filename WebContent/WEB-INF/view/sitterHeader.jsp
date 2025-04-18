@@ -25,9 +25,6 @@
         <nav>
             <button type="button" class="menuBtn presentPage" id="emg"
             onclick="window.location.href='<%=cp%>/emgmain.action'">홈</button>
-            <button type="button" class="menuBtn">로그아웃</button>
-            
-            <!-- 일반 회원 -->
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
             <button type="button" class="menuBtn" id="gen">일반돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
@@ -36,6 +33,7 @@
                 알림함
                 <span id="notify-badge">3</span>
             </button>
+            <button type="button" class="menuBtn">로그아웃</button>
         </nav>
   	</header>
 </div>

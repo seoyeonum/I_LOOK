@@ -26,17 +26,14 @@
         <nav>
             <button type="button" class="menuBtn presentPage" id="gen"
             onclick="window.location.href='<%=cp%>/genmain.action?id=${id}'">홈</button>
-            <button type="button" class="menuBtn">로그아웃</button>
-            
-            <!-- 일반 회원 -->
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
             <button type="button" class="menuBtn" id="emg">긴급돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
             onclick="window.location.href='<%=cp%>/parentmypage.action?id=${id}'">마이페이지</button>
             <button type="button" class="menuBtn" id="notify-btn">
-                알림함
-                <span id="notify-badge">3</span>
+                알림함<span id="notify-badge">3</span>
             </button>
+            <button type="button" class="menuBtn">로그아웃</button>
         </nav>
     </header>
 </div>
