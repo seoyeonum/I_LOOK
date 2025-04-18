@@ -16,9 +16,7 @@
 		    WHEN T.총근무시간 &lt; 5000 THEN '실버'
 		    WHEN T.총근무시간 &lt; 10000 THEN '골드'
 		    ELSE '플래티넘'
-		  END AS 등급
-		, SREG.SIT_REG_ID
-		, SCHK.CHK_DATE
+		    AND AS 등급
 		FROM
 		(
 		    SELECT
@@ -66,52 +64,46 @@
  	</select>
  	
  	<!-- 시터 회원 등록 요청 목록 확인 -->
- 	<select id="listSitReg" resultType="com.team1.dto.SitDTO">
-	 	SELECT *
-		FROM 
-		(
-		    SELECT ROWNUM RN, S.*
-		    FROM 
-		    (
+	<select id="listSitReg" resultType="com.team1.dto.SitDTO">
+		SELECT *
+		FROM (
+		    SELECT S.*, ROWNUM RN
+		    FROM (
 		        SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
-				     , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH  
-				FROM ADMIN_SIT_REG_VIEW
+		             , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH
+		        FROM ADMIN_SIT_REG_VIEW
+		        WHERE 1=1
+		        <if test="searchKey != null and searchValue != null and searchValue != ''">
+		            <if test="searchKey = 'name'">
+		                AND NAME LIKE '%' || #{searchValue} || '%'
+		            </if>
+		            <if test="searchKey = 'tel'">
+		                AND TEL LIKE '%' || #{searchValue} || '%'
+		            </if>
+		        </if>
 		        ORDER BY SIT_BACKUP_ID DESC
 		    ) S
-		    WHERE ROWNUM &lt; #{end}
 		)
-		WHERE RN &gt; #{start}
- 	</select>
- 	
- 	<select id="sitNameSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 이름 검색 public SitDTO sitNameSearch(String name); -->
- 		SELECT *
-	    FROM SIT_VIEW
-	    WHERE NAME LIKE '%' || #{name} || '%'  
-	    ORDER BY SIT_BACKUP_ID DESC
- 	</select>
- 	
- 	<select id="sitTelSearch" resultType="com.team1.dto.SitDTO"> <!-- // [관리자] 시터 회원 전화번호 검색 public SitDTO sitSearch(String tel); -->
- 		SELECT *
-		FROM SIT_VIEW
-		WHERE TEL = #{tel}
-		ORDER BY SIT_BACKUP_ID DESC
- 	</select>
- 	
- 	<!-- // [관리자] 시터 회원 등록 요청 개수 확인 public int countSitReg(); -->
- 	<select id="countSitReg" resultType="java.lang.Integer"> 
- 		SELECT COUNT(*) AS COUNT
-		FROM SIT_REG RG
-		JOIN SIT_BACKUP BK
-		ON RG.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
-		WHERE 
-		    BK.REG_DATE >= SYSDATE - 8 
-		    AND NOT EXISTS (
-		        SELECT 1 FROM SIT_CHK CK WHERE CK.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
-		    )
-		    AND NOT EXISTS (
-		        SELECT 1 FROM SIT_REJECTED RJ WHERE RJ.SIT_BACKUP_ID = BK.SIT_BACKUP_ID
-		    )
- 	</select>
+		WHERE RN BETWEEN #{start} AND #{end}
+
+	</select>
+		
+
+ 	<!-- // [관리자] 시터 회원 등록 요청 개수 -->
+ 	<select id="countSitReg" resultType="int">
+		SELECT COUNT(*) AS COUNT
+		FROM ADMIN_SIT_REG_VIEW
+		WHERE 1=1
+		<if test="searchKey != null and searchValue != null and searchValue != ''">
+			<if test="searchKey == 'name'">
+                AND NAME LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchKey == 'tel'">
+                AND TEL LIKE '%' || #{searchValue} || '%'
+            </if>
+		</if>
+	</select>
+
  	
  	<select id="countSit" resultType="java.lang.Integer"> <!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
  		SELECT COUNT (*) AS COUNT
@@ -126,15 +118,15 @@
 		WHERE ID = #{id}
  	</select>
  	
+ 	<insert id="sitBac" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
+		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
+		VALUES(#{sit_backup_id}, #{reg_date}, #{id})
+ 	</insert>
  	
  	
  	<insert id="sitReg" > <!-- // [관리자] 시터 회원 등록 요청 public int sitReg(SitDTO dto); -->
-		INSERT INTO SIT_BACKUP(SIT_BACKUP_ID, REG_DATE, ID)
-		VALUES(#{sit_backup_id}, #{reg_date}, #{id})
-		
  		INSERT INTO SIT_REG(SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH)
 		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, #{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code}, #{tel}, #{file_path})	
-		<!-- 트랜잭션 처리할 것. -->
  	</insert>
  	
  	
@@ -149,8 +141,8 @@
  		UPDATE SIT_REG 
 		 RIGHT JOIN SIT_BACKUP ON (SIT_REG.SIT_BACKUP_ID = SIT_BACKUP.SIT_BACKUP_ID)
 		   SET SIT_REG.PW = #{pw}
-		     , SIT_REG,NAME = #{name}
-		     , SIT_REG,ROAD_ADDR = #{road_addr}
+		     , SIT_REG.NAME = #{name}
+		     , SIT_REG.ROAD_ADDR = #{road_addr}
 		     , SIT_REG.DETAILED_ADDR = #{detailed_addr}
 		     , SIT_REG.ZIP_CODE = #{zip_code}
 		     , SIT_REG.TEL =  #{tel}
@@ -336,12 +328,4 @@
 		AND SBAC.SIT_BACKUP_ID = #{sit_backup_id}
 		ORDER BY EREQ.END_DATE DESC
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
 </mapper>

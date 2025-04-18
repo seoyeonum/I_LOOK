@@ -28,13 +28,13 @@ String cp = request.getContextPath();
 					<h1 class="content-title">시터 등록 요청</h1>
 
 					<div class="search-form">
-						<form action="" name="searchForm" method="post">
+						<form action="adminsitreglist.action" name="searchForm" method="get">
 							<select name="searchKey" class="selectFiled">
-								<option value="name">이름</option>
-								<option value="tel">연락처</option>
-							</select> <input type="text" name="searchValue" class="txt"
-								value="${searchValue }"> <input type="button" value="검색"
-								class="btn search-btn" onclick="sendIt()">
+								<option value="name" ${searchKey == 'name' ? 'selected' : ''}>이름</option>
+      							<option value="tel" ${searchKey == 'tel' ? 'selected' : ''}>연락처</option>
+							</select> 
+							<input type="text" name="searchValue" class="txt" value="${searchValue }">
+						    <input type="submit" value="검색" class="btn search-btn">
 						</form>
 					</div>
 				</div>
@@ -54,7 +54,7 @@ String cp = request.getContextPath();
 						<!-- 예시 데이터 -->
 						<c:forEach var="sitReg" items="${sitRegList }" varStatus="status">
 							<div class="info-row-sitReg">
-								<div class="info-cell">${paging.startNum - status.index - 1}</div>
+								<div class="info-cell">${paging.startNum - status.index}</div>
 								<div class="info-cell">${sitReg.name }</div>
 								<div class="info-cell">${sitReg.tel }</div>
 								<div class="info-cell">${sitReg.sit_reg_id }</div>
@@ -63,8 +63,7 @@ String cp = request.getContextPath();
 								<div class="info-cell">
 									<div class="action-buttons">
 										<button type="button" class="btn detail-btn"
-											onclick="location.href='adminSitRegDetail.jsp?sit_backup_id=${sitReg.sit_backup_id}'">상세
-											보기</button>
+											onclick="location.href='<%=cp %>/adminsitregdetail.action?sit_reg_id=${sitReg.sit_reg_id}'">상세보기</button>
 									</div>
 								</div>
 							</div>
@@ -73,25 +72,26 @@ String cp = request.getContextPath();
 
 					<!-- 페이징 영역 -->
 					<div class="page">
-						<c:if test="${paging.totalPage > 1}">
+						<c:if test="${paging.totalPage >= 1}">
 							<c:if test="${paging.startPage > 1}">
-								<a href="adminsitreglist.action?page=${paging.startPage-1}" class="prev">&lt;</a>
+								<a href="adminsitreglist.action?page=${paging.startPage-1}
+									&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
 							</c:if>
 
-							<c:forEach var="p" begin="${paging.startPage}"
-								end="${paging.endPage}">
+							<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
 								<c:choose>
 									<c:when test="${p == paging.page}">
 										<strong>${p}</strong>
 									</c:when>
 									<c:otherwise>
-										<a href="adminsitreglist.action?page=${p}">${p}</a>
+										<a href="adminsitreglist.action?page=${p}
+											&searchKey=${searchKey}&searchValue=${searchValue}">${p}</a>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 
 							<c:if test="${paging.endPage < paging.totalPage}">
-								<a href="adminsitreglist.action?page=${paging.endPage+1}" class="next">&gt;</a>
+								<a href="adminsitreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&gt;</a>
 							</c:if>
 						</c:if>
 					</div>

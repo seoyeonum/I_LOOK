@@ -152,7 +152,7 @@ body {
 
 .info-header-viol {
     display: grid;
-    grid-template-columns: repeat(, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;

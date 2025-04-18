@@ -17,20 +17,20 @@ public interface ISitDAO
 	// [관리자] 시터 회원 리스트
 	public ArrayList<SitDTO> list();
 	
-	// 시터 회원가입 요청 목록
-	public List<SitDTO> listSitReg(@Param("start") int start, @Param("end") int end);
+	// [관리자] 시터 회원가입 요청 목록
+	public List<SitDTO> listSitReg(@Param("start") int start
+								 , @Param("end") int end
+	                             , @Param("searchKey") String searchKey
+	                             , @Param("searchValue") String searchValue);
 	
-	// [관리자] 시터 회원 이름 검색
-	public List<SitDTO> sitNameSearch(String name); 
-	
-	// [관리자] 시터 회원 전화번호 검색
-	public SitDTO sitTelSearch(String tel); 
+	// [관리자] 시터 회원 등록 요청 개수 확인
+	public int countSitReg(@Param("searchKey") String searchKey
+			             , @Param("searchValue") String searchValue);
+
 	
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
 	
-	// [관리자] 시터 회원 등록 요청 개수 확인
-	public int countSitReg();
 	
 	// [관리자] 시터 회원 등록 요청
 	public int sitReg(SitDTO dto);
@@ -70,5 +70,11 @@ public interface ISitDAO
 	
 	// [시터가 그동안 맡은 긴급 돌봄 서비스 수]
 	public int emgCareCount(String sit_backup_id);
+	
+	// [관리자] 시터 회원 이름 검색
+	// public List<SitDTO> sitNameSearch(String name); 
+	
+	// [관리자] 시터 회원 전화번호 검색
+	// public SitDTO sitTelSearch(String tel); 
 	
 }
