@@ -153,6 +153,7 @@ public class SitterMypageController
 	
 	// genRegInsertFormComplete.jsp로 보내졌고, 그 파일엔 이미 알아서 버튼링크 처리가 되어 있으니 따로 뭘 더 안 만들어도 됨.
 	
+	
 	// 근무 등록 내역 확인 컨트롤러
 	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
 	public String GenRegList(Model model, String sit_backup_id)
@@ -220,7 +221,6 @@ public class SitterMypageController
 		
 		// 다 넣었으면 그걸 모델로 보내기.
 		model.addAttribute("wRPdtoList", wRPdto);
-		
 		
 		// 주소 지정
 		result = "/WEB-INF/view/GenRegList.jsp";

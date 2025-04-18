@@ -6,13 +6,16 @@
 	<artifactId>I_LOOK</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-
+	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 	<dependencies>
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
@@ -96,14 +99,6 @@
 			<systemPath>${project.basedir}/WebContent/WEB-INF/lib/ojdbc6.jar</systemPath>
 		</dependency>
 
-		<!--  cos → 직접 로컬 설치 필요  --> 
-		<dependency>
-    			<groupId>com.oreilly.servlet</groupId>
-    			<artifactId>cos</artifactId>
-    			<version>1.0</version>
-    			<scope>system</scope>
-    			<systemPath>${project.basedir}/WebContent/WEB-INF/lib/cos.jar</systemPath>
-		</dependency>
 		<!-- Spring Framework Core Modules (3.0.2.RELEASE) -->
 		<dependency>
 			<groupId>org.springframework</groupId>

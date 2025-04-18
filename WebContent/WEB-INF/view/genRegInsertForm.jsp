@@ -485,8 +485,10 @@ input[type="file"] {
 		
 		const diffDate = date2.getTime() - date1.getTime();
 		
-		return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
+		return Math.abs(diffDate / (1000 * 60 * 60 * 24));  
+								/* 밀리세컨 * 초 * 분 * 시 = 일 */	
 	}
+ 	
 
  	
  	

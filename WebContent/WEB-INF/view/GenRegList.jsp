@@ -222,8 +222,7 @@
 		{
 			if (confirm("정말 예약하시겠습니까?"))
 			{
-				
-				$(location).attr("href", "SitterGenReqAnsweredList.jsp");
+				$(location).attr("href", "sittergenreqansweredlist.action?sit_backup_id=" + ${sit_backup_id });
 			}
 			
 		});
@@ -232,7 +231,7 @@
 		{
 			if (confirm("정말 거절하시겠습니까?"))
 			{
-				$(location).attr("href", "SitterGenReqAnsweredList.jsp");
+				$(location).attr("href", "sittergenreqansweredlist.action?sit_backup_id=" + ${sit_backup_id });
 			}
 			
 		});
@@ -382,7 +381,7 @@
 				</div> --%>
 			<c:forEach var="wrpdto" items="${wRPdtoList }">
 			<c:forEach var="reg" items="${regList }">
-				<div class="row" id="${reg.gen_req_id }" >
+				<div class="row" id="${reg.gen_reg_id }" >
 					<div class="col-md-1">1</div>
 					<div class="col-md-1">${reg.title }</div>
 					<div class="col-md-2">${reg.sit_start_date } ~ ${reg.sit_end_date }</div>
