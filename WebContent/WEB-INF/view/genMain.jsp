@@ -68,7 +68,7 @@
 			    	<div class="form-group">
 				        <div class="label">돌봄 희망 아이</div>
 				        <div class="child-range">
-				        	<select name='child-name' id="child-name" required="required">
+				        	<select name='child_backup_id' id="child-name" required="required">
 								<option value="">아이 선택</option>
 					    		<c:forEach var="name" items="${listName}">
 					            <option value="${name.child_backup_id}">${name.name}</option>

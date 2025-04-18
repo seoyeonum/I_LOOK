@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
+import com.team1.dto.GenRegDTO;
 import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IChildDAO;
+import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.ISitAcctDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.ISitDAO;
@@ -41,37 +43,36 @@ public class GenReqController
 		
 		// 부모 id 기반으로 아이 이름 조회
 		IChildDAO dao = sqlSession.getMapper(IChildDAO.class);
-		
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
 		
 		listName = dao.listName(id);
 		
 		model.addAttribute("listName", listName);
-		
 		session.setAttribute("id", id);
+		
 		result = "WEB-INF/view/genMain.jsp";
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
-	public String genSearchResult(@RequestParam("child-name") String childName
-								, @RequestParam("date-start") String dateStart
-								, @RequestParam("date-end") String dateEnd
-								, @RequestParam("time-start") String timeStart
-								, @RequestParam("time-end") String timeEnd
-								//,HttpSession session
-								, Model model)
+	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto, Model model)
 	{
 		String result = null;
 		
-		model.addAttribute("childName", childName);
-		model.addAttribute("dateStart", dateStart);
-		model.addAttribute("dateEnd", dateEnd);
-		model.addAttribute("timeStart", timeStart);
-		model.addAttribute("timeEnd", timeEnd);
+		// 입력값 기반으로 1차 필터 수행
+		IGenRegDAO dao = sqlSession.getMapper(IGenRegDAO.class);
+		ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
 		
-		// (입력값 기반으로 1차 필터 수행)
+		listPrimaryGenReg = dao.listPrimaryGenReg(dto);
+		
+		model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
+		
+		model.addAttribute("childBackupId", childBackupId);
+		model.addAttribute("dateStart", dto.getStart_date());
+		model.addAttribute("dateEnd", dto.getEnd_date());
+		model.addAttribute("timeStart", dto.getStart_time());
+		model.addAttribute("timeEnd", dto.getEnd_time());
 		
 		result = "WEB-INF/view/genSearchResult.jsp";
 		
