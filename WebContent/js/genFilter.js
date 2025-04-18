@@ -60,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function()
     // 3. 시간 선택 제한
     
  	// 경고 메시지 요소 기본적으로 숨기기
-    $('#time-warning').hide();
+    $('#max-time-warning').hide();
+    $('#min-time-warning').hide();
     
     // 시작 시간, 종료 시간 변경 시 검사 실행
     $('#time-start').on('change', checkTimeDiff);
@@ -81,6 +82,14 @@ document.addEventListener('DOMContentLoaded', function()
        		{
             	// 경고 팝업
             	alert('일반 돌봄 하루 최대 이용시간은 8시간입니다.');
+            	event.preventDefault(); // 폼 제출 막기
+            }
+            
+            // 1시간 미만이면 제출 막기
+            if (hourDiff <= 0)
+       		{
+            	// 경고 팝업
+            	alert('일반 돌봄은 최소 2시간부터 이용 가능합니다.');
             	event.preventDefault(); // 폼 제출 막기
             }
         }
@@ -116,12 +125,24 @@ function checkTimeDiff()
         if (hourDiff > 8)
         {
             // 경고 표시
-            $('#time-warning').show();
+            $('#max-time-warning').show();
         }
         else
         {
             // 경고 숨기기
-            $('#time-warning').hide();
+            $('#max-time-warning').hide();
+        }
+        
+        // 시간 차가 1시간 미만이라면,
+        if (hourDiff <= 0)
+        {
+            // 경고 표시
+            $('#min-time-warning').show();
+        }
+        else
+        {
+            // 경고 숨기기
+            $('#min-time-warning').hide();
         }
     }
 }

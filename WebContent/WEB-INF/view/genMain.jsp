@@ -69,12 +69,12 @@
 				        <div class="label">돌봄 희망 아이</div>
 				        <div class="child-range">
 				        	<select name='child-name' id="child-name" required="required">
-					             <option value="">아이 선택</option>
-					             <option value="1">김창식</option>
-					             <option value="2">김충식</option>
-					             <option value="3">김민식</option>
-					             <option value="4">김주식</option>
+								<option value="">아이 선택</option>
+					    		<c:forEach var="name" items="${listName}">
+					            <option value="${name.child_backup_id}">${name.name}</option>
+								</c:forEach>
 					    	</select>
+					    	
 				    	</div>
 				    </div>
 				    
@@ -122,7 +122,8 @@
 				    		</select>
 				        	<span>까지</span>
 				        </div>
-				        <div class="warning" id="time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="max-time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 2시간부터 이용 가능합니다.</div>
 				    </div>
 				
 				    <button type="submit" class="btn btn-large" id="primary-search-btn">시터 찾기</button>
