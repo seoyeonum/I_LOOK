@@ -7,11 +7,16 @@
 	
 	<!-- 일반 돌봄 근무 등록 -->
 	<insert id="add">
+	<selectKey keyProperty="gen_reg_id"
+               resultType="String"
+               order="BEFORE">
+      SELECT 'GREG' || LPAD(SEQ_GREG.NEXTVAL, 4, '0') FROM DAUL
+	</selectKey>
 		INSERT INTO GEN_REG(GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION)
 		VALUES(#{gen_reg_id}, #{sit_backup_id}, #{title}
 		, #{start_date}, #{end_date}
-		, #{start_time}, #{end_time}, #{reg_date}, #{introduction})
+		, #{start_time}, #{end_time}, SYSDATE, #{introduction})
 	</insert>
 	
 	<!-- 일반 돌봄 근무 삭제 -->
@@ -33,7 +38,7 @@
 		FROM GEN_REG
 	</select>
 	
-	<!-- 특정 아이디에 따른 근무 리스트 -->
+	<!-- 특정 아이디에 따른 근무 등록 파일-->
 	<select id="regList" resultType="com.team1.dto.GenRegDTO">
 		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION

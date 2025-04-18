@@ -69,6 +69,19 @@
         background-color: #4cae4c;
     }
 </style>
+<script type="text/javascript">
+	
+	function mainPage()
+	{
+		 location.href = "emgmain.action";
+	}
+	
+	function genRegList()
+	{
+		 location.href = "genreglist.action";
+	}
+
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -83,8 +96,8 @@
         </div>
         
         <div class="button-container">
-            <button type="button" class="button home-btn" onclick="">홈</button>
-            <button type="button" class="button history-btn" onclick="">등록 내역 확인</button>
+            <button type="button" class="button home-btn" onclick="mainPage()">홈</button>
+            <button type="button" class="button history-btn" onclick="genRegList()">등록 내역 확인</button>
         </div>
     </div>
 </div>

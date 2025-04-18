@@ -65,10 +65,10 @@ public interface ISitDAO
 	// [시터] 백업 아이디로 자신의 최근 3개월 평균 점수 찾기
 	public int searchM3Rating(String sit_backup_id);
 	
-	// [시터가 그동안 맡은 일반 돌봄 서비스 수]
+	// [시터가 그동안 맡은 일반 돌봄 서비스 수
 	public int genCareCount(String sit_backup_id);
 	
-	// [시터가 그동안 맡은 긴급 돌봄 서비스 수]
+	// [시터가 그동안 맡은 긴급 돌봄 서비스 수
 	public int emgCareCount(String sit_backup_id);
 	
 	// [관리자] 시터 회원 이름 검색
