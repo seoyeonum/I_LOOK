@@ -4,6 +4,7 @@
 
 package com.team1.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
+import com.team1.mybatis.IAcctDAO;
+import com.team1.mybatis.IChildDAO;
+import com.team1.mybatis.ISitAcctDAO;
+import com.team1.mybatis.ISitCertDAO;
+import com.team1.mybatis.ISitDAO;
 
 @Controller
 public class GenReqController
@@ -28,17 +35,21 @@ public class GenReqController
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="/genmain.action", method = RequestMethod.GET)
-	public String genMain(@RequestParam("id") String id, HttpSession session)
+	public String genMain(@RequestParam("id") String id, HttpSession session, Model model)
 	{
 		String result = null;
 		
-		// (부모 id 기반으로 아이 이름 조회)
+		// 부모 id 기반으로 아이 이름 조회
+		IChildDAO dao = sqlSession.getMapper(IChildDAO.class);
+		
+		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
+		
+		listName = dao.listName(id);
+		
+		model.addAttribute("listName", listName);
 		
 		session.setAttribute("id", id);
 		result = "WEB-INF/view/genMain.jsp";
-		
-		System.out.println("Session ID: " + session.getId());
-		System.out.println("Parent ID in Session: " + session.getAttribute("id"));
 		
 		return result;
 	}
