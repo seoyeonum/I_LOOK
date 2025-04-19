@@ -370,6 +370,7 @@
 			            </label>
 			        </div>
 				</div>
+				<!-- 
 				<div class="form-group">
 					<div class="label" id="toggle-price">전체 돌봄 비용</div>
 			        <div class="range-group" id="range-price">
@@ -383,7 +384,7 @@
 			            </label>
 			        </div>
 				</div>
-	
+	 			-->
 				<button type="button" class="btn" id="secondary-search-btn">필터 적용</button>
 			</form>
 			</div>
@@ -409,14 +410,15 @@
 		                <!-- 파일 경로 추후 수정 필요!! -->
 		            </div>
 		            <div class="sitter-info">
-		                <div class="sitter-name">${genReg.name }</div>
+		                <div class="sitter-title">${genReg.title }</div>
 		                <div class="sitter-details">
+		                	
 		                    <div class="sitter-grade">
 		                    	<span class="sitter-grade-img">
 		                    		<img src="<c:url value='/${genReg.grade_file_path}' />" 
 		                    		width="20" height="20" alt="시터 등급 이미지">
 		                    	</span>
-		                    	${genReg.grade} 시터
+		                    	${genReg.grade} 시터 ${genReg.name}
 		                    </div>
 		                	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
 		                    <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>

@@ -465,7 +465,7 @@ input, select
 }
 
 
-.sitter-name, .child-name, .name
+.sitter-title, .child-name, .name
 {
 	display: flex;
     font-size: 18px;
