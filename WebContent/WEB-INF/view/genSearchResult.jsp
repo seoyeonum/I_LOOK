@@ -406,6 +406,7 @@
 		        <div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="<c:url value='/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
+		                <!-- 파일 경로 추후 수정 필요!! -->
 		            </div>
 		            <div class="sitter-info">
 		                <div class="sitter-name">${genReg.name }</div>
@@ -455,62 +456,6 @@
 		    
 	       	</c:forEach>
 		    
-		    <!-- -------------------------------------------------------------------------------------------------- -->
-		    
-		    
-		    	<div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit01.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">김탄</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🥉">브론즈 시터</div>		<!-- 대체 텍스트 수정 필요 -->
-		                	<div>최근 평점 ⭐4.9 (7건)</div>
-		                    <div>전체 평점 ⭐4.76 (123건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="submit" class="btn gen-btn-small" onclick="openDetailWindow(1)">돌봄 신청</button>
-
-		            </div>
-		        </div>
-		        
-		        
-				<div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit02.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">차은상</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🥈">실버 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-		                    <div>최근 평점 ⭐4.3 (3건)</div>
-		                    <div>전체 평점 ⭐4.56 (290건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="submit" class="btn gen-btn-small"  onclick="openDetailWindow(2)">돌봄 신청</button>
-		            </div>
-		        </div>
-		    
-		    
-		        <div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit03.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">최영도</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🌱">신입 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-		                    <div>최근 평점 ⭐4.8 (3건)</div>
-		                    <div>전체 평점 ⭐4.5 (3건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="button" class="btn gen-btn-small" onclick="openDetailWindow(3)">돌봄 신청</button>
-		             </div>
-		        </div>
 		    <!-- </form> -->
 	    </div>
 		
