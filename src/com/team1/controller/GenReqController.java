@@ -22,10 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
+import com.team1.dto.GradesDTO;
 import com.team1.dto.SitCertDTO;
+import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenRegDAO;
+import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitCertDAO;
+import com.team1.mybatis.IWorkRegionPreferedDAO;
 
 @Controller
 public class GenReqController
@@ -100,30 +104,44 @@ public class GenReqController
         
 	        ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
 	        List<String> certs = certDao.listSitCert(sitBackupId);
-	        genReg.setCertList(certs); // 각 시터에 개별 자격증 리스트 설정
+	        genReg.setCertList(certs); 		// 각 시터 돌봄 건에 개별 자격증 리스트 설정
 	        
+	        // 2. genRegId로 시터 선호 근무 지역 조회
+	        String genRegId = genReg.getGen_reg_id();
 	        
-	        // SitterDetailDTO sitterDetail = RegDao.getSitterDetailByGenRegId(genRegId);
-	        // genReg.setSitterDetail(sitterDetail);
+	        //IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
+	        List<String> regions = RegDao.listSitPreferedRegion(genRegId);
+			genReg.setRegionList(regions); 	// 각 시터 돌봄 건에 선호 근무 지역 리스트 설정
+			
 	        
-	        // 예시 2: 해당 genRegId에 대한 후기 조회
-	        // ArrayList<ReviewDTO> reviews = RegDao.getReviewsByGenRegId(genRegId);
-	        // genReg.setReviews(reviews);
-	        
-	        // 예시 3: 해당 genRegId에 대한 가능한 서비스 조회
-	        // ArrayList<ServiceDTO> services = RegDao.getServicesByGenRegId(genRegId);
-	        // genReg.setServices(services);
 	    }
 		
-		
-		
-		// 확인
-		System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
-		System.out.println("listPrimaryGenReg size: " + listPrimaryGenReg.size());
-		
-		model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
-		model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
-		model.addAttribute("listCert", listCert);
+	    model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
+	    model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
+	    model.addAttribute("listCert", listCert);
+	    
+		// 2차 필터 등급 범례 리스트
+	    IGradesDAO gradeDao = sqlSession.getMapper(IGradesDAO.class);
+	  	ArrayList<GradesDTO> listGrade = new ArrayList<GradesDTO>();
+	  	listGrade = gradeDao.listGrade();
+	    
+	    // 2차 필터 지역 범례 리스트
+	  	IWorkRegionPreferedDAO regionDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
+	  	ArrayList<WorkRegionPreferedDTO> listAllRegions = new ArrayList<WorkRegionPreferedDTO>();
+	  	listAllRegions = regionDao.listAllRegions();
+	    
+	  	// 2차 필터 자격증 범례 리스트
+	  	ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+	  	ArrayList<SitCertDTO> listCertType = new ArrayList<SitCertDTO>();
+	  	listCertType = certDao.listCertType();
+	  	
+	    model.addAttribute("listGrade", listGrade);
+	    model.addAttribute("listAllRegions", listAllRegions);
+	    model.addAttribute("listCertType", listCertType);
+
+	    // 확인
+		//System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
+		//System.out.println("listPrimaryGenReg size: " + listPrimaryGenReg.size());
 		
 		result = "WEB-INF/view/genSearchResult.jsp";
 		

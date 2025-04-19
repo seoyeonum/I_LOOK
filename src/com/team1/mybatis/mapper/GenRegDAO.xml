@@ -95,4 +95,13 @@
 		  AND R.END_TIME &gt;= #{end_time}
 	</select>
 	
+	<!-- (근무 등록 건별) 시터 선호 근무 지역 -->
+	<select id="listSitPreferedRegion" resultType="java.lang.String">
+		SELECT R.NAME AS REGION
+		FROM GEN_REG GR JOIN WORK_REGION_PREFERED WR
+		ON GR.GEN_REG_ID = WR.GEN_REG_ID
+		    JOIN REGIONS R
+		    ON WR.REGION_ID = R.REGION_ID
+		WHERE GR.GEN_REG_ID = #{gen_reg_id}
+	</select>
 </mapper>

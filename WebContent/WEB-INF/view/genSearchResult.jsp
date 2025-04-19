@@ -240,102 +240,22 @@
 			    <div class="form-group">
 			    	<div class="label" id="toggle-grade">시터 등급</div>
 			        <div class="checkbox-group" id="checkbox-grade">
+			        	<c:forEach var="grade" items="${listGrade}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="rookie" checked="checked">신입
+			                <input type="checkbox" name="grade" value="${grade.name}" checked="checked" autocomplete="off">${grade.name}
 			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="bronze" checked="checked">브론즈
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="silver" checked="checked">실버
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="gold" checked="checked">골드
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="platinum" checked="checked">플래티넘
-			            </label>
+			            </c:forEach>
 			        </div>
 			    </div>
 			    
 				<div class="form-group">
 					<div class="label" id="toggle-region">근무 지역</div>
 					<div class="checkbox-group"  id="checkbox-region">
+						<c:forEach var="region" items="${listAllRegions}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="region" value="1" checked="checked" autocomplete="off">강남구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="2" checked="checked" autocomplete="off">강동구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="3" checked="checked" autocomplete="off">강북구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="4" checked="checked" autocomplete="off">강서구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="5" checked="checked" autocomplete="off">관악구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="6" checked="checked" autocomplete="off">광진구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="7" checked="checked" autocomplete="off">구로구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="8" checked="checked" autocomplete="off">금천구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="9" checked="checked" autocomplete="off">노원구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="10" checked="checked" autocomplete="off">도봉구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="11" checked="checked" autocomplete="off">동대문구 
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="12" checked="checked" autocomplete="off">동작구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="13" checked="checked" autocomplete="off">마포구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="14" checked="checked" autocomplete="off">서대문구 
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="15" checked="checked" autocomplete="off">서초구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="16" checked="checked" autocomplete="off">성동구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="17" checked="checked" autocomplete="off">성북구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="18" checked="checked" autocomplete="off">송파구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="19" checked="checked" autocomplete="off">양천구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="20" checked="checked" autocomplete="off">영등포구 
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="21" checked="checked" autocomplete="off">용산구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="22" checked="checked" autocomplete="off">은평구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="23" checked="checked" autocomplete="off">종로구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="24" checked="checked" autocomplete="off">중구   
-			            </label>                                          
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="25" checked="checked" autocomplete="off">중랑구   
-			            </label>
+			                <input type="checkbox" name="region" value="${region.name}" checked="checked" autocomplete="off">${region.name}  
+			            </label>   
+			            </c:forEach>
 			        </div>                                                            
 				</div>                                                                          
 				<div class="form-group">
@@ -352,7 +272,7 @@
 				<div class="form-group">
 					<div class="label" id="toggle-age">시터 연령대</div>
 					<div class="checkbox-group" id="checkbox-age">
-			            <label class="checkbox-label">
+						<label class="checkbox-label">
 			                <input type="checkbox" name="age" value="20" checked="checked">20대
 			            </label>
 			            <label class="checkbox-label">
@@ -372,21 +292,12 @@
 				<div class="form-group">
 					<div class="label" id="toggle-cert">시터 보유 자격증</div>
 					<div class="checkbox-group" id="checkbox-cert">
+					
+						<c:forEach var="cert" items="${listCertType}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="1" checked="checked">보육 교사 1급 (특수)
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="2" checked="checked">보육 교사 1급
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="3" checked="checked">보육 교사 2급 (특수)
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="4" checked="checked">보육 교사 2급
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="5" checked="checked">특수 교사
-			            </label>
+			                <input type="checkbox" name="cert" value="${cert.type }" checked="checked">${cert.type }
+			            </label>  
+			            </c:forEach>
 			        </div>
 				</div>
 				<!-- 
@@ -489,6 +400,7 @@
 		                <div class="hidden sitter-gender-hidden">${genReg.gender }</div>
 		                <div class="hidden sitter-status-hidden">${genReg.status }</div>
 		                <div class="hidden sitter-age-hidden">${genReg.age }</div>
+		                <%-- <div class="hidden sitter-region-hidden">${genReg.regionlist }</div> --%>
 		                <button type="submit" class="btn gen-btn-small"
 		                onclick="openDetailWindow('${genReg.gen_reg_id}')">돌봄 신청</button>
 		            </div>

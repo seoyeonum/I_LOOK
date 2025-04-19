@@ -6,14 +6,13 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.team1.dto.SitCertDTO;
 
 public interface ISitCertDAO
 {
-	// [시터] 자격증 열람
-	public List<SitCertDTO> list(String sit_reg_id);
+	// [시터] 자격증 범례 열람
+	public ArrayList<SitCertDTO> listCertType();
 	
 	// [시터] 자격증 등록
 	public int addCert(SitCertDTO sitcert);

@@ -23,8 +23,10 @@ public class GenRegDTO
 	private String photo_file_path, grade_file_path;	//-- 시터 사진 저장경로, 등급 이미지 저장경로 
 	private double avg_rating, recent_avg_rating;		//-- 전체 평점, 최근 전체 평점
 	private int review_count, recent_review_count;		//-- 전체 리뷰 건수, 최근 리뷰 건수
-	private String status;								//-- 예약 상태
+	private String status, region;						//-- 예약 상태, 선호 지역
 	private List<String> certList;						//-- 시터의 보유 자격증 리스트
+	private List<String> regionList;					//-- 시터의 선호 근무 지역 리스트
+	
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -167,11 +169,23 @@ public class GenRegDTO
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
 	public List<String> getCertList() {
 		return certList;
 	}
 	public void setCertList(List<String> certList) {
 		this.certList = certList;
+	}
+	public List<String> getRegionList() {
+		return regionList;
+	}
+	public void setRegionList(List<String> regionList) {
+		this.regionList = regionList;
 	}
 	
 	

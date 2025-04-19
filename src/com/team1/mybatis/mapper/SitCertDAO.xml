@@ -4,6 +4,12 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team1.mybatis.ISitCertDAO">
+	
+	<!-- 자격증 범례 열람 -->
+	<select id="listCertType" resultType="com.team1.dto.SitCertDTO">
+	 	SELECT CERT_TYPE_ID, TYPE
+		FROM CERT_TYPES
+ 	</select>
 
  	<insert id="addCert"> <!-- public int addCert(SitCertDTO sitcert); -->
 	 	INSERT INTO CERT_REG(CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID)

@@ -33,4 +33,7 @@ public interface IGenRegDAO
 	
 	// (부모가 보는) 1차 필터 결과 리스트 건수
 	public int countPrimaryGenReg(GenRegDTO gen_reg);
+	
+	// (근무 등록 건별) 시터 선호 근무 지역
+	public ArrayList<String> listSitPreferedRegion(String gen_reg_id);
 }
