@@ -465,12 +465,21 @@ input, select
 }
 
 
-.sitter-title, .child-name, .name
+.sitter-title, .sitter-name, .child-name, .name
 {
 	display: flex;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 5px;
+}
+
+.sitter-status
+{
+	font-size: 16px;
+	/* border-radius: 5px; */
+	color: #d9534f;
+	/* background-color: #e28c99; */
+	display: inline;					/* 기본 none 으로 설정 바꾸어야 함! */
 }
 
 .sitter-grade-img
@@ -537,6 +546,10 @@ input, select
 	width: 20px;
 }
 
+.hidden
+{
+	display: none;
+}
 
 .row-items
 {

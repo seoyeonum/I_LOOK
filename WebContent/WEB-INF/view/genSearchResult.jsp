@@ -111,17 +111,36 @@
 	  	   	});
 	  	});
  
+  	    
+  	    //=================== 페이지 로드 시 돌봄 신청 상태에 따라 버튼 비활성화 ==================
+	    $('.box-preview').each(function() 		
+   	    {
+   	        // 현재 box-preview 내의 상태 텍스트 가져오기
+   	        var status = $(this).find('.sitter-status-hidden').text();
+   	        
+   	        // 해당 box-preview 내의 버튼 요소 
+   	        var button = $(this).find('.gen-btn-small');
+   	        
+   	        // 상태가 "예약중"인 경우 버튼 변경
+   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
+   	        {
+   	            button.text("예약중");
+   	            button.prop('disabled', true);
+   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
+   	        }
+   	    });
 	});
 
  	
  	// 함수 1. 돌봄 신청 클릭 시 새 창(genRegDetail.jsp) 열기
     function openDetailWindow(genRegId)
  	{
-    	// 두 번째 파라미터 : '_blank' → 새 창 열기
+ 		// 두 번째 파라미터 : '_blank' → 새 창 열기
         // 세 번째 파라미터 : 창 옵션 (크기, 스크롤바 등)
         /* window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500'); */
         window.open('genregpossibledetail.action?genRegId=' + genRegId, '_blank', 'width=640,height=500');
     }
+ 	
   
 </script>
 </head>
@@ -410,7 +429,10 @@
 		                <!-- 파일 경로 추후 수정 필요!! -->
 		            </div>
 		            <div class="sitter-info">
-		                <div class="sitter-title">${genReg.title }</div>
+		                <div class="sitter-title">
+		                	<span class="sitter-status">${genReg.status == "예약가능" ? "[예약가능]" : "" }</span>
+		                	&nbsp;${genReg.title }
+		                </div>
 		                <div class="sitter-details">
 		                	
 		                    <div class="sitter-grade">
@@ -451,6 +473,10 @@
 							</c:choose>
 							</div>
 		                </div>
+		                
+		                <div class="hidden sitter-gender-hidden">${genReg.gender }</div>
+		                <div class="hidden sitter-status-hidden">${genReg.status }</div>
+		                <div class="hidden sitter-age-hidden">${genReg.age }</div>
 		                <button type="submit" class="btn gen-btn-small"
 		                onclick="openDetailWindow('${genReg.gen_reg_id}')">돌봄 신청</button>
 		            </div>

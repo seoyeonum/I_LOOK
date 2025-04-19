@@ -78,6 +78,17 @@ public class GenReqController
 		ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
 		listPrimaryGenReg = RegDao.listPrimaryGenReg(dto);
 		
+		
+		// 각 일반 돌봄 근무 등록에서 시터 백업코드 추출
+		// → 보유 자격증 map 에 담기
+		// → 
+		
+		
+		// 각 일반 돌봄 근무 건에서 근무 등록 코드 추출
+		// → 선호 근무 지역 담기
+		// → 선호 돌봄 연령대 담기
+		
+		
 		// 확인
 		System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
 		System.out.println("listPrimaryGenReg size: " + listPrimaryGenReg.size());

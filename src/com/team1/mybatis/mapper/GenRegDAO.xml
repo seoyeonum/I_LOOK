@@ -64,11 +64,11 @@
 		            ELSE '예약가능'
 		            END AS STATUS
 		FROM GEN_REG_POSSIBLE_VIEW R JOIN GEN_SIT_INFO_VIEW SV
-		ON r.sit_backup_id = sv.sit_backup_id
+		ON R.SIT_BACKUP_ID = SV.SIT_BACKUP_ID
 		    JOIN SIT_GRADE_VIEW G
 		    ON R.SIT_BACKUP_ID = G.SIT_BACKUP_ID
 		        JOIN SIT_REG SR
-		        ON sv.sit_backup_id = sr.sit_backup_id
+		        ON SV.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
 		            LEFT JOIN RAITING_VIEW RV
 		            ON R.SIT_BACKUP_ID = RV.SIT_BACKUP_ID
 		                LEFT JOIN RECENT_RATING_VIEW RRV
@@ -77,13 +77,18 @@
 		  AND R.END_DATE &gt;= #{end_date}
 		  AND R.START_TIME &lt;= #{start_time}
 		  AND R.END_TIME &gt;= #{end_time}
-	    ORDER BY R.REG_DATE
+	    ORDER BY STATUS, R.REG_DATE
 	</select>
 	
 	<!-- (부모가 보는) 1차 필터 결과 리스트 건수 -->
 	<select id="countPrimaryGenReg" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
-		FROM GEN_REG_POSSIBLE_VIEW R
+		FROM GEN_REG_POSSIBLE_VIEW R JOIN GEN_SIT_INFO_VIEW SV
+		ON R.SIT_BACKUP_ID = SV.SIT_BACKUP_ID
+		    JOIN SIT_GRADE_VIEW G
+		    ON R.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+		        JOIN SIT_REG SR
+		        ON SV.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
 		WHERE R.START_DATE &lt;= #{start_date}
 		  AND R.END_DATE &gt;= #{end_date}
 		  AND R.START_TIME &lt;= #{start_time}

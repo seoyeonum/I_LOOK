@@ -20,6 +20,7 @@ public class GenRegDTO
 	private String photo_file_path, grade_file_path;	//-- 시터 사진 저장경로, 등급 이미지 저장경로 
 	private double avg_rating, recent_avg_rating;		//-- 전체 평점, 최근 전체 평점
 	private int review_count, recent_review_count;		//-- 전체 리뷰 건수, 최근 리뷰 건수
+	private String status;								//-- 예약 상태
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -155,6 +156,12 @@ public class GenRegDTO
 	}
 	public void setRecent_review_count(int recent_review_count) {
 		this.recent_review_count = recent_review_count;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	
