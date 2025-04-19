@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -11,102 +12,34 @@
 <title>genSearchResult.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="js/genFilter.js" defer></script>
 <script type="text/javascript">
 	
-	// 페이지가 로드되면
+	//이 페이지 로드 시,
     $(document).ready(function()
     {
-    	// 헤더가 로드된 후 버튼 클래스 변경
-        // menuBtn 와 presentPage를 클래스로 가지는 엘리먼트에서 presentPage 클래스 제거
+    	//=================== 헤더 버튼 클래스 변경 ==================
+		
+        // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
         var firstButton = document.querySelector('.menuBtn.presentPage');
         if (firstButton)
         {
             firstButton.classList.remove('presentPage');
         }
-        
-        // menuBtn 을 클래스로 가지는 엘리먼트 중
-        var buttons = document.querySelectorAll('.menuBtn');
-        if (buttons.length >= 2)
+       
+        // id가 'gen'인 버튼을 선택
+        var button = document.querySelector('#gen');
+
+        // 만약 버튼이 존재하면
+        if (button)
         {
-        	// 0번째 엘리먼트에 presentPage 클래스 추가 (0부터 시작)
-            buttons[0].classList.add('presentPage');
+            // 'presentPage' 클래스 추가
+            button.classList.add('presentPage');
         }
     	
-		//-------------------------------
         
-        // 날짜 선택 제한
-    	
-     	// Date() → 오늘 날짜 객체 생성
-        var today = new Date();
-        
-        // 오늘로부터 4일 후 (최소 날짜)
-        var minDate = new Date(today);
-        minDate.setDate(today.getDate() + 4);
-        
-        // 오늘로부터 34일 후 (최대 날짜)
-        var maxDate = new Date(today);
-        maxDate.setDate(today.getDate() + 34);
-        
-        // 최소, 최대 날짜 설정
-        var minDateStr = formatDate(minDate);
-        var maxDateStr = formatDate(maxDate);
-        
-        // 시작 날짜와 종료 날짜 입력 → min, max 속성 설정
-        $('#date-start').attr('min', minDateStr);
-        $('#date-start').attr('max', maxDateStr);
-        $('#date-end').attr('min', minDateStr);
-        $('#date-end').attr('max', maxDateStr);
-        
-        // 시작 날짜 선택 시 종료 날짜는 최소값 표기
-        $('#date-start').on('change', function()
-        {
-            var startDate = $(this).val();
-            $('#date-end').attr('min', startDate);
-            
-            // 만약 종료 날짜가 새로운 시작 날짜보다 이전이면 종료 날짜를 시작 날짜와 같게 설정
-            if ($('#date-end').val() < startDate)
-            {
-                $('#date-end').val(startDate);
-            }
-        });
-        
-        
-        
-		//-------------------------------
-        
-        // 시간 선택 제한
-        
-     	// 경고 메시지 요소 기본적으로 숨기기
-        $('#time-warning').hide();
-        
-        // 시작 시간, 종료 시간 변경 시 검사 실행
-        $('#time-start').on('change', checkTimeDiff);
-        $('#time-end').on('change', checkTimeDiff);
-        
-        // 폼 제출 시 유효성 검사
-        $('#primary-filter-form').on('submit', function(event)
-        {
-            // 시간 차이 재확인
-            if ($('#time-start').val() && $('#time-end').val())
-            {
-                var startHour = parseInt($('#time-start').val());
-                var endHour = parseInt($('#time-end').val());
-                var hourDiff = endHour - startHour;
+        //=================== 사이드 바 토글 기능 ==================
                 
-                // 8시간 초과면 제출 막기
-                if (hourDiff > 8)
-           		{
-                	// 경고 팝업
-                	alert('일반 돌봄 하루 최대 이용시간은 8시간입니다.');
-                	event.preventDefault(); // 폼 제출 막기
-	            }
-	        }
-        });
-        
-        
-        //-------------------------------
-        
-        
     	// 토글 처리 - 시터 등급
   		$("#toggle-grade").click(function() {
         	//$("#checkbox-grade").toggle();			// 일반 토글 모션 처리
@@ -152,48 +85,42 @@
   	    var initialPrice = $('input[name="price"]').val();
   	    var formattedInitialPrice = Number(initialPrice).toLocaleString('ko-KR');
   	    $('#current-price').text(formattedInitialPrice + '원');
+  	    
+  	    
+  	    //=================== 사이드 바 AJAX 기능 ==================
+  	    
+	  	$('#secondary-search-btn').on('click', function()
+  		{
+  			var grades = ['A', 'B', 'C']; 				// 예: 여러 등급을 배열로 저장
+  			var regions = ['SEOUL', 'BUSAN', 'DAEGU'];  // 예: 여러 지역을 배열로 저장
+			
+	  	    $.ajax({
+  	      			url: 'genregpossiblelist.action'
+  	     			, method: 'POST'
+  	     			, traditional: true
+  	      			, data: { grades : grades, regions : regions }  //category=A&type=premium 식으로 전달
+  	      			, dataType: 'html'
+  	      			, success: function(response)
+  	      			{
+  	        			$('#resultArea').html(response); // 응답으로 받은 HTML 조각을 리스트 영역에 삽입
+  	      			}
+  	      			, error: function(xhr, status, error)
+  	      			{
+			  	        console.error('Ajax 요청 실패:', error);	// 에러 발생
+			  	    }
+	  	   	});
+	  	});
+ 
 	});
-	
- 	// 함수 1.시간 차이 검사 함수
-    function checkTimeDiff()
-    {
-        // 두 시각이 모두 선택되었다면,
-        if ($('#time-start').val() && $('#time-end').val())
-        {
-            // 시간 계산
-            var startHour = parseInt($('#time-start').val());
-            var endHour = parseInt($('#time-end').val());
-            var hourDiff = endHour - startHour;
-            
-            // 시간 차가 8시간 초과라면,
-            if (hourDiff > 8)
-            {
-                // 경고 표시
-                $('#time-warning').show();
-            }
-            else
-            {
-                // 경고 숨기기
-                $('#time-warning').hide();
-            }
-        }
-    }
-	
- 	// 함수 2.날짜 → YYYY-MM-DD 형식으로 변환
-    function formatDate(date)
-    {
-        var year = date.getFullYear();
-        var month = String(date.getMonth() + 1).padStart(2, '0');		//-- LPAD 와 같다.
-        var day = String(date.getDate()).padStart(2, '0');
-        return year + '-' + month + '-' + day;
-    }
+
  	
- 	// 함수 3.돌봄 신청 클릭 시 새 창(genRegDetail.jsp) 열기
-    function openDetailWindow(sitterId)
+ 	// 함수 1. 돌봄 신청 클릭 시 새 창(genRegDetail.jsp) 열기
+    function openDetailWindow(genRegId)
  	{
-        // 두 번째 파라미터 : '_blank' → 새 창 열기
+    	// 두 번째 파라미터 : '_blank' → 새 창 열기
         // 세 번째 파라미터 : 창 옵션 (크기, 스크롤바 등)
-        window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500');
+        /* window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500'); */
+        window.open('genregpossibledetail.action?genRegId=' + genRegId, '_blank', 'width=640,height=500');
     }
   
 </script>
@@ -202,7 +129,9 @@
 
 <!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<c:import url="./parentMainFrame.html" charEncoding="UTF-8" />
+	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
+	<!-- → action 처리로 변경 -->
+	<c:import url="/parentheader.action"/>
 </div>
 
 <div id="body-container">
@@ -219,26 +148,29 @@
 				<h2>1차 필터</h2>
 			</div>
 			<div class="sub-body">
-			    <form action="" id="primary-filter-form">
+			    <form action="gensearchresult.action" id="primary-filter-form" method="post" >
 			    	<div class="form-group">
 				        <div class="label">돌봄 희망 아이</div>
 				        <div class="child-range">
-				        	<select id="child-name" required="required">
-					             <option value="">아이 선택</option>
-					             <option value="1">김창식</option>
-					             <option value="2">김충식</option>
-					             <option value="3">김민식</option>
-					             <option value="4">김주식</option>
+				        	<select name="child_backup_id" id="child-name" required="required">
+								<option value="">아이 선택</option>
+					    		<c:forEach var="name" items="${listName}">
+					            <option value="${name.child_backup_id}" 
+					            ${name.child_backup_id == childBackupId ? "selected" : ""}>${name.name}</option>
+								</c:forEach>
 					    	</select>
+					    	
 				    	</div>
 				    </div>
 				    
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" id="date-start" required="required">
+				        	<input type="date" name="start_date" id="date-start" required="required"
+				        	value="${dateStart}">
 				        	<span>부터</span>
-				        	<input type="date" id="date-end" required="required">
+				        	<input type="date" name="end_date" id="date-end" required="required"
+				        	value="${dateEnd}">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
@@ -246,45 +178,35 @@
 				    <div class="form-group">
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
-				        	<select id="time-start" required="required">
-					             <option value="">시작 시간</option>
-					             <option value="8">오전 8:00</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
-					    	</select>
+				        	<select name="start_time" id="time-start" required="required">
+					            <option value="">시작 시간</option>
+				        		<c:forEach var="i" begin="8" end="11" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="18" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
+							</select>
 					      	<span>부터</span>
-					      	<select id="time-end" required>
-					             <option value="">종료 시간</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
+					      	<select name="end_time" id="time-end" required="required">
+					            <option value="">종료 시간</option>
+				        		<c:forEach var="i" begin="9" end="11" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="19" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
 				    		</select>
 				        	<span>까지</span>
 				        </div>
-				        <div class="warning" id="time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="max-time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
+				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 2시간부터 이용 가능합니다.</div>
 				    </div>
 				
-				    <button type="submit" class="btn" id="primary-search-btn">시터 찾기</button>
+				    <button type="submit" class="btn btn-large" id="primary-search-btn">시터 찾기</button>
 			    </form>
 			</div>
-		</div>
+		</div>		
 	</div>
 	
 	<div id="wrapper-body">
@@ -462,20 +384,81 @@
 			        </div>
 				</div>
 	
-				<button type="submit" class="btn" id="secondary-searh-btn">필터 적용</button>
+				<button type="button" class="btn" id="secondary-search-btn">필터 적용</button>
 			</form>
 			</div>
 		</div>
 		
 		<!-- 검색 결과 -->
-	    <div class="gen-results">
+	    <div class="gen-results" id='resultArea'>
 	    	<div class="sub-subject">
-	        	<h2>검색 결과 (3)</h2>
+	        	<h2>검색 결과 (${countPrimaryGenReg})</h2>
 	        </div>
-	        
 	        <!-- 일반 돌봄 각 등록 건 -->
-	       	<!-- <form action="./genRegDetail.jsp"> -->
+	       	<!-- <form action="genregdetail.action" method="post" target="_blank"> -->
+	        <!-- 
+	        listPrimaryGenReg 
+	         R.GEN_REG_ID, R.NAME, R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME, STATUS
+	         -->
+	       	<c:forEach var="genReg" items="${listPrimaryGenReg}">
+	       	
+	       	
 		        <div class="box-preview">
+		            <div class="sitter-photo">
+		                <img src="<c:url value='/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
+		            </div>
+		            <div class="sitter-info">
+		                <div class="sitter-name">${genReg.name }</div>
+		                <div class="sitter-details">
+		                    <div class="sitter-grade">
+		                    	<span class="sitter-grade-img">
+		                    		<img src="<c:url value='/${genReg.grade_file_path}' />" 
+		                    		width="20" height="20" alt="시터 등급 이미지">
+		                    	</span>
+		                    	${genReg.grade} 시터
+		                    </div>
+		                	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
+		                    <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
+		                	
+		                	<fmt:parseDate var="startDateParsed" value="${genReg.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<fmt:parseDate var="endDateParsed" value="${genReg.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<div>돌봄 등록 일자: 📆
+								<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+							</div>
+		                	
+		                    <div>돌봄 등록 시간: ⏰
+		                    <c:choose>
+							    <c:when test="${genReg.start_time < 12}">
+							        오전 ${genReg.start_time}시
+							    </c:when>
+							    <c:otherwise>
+							        오후 ${genReg.start_time == 12 ? 12 : genReg.start_time-12}시
+							    </c:otherwise>
+							</c:choose>
+							~
+							<c:choose>
+							    <c:when test="${genReg.end_time < 12}">
+							        오전 ${genReg.end_time}시
+							    </c:when>
+							    <c:otherwise>
+							        오후 ${genReg.end_time == 12 ? 12 : genReg.end_time-12}시
+							    </c:otherwise>
+							</c:choose>
+							</div>
+		                </div>
+		                <button type="submit" class="btn gen-btn-small"
+		                onclick="openDetailWindow('${genReg.gen_reg_id}')">돌봄 신청</button>
+		            </div>
+		        </div>
+		    
+	       	</c:forEach>
+		    
+		    <!-- -------------------------------------------------------------------------------------------------- -->
+		    
+		    
+		    	<div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit01.jpg" alt="시터 사진">
 		            </div>
@@ -489,8 +472,11 @@
 		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
 		                </div>
 		                <button type="submit" class="btn gen-btn-small" onclick="openDetailWindow(1)">돌봄 신청</button>
+
 		            </div>
 		        </div>
+		        
+		        
 				<div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit02.jpg" alt="시터 사진">
@@ -507,6 +493,8 @@
 		                <button type="submit" class="btn gen-btn-small"  onclick="openDetailWindow(2)">돌봄 신청</button>
 		            </div>
 		        </div>
+		    
+		    
 		        <div class="box-preview">
 		            <div class="sitter-photo">
 		                <img src="./images/sit03.jpg" alt="시터 사진">
@@ -521,7 +509,7 @@
 		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
 		                </div>
 		                <button type="button" class="btn gen-btn-small" onclick="openDetailWindow(3)">돌봄 신청</button>
-		            </div>
+		             </div>
 		        </div>
 		    <!-- </form> -->
 	    </div>
