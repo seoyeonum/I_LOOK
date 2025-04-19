@@ -440,7 +440,7 @@
 		                    		<img src="<c:url value='/${genReg.grade_file_path}' />" 
 		                    		width="20" height="20" alt="시터 등급 이미지">
 		                    	</span>
-		                    	${genReg.grade} 시터 ${genReg.name}
+		                    	&nbsp;${genReg.grade} 시터 ${genReg.name}
 		                    </div>
 		                	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
 		                    <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
@@ -471,6 +471,18 @@
 							        오후 ${genReg.end_time == 12 ? 12 : genReg.end_time-12}시
 							    </c:otherwise>
 							</c:choose>
+							</div>
+							<div>
+								<%-- <c:forEach var="cert" items="${listCert}">
+									<span class="badge">${cert}</span>
+								</c:forEach> --%>
+								<c:if test="${not empty genReg.certList}">
+									<div>
+										<c:forEach var="cert" items="${genReg.certList}">
+											<span class="badge">${cert}</span>&nbsp;
+										</c:forEach>
+									</div>
+								</c:if>
 							</div>
 		                </div>
 		                

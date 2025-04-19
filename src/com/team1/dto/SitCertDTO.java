@@ -17,6 +17,9 @@ public class SitCertDTO
 	
 	// 자격증 종류
 	private String type;
+	
+	// 시터 백업 코드
+	private String sit_backup_id;
 
 	
 	// getter / setter 구성
@@ -80,8 +83,13 @@ public class SitCertDTO
 		this.type = type;
 	}
 
-	
-	
-	
+	public String getSit_backup_id() {
+		return sit_backup_id;
+	}
+
+	public void setSit_backup_id(String sit_backup_id) {
+		this.sit_backup_id = sit_backup_id;
+	}
+
 	
 }

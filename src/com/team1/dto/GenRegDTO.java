@@ -1,4 +1,7 @@
 package com.team1.dto;
+
+import java.util.List;
+
 // 일반 돌봄 근무 등록 데이터 자료형 클래스
 
 public class GenRegDTO
@@ -21,6 +24,7 @@ public class GenRegDTO
 	private double avg_rating, recent_avg_rating;		//-- 전체 평점, 최근 전체 평점
 	private int review_count, recent_review_count;		//-- 전체 리뷰 건수, 최근 리뷰 건수
 	private String status;								//-- 예약 상태
+	private List<String> certList;						//-- 시터의 보유 자격증 리스트
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -162,6 +166,12 @@ public class GenRegDTO
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public List<String> getCertList() {
+		return certList;
+	}
+	public void setCertList(List<String> certList) {
+		this.certList = certList;
 	}
 	
 	

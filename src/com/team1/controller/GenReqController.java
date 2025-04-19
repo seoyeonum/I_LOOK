@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
+import com.team1.dto.SitCertDTO;
 import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenRegDAO;
+import com.team1.mybatis.ISitCertDAO;
 
 @Controller
 public class GenReqController
@@ -88,6 +90,32 @@ public class GenReqController
 		// → 선호 근무 지역 담기
 		// → 선호 돌봄 연령대 담기
 		
+		ArrayList<String> listCert = new ArrayList<String>();
+		
+		// 각 일반 돌봄 근무 등록에서 sitBackupId 추출하여 추가 정보 가져오기
+	    for (GenRegDTO genReg : listPrimaryGenReg)
+	    {
+	    	// 1. sitBackupId로 보유 자격증 조회
+	        String sitBackupId = genReg.getSit_backup_id();
+        
+	        ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+	        List<String> certs = certDao.listSitCert(sitBackupId);
+	        genReg.setCertList(certs); // 각 시터에 개별 자격증 리스트 설정
+	        
+	        
+	        // SitterDetailDTO sitterDetail = RegDao.getSitterDetailByGenRegId(genRegId);
+	        // genReg.setSitterDetail(sitterDetail);
+	        
+	        // 예시 2: 해당 genRegId에 대한 후기 조회
+	        // ArrayList<ReviewDTO> reviews = RegDao.getReviewsByGenRegId(genRegId);
+	        // genReg.setReviews(reviews);
+	        
+	        // 예시 3: 해당 genRegId에 대한 가능한 서비스 조회
+	        // ArrayList<ServiceDTO> services = RegDao.getServicesByGenRegId(genRegId);
+	        // genReg.setServices(services);
+	    }
+		
+		
 		
 		// 확인
 		System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
@@ -95,6 +123,7 @@ public class GenReqController
 		
 		model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
 		model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
+		model.addAttribute("listCert", listCert);
 		
 		result = "WEB-INF/view/genSearchResult.jsp";
 		

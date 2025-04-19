@@ -34,5 +34,15 @@
 		WHERE SIT_REG_ID = #{sit_reg_id}
  	</select>
  	
+ 	<select id="listSitCert" resultType="java.lang.String">
+ 		SELECT CT.TYPE
+		FROM SIT_BACKUP S JOIN SIT_REG SR
+		ON S.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
+		    JOIN CERT_REG CR
+		    ON SR.SIT_REG_ID = CR.SIT_REG_ID
+		        JOIN CERT_TYPES CT
+		        ON CR.CERT_TYPE_ID = CT.CERT_TYPE_ID
+		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
+ 	</select>
  	
 </mapper>
