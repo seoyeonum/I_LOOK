@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -404,27 +405,51 @@
 	       	
 		        <div class="box-preview">
 		            <div class="sitter-photo">
-		                <img src="./images/sit01.jpg" alt="시터 사진">
+		                <img src="<c:url value='/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
 		            </div>
 		            <div class="sitter-info">
 		                <div class="sitter-name">${genReg.name }</div>
 		                <div class="sitter-details">
-		                    <div><img src="" alt="🥉">브론즈 시터</div>		<!-- 대체 텍스트 수정 필요 -->
-		                	<div>최근 평점 ⭐4.9 (7건)</div>
-		                    <div>전체 평점 ⭐4.76 (123건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
+		                    <div class="sitter-grade">
+		                    	<span class="sitter-grade-img">
+		                    		<img src="<c:url value='/${genReg.grade_file_path}' />" 
+		                    		width="20" height="20" alt="시터 등급 이미지">
+		                    	</span>
+		                    	${genReg.grade} 시터
+		                    </div>
+		                	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
+		                    <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
+		                	
+		                	<fmt:parseDate var="startDateParsed" value="${genReg.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<fmt:parseDate var="endDateParsed" value="${genReg.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<div>돌봄 등록 일자: 📆
+								<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+							</div>
+		                	
 		                    <div>돌봄 등록 시간: ⏰
 		                    <c:choose>
-							    <c:when test="${genReg.start_date < 12}">
-							        오전 ${genReg.start_date}시
+							    <c:when test="${genReg.start_time < 12}">
+							        오전 ${genReg.start_time}시
 							    </c:when>
 							    <c:otherwise>
-							        오후 ${genReg.start_date == 12 ? 12 : genReg.start_date-12}시
+							        오후 ${genReg.start_time == 12 ? 12 : genReg.start_time-12}시
 							    </c:otherwise>
-							</c:choose></div>
+							</c:choose>
+							~
+							<c:choose>
+							    <c:when test="${genReg.end_time < 12}">
+							        오전 ${genReg.end_time}시
+							    </c:when>
+							    <c:otherwise>
+							        오후 ${genReg.end_time == 12 ? 12 : genReg.end_time-12}시
+							    </c:otherwise>
+							</c:choose>
+							</div>
 		                </div>
 		                <button type="submit" class="btn gen-btn-small"
-		                onclick="openDetailWindow(${genReg.gen_reg_id})">돌봄 신청</button>
+		                onclick="openDetailWindow('${genReg.gen_reg_id}')">돌봄 신청</button>
 		            </div>
 		        </div>
 		    

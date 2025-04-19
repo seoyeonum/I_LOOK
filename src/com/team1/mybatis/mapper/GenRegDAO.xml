@@ -73,6 +73,11 @@
 		            ON R.SIT_BACKUP_ID = RV.SIT_BACKUP_ID
 		                LEFT JOIN RECENT_RATING_VIEW RRV
 		                ON R.SIT_BACKUP_ID = RRV.SIT_BACKUP_ID
+		WHERE R.START_DATE &lt;= #{start_date}
+		  AND R.END_DATE &gt;= #{end_date}
+		  AND R.START_TIME &lt;= #{start_time}
+		  AND R.END_TIME &gt;= #{end_time}
+	    ORDER BY R.REG_DATE
 	</select>
 	
 	<!-- (부모가 보는) 1차 필터 결과 리스트 건수 -->
