@@ -48,20 +48,31 @@
 	
 	<!-- (부모가 보는) 1차 필터 결과 리스트 -->
 	<select id="listPrimaryGenReg" resultType="com.team1.dto.GenRegDTO">
-		SELECT R.GEN_REG_ID, R.NAME, R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME
-		     , CASE WHEN NOT EXISTS 
-		                (
-		                    SELECT 1
-		                    FROM GEN_REQ Q
-		                    WHERE R.GEN_REG_ID = Q.GEN_REG_ID
+		SELECT R.GEN_REG_ID, R.SIT_BACKUP_ID, R.NAME, SV.GENDER, SV.AGE
+		     , SR.PHOTO_FILE_PATH AS PHOTO_FILE_PATH, G.GRADE
+		     , (SELECT FILE_PATH FROM GRADES WHERE NAME = G.GRADE) AS GRADE_FILE_PATH
+		     , NVL(RV.AVG_RATING,0) AS AVG_RATING
+		     , NVL(RV.REVIEW_COUNT,0) AS REVIEW_COUNT
+		     , NVL(RRV.AVG_RATING,0) AS RECENT_AVG_RATING
+		     , NVL(RRV.REVIEW_COUNT,0) AS RECENT_REVIEW_COUNT
+		     , R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME
+		     , CASE WHEN EXISTS 
+		                ( SELECT 1
+		                  FROM GEN_REQ Q
+		                  WHERE R.GEN_REG_ID = Q.GEN_REG_ID
 		                ) THEN '예약중'
 		            ELSE '예약가능'
 		            END AS STATUS
-		FROM GEN_REG_POSSIBLE_VIEW R
-		WHERE R.START_DATE &lt;= #{start_date}
-		  AND R.END_DATE &gt;= #{end_date}
-		  AND R.START_TIME &lt;= #{start_time}
-		  AND R.END_TIME &gt;= #{end_time}
+		FROM GEN_REG_POSSIBLE_VIEW R JOIN GEN_SIT_INFO_VIEW SV
+		ON r.sit_backup_id = sv.sit_backup_id
+		    JOIN SIT_GRADE_VIEW G
+		    ON R.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+		        JOIN SIT_REG SR
+		        ON sv.sit_backup_id = sr.sit_backup_id
+		            LEFT JOIN RAITING_VIEW RV
+		            ON R.SIT_BACKUP_ID = RV.SIT_BACKUP_ID
+		                LEFT JOIN RECENT_RATING_VIEW RRV
+		                ON R.SIT_BACKUP_ID = RRV.SIT_BACKUP_ID
 	</select>
 	
 	<!-- (부모가 보는) 1차 필터 결과 리스트 건수 -->

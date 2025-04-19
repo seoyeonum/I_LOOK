@@ -16,7 +16,10 @@ public class GenRegDTO
 	private int start_time, end_time;
 	
 	// 속성 추가
-	private String name;		//-- 시터 이름
+	private String name, gender, age, grade;			//-- 시터 이름, 성별, 연령대, 시터 등급
+	private String photo_file_path, grade_file_path;	//-- 시터 사진 저장경로, 등급 이미지 저장경로 
+	private double avg_rating, recent_avg_rating;		//-- 전체 평점, 최근 전체 평점
+	private int review_count, recent_review_count;		//-- 전체 리뷰 건수, 최근 리뷰 건수
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -98,6 +101,60 @@ public class GenRegDTO
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getPhoto_file_path() {
+		return photo_file_path;
+	}
+	public void setPhoto_file_path(String photo_file_path) {
+		this.photo_file_path = photo_file_path;
+	}
+	public String getGrade_file_path() {
+		return grade_file_path;
+	}
+	public void setGrade_file_path(String grade_file_path) {
+		this.grade_file_path = grade_file_path;
+	}
+	public double getAvg_rating() {
+		return avg_rating;
+	}
+	public void setAvg_rating(double avg_rating) {
+		this.avg_rating = avg_rating;
+	}
+	public double getRecent_avg_rating() {
+		return recent_avg_rating;
+	}
+	public void setRecent_avg_rating(double recent_avg_rating) {
+		this.recent_avg_rating = recent_avg_rating;
+	}
+	public int getReview_count() {
+		return review_count;
+	}
+	public void setReview_count(int review_count) {
+		this.review_count = review_count;
+	}
+	public int getRecent_review_count() {
+		return recent_review_count;
+	}
+	public void setRecent_review_count(int recent_review_count) {
+		this.recent_review_count = recent_review_count;
 	}
 	
 	
