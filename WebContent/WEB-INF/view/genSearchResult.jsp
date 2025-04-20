@@ -304,7 +304,8 @@
 					<div class="checkbox-group"  id="checkbox-region">
 						<c:forEach var="region" items="${listAllRegions}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="region" value="${region.name}" checked="checked" autocomplete="off">${region.name}  
+			                <input type="checkbox" name="region" value="${region.region_id}"
+			                 checked="checked" autocomplete="off">${region.name}  
 			            </label>   
 			            </c:forEach>
 			        </div>                                                            
@@ -346,7 +347,7 @@
 					
 						<c:forEach var="cert" items="${listCertType}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="${cert.type }" checked="checked">${cert.type }
+			                <input type="checkbox" name="cert" value="${cert.cert_type_id }" checked="checked">${cert.type }
 			            </label>  
 			            </c:forEach>
 			        </div>

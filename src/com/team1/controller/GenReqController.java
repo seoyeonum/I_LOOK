@@ -111,7 +111,7 @@ public class GenReqController
 		// → 선호 근무 지역 담기
 		// → 선호 돌봄 연령대 담기
 		
-		ArrayList<String> listCert = new ArrayList<String>();
+		//ArrayList<String> listCert = new ArrayList<String>();
 		
 		// 각 일반 돌봄 근무 등록에서 sitBackupId 추출하여 추가 정보 가져오기
 	    for (GenRegDTO genReg : listPrimaryGenReg)
@@ -120,8 +120,8 @@ public class GenReqController
 	        String sitBackupId = genReg.getSit_backup_id();
         
 	        ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
-	        ArrayList<String> certs = certDao.listSitCert(sitBackupId);
-	        genReg.setCertList(certs); 		// 각 시터 돌봄 건에 개별 자격증 리스트 설정
+	        ArrayList<String> certList = certDao.listSitCert(sitBackupId);
+	        genReg.setCertList(certList); 		// 각 시터 돌봄 건에 개별 자격증 리스트 설정
 	        
 	        // 2. genRegId로 시터 선호 근무 지역 조회
 	        String genRegId = genReg.getGen_reg_id();
@@ -135,7 +135,9 @@ public class GenReqController
 		
 	    model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
 	    model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
-	    model.addAttribute("listCert", listCert);
+	    //model.addAttribute("listCert", listCert);
+	    
+	    //System.out.println(listCert);
 	    model.addAttribute("paging", paging);
 	    
 		// 2차 필터 등급 범례 리스트
@@ -167,7 +169,7 @@ public class GenReqController
 	}
 	
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
-	//@ResponseBody
+	//@ResponseBody //← return 값을 문자 형태로 그대로 전달
 	public String genRegList(//@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
 						   //, @RequestParam(value = "page", defaultValue="1") int page
 						    @RequestParam(value = "grades", required = false) List<String> grades
@@ -198,11 +200,11 @@ public class GenReqController
  		//model.addAttribute("timeEnd", dto.getEnd_time());
 	 		
 		// 2차 필터 선택 항목 확인
-	    //System.out.println("Grades: " + grades);
-	    //System.out.println("Regions: " + regions);
-	    //System.out.println("Genders: " + genders);
-	    //System.out.println("Ages: " + ages);
-	    //System.out.println("Certs: " + certs);
+	    System.out.println("Grades: " + grades);
+	    System.out.println("Regions: " + regions);
+	    System.out.println("Genders: " + genders);
+	    System.out.println("Ages: " + ages);
+	    System.out.println("Certs: " + certs);
 	    
 	    try
 	    {
@@ -247,21 +249,6 @@ public class GenReqController
 	        // JSP 파일 반환
 	        return "WEB-INF/view/genRegListFragment.jsp";
 	        
-	        /*
-	        // 위 쿼리의 결과(ArrayList<GenRegDTO>)를 html 조각으로 변환
-	        StringBuilder htmlBuilder = new StringBuilder();
-	        
-	        htmlBuilder.append("");
-	        htmlBuilder.append("");
-	        htmlBuilder.append("");
-	        htmlBuilder.append("");
-	        htmlBuilder.append("");
-	        htmlBuilder.append("");
-	        
-	        
-	        result = htmlBuilder.toString();
-	        return result;
-	        */
 	    }
 	    catch (Exception e)
 	    {
