@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -184,32 +185,89 @@
 					<div class="label">돌봄 희망 시터</div>
 		            <div class="gen-info">
 		            	<div class="form-group" id="toggle-sitter-req">
-			                <div class="sitter-name">김탄 시터&nbsp;<span class="badge male">남</span> </div>
+			                <div class="sitter-name">${genDetail.name}&nbsp;
+			                	<c:choose>
+								<c:when test="${genDetail.gender == '남'}">
+									<span class="badge male">${genDetail.gender}</span>
+								</c:when>
+								<c:when test="${genDetail.gender == '여'}">
+									<span class="badge female">${genDetail.gender}</span>
+								</c:when>
+								<c:otherwise>
+									1=0 <!-- 항상 거짓. 즉, 쿼리 수행 X -->
+								</c:otherwise>
+								</c:choose>
+			                </div>
 			                <div class="sitter-details">
-			                    <div><img src="" alt="🥉">브론즈 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-			                	<div>최근 평점: ⭐4.9 (7건)</div>
-			                    <div>전체 평점: ⭐4.76 (123건)</div>
+			                    <div class="sitter-grade">
+			                    	<span class="sitter-grade-img">
+				             			<img src="<c:url value='/${genDetail.grade_file_path}' />" 
+				             			width="20" height="20" alt="시터 등급 이미지">
+				             		</span>
+				             		&nbsp;${genDetail.grade} 시터
+				             	</div>
+			                	<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
+            					<div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
 			            	</div>
 		            	</div>
 		            	<!-- 아래는 접힐 내용 -->
 		            	<div class="form-group" id="sitter-req-hidden">
 			            	<hr><br>
 			            	<div class="sitter-details">
-			                    <div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-			                	<div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-			                	<div>지역:
-			                    	<span class="badge">서초구</span>
-			                    	<span class="badge">강남구</span>
+			                    <fmt:parseDate var="startDateParsed" value="${genDetail.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:parseDate var="endDateParsed" value="${genDetail.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<div>돌봄 등록 일자: 📆
+									<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+								</div>
+								
+			                	<div>돌봄 등록 시간: ⏰
+					            <c:choose>
+								<c:when test="${genDetail.start_time < 12}">
+									오전 ${genDetail.start_time}시
+								</c:when>
+								<c:otherwise>
+									오후 ${genDetail.start_time == 12 ? 12 : genDetail.start_time-12}시
+								</c:otherwise>
+								</c:choose>
+								~
+								<c:choose>
+								<c:when test="${genDetail.end_time < 12}">
+									오전 ${genDetail.end_time}시
+								</c:when>
+								<c:otherwise>
+								    오후 ${genDetail.end_time == 12 ? 12 : genDetail.end_time-12}시
+								</c:otherwise>
+								</c:choose>
+								</div>
+			
+			                	<c:if test="${preferedRegion} != null">
+			                    <div>지역:&nbsp;
+			                    <c:forEach var="pr" items="${preferedRegion}">
+			                    	<span class="badge">${pr.name}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>자신있는 돌봄 연령대:
-			                    	<span class="badge">영아</span>
-			                    	<span class="badge">아동</span>
+			                    </c:if>
+			                    
+			                    <c:if test="${preferedAge} != null">
+			               		<div>자신있는 돌봄 연령대:&nbsp;
+			               		<c:forEach var="pa" items="${preferedAge}">
+			                    	<span class="badge">${pa.age}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>보유 자격:
-			                    	<span class="badge">보육 교사 2급</span>
+			                    </c:if>
+			                    
+			                    <c:if test="${listSitCert} != null">
+			               		<div>보유 자격:&nbsp;
+			               		<c:forEach var="cert" items="${listSitCert}">
+			                    	<span class="badge">${cert}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>시터님의 한 마디: 아이들과 함께 일하는 순간이 가장 행복해요. :)</div>
-			                	<div>마지막 근무일: 2025.03.14.</div>
+					            </c:if>
+			                    	
+			                    <div>시터님의 한 마디: ${genDetail.introduction}</div>
+			                	<div>마지막 근무일: <!-- 2025.03.14. --></div>
 			            	</div>
 			            </div>
 		            	<!-- 여기까지 접혀 들어가도록 -->
@@ -231,27 +289,66 @@
 					<div class="label">돌봄 희망 아이</div>
 		            <div class="gen-info">
 		            	<div class="form-group">
-			                <div class="child-name">김충식&nbsp;<span class="badge male">남</span> </div>
+			                <div class="child-name">${childInfo.name}&nbsp;
+			                	<c:choose>
+								<c:when test="${childInfo.gender == '남'}">
+									<span class="badge male">${childInfo.gender}</span>
+								</c:when>
+								<c:when test="${childInfo.gender == '여'}">
+									<span class="badge female">${childInfo.gender}</span>
+								</c:when>
+								<c:otherwise>
+									1=0 <!-- 항상 거짓. 즉, 쿼리 수행 X -->
+								</c:otherwise>
+								</c:choose>
+			                </div>
 			                <div class="gen-details">
-			                    <div>돌봄 희망 일자: 📆2025.04.03.~2025.04.03.</div>
-			                	<div>돌봄 희망 시간: ⏰오전 8시 ~ 오전 10시</div>
-			                	<div>돌봄 장소: 종로구 사직로 161, 101동 1392호</div>
-			                	<div>아이 연령: 만 4 세</div>
+			                    <fmt:parseDate var="startDateParsed" value="${dateStart}" pattern="yyyy-MM-dd"/>
+								<fmt:parseDate var="endDateParsed" value="${dateEnd}" pattern="yyyy-MM-dd"/>
+								<div>돌봄 희망 일자: 📆
+									<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+								</div>
+								
+			                	<div>돌봄 희망 시간: ⏰
+					            <c:choose>
+								<c:when test="${timeStart < 12}">
+									오전 ${timeStart}시
+								</c:when>
+								<c:otherwise>
+									오후 ${timeStart == 12 ? 12 : timeStart-12}시
+								</c:otherwise>
+								</c:choose>
+								~
+								<c:choose>
+								<c:when test="${timeEnd < 12}">
+									오전 ${timeEnd}시
+								</c:when>
+								<c:otherwise>
+								    오후 ${timeEnd == 12 ? 12 : timeEnd-12}시
+								</c:otherwise>
+								</c:choose>
+								</div>
+								
+			                	<div>돌봄 장소: ${childInfo.road_addr}, ${childInfo.detailed_addr }</div>
+			                	<div>아이 연령: 만&nbsp;${childInfo.age }&nbsp;세</div>
 		                    </div>
 		                    <div class="gen-details child-has">
 		                    	<div>장애 및 지병, 알레르기:</div>
 		                    	<div>
 		                    		<ul>
-		                    			<li>꽃가루 알레르기</li>
-		                    			<li>호두 알레르기</li>
+		                    		<c:forEach var="medical" items="${listMedical}">
+		                    			<li>${medical }</li>
+		                    		</c:forEach>
 		                    		</ul>
 		                    	</div>
 		                    </div>
 		                    <div class="gen-details">
-		                    	<div><span class="star">*</span>신장: (미입력)</div>
-		                    	<div><span class="star">*</span>몸무게: (미입력)</div>
-		                    	<div><span class="star">*</span>혈액형: A</div>
-		                    	<div><span class="star">*</span>기타 특이사항: 아이가 낯가림이 조금 있습니다.</div>
+		                    	<div><span class="star">*</span>신장: ${childInfo.height != null ? childInfo.height : "(미입력)"}</div>
+		                    	<div><span class="star">*</span>몸무게: ${childInfo.weight != null ? childInfo.height : "(미입력)"}</div>
+		                    	<div><span class="star">*</span>혈액형: ${childInfo.blood_type != null ? childInfo.blood_type : "(미입력)"}</div>
+		                    	<div><span class="star">*</span>기타 특이사항: ${childInfo.special_notes != null ? childInfo.special_notes : "(미입력)"}</div>
 		                    </div>
 		                    <br>
 		                    <div class="gen-details">

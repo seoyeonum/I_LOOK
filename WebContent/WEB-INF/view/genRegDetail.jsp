@@ -114,13 +114,13 @@
                     </div>
                     </c:if>
                     
-                    <%-- <c:if test="${listSitCert} != null"> --%>
+                    <c:if test="${listSitCert} != null">
                		<div>보유 자격:&nbsp;
                		<c:forEach var="cert" items="${listSitCert}">
                     	<span class="badge">${cert}</span>
 		            </c:forEach>
                     </div>
-		            <%-- </c:if> --%>
+		            </c:if>
                     	
                     <div>시터님의 한 마디: ${genDetail.introduction}</div>
                 	<div>마지막 근무일: <!-- 2025.03.14. --></div>

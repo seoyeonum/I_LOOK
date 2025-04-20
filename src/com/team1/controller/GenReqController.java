@@ -105,7 +105,6 @@ public class GenReqController
 	    // 입력값 기반으로 1차 필터 수행 결과 리스트
 	    ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
 	    listPrimaryGenReg = RegDao.listPrimaryGenReg(dto);
-	    System.out.println(listPrimaryGenReg.size());
 		
 		// GenRegDTO 리스트(listPrimaryGenReg) ← 자격증 및 지역 정보 추가
 		// → 『setCertAndRegion』 메소드 호출
@@ -115,7 +114,6 @@ public class GenReqController
 		// → 1차 필터 결과 리스트 건수, 리스트, 페이징 객체 
 	    model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
 	    model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
-	    System.out.println(listPrimaryGenReg.size());
 	    model.addAttribute("paging", paging);
 	    
 	    //----------------------------------------------------------------
@@ -258,7 +256,7 @@ public class GenReqController
         
 		// 다음 페이지로 넘겨주는 값
 		// → 근무 등록 코드, 특정 근무 등록 정보
-		//    , 시터 선호 근무 지역
+		//    , 시터 선호 근무 지역, 시터 선호 돌봄 연령대, 시터 보유 자격증
 		model.addAttribute("genRegId", genRegId);
 		model.addAttribute("genDetail", genDetail);
 		model.addAttribute("preferedRegion", preferedRegion);
@@ -271,15 +269,70 @@ public class GenReqController
 	}
 	
 	@RequestMapping(value="/genReqInsertForm.action", method = RequestMethod.GET)
-	public String genReqInsertForm(@RequestParam("genRegId") String genRegId, Model model)
+	public String genReqInsertForm(@RequestParam("genRegId") String genRegId
+								 , Model model, HttpSession session )
 	{
 		String result = null;
 		
-		//model.addAttribute("genRegId", genRegId);
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 특정 근무 정보 조회
+		IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
+		GenRegDTO genDetail = regDao.searchGenRegDetail(genRegId);
 		
-		// (시터 백업 코드로 시터 데이터 조회)
-		// (아이 백업 코드(세션)으로 아이 정보 조회
-		// (아이 백업 코드(세션)으로 아이 보유 알레르기 등 조회
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 시터 선호 근무 지역 조회
+		ArrayList<String> preferedRegion = regDao.listSitPreferedRegion(genRegId);
+		
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 시터 선호 돌봄 연령대 조회
+		ArrayList<String> preferedAge = regDao.listSitPreferedAge(genRegId);
+				
+		
+		// (시터 백업 코드로) 시터 보유 자격증 조회
+		String sitBackupId = genDetail.getSit_backup_id();
+		ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+        ArrayList<String> listSitCert = certDao.listSitCert(sitBackupId);
+        
+        
+		// 다음 페이지로 넘겨주는 값
+		// → 근무 등록 코드, 특정 근무 등록 정보
+		//    , 시터 선호 근무 지역, 시터 선호 돌봄 연령대, 시터 보유 자격증
+		model.addAttribute("genRegId", genRegId);
+		model.addAttribute("genDetail", genDetail);
+		model.addAttribute("preferedRegion", preferedRegion);
+		model.addAttribute("preferedAge", preferedAge);
+		model.addAttribute("listSitCert", listSitCert);
+		
+		
+		//--------------------------------------------------
+		
+		// (아이 백업 코드로) 아이 정보 조회
+		String childBackupId = (String) session.getAttribute("childBackupId");
+		IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
+		ChildDTO childInfo = childDao.searchChildInfo(childBackupId);
+		
+		// (아이 백업 코드로) 아이 보유 지병/알레르기/장애 조회
+		ArrayList<String> listMedical = childDao.listChildMedicalName(childBackupId);
+
+		// 세션에서 돌봄 정보 가져오기
+		String dateStart = (String) session.getAttribute("dateStart");
+		String dateEnd = (String) session.getAttribute("dateEnd");
+		int timeStart = (Integer) session.getAttribute("timeStart");
+		int timeEnd = (Integer) session.getAttribute("timeEnd");
+		
+		// 다음 페이지로 넘겨주는 값
+		// → 특정 아이 정보(일반돌봄), 아이 보유 지병/알레르기/장애 리스트
+		//   , 돌봄 희망 시작일, 종료일, 시작시, 종료시
+		model.addAttribute("childInfo", childInfo);
+		model.addAttribute("listMedical", listMedical);
+		model.addAttribute("dateStart", dateStart);
+		model.addAttribute("dateEnd", dateEnd);
+		model.addAttribute("timeStart", timeStart);
+		model.addAttribute("timeEnd", timeEnd);
+		
+		//--------------------------------------------------
+		
+		// 현 시점 일반 돌봄 시급 조회
+		
+		// 시터 등급에 따른 등급 배수 조회
+		//genDetail.grade
 		// 현 보유 포인트 조회
 		
 		result = "WEB-INF/view/genReqInsertForm.jsp?genRegId=" + genRegId;
