@@ -643,3 +643,58 @@ ul
 	align-items: center;
 	gap: 0 10px;
 }
+
+/* 페이징 처리 관련 css */
+.page
+{
+	text-align: center; /* 페이지 숫자 가운데 정렬 */
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 800px;
+}
+
+.page a, .page strong
+{
+	display: inline-block;
+	margin: 0 5px;
+	padding: 5px 10px;
+	text-decoration: none;		/* 밑줄 제거 */
+	color: #333; 				/* 기본 상태는 회색 */
+	border-radius: 3px;
+	transition: all 0.2s ease-in-out;
+}
+
+.page a:hover
+{
+	color: #febdb4;
+}
+
+.page strong
+{
+	color: #e28c99;
+	font-weight: bold;
+}
+
+/* 페이지 이동 폼 스타일 */
+#pageForm
+{
+	display: none; /* 숨김 처리 */
+}
+
+/* 페이지 버튼 스타일 */
+.page button
+{
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 5px 10px;
+	color: #888;
+	font-size: 1em;
+}
+
+.page button:hover
+{
+	color: #f0f0f0;
+}

@@ -30,6 +30,7 @@ import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
+import com.team1.util.PageHandler;
 
 @Controller
 public class GenReqController
@@ -57,6 +58,7 @@ public class GenReqController
 	
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
 	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
+								, @RequestParam(value = "page", defaultValue="1") int page
 								, Model model, HttpSession session)
 	{
 		String result = null;
@@ -78,6 +80,13 @@ public class GenReqController
 		// 입력값 기반으로 1차 필터 수행 결과 건수
 		IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
 		int countPrimaryGenReg = RegDao.countPrimaryGenReg(dto);
+		
+		// 페이징 객체 생성
+	    PageHandler paging = new PageHandler(page, countPrimaryGenReg);
+	    
+	    // DTO에 페이징 정보 추가
+	    dto.setStart(paging.getStart());
+	    dto.setEnd(paging.getEnd());
 		
 		// 입력값 기반으로 1차 필터 수행 결과 리스트
 		//IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
@@ -119,6 +128,7 @@ public class GenReqController
 	    model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
 	    model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
 	    model.addAttribute("listCert", listCert);
+	    model.addAttribute("paging", paging);
 	    
 		// 2차 필터 등급 범례 리스트
 	    IGradesDAO gradeDao = sqlSession.getMapper(IGradesDAO.class);

@@ -36,4 +36,5 @@ public interface IGenRegDAO
 	
 	// (근무 등록 건별) 시터 선호 근무 지역
 	public ArrayList<String> listSitPreferedRegion(String gen_reg_id);
+	
 }

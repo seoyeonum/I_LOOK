@@ -27,6 +27,8 @@ public class GenRegDTO
 	private List<String> certList;						//-- 시터의 보유 자격증 리스트
 	private List<String> regionList;					//-- 시터의 선호 근무 지역 리스트
 	
+    private int start;									//-- 시작 페이지
+    private int end;									//-- 끝 페이지
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -186,6 +188,18 @@ public class GenRegDTO
 	}
 	public void setRegionList(List<String> regionList) {
 		this.regionList = regionList;
+	}
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getEnd() {
+		return end;
+	}
+	public void setEnd(int end) {
+		this.end = end;
 	}
 	
 	

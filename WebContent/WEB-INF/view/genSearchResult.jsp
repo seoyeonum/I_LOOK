@@ -141,6 +141,14 @@
         window.open('genregpossibledetail.action?genRegId=' + genRegId, '_blank', 'width=640,height=500');
     }
  	
+ 	
+ 	// 함수 2. 페이지 이동을 위한 폼 제출 함수
+    function goToPage(page)
+	{
+	    document.getElementById('pageInput').value = page;
+	    document.getElementById('pageForm').submit();
+	}
+ 	
   
 </script>
 </head>
@@ -409,6 +417,41 @@
 	       	</c:forEach>
 		    
 		    <!-- </form> -->
+		    <!-- 페이징 영역 -->
+			<div class="page">
+			    <c:if test="${paging.totalPage >= 1}">
+			        <c:if test="${paging.startPage > 1}">
+			            <a href="javascript:void(0);" onclick="goToPage(${paging.startPage-1})">&lt;</a>
+			            <!-- a href="javascript:void(0);" → 폼 제출 방지 및 현상 유지 -->
+			        </c:if>
+			
+			        <c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
+			            <c:choose>
+			                <c:when test="${p == paging.page}">
+			                    <strong>${p}</strong>		<!-- 엘리먼트 강조 -->
+			                </c:when>
+			                <c:otherwise>
+			                    <a href="javascript:void(0);" onclick="goToPage(${p})">${p}</a>
+			                </c:otherwise>
+			            </c:choose>
+			        </c:forEach>
+			
+			        <c:if test="${paging.endPage < paging.totalPage}">
+			            <a href="javascript:void(0);" onclick="goToPage(${paging.endPage+1})">&gt;</a>
+			        </c:if>
+			    </c:if>
+			</div>
+			
+			<!-- 페이지 이동을 위한 hidden 폼 -->
+			<form id="pageForm" action="gensearchresult.action" method="post">
+			    <input type="hidden" name="child_backup_id" value="${childBackupId}">
+			    <input type="hidden" name="start_date" value="${dateStart}">
+			    <input type="hidden" name="end_date" value="${dateEnd}">
+			    <input type="hidden" name="start_time" value="${timeStart}">
+			    <input type="hidden" name="end_time" value="${timeEnd}">
+			    <input type="hidden" name="page" id="pageInput" value="1">
+			</form>
+			
 	    </div>
 		
 	</div>
