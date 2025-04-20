@@ -78,6 +78,12 @@ public class GenReqController
 		model.addAttribute("timeStart", dto.getStart_time());
 		model.addAttribute("timeEnd", dto.getEnd_time());
 		
+		// 세션에 필터 값 저장 (추가)
+	    session.setAttribute("childBackupId", childBackupId);
+	    session.setAttribute("dateStart", dto.getStart_date());
+	    session.setAttribute("dateEnd", dto.getEnd_date());
+	    session.setAttribute("timeStart", dto.getStart_time());
+	    session.setAttribute("timeEnd", dto.getEnd_time());
 		
 		// 입력값 기반으로 1차 필터 수행 결과 건수
 		IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
@@ -114,7 +120,7 @@ public class GenReqController
 	        String sitBackupId = genReg.getSit_backup_id();
         
 	        ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
-	        List<String> certs = certDao.listSitCert(sitBackupId);
+	        ArrayList<String> certs = certDao.listSitCert(sitBackupId);
 	        genReg.setCertList(certs); 		// 각 시터 돌봄 건에 개별 자격증 리스트 설정
 	        
 	        // 2. genRegId로 시터 선호 근무 지역 조회
@@ -161,13 +167,15 @@ public class GenReqController
 	}
 	
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
-	@ResponseBody
-	public String genRegList(@RequestParam(value = "grades", required = false) List<String> grades
+	//@ResponseBody
+	public String genRegList(//@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
+						   //, @RequestParam(value = "page", defaultValue="1") int page
+						    @RequestParam(value = "grades", required = false) List<String> grades
 				           , @RequestParam(value = "regions", required = false) List<String> regions
 				           , @RequestParam(value = "genders", required = false) List<String> genders
 				           , @RequestParam(value = "ages", required = false) List<String> ages
 				           , @RequestParam(value = "certs", required = false) List<String> certs
-				           , HttpServletResponse response )
+				           , HttpServletResponse response, Model model, HttpSession session )
 	{
 		String result = null;
 	    
@@ -175,17 +183,43 @@ public class GenReqController
 		response.setContentType("text/html; charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    
+	    
+	    // 입력값 기반으로 1차 필터 값 전달
+ 		//IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
+ 		//ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
+ 		//String id = (String) session.getAttribute("id");
+ 		//listName = childDao.listName(id);
+ 		
+ 		//model.addAttribute("listName", listName);
+ 		//model.addAttribute("childBackupId", childBackupId);
+ 		//model.addAttribute("dateStart", dto.getStart_date());
+ 		//model.addAttribute("dateEnd", dto.getEnd_date());
+ 		//model.addAttribute("timeStart", dto.getStart_time());
+ 		//model.addAttribute("timeEnd", dto.getEnd_time());
+	 		
 		// 2차 필터 선택 항목 확인
-	    System.out.println("Grades: " + grades);
-	    System.out.println("Regions: " + regions);
-	    System.out.println("Genders: " + genders);
-	    System.out.println("Ages: " + ages);
-	    System.out.println("Certs: " + certs);
+	    //System.out.println("Grades: " + grades);
+	    //System.out.println("Regions: " + regions);
+	    //System.out.println("Genders: " + genders);
+	    //System.out.println("Ages: " + ages);
+	    //System.out.println("Certs: " + certs);
 	    
 	    try
 	    {
+	    	// 세션에서 1차 필터 정보 가져오기
+	        GenRegDTO dto = new GenRegDTO();
+	        dto.setStart_date((String) session.getAttribute("dateStart"));
+	        dto.setEnd_date((String) session.getAttribute("dateEnd"));
+	        dto.setStart_time((Integer) session.getAttribute("timeStart"));
+	        dto.setEnd_time((Integer) session.getAttribute("timeEnd"));
+	        
 	    	// (커다란) map 에 수신 받은 매개변수 추가(put)
 	        Map<String, Object> params = new HashMap<String, Object>();
+	        
+	        params.put("start_date", dto.getStart_date());
+	        params.put("end_date", dto.getEnd_date());
+	        params.put("start_time", dto.getStart_time());
+	        params.put("end_time", dto.getEnd_time());
 	        
 	        if (grades != null)
 	        	params.put("grades", grades);
@@ -198,38 +232,36 @@ public class GenReqController
 	        if (certs != null)
 	        	params.put("certs", certs);
 
-			// 그 map 을 2차 필터 쿼리에 param 으로 주자.
-			
-	        // 여기서 실제 비즈니스 로직 처리 (DAO 호출 등)
-	        // IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
-	        // List<GenRegDTO> filteredList = regDao.getFilteredGenRegs(params);
+			// 위 map 을 2차 필터 쿼리의 params 로 제공
+			IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
+	        ArrayList<GenRegDTO> listSecondaryGenReg = regDao.listSecondaryGenReg(params);
 	        
+	        // 모델에 데이터 추가
+	        model.addAttribute("listSecondaryGenReg", listSecondaryGenReg);
+	        model.addAttribute("countSecondaryGenReg", listSecondaryGenReg.size());
 	        
+	        // 1차 필터 결과도 모델에 추가
+	        model.addAttribute("listPrimaryGenReg", listSecondaryGenReg); // 2차 필터 결과로 대체
+	        model.addAttribute("countPrimaryGenReg", listSecondaryGenReg.size());
 	        
-	        // 그 결과는 ArrayList<GenRegDTO> 에 담김 이 list 를 html 조각으로 바꾸자.
-	        // 이를 붙이자(String)
+	        // JSP 파일 반환
+	        return "WEB-INF/view/genRegListFragment.jsp";
 	        
-	        // 테스트용 HTML 응답 생성
+	        /*
+	        // 위 쿼리의 결과(ArrayList<GenRegDTO>)를 html 조각으로 변환
 	        StringBuilder htmlBuilder = new StringBuilder();
-	        htmlBuilder.append("<div class=\"sub-subject\">");
-	        htmlBuilder.append("<h2>검색 결과 (필터링 적용됨)</h2>");
-	        htmlBuilder.append("</div>");
-	        htmlBuilder.append("<div class=\"box-preview\">");
-	        htmlBuilder.append("<p>시터 등급: " + String.join(", ", grades) + "</p>");
-	        htmlBuilder.append("<p>근무 지역: " + String.join(", ", regions) + "</p>");
-	        if (genders != null) {
-	            htmlBuilder.append("<p>성별: " + String.join(", ", genders) + "</p>");
-	        }
-	        if (ages != null) {
-	            htmlBuilder.append("<p>연령대: " + String.join(", ", ages) + "</p>");
-	        }
-	        if (certs != null) {
-	            htmlBuilder.append("<p>자격증: " + String.join(", ", certs) + "</p>");
-	        }
-	        htmlBuilder.append("</div>");
+	        
+	        htmlBuilder.append("");
+	        htmlBuilder.append("");
+	        htmlBuilder.append("");
+	        htmlBuilder.append("");
+	        htmlBuilder.append("");
+	        htmlBuilder.append("");
+	        
 	        
 	        result = htmlBuilder.toString();
 	        return result;
+	        */
 	    }
 	    catch (Exception e)
 	    {

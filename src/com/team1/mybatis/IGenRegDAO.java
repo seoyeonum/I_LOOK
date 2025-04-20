@@ -5,6 +5,7 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.team1.dto.GenRegDTO;
 
@@ -37,4 +38,6 @@ public interface IGenRegDAO
 	// (근무 등록 건별) 시터 선호 근무 지역
 	public ArrayList<String> listSitPreferedRegion(String gen_reg_id);
 	
+	// (부모가 보는) 2차 필터 결과 리스트
+	public ArrayList<GenRegDTO> listSecondaryGenReg(Map<String, Object> params);
 }

@@ -112,4 +112,68 @@
 		    ON WR.REGION_ID = R.REGION_ID
 		WHERE GR.GEN_REG_ID = #{gen_reg_id}
 	</select>
+	
+	<select id="listSecondaryGenReg" parameterType="map" resultType="com.team1.dto.GenRegDTO">
+        SELECT R.GEN_REG_ID, R.SIT_BACKUP_ID, R.NAME, SV.GENDER, SV.AGE
+             , SR.FILE_PATH AS PHOTO_FILE_PATH, G.GRADE
+             , (SELECT FILE_PATH FROM GRADES WHERE NAME = G.GRADE) AS GRADE_FILE_PATH
+             , NVL(RV.AVG_RATING,0) AS AVG_RATING
+             , NVL(RV.REVIEW_COUNT,0) AS REVIEW_COUNT
+             , NVL(RRV.AVG_RATING,0) AS RECENT_AVG_RATING
+             , NVL(RRV.REVIEW_COUNT,0) AS RECENT_REVIEW_COUNT
+             , R.TITLE, R.INTRODUCTION, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME
+             , CASE WHEN EXISTS 
+                        ( SELECT 1
+                          FROM GEN_REQ Q
+                          WHERE R.GEN_REG_ID = Q.GEN_REG_ID
+                        ) THEN '예약중'
+                    ELSE '예약가능'
+                    END AS STATUS
+        FROM GEN_REG_POSSIBLE_VIEW R JOIN GEN_SIT_INFO_VIEW SV
+        ON R.SIT_BACKUP_ID = SV.SIT_BACKUP_ID
+            JOIN SIT_GRADE_VIEW G
+            ON R.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+                JOIN SIT_REG SR
+                ON SV.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
+                    LEFT JOIN RAITING_VIEW RV
+                    ON R.SIT_BACKUP_ID = RV.SIT_BACKUP_ID
+                        LEFT JOIN RECENT_RATING_VIEW RRV
+                        ON R.SIT_BACKUP_ID = RRV.SIT_BACKUP_ID
+		WHERE R.START_DATE &lt;= #{start_date}
+		  AND R.END_DATE &gt;= #{end_date}
+		  AND R.START_TIME &lt;= #{start_time}
+		  AND R.END_TIME &gt;= #{end_time}
+		  
+		<!-- 등급 필터 -->
+		<if test="grades != null and grades.size() > 0">
+		  AND GRADE IN
+			<foreach item="grade" collection="grades" open="(" separator="," close=")">
+			  #{grade}
+			</foreach>
+		</if>
+		  
+		<!-- 성별 필터 -->
+		<if test="genders != null and genders.size() > 0">
+		  AND
+		  (
+			<foreach item="gender" collection="genders" separator=" OR ">
+			    <choose>
+			        <when test="gender == 'female'">SV.GENDER = '여'</when>
+			        <when test="gender == 'male'">SV.GENDER = '남'</when>
+			        <otherwise>1=0</otherwise>	<!-- 항상 거짓. 즉, 쿼리 수행 X -->
+			    </choose>
+			</foreach>
+		  )
+		</if>
+		     
+		<!-- 연령대 필터 -->
+		<if test="ages != null and ages.size() > 0">
+		  AND AGE IN
+			<foreach item="age" collection="ages" open="(" separator="," close=")">
+			  #{age}
+		    </foreach>
+		</if>
+		     
+		ORDER BY R.REG_DATE
+	</select>
 </mapper>
