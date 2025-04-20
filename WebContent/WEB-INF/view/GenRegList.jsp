@@ -5,7 +5,6 @@
 	String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정할 수 있는 경로
 %>
 <%
-	String gen_req_id = "";
 
 %>
 <!DOCTYPE html>
@@ -215,6 +214,67 @@
 			
 			
 			// AJAX 처리 
+			var params = "gen_req_id=" + $(this).val();
+			
+			/*
+			id="name">.</div>
+			<div class="col-md-2" id="careDays">.</div>
+			<div class="col-md-2" id="gu_addr">.</div>
+			<div class="col-md-1" id="child_gender">.</div>
+			<div class="col-md-1" id="child_age">.</div>
+			<div class="col-md-1" id="medical_type">.</div>
+			<div class="col-md-2" id="allergie_type">.</div>
+			<div class="col-md-2" id="disability_type">.</div>
+			*/
+			
+			$.ajax(
+			{
+				type: "POST"
+				, url : "genregdetail.action"
+				, data: $(this).val()
+				, dataType: "json"
+				, success: function(data)
+				{
+					// 표 리셋
+					$("#name").html("");
+					$("#careDays").html("");
+					$("#gu_addr").html("");
+					$("#child_gender").html("");
+					$("#child_age").html("");
+					$("#medical_type").html("");
+					$("#allergie_type").html("");
+					$("#disability_type").html("");
+					$("#message").html("");
+					
+					// 표 표기
+					$("#name").html(data.name);
+					$("#careDays").html(data.careDays);
+					$("#gu_addr").html(data.gu_addr);
+					$("#child_gender").html(data.child_gender);
+					$("#child_age").html(data.child_age);
+					$("#medical_type").html(data.medical_type);
+					$("#allergie_type").html(data.allergie_type);
+					$("#disability_type").html(data.disability_type);
+					$("#message").html(data.message);
+					
+					
+					// 예약 버튼과 취소 버튼에 밸류 새기기
+					$(".answerBtn").val(data.gen_req_id);
+					$(".rejectBtn").val(data.gen_req_id);
+				}
+				, beforeSend: function()
+				{
+					return true;
+				}
+				, error: function(e)
+				{
+					alert(e.responseText());
+				}
+			});
+			
+			
+			
+			
 		});
 		
 		
@@ -222,7 +282,7 @@
 		{
 			if (confirm("정말 예약하시겠습니까?"))
 			{
-				$(location).attr("href", "sittergenreqansweredlist.action?sit_backup_id=" + ${sit_backup_id });
+				$(location).attr("href", "sittergenreqansweredlist.action?answer=yes&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
 			}
 			
 		});
@@ -231,7 +291,8 @@
 		{
 			if (confirm("정말 거절하시겠습니까?"))
 			{
-				$(location).attr("href", "sittergenreqansweredlist.action?sit_backup_id=" + ${sit_backup_id });
+				//$(location).attr("href", "sittergenreqansweredlist.action?answer=yes&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
+				$(location).attr("href", "sittergenreqansweredlist.action?answer=no&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
 			}
 			
 		});
@@ -305,14 +366,14 @@
 				</div>
 				<div class="info tbody" id="detailInfo">
 					<div class="row">
-						<div class="col-md-1">.</div>
-						<div class="col-md-2">.</div>
-						<div class="col-md-2">.</div>
-						<div class="col-md-1">.</div>
-						<div class="col-md-1">.</div>
-						<div class="col-md-1">.</div>
-						<div class="col-md-2">.</div>
-						<div class="col-md-2">.</div>
+						<div class="col-md-1" id="name">.</div>
+						<div class="col-md-2" id="careDays">.</div>
+						<div class="col-md-2" id="gu_addr">.</div>
+						<div class="col-md-1" id="child_gender">.</div>
+						<div class="col-md-1" id="child_age">.</div>
+						<div class="col-md-1" id="medical_type">.</div>
+						<div class="col-md-2" id="allergie_type">.</div>
+						<div class="col-md-2" id="disability_type">.</div>
 					</div>
 				</div>
 				
@@ -329,7 +390,12 @@
 			</div> <!-- .info.table -->
 			
 			<div class="answerBtndiv" style="align-items: center;">
-			<button class="answerBtn" value="1">예약하기</button> <button class="rejectBtn" value="0">거절</button>
+			<c:if test=""></c:if>			
+			<button class="answerBtn" value="">예약하기</button> 
+			<select name="reject" id="reject">
+				
+			</select>
+			<button class="rejectBtn" value="0">거절</button>
 			</div>
 		</div>
 	
@@ -379,20 +445,20 @@
 					<div class="col-md-1"><button class="reservation-btn" value="3">상세 정보</button></div>
 					<div class="col-md-1">신청 있음</div>
 				</div> --%>
-			<c:forEach var="wrpdto" items="${wRPdtoList }">
-			<c:forEach var="reg" items="${regList }">
+			<%-- <c:forEach var="wrpdto" items="${wRPdtoList }"> --%>
+			<c:forEach var="reg" items="${regList }" varStatus="status">
 				<div class="row" id="${reg.gen_reg_id }" >
 					<div class="col-md-1">1</div>
 					<div class="col-md-1">${reg.title }</div>
 					<div class="col-md-2">${reg.sit_start_date } ~ ${reg.sit_end_date }</div>
 					<div class="col-md-2">${reg.sit_start_time } ~ ${reg.sit_end_time }</div>
-					<div class="col-md-2">${wrpdto.name }</div>
+					<div class="col-md-2">${wRPdtoList[status.index].name }</div> 
 					<div class="col-md-2"><button class="detailBtn" value="${reg.introduction }" type="button">자세히 보기</button></div>
 					<div class="col-md-1"><button class="reservation-btn" value="${reg.gen_reg_id }" type="button">상세 정보</button></div>
 					<div class="col-md-1">${reg.request_result }</div>
 				</div>
 			</c:forEach>
-			</c:forEach>
+			<%-- </c:forEach> --%>
 			</div>
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->

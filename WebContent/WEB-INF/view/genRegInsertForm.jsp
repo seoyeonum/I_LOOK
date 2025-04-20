@@ -336,39 +336,34 @@ input[type="file"] {
 			}
             
         });
-        
+        //---------------------------------------------------------------------
         
         
         // 자기소개 글자 제한
         $("#introduction").keyup(function()
 		{
-        	var len = $(this).val().length; 	//입력된 값의 길이 확인
-        	var remain = 500 - len;				// 남은 값
-        	
-        	$("#limit").html(len);
-        	
-        	if (remain <=10 && remain >= 1)
-			{
-				$("#limit").css("color", "orange");		// h1 이 주황색으로 
-			}
-        	else if (remain <= 0)
-			{
-				$("#limit").css("color", "red");
-			}
-        	else
-        	{
-				$("#limit").css("color", "black");
-        	}
-        	
+        	charLimit("#introduction", "#limit2", 500);	
 		});
         
-        
-        
+        // 제목 글자 제한
+        $("#title").keyup(function()
+		{
+        	charLimit("#title", "#limit", 33);	
+		});
+        //---------------------------------------------------------------
         
         
 	    // 등록 버튼 누르면 벌어지는 일.
 	    $("#uploadBtn").click(function()
 		{
+	    	// 제목 적으세요
+	    	if (!$("#title").val())
+			{
+	    		alert("제목을 작성해 주십시오.");
+				return;	
+			}
+	    	
+	    	
 	    	// 근무 시작 + 종료일 안 선택함
 	    	if (!$("#end_date").val() || !$("#start_date").val())
 			{
@@ -489,7 +484,27 @@ input[type="file"] {
 								/* 밀리세컨 * 초 * 분 * 시 = 일 */	
 	}
  	
-
+	function charLimit(id, displayId, maxlength)
+	{
+		var len = $(id).val().length; 	//입력된 값의 길이 확인
+    	var remain = maxlength - len;				// 남은 값
+    	
+    	$(displayId).html(len);
+    	
+    	if (remain <=10 && remain >= 1)
+		{
+			$(displayId).css("color", "orange");		// h1 이 주황색으로 
+		}
+    	else if (remain <= 0)
+		{
+			$(displayId).css("color", "red");
+		}
+    	else
+    	{
+			$(displayId).css("color", "black");
+    	}
+	}
+ 	
  	
  	
 	
@@ -523,6 +538,20 @@ input[type="file"] {
      		        	<span class="required">* 표시는 필수 입력 항목입니다.</span>
 			        <div class="verification"></div>
 	       		</div>
+	       		
+	       		<!-- 제목 -->
+	       		<div class="container">
+	       			<div class="container-title">
+	       				<h3>제목 &nbsp;<span class="required">*</span></h3>
+	       				<div class="verification"></div>
+	       			</div>
+	       			
+	       			<div class="container-panel">제목 작성</div>
+	        		<div class="intro-area">
+	        			<input type="text" id="title" name="title" maxlength="33"/>
+		        		<div class="char-limit" style="display: flex;">33자 제한이 존재합니다. 현재 &nbsp;<span id="limit" >0</span>자 쓰셨습니다.</div>
+        			</div>
+       			</div>
 	       		
 		        <!-- 달력 날짜/시간 선택 -->
 	        	<div class="container">
@@ -640,7 +669,7 @@ input[type="file"] {
 	        		<div class="intro-area">
 		        		<textarea id="introduction" name="introduction" rows="6" cols="60" 
 		        		maxlength="500" placeholder="자기소개를 입력하세요"></textarea>
-		        		<div class="char-limit" style="display: flex;">500자 제한이 존재합니다. 현재 &nbsp;<div id="limit" >0</div>자 쓰셨습니다.</div>
+		        		<div class="char-limit" style="display: flex;">500자 제한이 존재합니다. 현재 &nbsp;<span id="limit2" >0</span>자 쓰셨습니다.</div>
 	        		</div>
 	        	</div>
 	        	
@@ -649,7 +678,7 @@ input[type="file"] {
 	        	<input type="hidden" name="start_time" id="start_time">
         		<input type="hidden" name="end_time" id="end_time">
 				<input type="hidden" name="age_type_id" id="age_type_id">		
-				<input type="hidden" name="sit_backup_id" id="sit_backup_id">		
+				<input type="hidden" name="sit_backup_id" id="sit_backup_id" value="${sit_backup_id }">		
 	        	
 	        	<!-- 등록 버튼 -->
 	        	<button type="button" id="uploadBtn">등록하기</button>

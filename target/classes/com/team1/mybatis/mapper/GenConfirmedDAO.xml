@@ -6,9 +6,12 @@
 <mapper namespace="com.team1.mybatis.IGenConfirmedDAO">
 
 	<!-- 예약 확정 등록 -->
-	<insert id="add">
+	<insert id="add" parameterType="com.team1.dto.GenConfirmedDTO">
+	<selectKey keyProperty="gen_confirmed_id" resultType="String" order="BEFORE">
+      SELECT 'GCON' || LPAD(SEQ_GCON.NEXTVAL, 4, '0') FROM DUAL
+	</selectKey>
 		INSERT INTO GEN_CONFIRMED(GEN_CONFIRMED_ID, GEN_REQ_ID, CONFIRMED_DATE, PAR_READ_DATE)
-		VALUES(#{gen_confirmed_id}, #{gen_req_id}, #{confirmed_date}, #{par_read_date})
+		VALUES(#{gen_confirmed_id}, #{gen_req_id}, SYSDATE, #{par_read_date})
 	</insert>
 	
 	<!-- 부모가 알림을 읽었을 때 시간 기록 확인 -->

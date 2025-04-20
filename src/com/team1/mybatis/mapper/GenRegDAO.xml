@@ -6,11 +6,10 @@
 <mapper namespace="com.team1.mybatis.IGenRegDAO">
 	
 	<!-- 일반 돌봄 근무 등록 -->
-	<insert id="add">
-	<selectKey keyProperty="gen_reg_id"
-               resultType="String"
-               order="BEFORE">
-      SELECT 'GREG' || LPAD(SEQ_GREG.NEXTVAL, 4, '0') FROM DAUL
+	<insert id="add" parameterType="com.team1.dto.GenRegDTO" keyProperty="gen_reg_id">
+	<selectKey keyProperty="gen_reg_id" resultType="String" order="BEFORE">
+		SELECT 'GREG' || LPAD(SEQ_GREG.NEXTVAL, 4, '0') AS gen_reg_id
+		FROM DUAL
 	</selectKey>
 		INSERT INTO GEN_REG(GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REG_DATE, INTRODUCTION)
@@ -24,7 +23,7 @@
 		DELETE FROM GEN_REG
 		WHERE GEN_REG_ID = #{gen_reg_id}
 	</delete>
-	
+
 	<!-- 시터 근무 가능 목록 -->
 	<select id="list" resultType="com.team1.dto.GenRegDTO">
 		SELECT GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE

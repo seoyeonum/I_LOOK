@@ -14,7 +14,7 @@
 <body>
 	<header>
 		<div id="logo">
-			<img src="<%=cp %>/imgs/logo.png" height="120px">
+			<img src="<%=cp %>/images/logo.png" height="120px">
 		</div>
 		<nav>
 			<button type="button" class="menuBtn presentPage">홈</button>

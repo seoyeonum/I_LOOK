@@ -69,6 +69,7 @@
         background-color: #4cae4c;
     }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 	
 	function mainPage()
@@ -78,7 +79,8 @@
 	
 	function genRegList()
 	{
-		 location.href = "genreglist.action";
+		var value = document.getElementById("btn").value;
+		location.href = "genreglist.action?sit_backup_id=" + value;
 	}
 
 </script>
@@ -97,7 +99,7 @@
         
         <div class="button-container">
             <button type="button" class="button home-btn" onclick="mainPage()">홈</button>
-            <button type="button" class="button history-btn" onclick="genRegList()">등록 내역 확인</button>
+            <button type="button" id="btn" class="button history-btn" onclick="genRegList()" value="${sit_backup_id }">등록 내역 확인</button>
         </div>
     </div>
 </div>

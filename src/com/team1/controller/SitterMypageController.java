@@ -20,12 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team1.dto.AgesPreferedDTO;
+import com.team1.dto.GenCanceledDTO;
+import com.team1.dto.GenConfirmedDTO;
 import com.team1.dto.GenRegDTO;
 import com.team1.dto.SitCareListDTO;
 import com.team1.dto.SitDTO;
 import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IAgesPreferedDAO;
+import com.team1.mybatis.IGenCanceledDAO;
+import com.team1.mybatis.IGenConfirmedDAO;
 import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitAcctDAO;
@@ -57,6 +61,7 @@ public class SitterMypageController
 		model.addAttribute("banklist", acctDao.list());
 		
 		return "/WEB-INF/view/SitterinfoList.jsp";
+		
 	}
 	
 	
@@ -137,21 +142,38 @@ public class SitterMypageController
 
 		// 그런데 이 genRegdto에는 sit_backup_id가 없다.
 		genRegdto.setSit_backup_id(sit_backup_id);
+		
+		//System.out.println(sit_backup_id);
+		
 		// int 나오니까 이걸로 분기 처리 가능. --> 나중에.
+		if (genRegdto.getIntroduction() == null)
+		{
+			genRegdto.setIntroduction(" ");
+		}
+		
+		//System.out.println(genRegdto.getIntroduction());
+		//System.out.println("빡침");
 		genRegDao.add(genRegdto);
+		
+		//System.out.println(genRegdto.getSit_backup_id());
+		String genregid = genRegdto.getGen_reg_id();
+		workRPDto.setGen_reg_id(genregid);
+		agePDto.setGen_reg_id(genregid);
+		  
+		//System.out.println(genregid);
 		workRPDao.addRegions(workRPDto);
 		agesPDao.addAges(agePDto);
 		
 		// 사이드바 이용을 위한 시터 백업 아이디 보내주기
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
-		result = "/WEB-INF/view/genRegInsertFormComplete.jsp";
+		result = "/WEB-INF/view/genRegInsertComplete.jsp";
 		
 		return result;
 	}
 	
 	
-	// genRegInsertFormComplete.jsp로 보내졌고, 그 파일엔 이미 알아서 버튼링크 처리가 되어 있으니 따로 뭘 더 안 만들어도 됨.
+	// genRegInsertComplete.jsp로 보내졌고, 그 파일엔 이미 알아서 버튼링크 처리가 되어 있으니 따로 뭘 더 안 만들어도 됨.
 	
 	
 	// 근무 등록 내역 확인 컨트롤러
@@ -228,26 +250,41 @@ public class SitterMypageController
 	}
 	
 	// 근무 등록 내역 상세보기 누르면 나오는 컨트롤러 >> AJAX 처리
-	@RequestMapping(value = "/genregdetail.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/genregdetail.action", method = RequestMethod.POST)
 	public String GenRegDetailList(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model) 
 	{
 		String result = null;
 		
+		ISitCareListDAO IsclDao = sqlSession.getMapper(ISitCareListDAO.class);
+		
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		model.addAttribute("gen_req_id", gen_req_id);
 		
-		result = "/WEB-INF/view/ParGenReqList.jsp";
+		
+		model.addAttribute("reqDetail", IsclDao.regDetailedList(gen_req_id));
+		
+		result = "/WEB-INF/view/SitterGenReqDetail.jsp";
+		
 		
 		return result;
 	}
 	
 	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredyes.action", method = RequestMethod.GET)
-	public String AnswerYes(String sit_backup_id, Model model)
+	@RequestMapping(value = "sittergenreqansweredlist.action?answer=yes&sit_backup_id=", method = RequestMethod.GET)
+	public String AnswerYes(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
 	{
 		String result = null;
 		
-		// 돌봄 확정에 insert
+		IGenConfirmedDAO gcfDao = sqlSession.getMapper(IGenConfirmedDAO.class);
+		GenConfirmedDTO gcfDto = new GenConfirmedDTO();
+		
+		gcfDto.setGen_req_id(gen_req_id);
+		gcfDto.setPar_read_date(null);
+		
+		// 돌봄 확정에 insert >> int로 분기 처리 가능
+		gcfDao.add(gcfDto);
+		
+		model.addAttribute("sit_backup_id", sit_backup_id);
 		
 		// 돌봄 제공 내역으로 리다이렉트
 		result = "redirect:sittergenreqansweredlist.action";
@@ -258,11 +295,17 @@ public class SitterMypageController
 	
 	// 근무 등록 내역에서 돌봄 취소하면 나오는 컨트롤러
 	@RequestMapping(value = "sittergenreqansweredno.action", method = RequestMethod.GET)
-	public String AnswerNo(String sit_backup_id, Model model)
+	public String AnswerNo(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
 	{
 		String result = null;
 		
+		IGenCanceledDAO gcDao = sqlSession.getMapper(IGenCanceledDAO.class);
+		GenCanceledDTO gcDto = new GenCanceledDTO();
+		
+		gcDto.setGen_req_id(gen_req_id);
+		
 		// 돌봄 취소에 insert
+		gcDao.addGenCanceled(gcDto);
 		
 		// 돌봄 제공 내역으로 리다이렉트
 		result = "redirect:sittergenreqansweredlist.action";
