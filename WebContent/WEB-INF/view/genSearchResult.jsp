@@ -376,7 +376,7 @@
 		
 		<!-- 검색 결과 -->
 	    <div class="gen-results" id='resultArea'>
-		    <c:import url="/WEB-INF/view/genRegListFragment.jsp" />
+		    <c:import url="/WEB-INF/view/genRegListFragment.jsp" />	<!-- action 처리 변경 필요 -->
 		</div>
     
 	</div>

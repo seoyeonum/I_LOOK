@@ -58,10 +58,13 @@ public class GenReqController
 		return result;
 	}
 	
+	
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
-	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
+	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId
+								, GenRegDTO dto
 								, @RequestParam(value = "page", defaultValue="1") int page
-								, Model model, HttpSession session)
+								, Model model
+								, HttpSession session)
 	{
 		String result = null;
 		
@@ -71,6 +74,7 @@ public class GenReqController
 		String id = (String) session.getAttribute("id");
 		listName = childDao.listName(id);
 		
+		// (이전 페이지에서 건넨 값을 다음 페이지로 전달)
 		model.addAttribute("listName", listName);
 		model.addAttribute("childBackupId", childBackupId);
 		model.addAttribute("dateStart", dto.getStart_date());
@@ -78,54 +82,61 @@ public class GenReqController
 		model.addAttribute("timeStart", dto.getStart_time());
 		model.addAttribute("timeEnd", dto.getEnd_time());
 		
-		// 세션에 필터 값 저장 (추가)
+		// (추가로 세션에 필터 값 저장)
 	    session.setAttribute("childBackupId", childBackupId);
 	    session.setAttribute("dateStart", dto.getStart_date());
 	    session.setAttribute("dateEnd", dto.getEnd_date());
 	    session.setAttribute("timeStart", dto.getStart_time());
 	    session.setAttribute("timeEnd", dto.getEnd_time());
 		
+	    //----------------------------------------------------------------
+	    
 		// 입력값 기반으로 1차 필터 수행 결과 건수
 		IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
 		int countPrimaryGenReg = RegDao.countPrimaryGenReg(dto);
-		
+
 		// 페이징 객체 생성
 	    PageHandler paging = new PageHandler(page, countPrimaryGenReg);
 	    
-	    
-	    // DTO에 페이징 정보 추가
+	    // (이전 페이지에서 건네 받은) dto 에 페이징 정보 추가
 	    dto.setStart(paging.getStart());
 	    dto.setEnd(paging.getEnd());
+	    
+	    // 입력값 기반으로 1차 필터 수행 결과 리스트
+	    ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
+	    listPrimaryGenReg = RegDao.listPrimaryGenReg(dto);
+	    System.out.println(listPrimaryGenReg.size());
 		
-		// 입력값 기반으로 1차 필터 수행 결과 리스트
-		//IGenRegDAO RegDao = sqlSession.getMapper(IGenRegDAO.class);
-		ArrayList<GenRegDTO> listPrimaryGenReg = new ArrayList<GenRegDTO>();
-		listPrimaryGenReg = RegDao.listPrimaryGenReg(dto);
-		
-		// 헬퍼 메서드를 호출하여 추가 정보 설정
+		// GenRegDTO 리스트(listPrimaryGenReg) ← 자격증 및 지역 정보 추가
+		// → 『setCertAndRegion』 메소드 호출
 		setCertAndRegion(listPrimaryGenReg);
 		
+		// 다음 페이지로 넘겨주는 값
+		// → 1차 필터 결과 리스트 건수, 리스트, 페이징 객체 
 	    model.addAttribute("countPrimaryGenReg", countPrimaryGenReg);
 	    model.addAttribute("listPrimaryGenReg", listPrimaryGenReg);
-	    
-	    //System.out.println(listCert);
+	    System.out.println(listPrimaryGenReg.size());
 	    model.addAttribute("paging", paging);
 	    
-		// 2차 필터 등급 범례 리스트
+	    //----------------------------------------------------------------
+	    
+		// 2차 필터 범례 리스트 - 등급
 	    IGradesDAO gradeDao = sqlSession.getMapper(IGradesDAO.class);
 	  	ArrayList<GradesDTO> listGrade = new ArrayList<GradesDTO>();
 	  	listGrade = gradeDao.listGrade();
 	    
-	    // 2차 필터 지역 범례 리스트
+	    // 2차 필터 범례 리스트 - 지역
 	  	IWorkRegionPreferedDAO regionDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
 	  	ArrayList<WorkRegionPreferedDTO> listAllRegions = new ArrayList<WorkRegionPreferedDTO>();
 	  	listAllRegions = regionDao.listAllRegions();
 	    
-	  	// 2차 필터 자격증 범례 리스트
+	  	// 2차 필터 범례 리스트 - 자격증
 	  	ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
 	  	ArrayList<SitCertDTO> listCertType = new ArrayList<SitCertDTO>();
 	  	listCertType = certDao.listCertType();
 	  	
+	  	// 다음 페이지로 넘겨주는 값
+	 	// → 2차 필터 범례 (등급, 지역, 자격증) 
 	    model.addAttribute("listGrade", listGrade);
 	    model.addAttribute("listAllRegions", listAllRegions);
 	    model.addAttribute("listCertType", listCertType);
@@ -135,29 +146,28 @@ public class GenReqController
 		return result;
 	}
 	
+	
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
-	//@ResponseBody //← return 값을 문자 형태로 그대로 전달
-	public String genRegPossibleList(//@RequestParam("child_backup_id") String childBackupId, GenRegDTO dto
-						    @RequestParam(value = "page", defaultValue="1") int page
-						   , @RequestParam(value = "grades", required = false) List<String> grades
-				           , @RequestParam(value = "regions", required = false) List<String> regions
-				           , @RequestParam(value = "genders", required = false) List<String> genders
-				           , @RequestParam(value = "ages", required = false) List<String> ages
-				           , @RequestParam(value = "certs", required = false) List<String> certs
-				           , HttpServletResponse response, Model model, HttpSession session )
+	public String genRegPossibleList( @RequestParam(value = "page", defaultValue="1") int page
+									, @RequestParam("grades") List<String> grades
+									, @RequestParam("regions") List<String> regions
+									, @RequestParam("genders") List<String> genders
+									, @RequestParam("ages") List<String> ages
+									, @RequestParam("certs") List<String> certs
+									, HttpServletResponse response
+									, Model model
+									, HttpSession session )
 	{
-		//String result = null;
-	    
-		// 응답 → 한글 인코딩 설정
+		// AJAX 응답 → 한글 인코딩 설정
 		response.setContentType("text/html; charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    
-	    // 2차 필터 선택 항목 확인
-	    System.out.println("Grades: " + grades);
-	    System.out.println("Regions: " + regions);
-	    System.out.println("Genders: " + genders);
-	    System.out.println("Ages: " + ages);
-	    System.out.println("Certs: " + certs);
+	    // 확인 (이전 페이지에서 온 2차 필터 선택 항목)
+	    //System.out.println("Grades: " + grades);
+	    //System.out.println("Regions: " + regions);
+	    //System.out.println("Genders: " + genders);
+	    //System.out.println("Ages: " + ages);
+	    //System.out.println("Certs: " + certs);
 	    
 	    // 세션에서 1차 필터 정보 가져오기
         GenRegDTO dto = new GenRegDTO();
@@ -166,7 +176,14 @@ public class GenReqController
         dto.setStart_time((Integer) session.getAttribute("timeStart"));
         dto.setEnd_time((Integer) session.getAttribute("timeEnd"));
         
-    	// (커다란) map 에 수신 받은 매개변수 추가(put)
+        //-----------------------------------------------------------
+        
+        // 입력값 기반으로 2차 필터 수행 결과 건수
+        IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
+        int countPrimaryGenReg = regDao.countPrimaryGenReg(dto);
+        
+    	// 2차 필터 매개변수 준비
+        // → Map 에 이전 페이지에서 수신한 매개변수 추가(put)
         Map<String, Object> params = new HashMap<String, Object>();
         
         params.put("start_date", dto.getStart_date());
@@ -174,23 +191,14 @@ public class GenReqController
         params.put("start_time", dto.getStart_time());
         params.put("end_time", dto.getEnd_time());
         
-        // 여기서 페이징 처리 추가
-        //int currentPage = 1; // 첫 페이지로 설정
-        
-        // 전체 레코드 수
-        IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
-        int countPrimaryGenReg = regDao.countPrimaryGenReg(dto);
-        
         // 페이징 객체 생성
         PageHandler paging = new PageHandler(page, countPrimaryGenReg);
         
-        // params 맵에 페이징 정보 추가
+        // Map 에 페이징 정보 추가
         params.put("start", paging.getStart());
         params.put("end", paging.getEnd());
 
-        //System.out.println(listCert);
-  	    model.addAttribute("paging", paging);
-  	    
+  	    // Map 에 (이전 페이지에서 온 2차 필터 선택 항목) 추가
         if (grades != null)
         	params.put("grades", grades);
         if (regions != null)
@@ -202,16 +210,18 @@ public class GenReqController
         if (certs != null)
         	params.put("certs", certs);
 
-		// 위 map 을 2차 필터 쿼리의 params 로 제공
-		//IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
-        ArrayList<GenRegDTO> listSecondaryGenReg = regDao.listSecondaryGenReg(params);
+		// 위 Map 을 2차 필터 쿼리의 params 로 제공
+		ArrayList<GenRegDTO> listSecondaryGenReg = regDao.listSecondaryGenReg(params);
         
-        // 헬퍼 메서드를 호출하여 추가 정보 설정
+        // GenRegDTO 리스트(listSecondaryGenReg) ← 자격증 및 지역 정보 추가
+		// → 『setCertAndRegion』 메소드 호출
         setCertAndRegion(listSecondaryGenReg);
 
-        // 모델에 데이터 추가
+        // 다음 페이지로 넘겨주는 값
+		// → 2차 필터 결과 리스트 건수, 리스트, 페이징 객체 
+        model.addAttribute("countSecondaryGenReg", countPrimaryGenReg);
         model.addAttribute("listSecondaryGenReg", listSecondaryGenReg);
-        model.addAttribute("countSecondaryGenReg", listSecondaryGenReg.size());
+        model.addAttribute("paging", paging);
         
         // 1차 필터 결과도 모델에 추가
         model.addAttribute("listPrimaryGenReg", listSecondaryGenReg); // 2차 필터 결과로 대체
@@ -220,12 +230,12 @@ public class GenReqController
         // JSP 파일 반환
         return "WEB-INF/view/genRegListFragment.jsp";
     
-	    
 	}
 	
 	
 	@RequestMapping(value="/genregpossibledetail.action", method = RequestMethod.GET)
-	public String genRegDetail(@RequestParam("genRegId") String genRegId, Model model)
+	public String genRegDetail(@RequestParam("genRegId") String genRegId
+							 , Model model, HttpSession session )
 	{
 		String result = null;
 		

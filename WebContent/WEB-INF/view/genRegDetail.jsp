@@ -3,8 +3,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 	
-	// 기존 창에서 전달된 매개변수 받기
-	//String genRegId = request.getParameter("genRegId");
 %>
 <!DOCTYPE html>
 <html>
