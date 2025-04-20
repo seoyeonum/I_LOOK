@@ -10,18 +10,19 @@
 <meta charset="UTF-8">
 <title>시터 회원가입 페이지</title>
 <link rel="stylesheet" href="css/parentInsertForm.css">
+
 <script type="text/javascript">
-    // 카카오 주소 API를 위한 함수
-    function searchAddress() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 도로명 주소를 폼에 입력
-                document.getElementById("address").value = data.roadAddress;
-                // 상세주소 입력란에 포커스
-                document.getElementById("detailAddress").focus();
-            }
-        }).open();
-    }
+// 카카오 주소 API를 위한 함수
+function searchAddress() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 도로명 주소를 폼에 입력
+            document.getElementById("address").value = data.roadAddress;
+            document.getElementById("postcode").value = data.zonecode; // 우편번호 입력
+            document.getElementById("detailAddress").focus(); // 상세주소 입력란에 포커스
+        }
+    }).open();
+}
 
     // 아이디 중복 검사
     function checkId() {
@@ -45,26 +46,41 @@
                 }
             })
             .catch(error => {
-                console.error("중복 확인 중 오류 발생:", error);
+                console.error("중복 확인 오류:", error);
                 messageSpan.style.color = "red";
-                messageSpan.textContent = "서버 오류로 중복 확인에 실패했습니다.";
+                messageSpan.textContent = "서버 오류로 확인 실패.";
             });
     }
 
-    // 비밀번호 검증
+    // 자격증 추가 필드
+    function addCertField() {
+        const certArea = document.getElementById("cert-area");
+        const certBlock = document.createElement("div");
+        certBlock.className = "cert-block";
+        certBlock.innerHTML = `
+            <select name="cert_type_ids">
+                <option value="001">보육 교사 1급 (일반)</option>
+                <option value="002">보육 교사 2급 (특수)</option>
+                <option value="003">보육 교사 2급 (일반)</option>
+                <option value="004">특수 교사 자격증</option>
+            </select>
+            <input type="file" name="certificates" accept=".pdf,.jpg,.jpeg,.png">
+        `;
+        certArea.appendChild(certBlock);
+    }
+
     function checkPassword() {
         var password = document.getElementById("password").value;
         var errorMessage = document.getElementById("password-error");
         var passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,16}$/;
 
         if (!passwordPattern.test(password)) {
-            errorMessage.textContent = "비밀번호는 소문자와 숫자를 결합하여 6자리에서 16자리로 입력해야 합니다.";
+            errorMessage.textContent = "비밀번호는 소문자+숫자 6~16자리여야 합니다.";
         } else {
             errorMessage.textContent = "";
         }
     }
 
-    // 비밀번호 일치 여부 확인
     function checkPasswordMatch() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
@@ -77,14 +93,13 @@
         }
     }
 
-    // 제출 전 체크 (아이디 중복 확인 포함)
     function checkPasswordBeforeSubmit() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
         var passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,16}$/;
 
         if (!passwordPattern.test(password)) {
-            alert("비밀번호는 소문자와 숫자를 결합하여 6자리에서 16자리로 입력해야 합니다.");
+            alert("비밀번호는 소문자+숫자 6~16자리로 입력하세요.");
             return false;
         }
 
@@ -95,29 +110,28 @@
 
         return true;
     }
+
+    // 연락처 합치기
+    window.onload = function () {
+        document.getElementById("submit-btn").addEventListener("click", function () {
+            const phone = document.getElementById("phone1").value + "-" 
+                        + document.getElementById("phone2").value + "-" 
+                        + document.getElementById("phone3").value;
+            document.getElementById("tel").value = phone;
+        });
+    }
 </script>
 
-<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<style>
-    .info-text {
-        font-size: 0.9em;
-        color: #777;
-    }
-    #cert-list {
-        list-style: disc;
-        margin-left: 20px;
-        padding: 5px 0;
-        font-size: 0.9em;
-    }
-</style>
-
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
-<body>
 
+<body>
 <div id="title">I,Look</div>
 
-<form action="<%=cp %>/sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="<%=cp %>/sitterInsert.action" method="POST" 
+      enctype="multipart/form-data" 
+      onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+
     <div class="form-section">
         <h2>회원요청</h2>
     </div>
@@ -134,14 +148,14 @@
 
     <!-- 비밀번호 -->
     <div class="form-group">
-        <label class="required" for="password">비밀번호</label>
+        <label class="required">비밀번호</label>
         <input type="password" class="text" id="password" name="pw" required oninput="checkPassword()">
         <span id="password-error" class="error-message"></span>
     </div>
 
     <!-- 비밀번호 확인 -->
     <div class="form-group">
-        <label class="required" for="confirmPassword">비밀번호 확인</label>
+        <label class="required">비밀번호 확인</label>
         <input type="password" class="text" id="confirmPassword" required oninput="checkPasswordMatch()">
         <span id="error-message" class="error-message"></span>
     </div>
@@ -156,9 +170,9 @@
     <div class="form-group">
         <label class="required">주민등록번호</label>
         <div class="ssn-container">
-            <input type="text" class="text" id="ssn1" name="ssn_first" placeholder="앞자리 6자리" maxlength="6" required>
+            <input type="text" class="text" name="ssn_first" placeholder="앞자리" maxlength="6" required>
             <span class="dash">-</span>
-            <input type="password" class="text" id="ssn2" name="ssn_second" placeholder="뒷자리 7자리" maxlength="7" required>
+            <input type="password" class="text" name="ssn_second" placeholder="뒷자리" maxlength="7" required>
         </div>
     </div>
 
@@ -172,7 +186,6 @@
             <span class="dash">-</span>
             <input type="text" class="text" id="phone3" maxlength="4">
         </div>
-        <!-- 숨겨진 tel 필드 -->
         <input type="hidden" name="tel" id="tel">
     </div>
 
@@ -191,33 +204,39 @@
     <!-- 상세주소 -->
     <div class="form-group">
         <label>상세주소</label>
-        <input type="text" class="text" id="detailAddress" name="detail[]ed_addr" placeholder="상세주소 입력">
+        <input type="text" class="text" id="detailAddress" name="detailed_addr" placeholder="상세주소 입력">
     </div>
 
-
-    <!-- 보건증 첨부 -->
+    <!-- 보건증 -->
     <div class="form-group">
         <label class="required">보건증 첨부</label>
-        <input type="file" name="healthCert" id="healthCert" accept=".pdf,.jpg,.jpeg,.png" required>
-        <span class="info-text">※ 보건증 파일을 첨부해 주세요.</span>
+        <input type="file" name="healthCert" accept=".pdf,.jpg,.jpeg,.png" required>
     </div>
 
-    <!-- 범죄이력 회신서 첨부 -->
+    <!-- 범죄이력 -->
     <div class="form-group">
         <label class="required">범죄이력 회신서 첨부</label>
-        <input type="file" name="crimeRecord" id="crimeRecord" accept=".pdf,.jpg,.jpeg,.png" required>
-        <span class="info-text">※ 경찰서 발급 회신서를 첨부해 주세요.</span>
+        <input type="file" name="crimeRecord" accept=".pdf,.jpg,.jpeg,.png" required>
     </div>
 
-    <!-- 자격증 첨부 (선택) -->
+    <!-- 자격증 -->
     <div class="form-group">
         <label>자격증 첨부 (선택, 여러 개 가능)</label>
-        <input type="file" name="certificates" id="certificates" accept=".pdf,.jpg,.jpeg,.png" multiple onchange="showCertificateFileNames()">
-        <span class="info-text">※ 자격증이 있다면 여러 개 첨부할 수 있습니다.</span>
-        <ul id="cert-list"></ul>
+        <div id="cert-area">
+            <div class="cert-block">
+                <select name="cert_type_ids">
+                    <option value="001">보육 교사 1급 (일반)</option>
+                    <option value="002">보육 교사 2급 (특수)</option>
+                    <option value="003">보육 교사 2급 (일반)</option>
+                    <option value="004">특수 교사 자격증</option>
+                </select>
+                <input type="file" name="certificates" accept=".pdf,.jpg,.jpeg,.png">
+            </div>
+        </div>
+        <button type="button" onclick="addCertField()">+ 자격증 추가</button>
     </div>
 
-    <!-- 가입 버튼 -->
+    <!-- ✅ 중복 제거된 가입 버튼 -->
     <div class="form-group">
         <input type="submit" value="가입하기" class="btn" id="submit-btn">
     </div>

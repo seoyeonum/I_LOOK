@@ -5,10 +5,10 @@
 
 <mapper namespace="com.team1.mybatis.ISitCertDAO">
 
- 	<insert id="addCert"> <!-- public int addCert(SitCertDTO sitcert); -->
+<!--  	<insert id="addCert"> public int addCert(SitCertDTO sitcert);
 	 	INSERT INTO CERT_REG(CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID)
 		VALUES(#{cert_reg_id}, #{cert_type_id}, #{sit_reg_id})
- 	</insert>
+ 	</insert> -->
  	
  	<update id="modifyCert"> <!-- public int modifyCert(SitCertDTO sitcert); -->
 	 	UPDATE CERT_REG
@@ -34,5 +34,13 @@
 		WHERE SIT_REG_ID = #{sit_reg_id}
  	</select>
  	
- 	
+ 	<!-- 자격증 (여러 개) 등록 -->
+	 <insert id="sitaddCert" parameterType="com.team1.dto.SitCertDTO">
+	  <selectKey keyProperty="cert_reg_id" resultType="String" order="BEFORE">
+	    SELECT 'CERT' || LPAD(CERT_REG_SEQ.NEXTVAL, 4, '0') FROM DUAL
+	  </selectKey>
+	  INSERT INTO CERT_REG (CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID, FILE_PATH, REG_DATE)
+	  VALUES (#{cert_reg_id}, #{cert_type_id}, #{sit_reg_id}, #{file_path}, SYSDATE)
+	</insert>
+ 
 </mapper>
