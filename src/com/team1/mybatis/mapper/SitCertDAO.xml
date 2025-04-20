@@ -41,7 +41,7 @@
  	</select>
  	
  	<select id="listSitCert" resultType="java.lang.String">
- 		SELECT CT.TYPE, CT.CERT_TYPE_ID
+ 		SELECT CT.TYPE
 		FROM SIT_BACKUP S JOIN SIT_REG SR
 		ON S.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
 		    JOIN CERT_REG CR

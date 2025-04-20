@@ -239,9 +239,31 @@ public class GenReqController
 	{
 		String result = null;
 		
-		// (선택한 근무 등록 정보 리스트)
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 특정 근무 정보 조회
+		IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
+		GenRegDTO genDetail = regDao.searchGenRegDetail(genRegId);
 		
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 시터 선호 근무 지역 조회
+		ArrayList<String> preferedRegion = regDao.listSitPreferedRegion(genRegId);
+		
+		// (이전 페이지에서 건네 받은) 근무 등록 코드로 시터 선호 돌봄 연령대 조회
+		ArrayList<String> preferedAge = regDao.listSitPreferedAge(genRegId);
+				
+				
+		// (시터 백업 코드로) 시터 보유 자격증 조회
+		String sitBackupId = genDetail.getSit_backup_id();
+		ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+        ArrayList<String> listSitCert = certDao.listSitCert(sitBackupId);
+        
+        
+		// 다음 페이지로 넘겨주는 값
+		// → 근무 등록 코드, 특정 근무 등록 정보
+		//    , 시터 선호 근무 지역
 		model.addAttribute("genRegId", genRegId);
+		model.addAttribute("genDetail", genDetail);
+		model.addAttribute("preferedRegion", preferedRegion);
+		model.addAttribute("preferedAge", preferedAge);
+		model.addAttribute("listSitCert", listSitCert);
 		
 		result = "WEB-INF/view/genRegDetail.jsp";
 		

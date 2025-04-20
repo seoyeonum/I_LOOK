@@ -103,16 +103,7 @@
 		  AND R.END_TIME &gt;= #{end_time}
 	</select>
 	
-	<!-- (근무 등록 건별) 시터 선호 근무 지역 -->
-	<select id="listSitPreferedRegion" resultType="java.lang.String">
-		SELECT R.NAME AS REGION
-		FROM GEN_REG GR JOIN WORK_REGION_PREFERED WR
-		ON GR.GEN_REG_ID = WR.GEN_REG_ID
-		    JOIN REGIONS R
-		    ON WR.REGION_ID = R.REGION_ID
-		WHERE GR.GEN_REG_ID = #{gen_reg_id}
-	</select>
-	
+	<!-- (부모가 보는) 2차 필터 결과 리스트 -->
 	<select id="listSecondaryGenReg" parameterType="map" resultType="com.team1.dto.GenRegDTO">
 	SELECT *
 	 FROM (
@@ -220,4 +211,57 @@
     ) 
     WHERE RNUM &gt;= #{start,jdbcType=INTEGER}
 	</select>
+	
+	
+	<!-- (근무 등록 건별) 시터 선호 근무 지역 -->
+	<select id="listSitPreferedRegion" resultType="java.lang.String">
+		SELECT R.NAME
+		FROM GEN_REG GR JOIN WORK_REGION_PREFERED WR
+		ON GR.GEN_REG_ID = WR.GEN_REG_ID
+		    JOIN REGIONS R
+		    ON WR.REGION_ID = R.REGION_ID
+		WHERE GR.GEN_REG_ID = #{gen_reg_id}
+	</select>
+	
+	<!-- (근무 등록 건별) 시터 선호 돌봄 연령대 -->
+	<select id="listSitPreferedAge" resultType="java.lang.String">
+		SELECT AT.TYPE AS AGE
+		FROM GEN_REG GR JOIN AGES_PREFERED AP
+		ON GR.GEN_REG_ID = AP.GEN_REG_ID
+		    JOIN AGE_TYPES AT
+		    ON AP.AGE_TYPE_ID = AT.AGE_TYPE_ID
+		WHERE GR.GEN_REG_ID = #{gen_reg_id}
+	</select>
+	
+	<!-- (근무 등록 건별) 상세 근무 정보 조회 -->
+	<select id="searchGenRegDetail" resultType="com.team1.dto.GenRegDTO">
+		SELECT R.GEN_REG_ID, R.SIT_BACKUP_ID, R.NAME, SV.GENDER, SV.AGE
+             , SR.FILE_PATH AS PHOTO_FILE_PATH, G.GRADE
+             , (SELECT FILE_PATH FROM GRADES WHERE NAME = G.GRADE) AS GRADE_FILE_PATH
+             , NVL(RV.AVG_RATING,0) AS AVG_RATING
+             , NVL(RV.REVIEW_COUNT,0) AS REVIEW_COUNT
+             , NVL(RRV.AVG_RATING,0) AS RECENT_AVG_RATING
+             , NVL(RRV.REVIEW_COUNT,0) AS RECENT_REVIEW_COUNT
+             , R.TITLE, R.INTRODUCTION, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME
+             , CASE WHEN EXISTS 
+                        ( SELECT 1
+                          FROM GEN_REQ Q
+                          WHERE R.GEN_REG_ID = Q.GEN_REG_ID
+                        ) THEN '예약중'
+                    ELSE '예약가능'
+                    END AS STATUS
+        FROM GEN_REG_POSSIBLE_VIEW R JOIN GEN_SIT_INFO_VIEW SV
+        ON R.SIT_BACKUP_ID = SV.SIT_BACKUP_ID
+            JOIN SIT_GRADE_VIEW G
+            ON R.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+                JOIN SIT_REG SR
+                ON SV.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
+                    LEFT JOIN RAITING_VIEW RV
+                    ON R.SIT_BACKUP_ID = RV.SIT_BACKUP_ID
+                        LEFT JOIN RECENT_RATING_VIEW RRV
+                        ON R.SIT_BACKUP_ID = RRV.SIT_BACKUP_ID
+        WHERE R.GEN_REG_ID = #{gen_reg_id}
+</select>
+	
+	
 </mapper>

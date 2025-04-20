@@ -35,9 +35,16 @@ public interface IGenRegDAO
 	// (부모가 보는) 1차 필터 결과 리스트 건수
 	public int countPrimaryGenReg(GenRegDTO gen_reg);
 	
+	// (부모가 보는) 2차 필터 결과 리스트
+	public ArrayList<GenRegDTO> listSecondaryGenReg(Map<String, Object> params);
+	
 	// (근무 등록 건별) 시터 선호 근무 지역
 	public ArrayList<String> listSitPreferedRegion(String gen_reg_id);
 	
-	// (부모가 보는) 2차 필터 결과 리스트
-	public ArrayList<GenRegDTO> listSecondaryGenReg(Map<String, Object> params);
+	// (근무 등록 건별) 시터 선호 돌봄 연령대
+	public ArrayList<String> listSitPreferedAge(String gen_reg_id);
+	
+	// (근무 등록 건별) 상세 근무 정보 조회
+	public GenRegDTO searchGenRegDetail(String gen_reg_id);
+	
 }
