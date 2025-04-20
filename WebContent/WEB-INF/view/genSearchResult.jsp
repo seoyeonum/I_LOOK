@@ -88,29 +88,72 @@
   	    
   	    
   	    //=================== 사이드 바 AJAX 기능 ==================
-  	    
 	  	$('#secondary-search-btn').on('click', function()
-  		{
-  			var grades = ['A', 'B', 'C']; 				// 예: 여러 등급을 배열로 저장
-  			var regions = ['SEOUL', 'BUSAN', 'DAEGU'];  // 예: 여러 지역을 배열로 저장
-			
-	  	    $.ajax({
-  	      			url: 'genregpossiblelist.action'
-  	     			, method: 'POST'
-  	     			, traditional: true
-  	      			, data: { grades : grades, regions : regions }  //category=A&type=premium 식으로 전달
-  	      			, dataType: 'html'
-  	      			, success: function(response)
-  	      			{
-  	        			$('#resultArea').html(response); // 응답으로 받은 HTML 조각을 리스트 영역에 삽입
-  	      			}
-  	      			, error: function(xhr, status, error)
-  	      			{
-			  	        console.error('Ajax 요청 실패:', error);	// 에러 발생
-			  	    }
-	  	   	});
-	  	});
- 
+	  	{
+			// 선택된 체크박스 값 가져오기
+		    var grades = [];
+		    $('input[name="grade"]:checked').each(function()
+		    {
+		        grades.push($(this).val());
+		    });
+		    
+		    var regions = [];
+		    $('input[name="region"]:checked').each(function()
+		    {
+		        regions.push($(this).val());
+		    });
+		    
+		    var genders = [];
+		    $('input[name="gender"]:checked').each(function()
+		    {
+		        genders.push($(this).val());
+		    });
+		    
+		    var ages = [];
+		    $('input[name="age"]:checked').each(function()
+		    {
+		        ages.push($(this).val());
+		    });
+		    
+		    var certs = [];
+		    $('input[name="cert"]:checked').each(function()
+		    {
+		        certs.push($(this).val());
+		    });
+		    
+		    // AJAX 요청
+		    $.ajax({
+		        url: 'genregpossiblelist.action'
+		        , method: 'POST'
+		        , traditional: true
+		        , data:
+		        { 
+		            grades: grades 
+		            , regions: regions
+		            , genders: genders
+		            , ages: ages
+		            , certs: certs
+		        }
+		        , dataType: 'html'
+		        , beforeSend: function(xmlHttpRequest)	// AJAX 요청 서버 전송 직전 실행
+		        {
+		        	xmlHttpRequest.setRequestHeader("Accept", "text/html; charset=utf-8");
+		        }
+		        , success: function(response)
+		        {
+		        	// 확인
+		            //console.log("응답 성공:", response);
+		        	
+		            $('#resultArea').html(response);
+		        }
+		        , error: function(xmlHttpRequest, status, error)
+		        {
+		            console.error('Ajax 요청 실패:', error);
+		            console.error('상태 코드:', xmlHttpRequest.status);
+		            console.error('응답 텍스트:', xmlHttpRequest.responseText);
+		        }
+		    });
+		});
   	    
   	    //=================== 페이지 로드 시 돌봄 신청 상태에 따라 버튼 비활성화 ==================
 	    $('.box-preview').each(function() 		

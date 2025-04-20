@@ -5,7 +5,9 @@
 package com.team1.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -160,34 +162,82 @@ public class GenReqController
 	
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
 	@ResponseBody
-	public String genRegList(@RequestParam("grades") List<String> grades
-							  , @RequestParam("regions") List<String> regions
-							  , HttpServletResponse response
-							  )
+	public String genRegList(@RequestParam(value = "grades", required = false) List<String> grades
+				           , @RequestParam(value = "regions", required = false) List<String> regions
+				           , @RequestParam(value = "genders", required = false) List<String> genders
+				           , @RequestParam(value = "ages", required = false) List<String> ages
+				           , @RequestParam(value = "certs", required = false) List<String> certs
+				           , HttpServletResponse response )
 	{
 		String result = null;
-	    // grades = ['A', 'B', 'C']
-	    // regions = ['SEOUL', 'BUSAN', 'DAEGU']
-		
-		// 커다란 map 에 위 둘을 넣자.
-		
-		// 그 map 을 2차 필터 쿼리에 param 으로 주자.
-		
-		// 그 결과는 ArrayList<GenRegDTO> 에 담김 이 list 를 html 조각으로 바꾸자.
-		// 이를 붙이자(String)
-		
-		System.out.println("Grades: " + grades);
-		
+	    
+		// 응답 → 한글 인코딩 설정
 		response.setContentType("text/html; charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    
-	    
-		result = "<p>Test</p>";
-		
+		// 2차 필터 선택 항목 확인
+	    System.out.println("Grades: " + grades);
 	    System.out.println("Regions: " + regions);
-		
-	    // 비즈니스 로직 처리 후 응답
-	    return result;
+	    System.out.println("Genders: " + genders);
+	    System.out.println("Ages: " + ages);
+	    System.out.println("Certs: " + certs);
+	    
+	    try
+	    {
+	    	// (커다란) map 에 수신 받은 매개변수 추가(put)
+	        Map<String, Object> params = new HashMap<String, Object>();
+	        
+	        if (grades != null)
+	        	params.put("grades", grades);
+	        if (regions != null)
+	        	params.put("regions", regions);
+	        if (genders != null)
+	        	params.put("genders", genders);
+	        if (ages != null)
+	        	params.put("ages", ages);
+	        if (certs != null)
+	        	params.put("certs", certs);
+
+			// 그 map 을 2차 필터 쿼리에 param 으로 주자.
+			
+	        // 여기서 실제 비즈니스 로직 처리 (DAO 호출 등)
+	        // IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
+	        // List<GenRegDTO> filteredList = regDao.getFilteredGenRegs(params);
+	        
+	        
+	        
+	        // 그 결과는 ArrayList<GenRegDTO> 에 담김 이 list 를 html 조각으로 바꾸자.
+	        // 이를 붙이자(String)
+	        
+	        // 테스트용 HTML 응답 생성
+	        StringBuilder htmlBuilder = new StringBuilder();
+	        htmlBuilder.append("<div class=\"sub-subject\">");
+	        htmlBuilder.append("<h2>검색 결과 (필터링 적용됨)</h2>");
+	        htmlBuilder.append("</div>");
+	        htmlBuilder.append("<div class=\"box-preview\">");
+	        htmlBuilder.append("<p>시터 등급: " + String.join(", ", grades) + "</p>");
+	        htmlBuilder.append("<p>근무 지역: " + String.join(", ", regions) + "</p>");
+	        if (genders != null) {
+	            htmlBuilder.append("<p>성별: " + String.join(", ", genders) + "</p>");
+	        }
+	        if (ages != null) {
+	            htmlBuilder.append("<p>연령대: " + String.join(", ", ages) + "</p>");
+	        }
+	        if (certs != null) {
+	            htmlBuilder.append("<p>자격증: " + String.join(", ", certs) + "</p>");
+	        }
+	        htmlBuilder.append("</div>");
+	        
+	        result = htmlBuilder.toString();
+	        return result;
+	    }
+	    catch (Exception e)
+	    {
+	        e.printStackTrace();
+	        result = "<div class='error'>필터링 중 오류가 발생했습니다: " + e.getMessage() + "</div>";
+	        return result;
+	    }
+	    
 	}
 	
 	
