@@ -206,13 +206,13 @@ textarea {
     margin-bottom: 30px;
 }
 
-.submit-btn {
+.cancel-btn {
     padding: 10px 20px;
     background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.submit-btn:hover {
+.cancel-btn:hover {
     background-color: #555;
 }
