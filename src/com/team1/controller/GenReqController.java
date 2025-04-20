@@ -130,11 +130,7 @@ public class GenReqController
 	    model.addAttribute("listAllRegions", listAllRegions);
 	    model.addAttribute("listCertType", listCertType);
 
-	    // 확인
-		//System.out.println("countPrimaryGenReg: " + countPrimaryGenReg);
-		//System.out.println("listPrimaryGenReg size: " + listPrimaryGenReg.size());
-		
-		result = "WEB-INF/view/genSearchResult.jsp";
+	    result = "WEB-INF/view/genSearchResult.jsp";
 		
 		return result;
 	}
@@ -150,7 +146,7 @@ public class GenReqController
 				           , @RequestParam(value = "certs", required = false) List<String> certs
 				           , HttpServletResponse response, Model model, HttpSession session )
 	{
-		String result = null;
+		//String result = null;
 	    
 		// 응답 → 한글 인코딩 설정
 		response.setContentType("text/html; charset=UTF-8");
@@ -216,7 +212,6 @@ public class GenReqController
         // 모델에 데이터 추가
         model.addAttribute("listSecondaryGenReg", listSecondaryGenReg);
         model.addAttribute("countSecondaryGenReg", listSecondaryGenReg.size());
-        
         
         // 1차 필터 결과도 모델에 추가
         model.addAttribute("listPrimaryGenReg", listSecondaryGenReg); // 2차 필터 결과로 대체
@@ -299,7 +294,7 @@ public class GenReqController
 	}
 	
 	
-	// 헬퍼 메서드: GenRegDTO 리스트에 자격증 및 지역 정보 설정
+	// GenRegDTO 리스트에 자격증 및 지역 정보 설정
 	private void setCertAndRegion(ArrayList<GenRegDTO> genRegList)
 	{
 	    for (GenRegDTO genReg : genRegList)

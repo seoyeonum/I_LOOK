@@ -155,23 +155,24 @@
 				  #{grade}
 				</foreach>
 			</if>
-			 <!-- 
-			지역 필터
+			 
+			<!-- 지역 필터 -->
+			<!-- 
 			<if test="regions != null and regions.size() > 0">
-			  AND R.GEN_REG_ID IN
+			  AND EXISTS
 			  (
-			    SELECT GR.GEN_REG_ID
-			    FROM GEN_REG GR JOIN WORK_REGION_PREFERED WR
-			    ON GR.GEN_REG_ID = WR.GEN_REG_ID
-			    	JOIN REGIONS RG
-			    	ON WR.REGION_ID = RG.REGION_ID
-			    WHERE RG.REGION_ID IN 
+			    SELECT 1
+			    FROM WORK_REGION_PREFERED WR JOIN REGIONS RG
+			    ON WR.REGION_ID = RG.REGION_ID
+			    WHERE WR.GEN_REG_ID = R.GEN_REG_ID
+			    AND RG.REGION_ID IN 
 			    <foreach item="region" collection="regions" open="(" separator="," close=")">
-			      #{region}
+			       #{region,jdbcType=INTEGER}
 			    </foreach>
 			  )
 			</if>
 			 -->
+			 
 			<!-- 성별 필터 -->
 			<if test="genders != null and genders.size() > 0">
 			  AND

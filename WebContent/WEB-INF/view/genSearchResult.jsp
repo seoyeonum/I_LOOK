@@ -71,6 +71,7 @@
         	$("#range-price").slideToggle(500);
     	});
   		
+  		/* 
 	  	// 가격 range 값 변경 시 current-price로 표시
   	    $('input[name="price"]').on('input', function()
   	    {
@@ -86,7 +87,8 @@
   	    var formattedInitialPrice = Number(initialPrice).toLocaleString('ko-KR');
   	    $('#current-price').text(formattedInitialPrice + '원');
   	    
-  	    
+ 		
+  	    */  	    
   	    //=================== 사이드 바 AJAX 기능 ==================
 	  	$('#secondary-search-btn').on('click', function()
 	  	{
