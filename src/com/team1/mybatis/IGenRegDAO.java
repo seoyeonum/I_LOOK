@@ -5,13 +5,9 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Map;
-=======
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
->>>>>>> develop
 
 import com.team1.dto.GenRegDTO;
 
