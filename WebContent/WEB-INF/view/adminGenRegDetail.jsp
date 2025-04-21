@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -39,7 +38,8 @@
 					<!-- 자기소개 영역 -->
 					<div class="intro-section">
 						<div class="intro-header">자기소개</div>
-						<textarea cols="10" rows="10" readonly>${genRegInfo.introduction }</textarea>
+						<textarea cols="10" rows="10" readonly>안녕하세요. 아이들을 사랑하는 김철수입니다. 
+						영유아 교육 경험이 풍부하며, 아이들의 건강한 성장을 돕겠습니다.</textarea>
 					</div>
 				</div>
 				
@@ -48,65 +48,65 @@
 					<div class="info-row">
 						<div class="info-header">등록 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.gen_reg_id }" readonly>
+							<input type="text" class="info-input" value="GREG00001" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">시터 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.sit_backup_id }" readonly>
+							<input type="text" class="info-input" value="SBAC00001" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">이름</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.name }" readonly>
+							<input type="text" class="info-input" value="김철수" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 시작일</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${fn:substring(genRegInfo.start_date, 0, 10)}" readonly>
+							<input type="text" class="info-input" value="2025-04-10" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 종료일</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${fn:substring(genRegInfo.end_date, 0, 10)}" readonly>
+							<input type="text" class="info-input" value="2025-04-20" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 시작 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.start_time }" readonly>
+							<input type="text" class="info-input" value="08:00" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 종료 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.end_time }" readonly>
+							<input type="text" class="info-input" value="11:00" readonly>
 						</div>
 					</div>
 					
 					<div class="category-row">
 						<div class="category-title">활동 가능 지역</div>
 						<div class="category-options">
-							<button class="category-button">${region.name }</button>
+							<button class="category-button">서울 구로동</button>
+							<button class="category-button">서울 가산동</button>
 						</div>
 					</div>
 					
 					<div class="category-row">
 						<div class="category-title">돌봄 선호 연령대</div>
 						<div class="category-options">
-						<c:forEach var="ageList" items="${age }">
-							<button class="category-button">${ageList.type }</button>
-						</c:forEach>
+							<button class="category-button">0~2세</button>
+							<button class="category-button">2~5세</button>
 						</div>
 					</div>
 				</div>
@@ -114,7 +114,7 @@
 			
 			<!-- 하단 버튼 영역 -->
 			<div class="bottom-btn">
-				<button class="btn cancel-btn" onclick="location.href='<%=cp%>/admingenreglist.action'">뒤로가기</button>
+				<button class="submit-btn">홈</button>
 			</div>
 		</main> 
 	</div>

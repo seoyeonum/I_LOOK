@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -99,8 +99,8 @@
 					<div class="page">
 						<c:if test="${paging.totalPage >= 1}">
 							<c:if test="${paging.startPage > 1}">
-								<a
-									href="admingenreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
+
+								<a href="admingenreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
 							</c:if>
 
 							<c:forEach var="p" begin="${paging.startPage}"
@@ -117,9 +117,7 @@
 							</c:forEach>
 
 							<c:if test="${paging.endPage < paging.totalPage}">
-								<a
-									href="admingenreglist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}">
-									> </a>
+								<a href="admingenreglist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}"> > </a>
 							</c:if>
 						</c:if>
 					</div>

@@ -5,9 +5,12 @@
 
 <mapper namespace="com.team1.mybatis.IAcctDAO">
 
+
 	<select id="list" resultType="com.team1.dto.AcctDTO"> <!-- // 은행 리스트 열람	public ArrayList<AcctDTO> list(); -->
 		SELECT BANK_TYPE_ID, TYPE
 		FROM BANK_TYPES
 	</select>
+
+
  
 </mapper>

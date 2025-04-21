@@ -122,8 +122,10 @@ body {
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    font-size: 25px;
-    font-weight: 450; 
+}
+.info-header .info-cell{
+    
+    font-size: 16px;
 }
 
 .info-header-child {
@@ -132,15 +134,10 @@ body {
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    font-weight: 450; 
 }
 
-
-.info-header-sitReg .info-cell 
-, .info-header-viol .info-cell 
-, .info-header-reject .info-cell
-, .info-header-child .info-cell
-, .info-header .info-cell {
+.info-header-child .info-cell{
+    
     font-size: 16px;
 }
 
@@ -151,7 +148,6 @@ body {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     font-size: 25px;
-    font-weight: 450; 
 }
 
 .info-header-viol {
@@ -161,7 +157,6 @@ body {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     font-size: 25px;
-    font-weight: 450; 
 } 
 
 .info-header-reject {
@@ -171,9 +166,17 @@ body {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     font-size: 25px;
-    font-weight: 450; 
 }
 
+.info-header-sitReg .info-cell {
+    
+    font-size: 16px;
+}
+
+.info-header-viol .info-cell {
+    
+    font-size: 16px;
+}
 
 .info-row {
     display: grid;
@@ -219,11 +222,6 @@ body {
 }
 
 /* 버튼 스타일 통일 */
-
-.detail-btn {
-    padding: 6px 10px;
-    font-size: 13px;
-}
 
 .btn {
     padding: 6px 12px;

@@ -1,7 +1,5 @@
 package com.team1.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +20,8 @@ public class adminInfoController
 	
 	// 관리자 정보 수정 페이지로 이동 및 데이터 전송
 	@RequestMapping(value = "/admininfoupdateform.action", method = RequestMethod.GET)
-	public String adminInfoUpdateForm(String admin_reg_id, Model model, HttpSession session)
+	public String adminInfoUpdateForm(String admin_reg_id, Model model)
 	{
-		// 관리자 확인 절차
-    	if (!isAdmin(session))
-    		return "redirect:/loginform.action";
-    	AdminDTO dto = getLoginAdmin(session);
-    	model.addAttribute("loginAdmin", dto);
-    	
 		String result = null;
 		
 		IAdminDAO dao = sqlSession.getMapper(IAdminDAO.class);
@@ -47,14 +39,8 @@ public class adminInfoController
 	
 	// 관리자 정보 수정
 	@RequestMapping(value = "/admininfoupdate.action", method = RequestMethod.POST)
-	public String adminInfoUpdate(AdminDTO admin, Model model, HttpSession session)
+	public String adminInfoUpdate(AdminDTO admin, Model model)
 	{
-		// 관리자 확인 절차
-    	if (!isAdmin(session))
-    		return "redirect:/loginform.action";
-    	AdminDTO dto = getLoginAdmin(session);
-    	model.addAttribute("loginAdmin", dto);
-    	
 		String result = null;
 		
 		IAdminDAO dao = sqlSession.getMapper(IAdminDAO.class);
@@ -65,15 +51,5 @@ public class adminInfoController
 		
 		return result;
 	}
-	
-	// 관리자 검증 메소드
-	private boolean isAdmin(HttpSession session)
-    {
-        return session.getAttribute("loginAdmin") != null;
-    }
-    private AdminDTO getLoginAdmin(HttpSession session)
-    {
-        return (AdminDTO) session.getAttribute("loginAdmin");
-    }
 	
 }

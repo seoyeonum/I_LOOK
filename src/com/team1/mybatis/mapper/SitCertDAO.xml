@@ -58,4 +58,5 @@
 	  INSERT INTO CERT_REG (CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID, FILE_PATH, REG_DATE)
 	  VALUES (#{cert_reg_id}, #{cert_type_id}, #{sit_reg_id}, #{file_path}, SYSDATE)
 	</insert>
+ 	
 </mapper>
