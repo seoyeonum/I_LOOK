@@ -41,6 +41,7 @@ public class GenReqController
 	@Autowired
 	private SqlSession sqlSession;
 	
+	// 일반 돌봄 메인
 	@RequestMapping(value="/genmain.action", method = RequestMethod.GET)
 	public String genMain(@RequestParam("id") String id, HttpSession session, Model model)
 	{
@@ -58,7 +59,7 @@ public class GenReqController
 		return result;
 	}
 	
-	
+	// 1차 필터 결과
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
 	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId
 								, GenRegDTO dto
@@ -144,7 +145,7 @@ public class GenReqController
 		return result;
 	}
 	
-	
+	// 2차 필터 결과
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
 	public String genRegPossibleList( @RequestParam(value = "page", defaultValue="1") int page
 									, @RequestParam("grades") List<String> grades
@@ -330,6 +331,8 @@ public class GenReqController
 		//--------------------------------------------------
 		
 		// 현 시점 일반 돌봄 시급 조회
+		
+		
 		
 		// 시터 등급에 따른 등급 배수 조회
 		//genDetail.grade

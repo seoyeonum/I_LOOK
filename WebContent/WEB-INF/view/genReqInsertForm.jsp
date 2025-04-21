@@ -346,7 +346,7 @@
 		                    </div>
 		                    <div class="gen-details">
 		                    	<div><span class="star">*</span>신장: ${childInfo.height != null ? childInfo.height : "(미입력)"}</div>
-		                    	<div><span class="star">*</span>몸무게: ${childInfo.weight != null ? childInfo.height : "(미입력)"}</div>
+		                    	<div><span class="star">*</span>몸무게: ${childInfo.weight != null ? childInfo.weight : "(미입력)"}</div>
 		                    	<div><span class="star">*</span>혈액형: ${childInfo.blood_type != null ? childInfo.blood_type : "(미입력)"}</div>
 		                    	<div><span class="star">*</span>기타 특이사항: ${childInfo.special_notes != null ? childInfo.special_notes : "(미입력)"}</div>
 		                    </div>
