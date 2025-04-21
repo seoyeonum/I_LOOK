@@ -42,7 +42,7 @@ public class AdminServiceController
 	public String adminGenRegList(@RequestParam(value = "page", defaultValue="1") int page
 								, @RequestParam(value = "searchKey", required = false) String searchKey 
 								, @RequestParam(value = "searchValue", required = false) String searchValue 
-								, @RequestParam(value = "currentOnly", required = false) String currentOnly 
+								, @RequestParam(value = "currentOnly", required = false) Boolean currentOnly 
 								, Model model, HttpSession session)
 	{
 		// 관리자 확인 절차
@@ -62,7 +62,6 @@ public class AdminServiceController
         // 근무 등록 내역 목록 조회
         List<GenRegDTO> genRegList = dao.adminListSitGenReg(paging.getStart(), paging.getEnd(), searchKey, searchValue, currentOnly);
         
-        
         // 모델에 데이터 담기
         model.addAttribute("genRegList", genRegList);
         model.addAttribute("paging", paging);
@@ -73,13 +72,50 @@ public class AdminServiceController
 		return "WEB-INF/view/adminGenRegList.jsp";
 	}
 	
-	
-	  // 시터 근무등록 ajax 처리
-	  
-	
-	
-	
-	
+	/*
+	 * // 시터 근무등록 ajax 처리
+	 * 
+	 * @RequestMapping(value="/admingenreglist.ajax", method=RequestMethod.GET)
+	 * 
+	 * @ResponseBody public String adminGenRegListAjax(@RequestParam(value = "page",
+	 * defaultValue = "1") int page,
+	 * 
+	 * @RequestParam(value = "searchKey", required = false) String searchKey,
+	 * 
+	 * @RequestParam(value = "searchValue", required = false, defaultValue = "")
+	 * String searchValue,
+	 * 
+	 * @RequestParam(value = "currentOnly", required = false) Boolean currentOnly) {
+	 * IGenRegDAO dao = sqlSession.getMapper(IGenRegDAO.class);
+	 * 
+	 * System.out.println("★★★ adminGenRegListAjax 도착 성공");
+	 * System.out.println("searchKey: " + searchKey);
+	 * System.out.println("searchValue: " + searchValue);
+	 * System.out.println("currentOnly: " + currentOnly);
+	 * 
+	 * Map<String, Object> result = new HashMap<>();
+	 * 
+	 * // currentOnly null 처리 - 비어있는 값이 전달되면 null로 처리되어 에러 발생할 수 있음 if (currentOnly
+	 * == null && "".equals(searchValue.trim())) { currentOnly = true; // 기본값: 진행 중
+	 * }
+	 * 
+	 * // 검색어 공백 처리 if (searchValue != null && searchValue.trim().isEmpty()) {
+	 * searchValue = null; }
+	 * 
+	 * int totalCount = dao.adminCountSitGenReg(searchKey, searchValue,
+	 * currentOnly); PageHandler paging = new PageHandler(page, totalCount);
+	 * List<GenRegDTO> list = dao.adminListSitGenReg(paging.getStart(),
+	 * paging.getEnd(), searchKey, searchValue, currentOnly);
+	 * 
+	 * System.out.println("★★★ list size: " + list.size());
+	 * 
+	 * result.put("list", list); result.put("paging", paging);
+	 * 
+	 * try { // Jackson ObjectMapper를 사용하여 Map을 JSON 문자열로 변환 ObjectMapper
+	 * objectMapper = new ObjectMapper(); return
+	 * objectMapper.writeValueAsString(result); } catch (Exception e) {
+	 * e.printStackTrace(); return "{\"error\": \"데이터 변환 중 오류가 발생했습니다.\"}"; } }
+	 */
 	
 	// 시터 등록요청 상세정보 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/admingenregdetail.action", method = RequestMethod.GET) 

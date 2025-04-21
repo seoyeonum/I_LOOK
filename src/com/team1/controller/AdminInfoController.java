@@ -14,7 +14,7 @@ import com.team1.mybatis.IAdminDAO;
 
 
 @Controller
-public class AdminInfoController
+public class adminInfoController
 {
 
 	@Autowired

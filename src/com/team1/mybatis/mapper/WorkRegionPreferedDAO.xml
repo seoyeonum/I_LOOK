@@ -17,17 +17,13 @@
  	
  	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listAllRegions(); -->
- 		SELECT REGION_ID, NAME  
-		FROM REGIONS
+ 		SELECT WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID
+		FROM WORK_REGION_PREFERED
+		WHERE GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	
  	<insert id="addRegions"> <!-- public int addRegions(WorkRegionPreferedDTO regions); -->
- 	<selectKey keyProperty="work_region_prefered_id"
-               resultType="String"
-               order="BEFORE">
-      SELECT 'SWOR' || LPAD(SEQ_SWOR.NEXTVAL, 4, '0') FROM DAUL
-	</selectKey>
 	 	INSERT INTO WORK_REGION_PREFERED(WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID)
 		VALUES(#{work_region_prefered_id}, #{region_id}, #{gen_reg_id})
  	</insert>

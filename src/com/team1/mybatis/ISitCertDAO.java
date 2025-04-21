@@ -28,4 +28,7 @@ public interface ISitCertDAO
 	
 	// [시터] 자격증 테이블 찾기
 	public SitCertDTO searchCert(String sit_reg_id);
+	
+	// 시터 회원가입
+	public int sitaddCert (SitCertDTO sitcert);
 }
