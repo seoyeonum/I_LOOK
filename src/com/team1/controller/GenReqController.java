@@ -33,6 +33,7 @@ import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
+import com.team1.mybatis.IParDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
 import com.team1.util.PageHandler;
@@ -342,20 +343,33 @@ public class GenReqController
 		GradesDTO searchGradeInfo = gradesDao.searchGradeInfo(sitGradeName);
 		double gradePay = searchGradeInfo.getGrade_pay();
 		
+		int price, careDays, careHours;
+		
 		// 1일 돌봄 비용 계산(기본급 * 등급 배수 * 수수료)
-		int sum = (int) Math.floor(genWage * gradePay * 1.05);
+		price = (int) Math.floor(genWage * gradePay * 1.05);
 		
 		// 총 이용 시간 계산 → 사용자 정의 함수(parseToDate) 활용
 		LocalDate localDateStart = parseToDate(dateStart);
 		LocalDate localDateEnd = parseToDate(dateEnd);
 		
-		long daysBetween = ChronoUnit.DAYS.between(localDateEnd, localDateStart);
-		System.out.println("두 날짜 차이: " + daysBetween + "일");
+		long daysBetween = ChronoUnit.DAYS.between(localDateStart, localDateEnd);
+		careDays = (int) daysBetween + 1;
+		careHours = timeEnd - timeStart;
 		
 		// 총 지불 비용 계산
+		int totalPrice = price * careDays * careHours;
 		
-		//genDetail.grade
 		// 현 보유 포인트 조회
+		IParDAO parDao = sqlSession.getMapper(IParDAO.class);
+		String parBackupId = parDao.seachParBackupId(childBackupId);		
+		int point = parDao.searchPoint(parBackupId);
+		
+		// 다음 페이지로 넘겨주는 값
+		// → 1일 돌봄 비용, 총 돌봄 일수, 일 돌봄 시간, 총 돌봄 비용
+		model.addAttribute("price", price);
+		model.addAttribute("careDays", careDays);
+		model.addAttribute("careHours", careHours);
+		model.addAttribute("totalPrice", totalPrice);
 		
 		result = "WEB-INF/view/genReqInsertForm.jsp?genRegId=" + genRegId;
 		

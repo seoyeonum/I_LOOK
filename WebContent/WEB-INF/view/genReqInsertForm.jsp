@@ -5,7 +5,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 	
-	int point = 600;
 %>
 <!DOCTYPE html>
 <html>
@@ -88,7 +87,7 @@
     		// 입력한 포인트 값 가져오기
     		// 『||』: 앞의 값이 없다면 || 뒤의 값 사용
     		var pointInput = parseInt($("#point-input").val()) || 0;
-    		var maxPoint = <%= point %>;
+    		var maxPoint = ${point};
     		
     		// 유효성 검사
     		if (pointInput < 100 && pointInput > 0)
@@ -403,32 +402,51 @@
 		            	<div class="form-group">
 			                <div class="name">결제 비용</div>
 			                <div class="gen-details">
-			                	<div>1일 돌봄 비용: 12,600 (원)</div>
-			                	<div>총 지불 비용: 25,200 (원)</div>
+			                	<div>1일 돌봄 비용: <fmt:formatNumber value="${price}" type="number" groupingUsed="true" /> (원)</div>
+			                	<div>총 돌봄 시간:
+			                		<fmt:formatNumber value="${careDays}" type="number" groupingUsed="true" />
+			                		×
+			                		<fmt:formatNumber value="${careHours}" type="number" groupingUsed="true" />
+			                		=
+			                		<fmt:formatNumber value="${careDays * careHours}" type="number" groupingUsed="true" /> (시간)
+			                	</div>
+			                	<div>총 지불 비용:
+				                	<fmt:formatNumber value="${price}" type="number" groupingUsed="true" />
+				                	×
+				                	<fmt:formatNumber value="${careDays}" type="number" groupingUsed="true" />
+				                	×
+				                	<fmt:formatNumber value="${careHours}" type="number" groupingUsed="true" />
+				                	=
+				                	<fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" /> (원)
+				                </div>
 			                </div>
-			            </div>
-			            <div class="form-group">
+		           		</div>
+		            	<div class="form-group">
 			                <div class="name">포인트 사용</div>
 			                <div class="gen-details">
-			                	<div>현재 보유 포인트: <%= point %>원</div>
-			                	<div class="row-items">사용할 포인트: 
-			                    	<input type="text" id="point-input" min="100" max="<%= point %>" placeholder="(사용할 포인트)"/>원
-			                    	<button type="button" id="point-reset" class="btn gen-btn-small" >취소</button>
-			                    	<button type="button" id="point-use" class="btn gen-btn-small">적용</button>
-			                    </div>
-			                </div>
-		                    <div class="gen-details">
-			                    <div><span class="star">*최소 100원부터 사용 가능합니다.</span></div>
-			                </div>
-			            </div>
-			            <div class="form-group">
-			                <div class="name">결제 예정 금액</div>
-			                <div class="gen-details">
-			                	<div>25,200 - <span id="point-spend">0</span> = <span id="final-price">25,200</span></div>		                	
-			                </div>
-			            </div>
-		   			</div>
-		        </div>
+		                	<div>현재 보유 포인트: <fmt:formatNumber value="${empty point ? 0 : point}" type="number" groupingUsed="true" />원</div>
+		                	<div class="row-items">사용할 포인트: 
+		                    	<input type="text" id="point-input" min="100" max="${point}" placeholder="(사용할 포인트)"/>원
+		                    	<button type="button" id="point-reset" class="btn gen-btn-small" >취소</button>
+		                    	<button type="button" id="point-use" class="btn gen-btn-small">적용</button>
+		                    </div>
+		                </div>
+	                    <div class="gen-details">
+		                    <div><span class="star">*최소 100원부터 사용 가능합니다.</span></div>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <div class="name">결제 예정 금액</div>
+		                <div class="gen-details">
+		                	<div><fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" />
+		                	 -
+		                	<span id="point-spend">0</span>
+		                	 = 
+		                	<span id="final-price">25,200</span></div>		                	
+		                </div>
+		            </div>
+	   			</div>
+	        </div>
 		        
 		        <!-- 5. 결제 정보 확인 -->
 		        <div class="box-req">

@@ -42,4 +42,7 @@ public interface IParDAO
 	// 회원가입 중복 체크
 	public int checkId(String par_reg_id);
 	
+	// (아이 백업 코드로) 부모 백업 코드 조회
+	public String seachParBackupId(String child_backup_id);
+	
 }

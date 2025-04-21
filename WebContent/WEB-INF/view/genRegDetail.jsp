@@ -31,7 +31,7 @@
             // opener: 현재 창을 연 부모창
             // location: 이동할 URL
             // href: ...로 이동
-            window.opener.location.href = 'genReqInsertForm.action?genRegId=${genRegId}';
+            window.opener.location.href = 'gereqinsertform.action?genRegId=${genRegId}';
             
             // 현재 창 닫기
             window.close();
