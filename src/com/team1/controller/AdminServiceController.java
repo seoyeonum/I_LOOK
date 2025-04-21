@@ -1,8 +1,14 @@
 package com.team1.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,11 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team1.dto.AdminDTO;
 import com.team1.dto.AgesPreferedDTO;
 import com.team1.dto.GenRegDTO;
+import com.team1.dto.GenReqDTO;
 import com.team1.dto.GradesDTO;
 import com.team1.dto.SitCertDTO;
 import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IAgesPreferedDAO;
 import com.team1.mybatis.IGenRegDAO;
+import com.team1.mybatis.IGenReqDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
@@ -165,20 +173,89 @@ public class AdminServiceController
 	
 	// 예약신청내역으로 이동 및 데이터 전송
 	@RequestMapping(value = "/adminreqlist.action", method = RequestMethod.GET)
-	public String adminReqList(Model model, HttpSession session)
+	public String adminReqList(Model model, HttpSession session
+	                         , @RequestParam(defaultValue="normal") String careType
+	                         , @RequestParam(required=false, defaultValue = "all") String statusFilter
+	                         , @RequestParam(required=false) String searchKey
+	                         , @RequestParam(required=false) String searchValue
+	                         , @RequestParam(required = false, defaultValue = "week") String dateRange
+	                         , @RequestParam(required=false) String startDate
+	                         , @RequestParam(required=false) String endDate
+	                         , @RequestParam(defaultValue="1") int page)
 	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("loginAdmin", dto);
-		
-		result = "WEB-INF/view/adminReqList.jsp";
-		
-		return result;
+	    if (!isAdmin(session))
+	        return "redirect:/loginform.action";
+	    AdminDTO dto = getLoginAdmin(session);
+	    model.addAttribute("loginAdmin", dto);
+	    
+	    // 날짜 자동 계산
+	    if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty()))
+	    {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        Calendar cal = Calendar.getInstance();
+
+	        endDate = sdf.format(new Date()); // 오늘 날짜
+	        switch (dateRange)
+	        {
+	            case "week":
+	                cal.add(Calendar.DATE, -7);
+	                break;
+	            case "month":
+	                cal.add(Calendar.MONTH, -1);
+	                break;
+	            case "3month":
+	                cal.add(Calendar.MONTH, -3);
+	                break;
+	            case "all":
+	                endDate = null;
+	                startDate = null;
+	                break;
+	        }
+	        if (startDate == null)  // all이 아닌 경우만 s tartDate 세팅
+	            startDate = sdf.format(cal.getTime());
+	    }
+
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("statusFilter", statusFilter);
+	    params.put("searchKey", searchKey);
+	    params.put("searchValue", searchValue);
+	    params.put("startDate", startDate);
+	    params.put("endDate", endDate);
+
+	    int totalCount = 0;
+	    List<GenReqDTO> list = Collections.emptyList();
+	    IGenReqDAO reqDao = sqlSession.getMapper(IGenReqDAO.class);
+
+	    if ("normal".equals(careType))
+	    {
+	        totalCount = reqDao.adminCountGenReq(params);
+
+	        PageHandler paging = new PageHandler(page, totalCount);
+	        params.put("start", paging.getStart());
+	        params.put("end", paging.getEnd());
+
+	        list = reqDao.adminListSitGenReg(params);
+	        model.addAttribute("paging", paging);
+	    }
+	    else if ("emergency".equals(careType))
+	    {
+	        // ★ 긴급돌봄 처리 예정
+	    }
+
+	    // model 세팅
+	    model.addAttribute("list", list);
+	    model.addAttribute("careType", careType);
+	    model.addAttribute("statusFilter", statusFilter);
+	    model.addAttribute("searchKey", searchKey);
+	    model.addAttribute("searchValue", searchValue);
+	    model.addAttribute("dateRange", dateRange);
+	    model.addAttribute("startDate", startDate);
+	    model.addAttribute("endDate", endDate);
+	    model.addAttribute("totalCount", totalCount);
+
+	    return "WEB-INF/view/adminReqList.jsp";
 	}
+
 	
 	// 결제내역으로 이동 및 데이터 전송
 	@RequestMapping(value = "/adminpayreclist.action", method = RequestMethod.GET)

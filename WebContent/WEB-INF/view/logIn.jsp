@@ -130,14 +130,14 @@
 <main>
     <!-- 로고 이미지 -->
     <div class="logoImg">
-        <img src="./logoimg.png" style="height: 400px;">
+        <img src="images/logoimg.png" style="height: 400px;">
     </div>
 
     <!-- 로그인 박스 -->
     <div class="login-wrapper">
         <div id="slogan">돌봄이 필요한 부모님과<br>일자리를 원하는 시터를 잇는 플랫폼</div>
         <div style="display: flex; align-items: center;">
-			<img src="./logo.png" id="logo"> 
+			<img src="images/logo.png" id="logo"> 
 			<span id="logoName">아이.룩</span>
         </div>
 
