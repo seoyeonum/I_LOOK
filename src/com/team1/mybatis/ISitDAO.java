@@ -20,7 +20,7 @@ public interface ISitDAO
 	public SitDTO searchSitDetail(String sit_reg_id);
 
 	// [관리자] 시터 회원 등록 요청 개수 확인
-	public int countSitReg();
+	public int countSitReg(String a, String b);
 	
 	// [관리자] 시터 회원 등록 요청
 	public int sitReg(SitDTO dto);

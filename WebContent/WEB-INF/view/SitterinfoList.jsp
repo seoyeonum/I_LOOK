@@ -239,7 +239,7 @@
 			<div  class="form-group" >
 			현재 지닌 자격증: 
 			</div>
-			<div class="form-group" >
+			<%-- <div class="form-group" >
 			자격증 등록: <input type="file" class="form-control"/>
 			<button type="button" class="certBtn">등록하기</button>
 			</div>
@@ -250,7 +250,7 @@
 			<div class="form-group" >
 			서류 등록: <input type="file" class="form-control"/>
 			<button type="button" class="certBtn">등록하기</button>
-			</div>
+			</div> --%>
 			
 			<br /><br />
 			<br />
