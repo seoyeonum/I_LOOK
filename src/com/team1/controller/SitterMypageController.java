@@ -257,10 +257,11 @@ public class SitterMypageController
 		
 		ISitCareListDAO IsclDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
+		// 두 개 필요하니 다시 보냄
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		model.addAttribute("gen_req_id", gen_req_id);
 		
-		
+		// 정보 보냄
 		model.addAttribute("reqDetail", IsclDao.regDetailedList(gen_req_id));
 		
 		result = "/WEB-INF/view/SitterGenReqDetail.jsp";
