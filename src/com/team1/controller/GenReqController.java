@@ -4,6 +4,7 @@
 
 package com.team1.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +22,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,12 +31,14 @@ import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
 import com.team1.dto.GradesDTO;
+import com.team1.dto.ParDTO;
 import com.team1.dto.SitCertDTO;
 import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.IParDAO;
+import com.team1.mybatis.IParLoginDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
 import com.team1.util.PageHandler;
@@ -45,11 +50,22 @@ public class GenReqController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	// 일반 돌봄 메인
-	@RequestMapping(value="/genmain.action", method = RequestMethod.GET)
-	public String genMain(@RequestParam("id") String id, HttpSession session, Model model)
+	// ● 일반 돌봄 메인
+	@RequestMapping(value="/genmain.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String genMain(HttpSession session, Model model)
 	{
 		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+		
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
+		String id = parent.getId();
 		
 		// 부모 id 기반으로 아이 이름 조회
 		IChildDAO ChildDao = sqlSession.getMapper(IChildDAO.class);
@@ -57,13 +73,14 @@ public class GenReqController
 		listName = ChildDao.listName(id);
 		
 		model.addAttribute("listName", listName);
-		session.setAttribute("id", id);
+		//session.setAttribute("id", id);
 		
 		result = "WEB-INF/view/genMain.jsp";
 		return result;
 	}
 	
-	// 1차 필터 결과
+	
+	// ● 1차 필터 결과
 	@RequestMapping(value="/gensearchresult.action", method = RequestMethod.POST)
 	public String genSearchResult(@RequestParam("child_backup_id") String childBackupId
 								, GenRegDTO dto
@@ -73,10 +90,20 @@ public class GenReqController
 	{
 		String result = null;
 		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
 		// 입력값 기반으로 1차 필터 유지
 		IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
-		String id = (String) session.getAttribute("id");
+		//String id = (String) session.getAttribute("id");
+		String id = parent.getId();
 		listName = childDao.listName(id);
 		
 		// (이전 페이지에서 건넨 값을 다음 페이지로 전달)
@@ -149,7 +176,7 @@ public class GenReqController
 		return result;
 	}
 	
-	// 2차 필터 결과
+	// ● 2차 필터 결과
 	@RequestMapping(value = "/genregpossiblelist.action", method = RequestMethod.POST)
 	public String genRegPossibleList( @RequestParam(value = "page", defaultValue="1") int page
 									, @RequestParam("grades") List<String> grades
@@ -161,6 +188,15 @@ public class GenReqController
 									, Model model
 									, HttpSession session )
 	{
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
 		// AJAX 응답 → 한글 인코딩 설정
 		response.setContentType("text/html; charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
@@ -235,12 +271,21 @@ public class GenReqController
     
 	}
 	
-	
+	// ● 예약 가능한 근무 등록 상세 열람
 	@RequestMapping(value="/genregpossibledetail.action", method = RequestMethod.GET)
 	public String genRegDetail(@RequestParam("genRegId") String genRegId
 							 , Model model, HttpSession session )
 	{
 		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
 		
 		// (이전 페이지에서 건네 받은) 근무 등록 코드로 특정 근무 정보 조회
 		IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
@@ -273,12 +318,22 @@ public class GenReqController
 		return result;
 	}
 	
+	// ● 일반 돌봄 예약 신청 폼
 	@RequestMapping(value="/gereqinsertform.action", method = RequestMethod.GET)
 	public String genReqInsertForm(@RequestParam("genRegId") String genRegId
 								 , Model model, HttpSession session )
 	{
 		String result = null;
 		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+
 		// (이전 페이지에서 건네 받은) 근무 등록 코드로 특정 근무 정보 조회
 		IGenRegDAO regDao = sqlSession.getMapper(IGenRegDAO.class);
 		GenRegDTO genDetail = regDao.searchGenRegDetail(genRegId);
@@ -361,7 +416,7 @@ public class GenReqController
 		
 		// 현 보유 포인트 조회
 		IParDAO parDao = sqlSession.getMapper(IParDAO.class);
-		String parBackupId = parDao.seachParBackupId(childBackupId);		
+		String parBackupId = parent.getPar_backup_id();		// = parDao.seachParBackupId(childBackupId);		
 		int point = parDao.searchPoint(parBackupId);
 		
 		// 다음 페이지로 넘겨주는 값
@@ -376,13 +431,39 @@ public class GenReqController
 		return result;
 	}
 	
-	
+	// ● 일반 돌봄 결제 진행 폼
 	@RequestMapping(value="/genpayinsertform.action", method = RequestMethod.GET)
-	public String genPayInsertForm(GenPayDTO dto, Model model)
+	public String genPayInsertForm(Model model, HttpSession session, HttpServletRequest request)
 	{
 		String result = null;
 		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+
 		// 아래 필요한 데이터 전부 담아 전달
+		
+		// 포인트 가져오기
+		String pointStr = request.getParameter("point");
+		int point = (pointStr != null && !pointStr.isEmpty()) ? Integer.parseInt(pointStr) : 0;
+
+		// 최종 결제 예정 금액 가져오기
+		String finalPriceStr = request.getParameter("finalPrice");
+		int finalPrice = (finalPriceStr != null && !finalPriceStr.isEmpty()) ? Integer.parseInt(finalPriceStr) : 0;
+
+		// 상품명
+		String productName = "I_LOOK_일반돌봄";
+		
+		// 다음 페이지로 넘겨주는 값
+		// → 최종 결제 예정 금액, 상품명
+		model.addAttribute("finalPrice", finalPrice);
+		model.addAttribute("productName", productName);
+		
 		
 		// (결제 비용 데이터)
 		// (포인트 차감 데이터)
@@ -395,15 +476,30 @@ public class GenReqController
 		return result;
 	}
 	
-	
+	// ● 일반 돌봄 결제 완료 안내
 	@RequestMapping(value="/genpayresult.action", method = RequestMethod.GET)
 	public String genPayResult(GenPayDTO dto, HttpSession session)
 	{
 		String result = null;
 		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		
+		if (parent == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
 		// (결제 내역 데이터 추가 액션)
 		// (포인트 차감 데이터 추가 액션)
 		// (일반 돌봄 신청 데이터 추가 액션)
+		
+		// (돌봄 정보 세션 비워주기)
+		// if (session.getAttribute("dateStart") != null) {
+	    //session.removeAttribute("dateStart");
+	    //System.out.println("세션에서 dateStart 제거 완료");
+		//}
 		
 		session.getAttribute("id");
 		result = "WEB-INF/view/genPayResult.jsp";
@@ -415,7 +511,7 @@ public class GenReqController
 	}
 	
 	
-	// GenRegDTO 리스트에 자격증 및 지역 정보 설정
+	// ○ 함수 1. GenRegDTO 리스트에 자격증 및 지역 정보 설정
 	private void setCertAndRegion(ArrayList<GenRegDTO> genRegList)
 	{
 	    for (GenRegDTO genReg : genRegList)
@@ -436,7 +532,7 @@ public class GenReqController
 	    }
 	}
 	
-	// 날짜 타입 변환 함수
+	// ○ 함수 2. 날짜 타입 변환 함수
 	public static LocalDate parseToDate(String dateStr)
 	{
 		// 날짜 타입 변환을 위한 formatter 객체 생성

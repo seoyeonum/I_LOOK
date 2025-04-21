@@ -121,6 +121,10 @@
     	        return;
     	    }
     	    
+    		// 최종 가격을 hidden 필드에 저장 (콤마 제거)
+    	    var finalPrice = $("#final-price").text().replace(/,/g, '');	//-- 정규 표현식 이용
+    	    $("#hidden-final-price").val(finalPrice);
+    	    
     	    // 체크되어 있다면 폼 제출 → genPayInsertForm.jsp
     	    $("form").submit();
     	});
@@ -173,8 +177,7 @@
 		</div>
 		
 		<div class="sub-body-form">
-			<!-- <form action="genpayinsertfrom.action"> -->
-			<form action="genpayresult.action">
+			<form action="genpayinsertform.action">
 			
 				<!-- 1. 신청하는 시터님 관련 정보 -->
 				<!--
@@ -372,7 +375,7 @@
 			                <div class="name">전달 메시지</div>
 			                <div class="gen-details">
 			                    <div>
-			                    	<input type="text" id="msg-input" maxlength="160"
+			                    	<input type="text" id="msg-input" name=message maxlength="160"
 			                    	placeholder="(시터님에게 전달하실 말씀을 적어주세요.)"/>	<!-- 현재 ERD 상 varchar2(500)이라 160자 정도 입력 가능.. -->
 				                    <button type="button" id="msg-reset" class="btn gen-btn-small" >다시 작성</button>
 			                    </div>
@@ -427,7 +430,8 @@
 			                <div class="gen-details">
 		                	<div>현재 보유 포인트: <fmt:formatNumber value="${empty point ? 0 : point}" type="number" groupingUsed="true" />원</div>
 		                	<div class="row-items">사용할 포인트: 
-		                    	<input type="text" id="point-input" min="100" max="${point}" placeholder="(사용할 포인트)"/>원
+		                    	<input type="text" id="point-input" name="point"
+		                    	 min="100" max="${point}" value="0" placeholder="(사용할 포인트)"/>원
 		                    	<button type="button" id="point-reset" class="btn gen-btn-small" >취소</button>
 		                    	<button type="button" id="point-use" class="btn gen-btn-small">적용</button>
 		                    </div>
@@ -443,7 +447,8 @@
 		                	 -
 		                	<span id="point-spend">0</span>
 		                	 = 
-		                	<span id="final-price">25,200</span>원</div>		                	
+		                	<span id="final-price"><fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" /></span>원</div>
+		                	<input type="hidden" id="hidden-final-price" name="finalPrice" value="" />
 		                </div>
 		            </div>
 	   			</div>
