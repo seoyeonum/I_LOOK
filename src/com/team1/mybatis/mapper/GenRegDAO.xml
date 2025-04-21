@@ -105,7 +105,7 @@
 		                AND R.TITLE LIKE '%' || #{searchValue} || '%'
 		            </if>
 		        </if>
-		        <if test="currentOnly != null and currentOnly == true">
+		        <if test="currentOnly != null and currentOnly == 'current'">
 		            AND R.END_DATE >= SYSDATE
 		        </if>
 		        ORDER BY R.REG_DATE DESC
@@ -129,7 +129,7 @@
 	              AND R.TITLE LIKE '%' || #{searchValue} || '%'
 	          </if>
 	      </if>
-	      <if test="currentOnly != null and currentOnly == true">
+	      <if test="currentOnly != null and currentOnly == 'current'">
 	          AND R.END_DATE >= SYSDATE
 	      </if>
 	</select>

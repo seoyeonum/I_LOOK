@@ -42,12 +42,12 @@ public interface IGenRegDAO
 									   , @Param("end") int end
 			                           , @Param("searchKey") String searchKey
 			                           , @Param("searchValue") String searchValue
-			                           , @Param("currentOnly") Boolean currentOnly);
+			                           , @Param("currentOnly") String currentOnly);
 	
 	// [관리자] 시터 근무 등록 내역 목록 개수 확인
 	public int adminCountSitGenReg(@Param("searchKey") String searchKey
 			                , @Param("searchValue") String searchValue
-			                , @Param("currentOnly") Boolean currentOnly);
+			                , @Param("currentOnly") String currentOnly);
 	
 	//[관리자] 시터 근무 등록 상세내역 조회
 	public GenRegDTO adminSitGenRegDetail(String gen_reg_id);
