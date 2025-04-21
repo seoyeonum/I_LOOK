@@ -371,8 +371,7 @@ public class GenReqController
 		model.addAttribute("careHours", careHours);
 		model.addAttribute("totalPrice", totalPrice);
 		
-		// *** 아래 ? 없애야 함! ***
-		result = "WEB-INF/view/genReqInsertForm.jsp?genRegId=" + genRegId;
+		result = "WEB-INF/view/genReqInsertForm.jsp";
 		
 		return result;
 	}
@@ -385,7 +384,7 @@ public class GenReqController
 		
 		// 아래 필요한 데이터 전부 담아 전달
 		
-		// (결제 내역 데이터)
+		// (결제 비용 데이터)
 		// (포인트 차감 데이터)
 		// (일반 돌봄 신청 데이터)
 		

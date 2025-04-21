@@ -76,7 +76,7 @@
     		$("#point-spend").text(0);
     		
     		// 최종 비용 업데이트
-    		updateFinalPrice();
+    		calcPrice();
     		
     	});
     	
@@ -87,9 +87,10 @@
     		// 입력한 포인트 값 가져오기
     		// 『||』: 앞의 값이 없다면 || 뒤의 값 사용
     		var pointInput = parseInt($("#point-input").val()) || 0;
-    		var maxPoint = ${point};
+    		var maxPoint = ${point != null ? point : 0};
     		
     		// 유효성 검사
+    		
     		if (pointInput < 100 && pointInput > 0)
     		{
     			alert("최소 100원부터 사용 가능합니다.");
@@ -106,7 +107,7 @@
     		$("#point-spend").text(pointInput);
     		
     		// 최종 금액 업데이트
-    		updateFinalPrice();
+    		calcPrice();
     	});
     	
     	
@@ -138,7 +139,7 @@
  	// 함수 2.결제 금액 계산 함수
  	function calcPrice()
  	{
-   	    var basePrice = 25200; 								// 기본 비용
+   	    var basePrice = ${totalPrice}; 						// 기본 비용
    	    var pointUsed = parseInt($("#point-spend").text()); // 사용 포인트
    	    var finalPrice = basePrice - pointUsed; 			// 최종 비용
    	    
@@ -442,7 +443,7 @@
 		                	 -
 		                	<span id="point-spend">0</span>
 		                	 = 
-		                	<span id="final-price">25,200</span></div>		                	
+		                	<span id="final-price">25,200</span>원</div>		                	
 		                </div>
 		            </div>
 	   			</div>
