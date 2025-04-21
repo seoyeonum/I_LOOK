@@ -9,65 +9,65 @@
 <head>
 <meta charset="UTF-8">
 <title>아이 정보 수정 페이지</title>
-<link rel="stylesheet" type="text/css" href="css/ChildUpdateForm.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ChildUpdateForm.css">
 <script>
-    // 탈퇴하기 버튼 클릭 시 확인 메시지
-    function confirmDelete() {
-        if (confirm("정말로 탈퇴하시겠습니까?")) {
-            // 탈퇴 처리 로직을 여기에 추가
-            alert("탈퇴가 완료되었습니다.");
-        }
+    function confirmUpdate() {
+        return confirm("정말로 수정하시겠습니까?");
     }
 </script>
 </head>
 <body>
 
+<%-- ✅ 여기 alert 추가 --%>
+<c:if test="${updated}">
+    <script>
+        alert("수정이 완료되었습니다.");
+    </script>
+</c:if>
+
 <header>
     <div id="logo">
-        <img src="./logo.png" height="120px"></div>
-        <nav>
-            <button type="button" class="menuBtn presentPage">홈</button>
-            <button type="button" class="menuBtn">로그아웃</button>
-            <button type="button" class="menuBtn">스케줄러</button>
-            <button type="button" class="menuBtn">긴급돌봄서비스</button>
-            <button type="button" class="menuBtn">마이페이지</button>
-            <button type="button" class="menuBtn">알림함</button>
-        </nav>
+        <img src="${pageContext.request.contextPath}/logo.png" height="120px">
+    </div>
+    <nav>
+        <button type="button" class="menuBtn presentPage">홈</button>
+        <button type="button" class="menuBtn">로그아웃</button>
+        <button type="button" class="menuBtn">스케줄러</button>
+        <button type="button" class="menuBtn">긴급돌봄서비스</button>
+        <button type="button" class="menuBtn">마이페이지</button>
+        <button type="button" class="menuBtn">알림함</button>
+    </nav>
 </header>
 
 <div class="sidebar">
-	<div class="sidebar-title">마이페이지</div>
-	  <div class="menu">
-	
-	    <!-- 아이 정보 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-	      <div class="submenu">
-	        <a href="#">아이 목록 보기</a>
-	        <a href="#">신규 아이 등록</a>
-	        <a href="#">아이 정보 수정</a>
-	      </div>
-	    </div>
-	
-	    <!-- 부모 정보 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-	      <div class="submenu">
-	        <a href="#">부모 정보 보기</a>
-	        <a href="#">부모 정보 수정</a>
-	      </div>
-	    </div>
-	
-	    <!-- 돌봄 이용 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
-	      <div class="submenu">
-	        <a href="#">현재 이용 내역</a>
-	        <a href="#">이용 완료 내역</a>
-	      </div>
-	    </div>
-
-	  </div>
+    <div class="sidebar-title">마이페이지</div>
+    <div class="menu">
+        <!-- 아이 정보 -->
+        <div class="menu-item">
+            <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
+            <div class="submenu">
+                <a href="#">아이 목록 보기</a>
+                <a href="#">신규 아이 등록</a>
+                <a href="#">아이 정보 수정</a>
+            </div>
+        </div>
+        <!-- 부모 정보 -->
+        <div class="menu-item">
+            <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
+            <div class="submenu">
+                <a href="#">부모 정보 보기</a>
+                <a href="#">부모 정보 수정</a>
+            </div>
+        </div>
+        <!-- 돌봄 이용 -->
+        <div class="menu-item">
+            <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
+            <div class="submenu">
+                <a href="#">현재 이용 내역</a>
+                <a href="#">이용 완료 내역</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="page-title">
@@ -75,93 +75,73 @@
 </div>
 
 <div class="container">
-	 <div class="modify-content">
-	     <form action="" method="post">
-	         <div class="input-field">
-	             <label for="name">이름 :</label>
-	             <input type="text" id="name" name="name" value="김창식" readonly="readonly">
-	         </div>
-	         
-		  <div class="input-field">
-	  		<label for="age">나이 :</label>
-	  		<div class="input-with-unit">
-	  			<input type="number" id="age" name="age" value="4" readonly="readonly">
-	  			<span>세</span>
-	  		</div>
-		  </div>
-	
-		  <div class="input-field">
-	  		<label for="height">키 :</label>
-	  		<div class="input-with-unit">
-	  			<input type="number" id="height" name="height" value="110">
-	  			<span>cm</span>
-	  		</div>
-		  </div>
-	 
-		  <div class="input-field">
-	  		<label for="weight">몸무게 :</label>
-	  		<div class="input-with-unit">
-	  			<input type="number" id="weight" name="weight" value="20">
-	  			<span>kg</span>
-	  		</div>
-		  </div>
-	
-	         <div class="input-field">
-	             <label for="blood">혈액형 :</label>
-	             <div class="input-with-unit">
-	                 <input type="text" id="blood" name="blood" value="A" readonly="readonly">
-	                 <span>형</span>
-	             </div>
-	         </div>
-	
-			<div class="input-field">
-			    <label for="disability">장애:</label>
-			    <div class="input-with-unit">
-			        <select id="disability" name="disability">
-			            <option value="없음">없음</option>
-			            <option value="select1">자폐 스펙트럼 장애</option>
-			            <option value="select2">뇌성마비 </option>
-			            <option value="select3">지적장애</option>
-			        </select>
-			    </div>
-			</div>
-			
-			<div class="input-field">
-			    <label for="disease">지병:</label>
-			    <div class="input-with-unit">
-			        <select id="disease" name="disease">
-			            <option value="없음">없음</option>
-			            <option value="select1">면역결핍 질환</option>
-			            <option value="select2">심장병</option>
-			            <option value="select3">감기</option>
-			        </select>
-			    </div>
-			</div>
-			
-			<div class="input-field">
-			    <label for="allergy">알레르기:</label>
-			    <div class="input-with-unit">
-			        <select id="allergy" name="allergy">
-			            <option value="없음">없음</option>
-			            <option value="select1">꽃가루 알레르기</option>
-			            <option value="select2">우유 알레르기</option>
-			            <option value="select3">꽃가루 알레르기</option>
-			        </select>
-			    </div>
-			</div>
+    <div class="modify-content">
+        <form action="${pageContext.request.contextPath}/childupdate.action" method="post" onsubmit="return confirmUpdate();">
+            <input type="hidden" name="child_reg_id" value="${child.child_reg_id}" />
 
-			<div class="input-field">
-			    <label for="remarks" id="remarks">특이사항:</label>
-			    <div class="input-with-unit">
-			        <textarea id="remark-text" name="remarks" rows="4" cols="50"></textarea>
-			    </div>
-			</div>
-	
-	         <div class="form-buttons">
-	             <button type="submit" class="btn update-btn">수정하기</button>
-	         </div>
-	     </form>
-	 </div>
+            <div class="input-field">
+                <label for="name">이름 :</label>
+                <input type="text" id="name" name="name" value="${child.name}" readonly="readonly">
+            </div>
+
+            <div class="input-field">
+                <label for="height">키 :</label>
+                <input type="number" id="height" name="height" value="${child.height}" required>
+                <span>cm</span>
+            </div>
+
+            <div class="input-field">
+                <label for="weight">몸무게 :</label>
+                <input type="number" id="weight" name="weight" value="${child.weight}" required>
+                <span>kg</span>
+            </div>
+
+            <div class="input-field">
+                <label for="blood_type">혈액형 :</label>
+                <input type="text" id="blood_type" name="blood_type" value="${child.blood_type}" readonly="readonly">
+                <span>형</span>
+            </div>
+
+            <div class="input-field">
+                <label for="special_notes">특이사항:</label>
+                <textarea id="special_notes" name="special_notes" rows="4" cols="50">${child.special_notes}</textarea>
+            </div>
+
+            <div class="input-field">
+                <label for="disability_type_id">장애:</label>
+                <select name="disability_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="d" items="${disabilities}">
+                        <option value="${d.disability_type_id}" <c:if test="${d.disability_type_id == child.disability_type_id}">selected</c:if>>${d.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label for="medical_type_id">지병:</label>
+                <select name="medical_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="m" items="${medicals}">
+                        <option value="${m.medical_type_id}" <c:if test="${m.medical_type_id == child.medical_type_id}">selected</c:if>>${m.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label for="allergy_type_id">알레르기:</label>
+                <select name="allergy_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="a" items="${allergies}">
+                        <option value="${a.allergy_type_id}" <c:if test="${a.allergy_type_id == child.allergy_type_id}">selected</c:if>>${a.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn update-btn">수정하기</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

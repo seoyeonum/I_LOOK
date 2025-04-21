@@ -3,7 +3,6 @@ package com.team1.controller;
 import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,99 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team1.dto.AdminDTO;
 import com.team1.dto.GradesDTO;
 import com.team1.mybatis.IGradesDAO;
 
 
 @Controller
-public class AdminServiceController
+public class adminServiceController
 {
 
 	@Autowired
 	private SqlSession sqlSession;
 	
-	// 상단 서비스관리 및 사이드바 근무 등록 내역(기본값)으로 이동 및 데이터 전송
+	// 상단 서비스관리 누를 시 근무 등록 내역(기본값)으로 이동 및 데이터 전송
 	@RequestMapping(value = "/admingenreglist.action", method = RequestMethod.GET)
-	public String adminGenRegList(Model model, HttpSession session)
+	public String adminGenRegList(Model model)
 	{
 		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-        	return "redirect:/loginform.action";
-        AdminDTO dto = getLoginAdmin(session);
-        model.addAttribute("admin", dto);
 		
 		result = "WEB-INF/view/adminGenRegList.jsp";
-		
-		return result;
-	}
-	
-	// 임금내역으로 이동 및 데이터 전송
-	@RequestMapping(value = "/adminwagelist.action", method = RequestMethod.GET)
-	public String wageList(Model model, HttpSession session)
-	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("admin", dto);
-		
-		result = "WEB-INF/view/adminWageList.jsp";
-		
-		return result;
-	}
-	
-	// 예약신청내역으로 이동 및 데이터 전송
-	@RequestMapping(value = "/adminreqlist.action", method = RequestMethod.GET)
-	public String adminReqList(Model model, HttpSession session)
-	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("admin", dto);
-		
-		result = "WEB-INF/view/adminReqList.jsp";
-		
-		return result;
-	}
-	
-	// 결제내역으로 이동 및 데이터 전송
-	@RequestMapping(value = "/adminpayreclist.action", method = RequestMethod.GET)
-	public String adminPayRecList(Model model, HttpSession session)
-	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("admin", dto);
-		
-		result = "WEB-INF/view/adminPayRecList.jsp";
-		
-		return result;
-	}
-	
-	// 포인트 변동 내역으로 이동 및 데이터 전송
-	@RequestMapping(value = "/adminpointlist.action", method = RequestMethod.GET)
-	public String adminPointList(Model model, HttpSession session)
-	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("admin", dto);
-		
-		result = "WEB-INF/view/adminPointList.jsp";
 		
 		return result;
 	}
@@ -114,16 +38,10 @@ public class AdminServiceController
 	
 	// 등급 목록으로 이동 및 데이터 전송
 	@RequestMapping(value = "/gradelist.action", method = RequestMethod.GET)
-	public String gradeList(Model model, HttpSession session)
+	public String gradeList(Model model)
 	{
 		String result = null;
 		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-        	return "redirect:/loginform.action";
-        AdminDTO dto = getLoginAdmin(session);
-        model.addAttribute("admin", dto);
-		        
 		IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
 		
 		model.addAttribute("grade", dao.listGrade());
@@ -135,15 +53,11 @@ public class AdminServiceController
 	
 	// 등급 추가 폼으로 이동 및 데이터 전송
 	@RequestMapping(value = "/gradeinsertform.action", method = RequestMethod.GET)
-	public String gradeInsertForm(Model model, HttpSession session)
+	public String gradeInsertForm(Model model)
 	{
 		String result = null;
 		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-        	return "redirect:/loginform.action";
-        AdminDTO dto = getLoginAdmin(session);
-        model.addAttribute("admin", dto);
+		IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
 		
 		result = "WEB-INF/view/gradeInsertForm.jsp";
 		
@@ -152,14 +66,14 @@ public class AdminServiceController
 	
 	// 등급 추가
 	@RequestMapping(value = "/gradeinsert.action", method = RequestMethod.POST)
-	public String addGrade(GradesDTO grade, @RequestParam("uploadFile") MultipartFile uploadFile 
+	public String addGrade(GradesDTO grade, @RequestParam("file_path") MultipartFile uploadFile 
             			 , HttpServletRequest request) throws Exception
 	{
 		String result = null;
 		
 		// 파일 업로드 처리
 		// 업로드 경로 지정 (/WebContent/images/grades/)
-		String uploadDir = request.getServletContext().getRealPath("/images/grades");
+	    String uploadDir = request.getServletContext().getRealPath("/images/grades");
 		
 		File dir = new File(uploadDir);
 		if (!dir.exists())
@@ -178,9 +92,9 @@ public class AdminServiceController
 	            uploadFile.transferTo(saveFile);
 	            
 	            System.out.println("업로드된 파일 이름: " + fileName);
-	            System.out.println("업로드된 파일 경로 : " + uploadDir);
+	            
 	            // 파일 경로를 DTO의 file_path에 설정
-	            grade.setFile_path("images/grades/" + fileName);
+	            grade.setFile_path("/images/grades/" + fileName);
 	        }
 	        
 	        IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
@@ -197,12 +111,14 @@ public class AdminServiceController
 		return result;
 	}
 	
+	
 	// 등급 수정 폼으로 이동 및 데이터 전송
 	
 	
 	
+	
 	// 시급 목록으로 이동
-	@RequestMapping(value = "/hourlywagelist.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/wagelist.action", method = RequestMethod.GET)
 	public String wageList(Model model)
 	{
 		String result = null;
@@ -212,7 +128,7 @@ public class AdminServiceController
 		model.addAttribute("genWage", dao.listGenWage());
 		model.addAttribute("emgWage", dao.listEmgWage());
 		
-		result = "WEB-INF/view/hourlyWageList.jsp";
+		result = "WEB-INF/view/wageList.jsp";
 		
 		return result;
 	}
@@ -257,38 +173,10 @@ public class AdminServiceController
 			dao.modifyEmgWage(grades);
 		}
 		
-		result = "redirect:hourlywagelist.action";
+		result = "redirect:wagelist.action";
 		
 		return result;
 	}
-	
-	// 공지사항으로 이동 및 데이터 전송
-	@RequestMapping(value = "/noticelist.action", method = RequestMethod.GET)
-	public String noticeList(Model model, HttpSession session)
-	{
-		String result = null;
-		
-		// 관리자 확인 절차
-		if (!isAdmin(session))
-			return "redirect:/loginform.action";
-		AdminDTO dto = getLoginAdmin(session);
-		model.addAttribute("admin", dto);
-		
-		result = "WEB-INF/view/noticeList.jsp";
-		
-		return result;
-	}
-		
-	
-	// 관리자 검증 메소드
-	private boolean isAdmin(HttpSession session)
-    {
-        return session.getAttribute("loginAdmin") != null;
-    }
-    private AdminDTO getLoginAdmin(HttpSession session)
-    {
-        return (AdminDTO) session.getAttribute("loginAdmin");
-    }
 	
 	
 }
