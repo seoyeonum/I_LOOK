@@ -371,6 +371,7 @@ public class GenReqController
 		model.addAttribute("careHours", careHours);
 		model.addAttribute("totalPrice", totalPrice);
 		
+		// *** 아래 ? 없애야 함! ***
 		result = "WEB-INF/view/genReqInsertForm.jsp?genRegId=" + genRegId;
 		
 		return result;

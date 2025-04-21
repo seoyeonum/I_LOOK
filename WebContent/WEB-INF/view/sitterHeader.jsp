@@ -25,6 +25,7 @@
         <nav>
             <button type="button" class="menuBtn presentPage" id="emg"
             onclick="window.location.href='<%=cp%>/emgmain.action'">홈</button>
+            <button type="button" class="menuBtn" id="noticeList">공지사항</button>
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
             <button type="button" class="menuBtn" id="gen">일반돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
