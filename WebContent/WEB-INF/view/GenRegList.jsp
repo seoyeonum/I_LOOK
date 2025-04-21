@@ -168,9 +168,12 @@
 		$(".answerBtn").css("display", "none");
 		$(".rejectBtn").css("display", "none");
 		
+		
+		// 자기소개글 누르면 나오는 새 창.
 		$(".detailBtn").click(function()
 		{
-			alert(this.value);
+			//$(location).attr("href", "sitterregintroduction.action?gen_reg_id=" + $(this).val());
+			var popup = window.open("sitterregintroduction.action?gen_reg_id=" + $(this).val(), '자기소개글', 'scrollbars=yes');
 		});
 		
 		$(".reservation-btn").click(function() 
@@ -212,10 +215,12 @@
 			}
 			*/
 			
+			//alert($(this).val());
 			
 			// AJAX 처리 
 			var params = "gen_req_id=" + $(this).val();
 			
+			alert(params); 	//gen_req_id=GREQ0022
 			/*
 			id="name">.</div>
 			<div class="col-md-2" id="careDays">.</div>
@@ -231,10 +236,12 @@
 			{
 				type: "POST"
 				, url : "genregdetail.action"
-				, data: $(this).val()
-				, dataType: "json"
+				, data: params
+				, dataType: "JSON"
 				, success: function(data)
 				{
+					alert("성공~~~");
+					
 					// 표 리셋
 					$("#name").html("");
 					$("#careDays").html("");
@@ -247,8 +254,8 @@
 					$("#message").html("");
 					
 					// 표 표기
-					$("#name").html(data.name);
-					$("#careDays").html(data.careDays);
+					$("#name").html(data.chi_name);
+					$("#careDays").html(data.par_start_date + " ~ " + data.par_end_date + " | " + data.par_start_time + " ~ " + data.par_end_time);
 					$("#gu_addr").html(data.gu_addr);
 					$("#child_gender").html(data.child_gender);
 					$("#child_age").html(data.child_age);
@@ -262,13 +269,13 @@
 					$(".answerBtn").val(data.gen_req_id);
 					$(".rejectBtn").val(data.gen_req_id);
 				}
-				, beforeSend: function()
+				, beforeSend: function(xmlHttpservelt)
 				{
-					return true;
+					
 				}
 				, error: function(e)
 				{
-					alert(e.responseText());
+					alert(e.responseText);
 				}
 			});
 			
@@ -284,7 +291,7 @@
 			{
 				$(location).attr("href", "sittergenreqansweredlist.action?answer=yes&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
 			}
-			
+
 		});
 		
 		$(".rejectBtn").click(function()
@@ -333,7 +340,7 @@
 					<ul>
 						<li><a href="sitterinfolist.action?sit_backup_id=${sit_backup_id }">개인정보 수정</a></li>
 						<li><a href="gradescheck.action?sit_backup_id=${sit_backup_id }">등급 확인</a></li>
-						<li><a href="">근무 등록</a></li>
+						<li><a href="genreginsertform.action?sit_backup_id=${sit_backup_id }">근무 등록</a></li>
 						<li><a href="genreglist.action?sit_backup_id=${sit_backup_id }" style="font-weight: bold; color: #1AB223">근무 등록 내역 확인</a></li>
 						<li><a href="sittergenreqansweredlist.action?sit_backup_id=${sit_backup_id }">돌봄 제공 내역 확인</a></li>
 						<li><a href="carecompletelist.action?sit_backup_id=${sit_backup_id }" >돌봄 완료 내역 확인</a></li>
@@ -390,7 +397,6 @@
 			</div> <!-- .info.table -->
 			
 			<div class="answerBtndiv" style="align-items: center;">
-			<c:if test=""></c:if>			
 			<button class="answerBtn" value="">예약하기</button> 
 			<select name="reject" id="reject">
 				
@@ -405,10 +411,10 @@
 			<div class="reservation thead" style="border-top-left-radius: 10px; border-top-right-radius: 10px; width: 100%; ">
 				<div class="row" style="padding-right: 10px;">
 					<div class="col-md-1">번호</div>
-					<div class="col-md-1">제목</div>
+					<div class="col-md-2">제목</div>
 					<div class="col-md-2">근무 가능 날짜</div>
 					<div class="col-md-2">근무 가능 시간</div>
-					<div class="col-md-2">선호 근무 지역</div>
+					<div class="col-md-1">선호 근무 지역</div>
 					<div class="col-md-2">자기소개글</div>
 					<div class="col-md-1">상세 정보</div>
 					<div class="col-md-1">신청 상태</div>
@@ -449,16 +455,21 @@
 			<c:forEach var="reg" items="${regList }" varStatus="status">
 				<div class="row" id="${reg.gen_reg_id }" >
 					<div class="col-md-1">1</div>
-					<div class="col-md-1">${reg.title }</div>
+					<div class="col-md-2">${reg.title }</div>
 					<div class="col-md-2">${reg.sit_start_date } ~ ${reg.sit_end_date }</div>
-					<div class="col-md-2">${reg.sit_start_time } ~ ${reg.sit_end_time }</div>
-					<div class="col-md-2">${wRPdtoList[status.index].name }</div> 
-					<div class="col-md-2"><button class="detailBtn" value="${reg.introduction }" type="button">자세히 보기</button></div>
-					<div class="col-md-1"><button class="reservation-btn" value="${reg.gen_reg_id }" type="button">상세 정보</button></div>
+					<div class="col-md-2">${reg.sit_start_time }시 ~ ${reg.sit_end_time }시</div>
+				 	<div class="col-md-1"> - </div>  
+					<div class="col-md-2"><button class="detailBtn" value="${reg.gen_reg_id }" type="button" >자세히 보기</button>
+					</div>
+					<div class="col-md-1">
+					<c:if test="${reg.gen_req_id != null }">
+					<button class="reservation-btn" value="${reg.gen_req_id }" type="button">상세 정보</button>
+					</c:if>
+					</div>
 					<div class="col-md-1">${reg.request_result }</div>
 				</div>
 			</c:forEach>
-			<%-- </c:forEach> --%>
+			<%-- </c:forEach>  --%>
 			</div>
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->

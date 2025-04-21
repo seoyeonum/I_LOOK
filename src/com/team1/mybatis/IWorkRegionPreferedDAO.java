@@ -14,6 +14,9 @@ public interface IWorkRegionPreferedDAO
 	// 근무 지역 열람
 	public ArrayList<WorkRegionPreferedDTO> listRegions(String gen_reg_id);
 	
+	// [시터] 근무 등록 아이디로, 그 근무 1건의 선호 지역을 보는 쿼리
+	public WorkRegionPreferedDTO sitRegion(String gen_reg_id);
+	
 	// 근무 지역 전체 열람
 	public ArrayList<WorkRegionPreferedDTO> listAllRegions();
 	

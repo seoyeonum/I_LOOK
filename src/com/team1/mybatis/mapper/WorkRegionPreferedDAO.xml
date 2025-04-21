@@ -17,6 +17,17 @@
 		AND GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
+ 	<select id="sitRegion" resultType="com.team1.dto.WorkRegionPreferedDTO">
+ 	<!-- // [시터] 근무 등록 아이디로, 그 근무 1건의 선호 지역을 보는 쿼리
+	public WorkRegionPreferedDTO sitRegion(String gen_reg_id); -->
+ 		SELECT WROP.WORK_REGION_PREFERED_ID AS WORK_REGION_PREFERED_ID
+ 		, WROP.REGION_ID AS REGION_ID
+ 		, WROP.GEN_REG_ID AS GEN_REG_ID
+ 		, R.NAME AS NAME
+		FROM WORK_REGION_PREFERED WROP, REGIONS R
+		WHERE WROP.REGION_ID = R.REGION_ID
+		AND GEN_REG_ID = #{gen_reg_id}
+ 	</select>
  	
  	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listAllRegions(); -->

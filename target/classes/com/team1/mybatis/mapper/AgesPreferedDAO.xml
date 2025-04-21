@@ -10,6 +10,11 @@
 		FROM AGES_PREFERED
  	</select>
  	
+ 	<select id="listAllAges" resultType="com.team1.dto.AgesPreferedDTO"> 
+ 	<!-- // 시터 돌봄 선호 연령대 전체 열람 public ArrayList<AgesPreferedDTO> listAges(); -->
+ 		SELECT AGE_TYPE_ID, TYPE
+		FROM AGE_TYPES
+ 	</select>
  	
  	<insert id="addAges" parameterType="com.team1.dto.AgesPreferedDTO">
  	<selectKey keyProperty="age_prefered_id" resultType="String" order="BEFORE">
