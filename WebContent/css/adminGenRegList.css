@@ -1,15 +1,6 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 /* 기본 스타일 */
-* {
-    box-sizing: border-box;
-    font-family: "Noto Sans KR", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: 420;   
-	font-style: normal;
-}
-
 body {
     margin: 0;
     padding: 0;

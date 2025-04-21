@@ -13,6 +13,7 @@ public class GenRegDTO
 	
 	// 근무 시작 가능 날짜, 근무 종료 가능 날짜, 근무 등록 날짜, 자기소개
 	private String start_date, end_date, reg_date, introduction;
+	// 근무 시작 가능 시간, 근무 
 	private int start_time, end_time;
 	
 	// getter / setter 구성
