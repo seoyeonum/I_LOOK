@@ -174,14 +174,57 @@
 	    WHERE CHILD_BACKUP_ID = #{child_backup_id}
 	</delete>
 	
-	<!-- 특정 아이 삭제 시 -->
-	<delete id="removeDiseaseByBackup">
-	    DELETE FROM CHILD_MEDICALS
-	    WHERE CHILD_REG_ID IN (
-	        SELECT CHILD_REG_ID
-	        FROM CHILD_REG
-	        WHERE CHILD_BACKUP_ID = #{child_backup_id}
-	    )
+	<!-- 아이 리스트 -->
+	<select id="list" resultType="com.team1.dto.ChildDTO">
+		SELECT *
+		FROM V_CHILD_INFO
+	</select>
+	
+	<!-- 아이 이름 리스트 -->
+	<select id="listName" resultType="com.team1.dto.ChildDTO">
+		SELECT C.CHILD_BACKUP_ID, CR.NAME
+		FROM PAR_BACKUP P JOIN CHILD_BACKUP C
+		ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+		    JOIN CHILD_REG CR
+		    ON C.CHILD_BACKUP_ID = CR.CHILD_BACKUP_ID
+		WHERE P.ID = #{id}
+	</select>
+	
+	<!-- 특정 아이 리스트 -->
+		<select id="childList" resultType="com.team1.dto.ChildDTO">
+		SELECT *
+		FROM V_CHILD_INFO
+		WHERE CHILD_REG_ID = #{child_reg_id}
+	</select>
+	
+	<!-- 아이 전체 인원 수 -->
+	<select id="countChild" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM V_CHILD_INFO
+	</select>
+	
+	<!-- 아이 지병 등록 -->
+	<insert id="addDisease">
+		INSERT INTO CHILD_MEDICALS (CHILD_MEDICAL_ID, MEDICAL_TYPE_ID, REG_DATE, CHILD_REG_ID)
+		VALUES (#{child_medical_id}, #{medical_type_id}, #{reg_date}, #{child_reg_id})
+	</insert>
+	
+	<!-- (아이 백업코드로) 아이 보유 지병 조회 -->
+	<select id="searchDisease" resultType="java.lang.String">
+		SELECT MT.TYPE AS TYPE
+		FROM CHILD_MEDICALS CM JOIN MEDICAL_TYPES MT
+		ON CM.MEDICAL_TYPE_ID = MT.MEDICAL_TYPE_ID
+		WHERE CHILD_MEDICAL_ID = (  SELECT CHILD_MEDICAL_ID
+		                            FROM CHILD_REG CR
+		                            WHERE CM.CHILD_REG_ID = CR.CHILD_REG_ID
+		                              AND CHILD_BACKUP_ID = #{child_backup_id} )
+	</select>	
+	
+	<!-- 아이 지병 삭제 -->
+	<delete id="removeDisease">
+		DELETE FROM CHILD_MEDICALS
+		WHERE CHILD_MEDICAL_ID = #{child_medical_id}	
+
 	</delete>
 	
 	<delete id="removeAllergyByBackup">

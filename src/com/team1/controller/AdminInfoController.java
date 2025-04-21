@@ -50,5 +50,6 @@ public class adminInfoController
 		result = "redirect:admininfo.action";
 		
 		return result;
-	}		
+	}
+	
 }
