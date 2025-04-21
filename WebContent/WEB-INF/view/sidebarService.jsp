@@ -39,7 +39,7 @@
 			<span class="sidebar-header">등급 및 시급 관리</span>
 			<div class="sidebar-menu">
 				<a href="<%=cp %>/gradelist.action">등급 목록</a> 
-				<a href="<%=cp %>/wagelist.action">시급 목록</a> 
+				<a href="<%=cp %>/hourlywagelist.action">시급 목록</a> 
 			</div>
 		</div>
 		

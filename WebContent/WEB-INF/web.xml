@@ -30,7 +30,6 @@
 		<!-- 『*.action』 : 무슨 액션인지 몰라도 ~~.action 의 구조라면 servlet-name == dispatcher 로 인계한다. -->
 	</servlet-mapping>
 	
-	
 	<!-- web.xml에 필터를 등록해보자. -->
 	
 	<!-- check~!!! -->

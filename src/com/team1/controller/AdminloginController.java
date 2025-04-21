@@ -13,7 +13,7 @@ import com.team1.dto.AdminDTO;
 import com.team1.mybatis.IAdminLoginDAO;
 
 @Controller
-public class adminloginController
+public class AdminloginController
 {
     @Autowired
     private SqlSession sqlSession;

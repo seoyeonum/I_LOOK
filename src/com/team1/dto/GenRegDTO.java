@@ -3,24 +3,17 @@ package com.team1.dto;
 
 public class GenRegDTO
 {
-	// GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
+	// GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE, NAME, FILE_PATH
 	// START_TIME, END_TIME
 	// REG_DATE, INTRODUCTION
 	
-<<<<<<< HEAD
 	// 주요 속성 구성 	
-	// 근무 등록 코드, 시터 백업 코드, 제목 
-	private String gen_reg_id, sit_backup_id, title;
+	// 근무 등록 코드, 시터 백업 코드, 제목, 시터 이름, 시터 사진 
+	private String gen_reg_id, sit_backup_id, title, name, file_path, sit_reg_id;
 	// 근무 시작 가능 날짜, 근무 종료 가능 날짜, 근무 등록 날짜, 자기소개
-=======
-	// 주요 속성 구성
-	private String gen_reg_id, sit_backup_id, title;
->>>>>>> develop
 	private String start_date, end_date, reg_date, introduction;
+	// 근무 시작 가능 시간, 근무 
 	private int start_time, end_time;
-	
-	// 속성 추가
-	private String name;		//-- 시터 이름
 	
 	// getter / setter 구성
 	public String getGen_reg_id()
@@ -102,6 +95,22 @@ public class GenRegDTO
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	public String getFile_path()
+	{
+		return file_path;
+	}
+	public void setFile_path(String file_path)
+	{
+		this.file_path = file_path;
+	}
+	public String getSit_reg_id()
+	{
+		return sit_reg_id;
+	}
+	public void setSit_reg_id(String sit_reg_id)
+	{
+		this.sit_reg_id = sit_reg_id;
 	}
 	
 	

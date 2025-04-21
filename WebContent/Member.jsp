@@ -102,7 +102,7 @@
 
         <div class="btn-container">
 			<a href="parentInsertForm.action"  class="btn">부모님으로 회원가입하기</a>
-			<a href="sitterInsertForm.action" class="btn">베이비시터로 회원요청하기</a>
+			<a href="sitterInsertForm.jsp" class="btn">베이비시터로 회원요청하기</a>
         </div>
 
         <div class="back-btn">

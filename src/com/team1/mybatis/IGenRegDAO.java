@@ -25,8 +25,11 @@ public interface IGenRegDAO
 	// 전체 근무 등록 수 확인
 	public int countGen();
 	
+	// 근무 등록 아이디에 따른 근무 파일 1개
+	public GenRegDTO regList(String gen_reg_id);
+	
 	// 특정 아이디에 따른 근무 리스트
-	public ArrayList<GenRegDTO> regList(String gen_reg_id);
+	public ArrayList<GenRegDTO> regListId(String gen_reg_id);
 	
 	// (부모가 보는) 1차 필터 결과 리스트
 	public ArrayList<GenRegDTO> listPrimaryGenReg(GenRegDTO gen_reg);
@@ -39,12 +42,12 @@ public interface IGenRegDAO
 									   , @Param("end") int end
 			                           , @Param("searchKey") String searchKey
 			                           , @Param("searchValue") String searchValue
-			                           , @Param("currentOnly") String currentOnly);
+			                           , @Param("currentOnly") Boolean currentOnly);
 	
 	// [관리자] 시터 근무 등록 내역 목록 개수 확인
 	public int adminCountSitGenReg(@Param("searchKey") String searchKey
 			                , @Param("searchValue") String searchValue
-			                , @Param("currentOnly") String currentOnly);
+			                , @Param("currentOnly") Boolean currentOnly);
 	
 	//[관리자] 시터 근무 등록 상세내역 조회
 	public GenRegDTO adminSitGenRegDetail(String gen_reg_id);
