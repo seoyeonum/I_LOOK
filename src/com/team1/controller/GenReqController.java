@@ -4,6 +4,10 @@
 
 package com.team1.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
@@ -269,7 +272,7 @@ public class GenReqController
 		return result;
 	}
 	
-	@RequestMapping(value="/genReqInsertForm.action", method = RequestMethod.GET)
+	@RequestMapping(value="/gereqinsertform.action", method = RequestMethod.GET)
 	public String genReqInsertForm(@RequestParam("genRegId") String genRegId
 								 , Model model, HttpSession session )
 	{
@@ -330,11 +333,27 @@ public class GenReqController
 		
 		//--------------------------------------------------
 		
-		// 현 시점 일반 돌봄 시급 조회
-		
-		
+		// 현 시점 일반 돌봄 기본급 조회
+		IGradesDAO gradesDao = sqlSession.getMapper(IGradesDAO.class);
+		int genWage = gradesDao.searchGenWageLately();
 		
 		// 시터 등급에 따른 등급 배수 조회
+		String sitGradeName = genDetail.getGrade();
+		GradesDTO searchGradeInfo = gradesDao.searchGradeInfo(sitGradeName);
+		double gradePay = searchGradeInfo.getGrade_pay();
+		
+		// 1일 돌봄 비용 계산(기본급 * 등급 배수 * 수수료)
+		int sum = (int) Math.floor(genWage * gradePay * 1.05);
+		
+		// 총 이용 시간 계산 → 사용자 정의 함수(parseToDate) 활용
+		LocalDate localDateStart = parseToDate(dateStart);
+		LocalDate localDateEnd = parseToDate(dateEnd);
+		
+		long daysBetween = ChronoUnit.DAYS.between(localDateEnd, localDateStart);
+		System.out.println("두 날짜 차이: " + daysBetween + "일");
+		
+		// 총 지불 비용 계산
+		
 		//genDetail.grade
 		// 현 보유 포인트 조회
 		
@@ -402,5 +421,22 @@ public class GenReqController
 	        genReg.setRegionList(regions);  // 각 시터 돌봄 건에 선호 근무 지역 리스트 설정
 	    }
 	}
+	
+	// 날짜 타입 변환 함수
+	public static LocalDate parseToDate(String dateStr)
+	{
+		// 날짜 타입 변환을 위한 formatter 객체 생성
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        try
+        {
+            return LocalDate.parse(dateStr, formatter);
+        }
+        catch (DateTimeParseException e)
+        {
+            System.err.println("날짜 형식이 잘못되었습니다: " + dateStr);
+            return null;
+        }
+    }
 	
 }

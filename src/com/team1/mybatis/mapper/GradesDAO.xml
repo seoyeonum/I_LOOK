@@ -12,6 +12,14 @@
 		FROM GRADES
 	</select>
 	
+	<!-- (등급명으로) 특정 등급 목록 조회  -->
+	<select id="searchGradeInfo" resultType="com.team1.dto.GradesDTO">
+		SELECT GRADE_ID, NAME, MIN_RANGE, MAX_RANGE, GRADE_PAY
+		     , FILE_PATH, DAILY_MAX_TIME, CHANGED_DATE
+		FROM GRADES
+		WHERE NAME = #{name}
+	</select>
+	
 	<!-- 등급 데이터 추가 --> 
 	<insert id="addGrade" parameterType="com.team1.dto.GradesDTO">
     	INSERT INTO GRADES 
