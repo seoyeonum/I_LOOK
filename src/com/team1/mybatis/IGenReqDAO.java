@@ -24,4 +24,5 @@ public interface IGenReqDAO
 	
 	// 특정 아이디의 예약 등록건 찾기
 	public int search (GenReqDTO gen_req);
+	
 }
