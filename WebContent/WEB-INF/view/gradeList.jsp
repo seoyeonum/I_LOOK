@@ -19,6 +19,14 @@
 		{
 			$(location).attr("href", "gradeupdateform.action?grade_id=" + $(this).val());
 		});
+		
+		$(".delete-btn").click(function()
+		{
+			if (confirm("정말 삭제하시겠습니까?")) 
+		    {
+		        $(location).attr("href", "gradedelete.action?grade_id=" + $(this).val());
+		    }
+		});
 	});
 
 </script>
@@ -83,7 +91,7 @@
 						</div>
 						<div class="info-cell">
 							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
+								<button type="button" class="btn delete-btn" value="${grade.grade_id }">삭제</button>
 							</div>
 						</div>
 					</div>

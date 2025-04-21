@@ -29,6 +29,14 @@
 		WHERE GRADE_ID = #{grade_id}
 	</update>
 	
+	<!-- 등급 목록 검색  -->
+	<select id="searchGrade" resultType="com.team1.dto.GradesDTO">
+		SELECT GRADE_ID, NAME, MIN_RANGE, MAX_RANGE, GRADE_PAY
+		     , FILE_PATH, DAILY_MAX_TIME, CHANGED_DATE
+		FROM GRADES
+		WHERE GRADE_ID = #{grade_id}
+	</select>
+	
 	<!-- 등급 삭제 -->
 	<delete id="removeGrade">
 		DELETE

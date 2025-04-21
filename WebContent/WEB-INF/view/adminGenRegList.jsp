@@ -76,8 +76,10 @@
 								<div class="info-cell">${genRegList.name }</div>
 								<div class="info-cell">${fn:substring(genRegList.start_date, 0, 10) }</div>
 								<div class="info-cell">${fn:substring(genRegList.end_date, 0, 10) }</div>
-								<div class="info-cell">${genRegList.start_time }</div>
-								<div class="info-cell">${genRegList.end_time }</div>
+								<c:set var="startTime" value="${genRegList.start_time}" />
+								<c:set var="endTime" value="${genRegList.end_time}" />
+								<div class="info-cell">${startTime lt 10 ? '0' : ''}${startTime}:00</div>
+								<div class="info-cell">${endTime lt 10 ? '0' : ''}${endTime}:00</div>
 								<div class="info-cell">${genRegList.sit_backup_id }</div>
 								<div class="info-cell">${fn:substring(genRegList.reg_date, 0, 10)}</div>
 								<div class="info-cell">

@@ -363,8 +363,8 @@ public class AdminServiceController
 	            File saveFile = new File(uploadDir, fileName);
 	            uploadFile.transferTo(saveFile);
 	            
-	            System.out.println("업로드된 파일 이름: " + fileName);
-	            System.out.println("업로드된 파일 경로 : " + uploadDir);
+	            //System.out.println("업로드된 파일 이름: " + fileName);
+	            //System.out.println("업로드된 파일 경로 : " + uploadDir);
 	            // 파일 경로를 DTO의 file_path에 설정
 	            grade.setFile_path("images/grades/" + fileName);
 	        }
@@ -377,13 +377,106 @@ public class AdminServiceController
 	    catch (Exception e)
 	    {
 	        System.out.println("파일 업로드 중 오류 발생: " + e.getMessage());
-	        throw e;
 	    }
 		
 		return result;
 	}
 	
 	// 등급 수정 폼으로 이동 및 데이터 전송
+	@RequestMapping(value = "/gradeupdateform.action", method = RequestMethod.GET)
+	public String updateForm(String grade_id, Model model, HttpSession session)
+	{
+		// 관리자 확인 절차
+		if (!isAdmin(session))
+        	return "redirect:/loginform.action";
+        AdminDTO dto = getLoginAdmin(session);
+        model.addAttribute("loginAdmin", dto);
+		        
+		String result = null;
+		
+		IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
+		
+		model.addAttribute("grade", dao.searchGrade(grade_id));
+		
+		result = "WEB-INF/view/gradeUpdateForm.jsp";
+		
+		return result;
+	}
+	
+	// 등급 업데이트
+	@RequestMapping(value = "/gradeupdate.action", method = RequestMethod.POST)
+	public String updateGrade(GradesDTO grade, @RequestParam("uploadFile") MultipartFile uploadFile 
+            			 , HttpServletRequest request, Model model, HttpSession session) throws Exception
+	{
+		// 관리자 확인 절차
+		if (!isAdmin(session))
+        	return "redirect:/loginform.action";
+        AdminDTO dto = getLoginAdmin(session);
+        model.addAttribute("loginAdmin", dto);
+		        
+		String result = null;
+		
+		// 파일 업로드 처리
+		// 업로드 경로 지정 (/WebContent/images/grades/)
+		String uploadDir = request.getServletContext().getRealPath("/images/grades");
+		
+		
+		// 폴더 없으면 해당위치에 폴더 생성
+		File dir = new File(uploadDir);
+		if (!dir.exists())
+			dir.mkdirs();
+		
+		try
+	    {
+	        // Spring의 MultipartFile을 사용하여 파일 처리
+	        if (!uploadFile.isEmpty())
+	        {
+	            // 원본 파일 이름 가져오기
+	            String fileName = uploadFile.getOriginalFilename();
+	            
+	            // 파일 저장
+	            File saveFile = new File(uploadDir, fileName);
+	            uploadFile.transferTo(saveFile);
+	            
+				
+				  // System.out.println("업로드된 파일 이름: " + fileName);
+				  // System.out.println("업로드된 파일 경로 : " + uploadDir);
+				  // 파일 경로를 DTO의 file_path에 설정
+	            grade.setFile_path("images/grades/" + fileName);
+	        }
+	        
+	        IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
+	        dao.modifyGrade(grade);
+	        
+	        result = "redirect:gradelist.action";
+	    }
+	    catch (Exception e)
+	    {
+	        System.out.println("파일 업로드 중 오류 발생: " + e.getMessage());
+	    }
+		
+		return result;
+	}
+	// 등급 삭제
+	@RequestMapping(value = "/gradedelete.action", method = RequestMethod.GET)
+	public String gradeDelete(String grade_id, Model model, HttpSession session)
+	{
+		// 관리자 확인 절차
+		if (!isAdmin(session))
+        	return "redirect:/loginform.action";
+        AdminDTO dto = getLoginAdmin(session);
+        model.addAttribute("loginAdmin", dto);
+		        
+		String result = null;
+	    
+		IGradesDAO dao = sqlSession.getMapper(IGradesDAO.class);
+		
+		dao.removeGrade(grade_id);
+		
+		result = "redirect:gradelist.action";
+		
+		return result;
+	}
 	
 	
 	
