@@ -4,6 +4,12 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team1.mybatis.ISitCertDAO">
+	
+	<!-- 자격증 범례 열람 -->
+	<select id="listCertType" resultType="com.team1.dto.SitCertDTO">
+	 	SELECT CERT_TYPE_ID, TYPE
+		FROM CERT_TYPES
+ 	</select>
 
  	<insert id="addCert"> <!-- public int addCert(SitCertDTO sitcert); -->
 	 	INSERT INTO CERT_REG(CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID)
@@ -32,6 +38,17 @@
 	 	SELECT CERT_TYPE_ID, FILE_PATH
 		FROM CERT_REG
 		WHERE SIT_REG_ID = #{sit_reg_id}
+ 	</select>
+ 	
+ 	<select id="listSitCert" resultType="java.lang.String">
+ 		SELECT CT.TYPE
+		FROM SIT_BACKUP S JOIN SIT_REG SR
+		ON S.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
+		    JOIN CERT_REG CR
+		    ON SR.SIT_REG_ID = CR.SIT_REG_ID
+		        JOIN CERT_TYPES CT
+		        ON CR.CERT_TYPE_ID = CT.CERT_TYPE_ID
+		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
  	</select>
  	
  	<!-- 시터가 보유한 자격증 목록 확인 -->

@@ -5,9 +5,13 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
+import java.util.Map;
+=======
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+>>>>>>> develop
 
 import com.team1.dto.GenRegDTO;
 
@@ -37,6 +41,18 @@ public interface IGenRegDAO
 	// (부모가 보는) 1차 필터 결과 리스트 건수
 	public int countPrimaryGenReg(GenRegDTO gen_reg);
 	
+	// (부모가 보는) 2차 필터 결과 리스트
+	public ArrayList<GenRegDTO> listSecondaryGenReg(Map<String, Object> params);
+	
+	// (근무 등록 건별) 시터 선호 근무 지역
+	public ArrayList<String> listSitPreferedRegion(String gen_reg_id);
+	
+	// (근무 등록 건별) 시터 선호 돌봄 연령대
+	public ArrayList<String> listSitPreferedAge(String gen_reg_id);
+	
+	// (근무 등록 건별) 상세 근무 정보 조회
+	public GenRegDTO searchGenRegDetail(String gen_reg_id);
+	
 	// [관리자] 시터 근무 등록 내역 조회
 	public List<GenRegDTO> adminListSitGenReg(@Param("start") int start
 									   , @Param("end") int end
@@ -51,4 +67,5 @@ public interface IGenRegDAO
 	
 	//[관리자] 시터 근무 등록 상세내역 조회
 	public GenRegDTO adminSitGenRegDetail(String gen_reg_id);
+
 }

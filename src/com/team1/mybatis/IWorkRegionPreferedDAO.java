@@ -25,5 +25,6 @@ public interface IWorkRegionPreferedDAO
 
 	// 시터가 근무 등록 때 근무 지역 삭제
 	public int removeRegions(String gen_reg_id);
+	 
 
 }

@@ -23,6 +23,7 @@
 
 	<!-- 등급 수정 -->
 	<update id="modifyGrade" parameterType="com.team1.dto.GradesDTO">
+		UPDATE GRADES
 		SET NAME=#{name}, MIN_RANGE=#{min_range}, MAX_RANGE=#{max_range}, GRADE_PAY=#{grade_pay}
 	      , FILE_PATH=#{file_path}, DAILY_MAX_TIME=#{daily_max_time}, CHANGED_DATE = SYSDATE
 		WHERE GRADE_ID = #{grade_id}
@@ -66,6 +67,7 @@
 		UPDATE GEN_MIN_WAGE
 		SET GEN_MIN_WAGE=#{gen_min_wage}
 	      , CHANGED_DATE = SYSDATE
+	    WHERE GEN_MIN_WAGE_ID = #{gen_min_wage_id}
 	</update>
 	
 	<!-- 긴급 돌봄 시급 수정 -->
@@ -73,6 +75,7 @@
 		UPDATE EMG_MIN_WAGE
 		SET EMG_MIN_WAGE=#{emg_min_wage}
 		  , CHANGED_DATE = SYSDATE
+	 	WHERE EMG_MIN_WAGE_ID = #{emg_min_wage_id}
 	</update>
 	
 </mapper>
