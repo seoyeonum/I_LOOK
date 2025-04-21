@@ -182,7 +182,7 @@
 					<ul>
 						<li><a href="sitterinfolist.action?sit_backup_id=${list.sit_backup_id }" style="font-weight: bold; color: #1AB223">개인정보 수정</a></li>
 						<li><a href="gradescheck.action?sit_backup_id=${list.sit_backup_id }">등급 확인</a></li>
-						<li><a href="genreginsertform.action?sit_backup_id=${list.sit_backup_id }">근무 등록</a></li>
+						<li><a href="">근무 등록</a></li>
 						<li><a href="genreglist.action?sit_backup_id=${list.sit_backup_id }" >근무 등록 내역 확인</a></li>
 						<li><a href="sittergenreqansweredlist.action?sit_backup_id=${list.sit_backup_id }">돌봄 제공 내역 확인</a></li>
 						<li><a href="carecompletelist.action?sit_backup_id=${list.sit_backup_id }" >돌봄 완료 내역 확인</a></li>

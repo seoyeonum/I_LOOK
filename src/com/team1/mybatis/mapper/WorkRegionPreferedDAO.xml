@@ -14,14 +14,14 @@
  		, R.NAME AS NAME
 		FROM WORK_REGION_PREFERED WROP, REGIONS R
 		WHERE WROP.REGION_ID = R.REGION_ID
-		AND GEN_REG_ID = #{gen_reg_id};
+		AND GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	
  	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listAllRegions(); -->
- 		SELECT REGION_ID, NAME  
-		FROM REGIONS
+ 		SELECT REGION_ID, NAME
+ 		FROM REGIONS
  	</select>
  	
  	

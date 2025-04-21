@@ -6,12 +6,8 @@
  =============================*/
 package com.team1.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,7 +45,7 @@ public class SitterMypageController
 	
 	// 시터 마이 페이지 >> 개인정보 수정 컨트롤러
 	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
-	public String infoList(Model model, String sit_backup_id)
+	public String infoList(Model model)
 	{
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
 		ISitAcctDAO sitAcctDao = sqlSession.getMapper(ISitAcctDAO.class);
@@ -175,76 +171,18 @@ public class SitterMypageController
 	
 	// genRegInsertComplete.jsp로 보내졌고, 그 파일엔 이미 알아서 버튼링크 처리가 되어 있으니 따로 뭘 더 안 만들어도 됨.
 	
-	
 	// 근무 등록 내역 확인 컨트롤러
 	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
 	public String GenRegList(Model model, String sit_backup_id)
 	{
-		// 주소
 		String result = null;
 		
-		// sqlSession 으로 의존성 주입
 		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
-		IWorkRegionPreferedDAO regionDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
 		
-		// 사이드바 이용을 위한 시터 백업 아이디 보내주기
+		model.addAttribute("regList", sitcarelistDao.regList(sit_backup_id));
+		
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
-		// 근무 등록 내역 리스트 보내주기 >> 
-		// SIT_BACKUP_ID, GEN_REG_ID, GEN_REQ_ID, REG_DATE, 
-		// TITLE, SIT_START_DATE, SIT_END_DATE, SIT_START_TIME, SIT_END_TIME,
-		// INTRODUCTION
-		model.addAttribute("regList", sitcarelistDao.regList(sit_backup_id));
-
-		/*------------------------------------------------------------------------------------
-		// 저 메소드에는 지역이 없다. 따라서 근무 등록 아이디를 가져오기 위해 이터레이터를 써서 아이디를 하나씩 뽑아냈다.
-		// 또한 근무 등록 아이디를 담아올 ArrayList를 만들었다. 
-		ArrayList<String> genRegId = new ArrayList<String>();
-		while (sitcarelistDao.regList(sit_backup_id).iterator().hasNext())
-		{
-			// 그걸 ArrayList<String>에 담을 것이다. 
-			SitCareListDTO sCListdto = (SitCareListDTO) sitcarelistDao.regList(sit_backup_id).iterator().next();
-			
-			// ORDER BY GREG.REG_DATE DESC 이니, 이 순서대로 담겼을 것이다. 
-			// 따라서 지역 리스트를 뽑아오는 쿼리도 같은 방식으로 정렬해야 옳게 나올 것이다. 
-			genRegId.add(sCListdto.getGen_reg_id());
-		}
-		// 메소드에 지역이 없어서 근무 등록 아이디를 주면 
-		// 근무 등록 1건의 지역 ID와, 이름 리스트를 WorkRegionPrefered에 담아 가져오는 쿼리를 WorkRegionPreferedDAO와 IWorkRegionPreferedDAO에 추가했다.  
-		
-		// 시터가 선택한 근무 지역 보내주기
-		---------------------------------------------------------------------------------------*/
-		
-		// 를 하려고 했으나.......복수선택된 지역을 한 행으로 압축시킬 수가 없어 지역을 하나만 선택하게끔 페이지를 변경했다.
-		// 그래도 어쨌든 gen_reg_id는 필요하니 확인한다. 
-		ArrayList<String> genRegId = new ArrayList<String>();
-		while (sitcarelistDao.regList(sit_backup_id).iterator().hasNext())
-		{
-			// 그걸 ArrayList<String>에 담을 것이다. 
-			SitCareListDTO sCListdto = (SitCareListDTO) sitcarelistDao.regList(sit_backup_id).iterator().next();
-			
-			// ORDER BY GREG.REG_DATE DESC 이니, 이 순서대로 담겼을 것이다. 
-			// 따라서 지역 리스트를 뽑아오는 쿼리도 같은 방식으로 정렬해야 옳게 나올 것이다. 
-			genRegId.add(sCListdto.getGen_reg_id());
-		}
-		
-		// 이제 gen_reg_id 묶음이 생겼다. 여기서 하나씩 꺼내서 WorkRegionPreferdDTO 묶음을 만들자. 
-		// WorkRegionPreferedDTO 묶음 생성
-		ArrayList<WorkRegionPreferedDTO> wRPdto = new ArrayList<WorkRegionPreferedDTO>();
-		
-		// genRegId(ArrayList<String>)에서 하나씩 꺼내기
-		while (genRegId.iterator().hasNext())
-		{
-			// 그걸 문자열로 만들기
-			String gen_reg_id = (String) genRegId.iterator().next();
-			// 이제 그걸 다시 또 ArrayList<WorkRegionPreferdDTO>에 넣기
-			wRPdto.add(regionDao.listRegions(gen_reg_id));
-		} 
-		
-		// 다 넣었으면 그걸 모델로 보내기.
-		model.addAttribute("wRPdtoList", wRPdto);
-		
-		// 주소 지정
 		result = "/WEB-INF/view/GenRegList.jsp";
 		return result;
 	}
@@ -260,7 +198,6 @@ public class SitterMypageController
 		// 두 개 필요하니 다시 보냄
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		model.addAttribute("gen_req_id", gen_req_id);
-		
 		// 정보 보냄
 		model.addAttribute("reqDetail", IsclDao.regDetailedList(gen_req_id));
 		
@@ -315,35 +252,13 @@ public class SitterMypageController
 	}
 	
 	
-	
 	// 돌봄 제공 내역 확인 컨트롤러
 	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
 	public String AnswerList(Model model, String sit_backup_id) 
 	{
-		String result = null;
-		
-		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
-		
-		// 돌봄 제공 내역 확인 메소드 사용 >> 
-		model.addAttribute("answerList", sitcarelistDao.answerList(sit_backup_id));
-		
-		model.addAttribute("sit_backup_id", sit_backup_id);
-		
-		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
-		
-		return result;
+		return "/WEB-INF/view/ParGenReqDetail.jsp";
 	}
 	
-	// 돌봄 제공 내역 확인 >> 자기소개서 자세히 보기 클릭 >> 새창으로 나오는 자기소개
-	@RequestMapping(value = "/sitterregintroduction.action", method = RequestMethod.GET)
-	public String SitterRegIntroduction(@RequestParam("gen_reg_id") String gen_reg_id, Model model)
-	{
-		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
-		
-		model.addAttribute("register", genRegDao.regList(gen_reg_id));
-		
-		return "/WEB-INF/view/SitterRegIntroduction.jsp";
-	}
 	
 	// 돌봄 제공 내역 확인 상세 정보 새창 처리 컨트롤러
 	// 돌봄 완료 내역 확인 + 돌봄 제공 내역 확인 >> 일반 돌봄 클릭 >> 상세 정보 버튼 클릭 >> 새창으로 나오는 상세 정보.
@@ -358,15 +273,13 @@ public class SitterMypageController
 		return "/WEB-INF/view/ParGenReqDetail.jsp";
 	}
 	
-	
-	// 돌봄 완료 내역 띄우기
+	// 돌봄 완료 내역 확인 띄우기
 	@RequestMapping(value = "/carecompletelist.action", method = RequestMethod.GET)
-	public String CareCompleteList(Model model, String sit_backup_id)
+	public String CareCompleteList(Model model, String gen_req_id)
 	{
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
-		model.addAttribute("completeList", sitCareListDao.genCompleteList(sit_backup_id));
-		model.addAttribute("sit_backup_id", sit_backup_id);
+		model.addAttribute("completeList", sitCareListDao.genCompleteList(gen_req_id));
 		
 		
 		return "/WEB-INF/view/CareCompleteList.jsp";

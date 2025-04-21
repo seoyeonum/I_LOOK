@@ -15,11 +15,22 @@ String cp = request.getContextPath();
 
 	$(document).ready(function()
 	{
+		// 비밀번호 마스킹
+		$(".pw").each(function() 
+		{
+	        var pw = $(this).data("pw");
+	        if (pw.length >= 1) 
+	        {
+	            var maskedPw = pw.substring(0, 1) + "*".repeat(pw.length - 1);
+	            $(this).val(maskedPw);
+	        }
+	    });
+		
+		// 업데이트 폼으로 이동
 		$(".update-btn").click(function()
 		{
 			$(location).attr("href", "admininfoupdateform.action?admin_reg_id=" + $(this).val());
 		});
-		
 	});
 
 </script>
@@ -56,7 +67,8 @@ String cp = request.getContextPath();
 					<div class="info-row">
 						<div class="info-header">비밀번호</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${admin.pw }" readonly>
+							<input type="text" class="info-input pw" data-pw="${admin.pw}" id="pw_${admin.admin_reg_id}" readonly>
+
 						</div>
 					</div>
 					

@@ -28,7 +28,7 @@ public class AdminMainController
         if (!isAdmin(session))
         	return "redirect:/loginform.action";
         AdminDTO dto = getLoginAdmin(session);
-        model.addAttribute("admin", dto);
+        model.addAttribute("loginAdmin", dto);
 	
 		result = "WEB-INF/view/adminMain.jsp";
 		
@@ -44,7 +44,7 @@ public class AdminMainController
 		if (!isAdmin(session))
         	return "redirect:/loginform.action";
         AdminDTO dto = getLoginAdmin(session);
-        model.addAttribute("admin", dto);
+        model.addAttribute("loginAdmin", dto);
 		
 		IAdminDAO admin = sqlSession.getMapper(IAdminDAO.class);
 		
