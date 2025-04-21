@@ -6,20 +6,21 @@ import java.util.List;
 
 public class GenRegDTO
 {
-	// GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE
+	// GEN_REG_ID, SIT_BACKUP_ID, TITLE, START_DATE, END_DATE, NAME, FILE_PATH
 	// START_TIME, END_TIME
 	// REG_DATE, INTRODUCTION
 	
 	// 주요 속성 구성 	
-	// 근무 등록 코드, 시터 백업 코드, 제목 
-	private String gen_reg_id, sit_backup_id, title;
+	// 근무 등록 코드, 시터 백업 코드, 제목, 시터 이름, 시터 사진 
+	private String gen_reg_id, sit_backup_id, title, name, file_path, sit_reg_id;
+	
 	// 근무 시작 가능 날짜, 근무 종료 가능 날짜, 근무 등록 날짜, 자기소개
 	private String start_date, end_date, reg_date, introduction;
 	// 근무 시작 가능 시간, 근무 
 	private int start_time, end_time;
 	
 	// 속성 추가
-	private String name, gender, age, grade;			//-- 시터 이름, 성별, 연령대, 시터 등급
+	private String gender, age, grade;					//-- 성별, 연령대, 시터 등급
 	private String photo_file_path, grade_file_path;	//-- 시터 사진 저장경로, 등급 이미지 저장경로 
 	private double avg_rating, recent_avg_rating;		//-- 전체 평점, 최근 전체 평점
 	private int review_count, recent_review_count;		//-- 전체 리뷰 건수, 최근 리뷰 건수
@@ -111,6 +112,7 @@ public class GenRegDTO
 	{
 		this.name = name;
 	}
+
 	public String getGender() {
 		return gender;
 	}
@@ -201,6 +203,21 @@ public class GenRegDTO
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	
+	public String getFile_path()
+	{
+		return file_path;
+	}
+	public void setFile_path(String file_path)
+	{
+		this.file_path = file_path;
+	}
+	public String getSit_reg_id()
+	{
+		return sit_reg_id;
+	}
+	public void setSit_reg_id(String sit_reg_id)
+	{
+		this.sit_reg_id = sit_reg_id;
+	}
 	
 }

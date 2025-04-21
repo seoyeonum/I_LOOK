@@ -5,25 +5,81 @@
 
 <mapper namespace="com.team1.mybatis.ISitRejectDAO">
 
- 	<select id="listSitRej" resultType="com.team1.dto.SitRejectDTO"> <!-- // [관리자] 승인 거절 내역 리스트 확인 public ArrayList<SitRejectDTO> listSitRej(); -->
- 		SELECT SREG.NAME, SREG.TEL, SREG.SIT_REG_ID, SBAC.REG_DATE, SREJ.REJECTED_DATE, SRRE.REASON
-		FROM SIT_REJECTED SREJ, SIT_REJECTED_REASONS SRRE, SIT_BACKUP SBAC, SIT_REG SREG
-		WHERE SBAC.SIT_BACKUP_ID = SREJ.SIT_BACKUP_ID
-		AND SBAC.SIT_BACKUP_ID = SREG.SIT_BACKUP_ID
-		AND SREJ.SIT_REJECTED_REASON_ID = SRRE.SIT_REJECTED_REASON_ID
- 	</select>
- 	
- 	<select id="countSitRej" resultType="java.lang.Integer"> <!-- // [관리자] 승인 거절 명수 확인 -->
- 		SELECT COUNT(*) AS COUNT
+	<!-- 시터 승인 거절 내역 목록 -->
+ 	<select id="listSitRej" resultType="com.team1.dto.SitRejectDTO">
+	    SELECT *
+	    FROM (
+	        SELECT R.*, ROWNUM RN
+	        FROM (
+	            SELECT SREG.NAME AS NAME
+	                 , SREG.TEL AS TEL
+	                 , SREG.SIT_REG_ID AS SIT_REG_ID
+	                 , SBAC.REG_DATE AS REG_DATE
+	                 , SREJ.REJECTED_DATE AS REJECTED_DATE
+	                 , SRRE.REASON AS REASON
+	            FROM SIT_REJECTED SREJ
+	            JOIN SIT_BACKUP SBAC ON SBAC.SIT_BACKUP_ID = SREJ.SIT_BACKUP_ID
+	            JOIN SIT_REG SREG ON SBAC.SIT_BACKUP_ID = SREG.SIT_BACKUP_ID
+	            JOIN SIT_REJECTED_REASONS SRRE ON SREJ.SIT_REJECTED_REASON_ID = SRRE.SIT_REJECTED_REASON_ID
+	            WHERE NOT EXISTS 
+	            (SELECT 1
+                   FROM SIT_CHK C
+                  WHERE C.SIT_BACKUP_ID = SBAC.SIT_BACKUP_ID)
+	            <if test="searchKey != null and searchValue != null and searchValue != ''">
+	                <if test="searchKey == 'name'">
+	                    AND SREG.NAME LIKE '%' || #{searchValue} || '%'
+	                </if>
+	                <if test="searchKey == 'tel'">
+	                    AND SREG.TEL LIKE '%' || #{searchValue} || '%'
+	                </if>
+	            </if>
+	            ORDER BY SREJ.REJECTED_DATE DESC
+	        ) R
+	    )
+	    WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+
+ 	<!-- [관리자] 승인 거절 명수 확인 -->
+ 	<select id="countSitRej" resultType="java.lang.Integer"> 
+		SELECT COUNT(*) AS COUNT
 		FROM SIT_REJECTED
- 	</select>
- 	
+		WHERE 1=1
+		<if test="searchKey != null and searchValue != null and searchValue != ''">
+			<if test="searchKey == 'name'">
+                AND NAME LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchKey == 'tel'">
+                AND TEL LIKE '%' || #{searchValue} || '%'
+            </if>
+		</if>
+	</select>
  	
  	<insert id="rejectSit"> <!-- // [관리자] 승인 거절 -->
  		INSERT INTO SIT_REJECTED(SIT_REJECTED_ID, SIT_BACKUP_ID, SIT_REJECTED_REASON_ID)
-		VALUES(#{sit_rejected_id}, #{sit_backup_id}, #{sit_rejected_reason_id})
+		VALUES('SREJ' || LPAD(SEQ_SREJ.NEXTVAL, 4, '0'), #{sit_backup_id}, #{sit_rejected_reason_id})
  	</insert>
  	
+ 	<!-- 시터 백업코드로 거절내역 조회 -->
+ 	<select id="searchRejectedReasonsList" resultType="com.team1.dto.SitRejectDTO">
+ 		SELECT SR.SIT_REJECTED_ID AS SIT_REJECTED_ID
+		     , SB.SIT_BACKUP_ID AS SIT_BACKUP_ID, R.SIT_REG_ID AS SIT_REG_ID
+		     , RR.SIT_REJECTED_REASON_ID AS SIT_REJECTED_REASON_ID
+		     , RR.REASON AS SRASON, SB.REG_DATE AS REG_DATE, SR.REJECTED_DATE
+		FROM SIT_REJECTED SR
+		JOIN SIT_REJECTED_REASONS RR
+		ON RR.SIT_REJECTED_REASON_ID = SR.SIT_REJECTED_REASON_ID
+		JOIN SIT_BACKUP SB
+		ON SR.SIT_BACKUP_ID = SB.SIT_BACKUP_ID
+		JOIN SIT_REG R
+		ON SB.SIT_BACKUP_ID = R.SIT_BACKUP_ID
+		WHERE SR.SIT_BACKUP_ID = #{sit_backup_id}
+ 	</select>
  	
+ 	<!-- 거절 사유 리스트 조회 -->
+ 	<select id="listRejectedReasons" resultType="com.team1.dto.SitRejectDTO">
+		SELECT SIT_REJECTED_REASON_ID, REASON
+		FROM SIT_REJECTED_REASONS
+		WHERE SIT_REJECTED_REASON_ID != '006'
+ 	</select>
  	
 </mapper>

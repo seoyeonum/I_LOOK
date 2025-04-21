@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+	String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -63,19 +63,19 @@ String cp = request.getContextPath();
 								<div class="info-cell">
 									<div class="action-buttons">
 										<button type="button" class="btn detail-btn"
-											onclick="location.href='<%=cp %>/adminsitregdetail.action?sit_reg_id=${sitReg.sit_reg_id}'">상세보기</button>
+											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_reg_id=${sitReg.sit_reg_id}&source=req'">상세보기</button>
+											
 									</div>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
 
-					<!-- 페이징 영역 -->
+					<!-- 페이지 영역 -->
 					<div class="page">
 						<c:if test="${paging.totalPage >= 1}">
 							<c:if test="${paging.startPage > 1}">
-								<a href="adminsitreglist.action?page=${paging.startPage-1}
-									&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
+								<a href="adminsitreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
 							</c:if>
 
 							<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
@@ -91,7 +91,7 @@ String cp = request.getContextPath();
 							</c:forEach>
 
 							<c:if test="${paging.endPage < paging.totalPage}">
-								<a href="adminsitreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&gt;</a>
+								<a href="adminsitreglist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}"> > </a>
 							</c:if>
 						</c:if>
 					</div>

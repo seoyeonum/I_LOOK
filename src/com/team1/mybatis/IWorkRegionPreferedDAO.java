@@ -16,8 +16,8 @@ public interface IWorkRegionPreferedDAO
 	
 	// 근무 지역 전체 열람
 	public ArrayList<WorkRegionPreferedDTO> listAllRegions();
-
-	// 시터가 근무 등록 때 근무 지역 추가
+	
+	// 근무 지역 추가
 	public int addRegions(WorkRegionPreferedDTO regions);
 
 	// 시터가 근무 등록 때 근무 지역 수정

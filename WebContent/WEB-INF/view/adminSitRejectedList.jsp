@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -27,12 +28,13 @@ String cp = request.getContextPath();
 					<h1 class="content-title">시터 등록 거절 내역</h1>
 
 					<div class="search-form">
-						<form action="" name="searchForm" method="post">
+						<form action=adminsitrejectedlist.action name="searchForm" method="get">
 							<select name="searchKey" class="selectFiled">
-								<option value="sitterName">이름</option>
-							</select> <input type="text" name="searchValue" class="txt" value="">
-							<input type="button" value="검색" class="btn search-btn"
-								onclick="sendIt()">
+								<option value="name" ${searchKey == 'name' ? 'selected' : ''}>이름</option>
+      							<option value="tel" ${searchKey == 'tel' ? 'selected' : ''}>연락처</option>
+							</select> 
+							<input type="text" name="searchValue" class="txt" value="${searchValue }">
+						    <input type="submit" value="검색" class="btn search-btn">
 						</form>
 					</div>
 				</div>
@@ -51,40 +53,49 @@ String cp = request.getContextPath();
 						</div>
 
 						<!-- 예시 데이터 -->
-						<div class="info-row-reject">
-							<div class="info-cell">1</div>
-							<div class="info-cell">정하영</div>
-							<div class="info-cell">010-1111-2222</div>
-							<div class="info-cell">REQ00001</div>
-							<div class="info-cell">2025-04-01</div>
-							<div class="info-cell">2025-04-03</div>
-							<div class="info-cell">서류 미비</div>
-							<div class="info-cell">
-                            <div class="action-buttons">
-                               <button type="button" class="btn detail-btn" onclick="location.href='adminSitRegDetail.jsp?id=123&source=reject'">상세 보기</button>
-                            </div>
-                        </div>
-						</div>
-
-						<div class="info-row-reject">
-							<div class="info-cell">2</div>
-							<div class="info-cell">김경희</div>
-							<div class="info-cell">010-3333-4444</div>
-							<div class="info-cell">REQ00002</div>
-							<div class="info-cell">2025-04-02</div>
-							<div class="info-cell">2025-04-05</div>
-							<div class="info-cell">잘못된 정보 입력</div>
-							<div class="info-cell">
-	                            <div class="action-buttons">
-	                               <button type="button" class="btn detail-btn" onclick="location.href='adminSitRegDetail.jsp?id=123&source=reject'">상세 보기</button>
-	                            </div>
-	                        </div>	
-						</div>
+						<c:forEach var="sitReject" items="${sitRejectList }" varStatus="status">
+							<div class="info-row-reject">
+								<div class="info-cell">${paging.startNum - status.index}</div>
+								<div class="info-cell">${sitReject.name }</div>
+								<div class="info-cell">${sitReject.tel }</div>
+								<div class="info-cell">${sitReject.sit_reg_id }</div>
+								<div class="info-cell">${fn:substring(sitReject.reg_date, 0, 10)}</div>
+								<div class="info-cell">${fn:substring(sitReject.rejected_date, 0, 10)}</div>
+								<div class="info-cell">${sitReject.reason }</div>
+								<div class="info-cell">
+									<div class="action-buttons">
+										<button type="button" class="btn detail-btn"
+											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_reg_id=${sitReject.sit_reg_id}&source=reject'">상세보기</button>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+						
 					</div>
 
-					<!-- 페이징 영역 -->
+					<!-- 페이지 영역 -->
 					<div class="page">
-						<p>1 Prev 21 22 23 24 25 26 27 28 29 30 Next 42</p>
+						<c:if test="${paging.totalPage >= 1}">
+							<c:if test="${paging.startPage > 1}">
+								<a href="adminsitrejectedlist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
+							</c:if>
+
+							<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
+								<c:choose>
+									<c:when test="${p == paging.page}">
+										<strong>${p}</strong>
+									</c:when>
+									<c:otherwise>
+										<a href="adminsitrejectedlist.action?page=${p}
+											&searchKey=${searchKey}&searchValue=${searchValue}">${p}</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+							<c:if test="${paging.endPage < paging.totalPage}">
+								<a href="adminsitrejectedlist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}"> > </a>
+							</c:if>
+						</c:if>
 					</div>
 				</div>
 			</main>

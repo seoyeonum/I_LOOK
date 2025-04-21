@@ -8,30 +8,29 @@
  	<!-- - 시터 선호 근무 지역 데이터 자료형 클래스 -->
  	
  	<select id="listRegions" resultType="com.team1.dto.WorkRegionPreferedDTO"> <!-- public ArrayList<WorkRegionPreferedDTO> listRegions(); -->
- 		SELECT WROP.WORK_REGION_PREFERED_ID AS WORK_REGION_PREFERED_ID, WROP.REGION_ID AS REGION_ID, WROP.GEN_REG_ID AS GEN_REG_ID, R.NAME AS NAME
+ 		SELECT WROP.WORK_REGION_PREFERED_ID AS WORK_REGION_PREFERED_ID
+ 		, WROP.REGION_ID AS REGION_ID
+ 		, WROP.GEN_REG_ID AS GEN_REG_ID
+ 		, R.NAME AS NAME
 		FROM WORK_REGION_PREFERED WROP, REGIONS R
 		WHERE WROP.REGION_ID = R.REGION_ID
-		AND GEN_REG_ID = #{gen_reg_id};
+		AND GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	
  	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listAllRegions(); -->
- 		SELECT REGION_ID, NAME  
-		FROM REGIONS
+ 		SELECT REGION_ID, NAME
+ 		FROM REGIONS
  	</select>
  	
- 	
- 	<insert id="addRegions"> <!-- public int addRegions(WorkRegionPreferedDTO regions); -->
- 	<selectKey keyProperty="work_region_prefered_id"
-               resultType="String"
-               order="BEFORE">
-      SELECT 'SWOR' || LPAD(SEQ_SWOR.NEXTVAL, 4, '0') FROM DAUL
+ 	<insert id="addRegions" parameterType="com.team1.dto.WorkRegionPreferedDTO"> <!-- public int addRegions(WorkRegionPreferedDTO regions); -->
+ 	<selectKey keyProperty="work_region_prefered_id" resultType="String" order="BEFORE">
+      SELECT 'SWOR' || LPAD(SEQ_SWOR.NEXTVAL, 4, '0') FROM DUAL
 	</selectKey>
 	 	INSERT INTO WORK_REGION_PREFERED(WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID)
 		VALUES(#{work_region_prefered_id}, #{region_id}, #{gen_reg_id})
  	</insert>
- 	
  	
  	<update id="modifyRegions"> <!-- public int modifyRegions(WorkRegionPreferedDTO regions); -->
 	 	UPDATE WORK_REGION_PREFERED

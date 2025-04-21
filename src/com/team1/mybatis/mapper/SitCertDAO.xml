@@ -51,4 +51,21 @@
 		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
  	</select>
  	
+ 	<!-- 시터가 보유한 자격증 목록 확인 -->
+ 	<select id="search" resultType="com.team1.dto.SitCertDTO">
+	 	SELECT C.CERT_REG_ID AS CERT_REG_ID
+		     , C.CERT_TYPE_ID AS CERT_TYPE_ID
+		     , T.TYPE AS TYPE
+		     , C.FILE_PATH AS FILE_PATH
+		     , C.REG_DATE AS REG_DATE
+		FROM CERT_REG C
+		JOIN SIT_REG S 
+		  ON C.SIT_REG_ID = S.SIT_REG_ID
+		JOIN CERT_TYPES T 
+		  ON C.CERT_TYPE_ID = T.CERT_TYPE_ID
+		WHERE C.SIT_REG_ID = #{sit_reg_id}
+		ORDER BY C.REG_DATE DESC
+ 	</select>
+ 	
+ 	
 </mapper>
