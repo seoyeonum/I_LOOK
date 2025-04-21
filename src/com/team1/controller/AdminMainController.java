@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.team1.mybatis.IAdminDAO;
 
 @Controller
-public class adminMainController
+public class AdminMainController
 {
 
 	@Autowired

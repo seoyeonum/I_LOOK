@@ -30,6 +30,6 @@ public class ChildUpdateFormController
         model.addAttribute("allergies", dao.getAllergyTypes());
         model.addAttribute("medicals", dao.getMedicalTypes());
 
-        return "ChildUpdateForm";  // /WEB-INF/view/ChildUpdateForm.jsp
+        return "/WEB-INF/view/ChildUpdateForm.jsp";  // /WEB-INF/view/ChildUpdateForm.jsp
     }
 }

@@ -23,6 +23,6 @@ public class ChildInsertFormController
         model.addAttribute("allergies", dao.getAllergyTypes());
         model.addAttribute("medicals", dao.getMedicalTypes());
 
-        return "ChildInsertForm"; // ViewResolver가 "/WEB-INF/view/ChildInsertForm.jsp"로 연결
+        return "/WEB-INF/view/ChildInsertForm.jsp"; // ViewResolver가 "/WEB-INF/view/ChildInsertForm.jsp"로 연결
     }
 }

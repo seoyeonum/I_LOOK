@@ -31,6 +31,6 @@ public class ChildUpdateController
         model.addAttribute("medicals", dao.getMedicalTypes());
         model.addAttribute("updated", true);
 
-        return "ChildUpdateForm";  // 다시 수정 폼으로 돌아오되 최신 데이터 반영
+        return "/WEB-INF/view/ChildUpdateForm.jsp";
     }
 }

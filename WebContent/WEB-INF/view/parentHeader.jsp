@@ -29,7 +29,7 @@
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
             <button type="button" class="menuBtn" id="emg">긴급돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
-            onclick="window.location.href='<%=cp%>/parentmypage.action?id=${id}'">마이페이지</button>
+            onclick="window.location.href='<%=cp%>/parentmypage.action">마이페이지</button>
             <button type="button" class="menuBtn" id="notify-btn">
                 알림함<span id="notify-badge">3</span>
             </button>

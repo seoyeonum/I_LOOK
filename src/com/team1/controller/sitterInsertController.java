@@ -122,7 +122,7 @@ public class sitterInsertController
         }
 
         // 7. 완료 후 로그인 페이지 또는 메인 페이지 이동
-        // return "redirect:/iLook.action";
-        return "redirect:/iLook.action?joined=true";
+        return "redirect:/iLook.action";
+        //return "redirect:/iLook.action?joined=true";
     }
 }

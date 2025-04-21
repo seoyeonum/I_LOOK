@@ -77,7 +77,7 @@
 <div class="container">
     <div class="modify-content">
         <form action="${pageContext.request.contextPath}/childupdate.action" method="post" onsubmit="return confirmUpdate();">
-            <input type="hidden" name="child_reg_id" value="${child.child_backup_id}" />
+            <input type="hidden" name="child_backup_id" value="${child.child_backup_id}" />
 
             <div class="input-field">
                 <label for="name">이름 :</label>

@@ -18,7 +18,7 @@ import com.team1.mybatis.IGradesDAO;
 
 
 @Controller
-public class adminServiceController
+public class AdminServiceController
 {
 
 	@Autowired

@@ -12,7 +12,7 @@ import com.team1.mybatis.IAdminDAO;
 
 
 @Controller
-public class adminInfoController
+public class AdminInfoController
 {
 
 	@Autowired

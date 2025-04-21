@@ -1,65 +1,54 @@
 /* =================
- 	IChildDAO.java
+ IChildDAO.java
 =================== */
 
 package com.team1.mybatis;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.team1.dto.ChildDTO;
 
 public interface IChildDAO
 {
-	/*
-	 * // 아이 등록 및 수정 public int add(ChildDTO child); // CHILD_REG INSERT public int
-	 * modifyByBackupId(ChildDTO child); // CHILD_REG UPDATE by CHILD_BACKUP_ID
-	 * 
-	 * // 아이 삭제 (CHILD_REG, CHILD_BACKUP) public int removeByBackupId(String
-	 * child_backup_id); // CHILD_REG 삭제 public int removeChildBackup(String
-	 * child_backup_id); // CHILD_BACKUP 삭제
-	 * 
-	 * // 부모 아이디로 부모 백업 ID 조회 public String findParId(String id);
-	 * 
-	 * // 부모 기준 아이 전체 목록 조회 public List<ChildDTO> findChildrenByParent(String
-	 * parBackupId);
-	 * 
-	 * // 아이 단일 조회 (CHILD_BACKUP_ID 기준) public ChildDTO findByBackupId(String
-	 * child_backup_id);
-	 * 
-	 * // 아이 백업 등록 public int addChildBackup(ChildDTO child);
-	 * 
-	 * // 아이 지병 public int addDisease(ChildDTO disease); public ArrayList<String>
-	 * searchDisease(String child_backup_id); public int
-	 * removeDiseaseByBackup(String child_backup_id);
-	 * 
-	 * // 아이 알레르기 public int addAllergy(ChildDTO allergy); public ArrayList<String>
-	 * searchAllergy(String child_backup_id); public int
-	 * removeAllergyByBackup(String child_backup_id);
-	 * 
-	 * // 아이 장애 public int addDisability(ChildDTO disability); public
-	 * ArrayList<String> searchDisability(String child_backup_id); public int
-	 * removeDisabilityByBackup(String child_backup_id);
-	 * 
-	 * // 자격/질환/장애 유형 목록 public ArrayList<ChildDTO> getDisabilityTypes(); public
-	 * ArrayList<ChildDTO> getAllergyTypes(); public ArrayList<ChildDTO>
-	 * getMedicalTypes();
-	 */
+    // 아이 등록 및 수정
     public int add(ChildDTO child);
-    public int addChildBackup(ChildDTO child);
-    public int addDisease(ChildDTO disease);
-    public int addAllergy(ChildDTO allergy);
-    public int addDisability(ChildDTO disability);
+    public int modifyByBackupId(ChildDTO child);
 
-    public String findParBackupId(String id);  // ← 핵심: XML에서 이 ID 사용해야 함
+    // 아이 삭제
+    public int removeByBackupId(String child_backup_id);
+    public int removeChildBackup(String child_backup_id);
 
-    public List<ChildDTO> findChildrenByParent(String parBackupId);
+    // 부모 백업 ID 조회 (이름 통일 완료)
+    public String findParBackupId(String id);
+
+    // 아이 이름 목록
+    //public ArrayList<ChildDTO> listName(String parBackupId);
+    public ArrayList<ChildDTO> listName(@Param("parBackupId") String parBackupId);
+
+    // 단일 아이 조회
     public ChildDTO findByBackupId(String child_backup_id);
 
-    public ArrayList<String> searchDisease(String child_backup_id);
-    public ArrayList<String> searchAllergy(String child_backup_id);
-    public ArrayList<String> searchDisability(String child_backup_id);
+    // 아이 백업 등록
+    public int addChildBackup(ChildDTO child);
 
+    // 지병
+    public int addDisease(ChildDTO disease);
+    public ArrayList<String> searchDisease(String child_backup_id);
+    public int removeDiseaseByBackup(String child_backup_id);
+
+    // 알레르기
+    public int addAllergy(ChildDTO allergy);
+    public ArrayList<String> searchAllergy(String child_backup_id);
+    public int removeAllergyByBackup(String child_backup_id);
+
+    // 장애
+    public int addDisability(ChildDTO disability);
+    public ArrayList<String> searchDisability(String child_backup_id);
+    public int removeDisabilityByBackup(String child_backup_id);
+
+    // 유형 목록
     public ArrayList<ChildDTO> getDisabilityTypes();
     public ArrayList<ChildDTO> getAllergyTypes();
     public ArrayList<ChildDTO> getMedicalTypes();
