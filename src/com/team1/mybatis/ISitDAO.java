@@ -26,14 +26,13 @@ public interface ISitDAO
 	// [관리자] 시터 회원 등록 요청 개수 확인
 	public int countSitReg(@Param("searchKey") String searchKey
 			             , @Param("searchValue") String searchValue);
-
 	
 	// [관리자] 전체 시터 회원 명수 확인
 	public int countSit();
 	
 	// 시터 회원가입 요청 코드로 상세정보 조회
 	public SitDTO searchSitDetail(String sit_reg_id);
-
+	
 	// [관리자] 시터 회원 등록 요청
 	public int sitReg(SitDTO dto);
 	

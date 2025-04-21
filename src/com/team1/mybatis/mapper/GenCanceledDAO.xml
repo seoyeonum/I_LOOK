@@ -33,7 +33,11 @@
 	<!-- 1-1.예약 확정 전 취소 내역 -->
 	
 	<!-- 예약 확정 전 취소 내역 추가 -->
-	<insert id="addGenCanceled">
+	<insert id="addGenCanceled" >
+	<selectKey keyProperty="gen_canceled_id" resultType="String" order="BEFORE">
+		SELECT 'GCAN' || TO_CHAR(SEQ_GCAN.NEXTVAL, 4, '0')
+		FROM DUAL
+	</selectKey>
 		<!-- PreparedStatement 작업 객체 활용 형태 -->
 		INSERT INTO GEN_CANCELED (GEN_CANCELED_ID, GEN_PAY_REC_ID, REASON_CANCELED_ID)
 		VALUES (#{gen_canceled_id}, #{gen_pay_rec_id}, #{reason_canceled_id})

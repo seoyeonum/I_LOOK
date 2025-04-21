@@ -10,6 +10,7 @@ public class GenRegDTO
 	// 주요 속성 구성 	
 	// 근무 등록 코드, 시터 백업 코드, 제목, 시터 이름, 시터 사진 
 	private String gen_reg_id, sit_backup_id, title, name, file_path, sit_reg_id;
+	
 	// 근무 시작 가능 날짜, 근무 종료 가능 날짜, 근무 등록 날짜, 자기소개
 	private String start_date, end_date, reg_date, introduction;
 	// 근무 시작 가능 시간, 근무 
