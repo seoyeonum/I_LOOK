@@ -35,7 +35,8 @@
                 알림함
                 <span id="notify-badge">3</span>
             </button>
-            <button type="button" class="menuBtn">로그아웃</button>
+            <button type="button" class="menuBtn"
+            onclick="window.location.href='<%=cp%>/logout.action'">로그아웃</button>
         </nav>
   	</header>
 </div>
