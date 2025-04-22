@@ -15,14 +15,6 @@ String cp = request.getContextPath();
 
 $(document).ready(function()
 {
-	
-	$("#doc1").click(function()
-	{
-	    var imagePath = "<%=cp%>/upload/${adminInfo.profile_img}";  // 저장된 파일 경로
-	    var imageWindow = window.open(imagePath, "_blank");
-		
-	});
-	
 	var ssnFirst = "${parDto.ssn_first}";
     var ssnSecond = "${parDto.ssn_second}";
    	
@@ -30,8 +22,6 @@ $(document).ready(function()
     var maskedSecond = ssnSecond.substring(0, 1) + "*".repeat(ssnSecond.length - 1);
 
     document.getElementById("ssn").value = ssnFirst + "-" + maskedSecond;
-	
-	
 });
 
 </script>

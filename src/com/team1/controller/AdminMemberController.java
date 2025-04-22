@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team1.dto.AdminDTO;
 import com.team1.dto.DocRegDTO;
+import com.team1.dto.ParDTO;
 import com.team1.dto.SitCertDTO;
 import com.team1.dto.SitDTO;
 import com.team1.dto.SitRejectDTO;
 import com.team1.mybatis.IDocRegDAO;
+import com.team1.mybatis.IParDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.ISitDAO;
 import com.team1.mybatis.ISitRejectDAO;
@@ -66,7 +68,7 @@ public class AdminMemberController
     							
     // 시터 등록요청 상세정보 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/adminsitregdetail.action", method = RequestMethod.GET) 
-    public String adminSitRegDetail(String sit_reg_id, Model model, HttpSession session)
+    public String adminSitRegDetail(String sit_backup_id, Model model, HttpSession session)
     {
     	// 관리자 확인 절차
 	    if (!isAdmin(session))
@@ -80,9 +82,9 @@ public class AdminMemberController
     	ISitRejectDAO rejectDao = sqlSession.getMapper(ISitRejectDAO.class);
     	
     	// 시터 개인정보, 자격증, 제출서류 정보, 거절사유 리스트
-    	SitDTO sitInfo = sitDao.searchSitDetail(sit_reg_id);
-    	List<DocRegDTO> sitDoc = docRegDao.search(sit_reg_id);
-    	List<SitCertDTO> sitCert = sitCertDao.search(sit_reg_id);
+    	SitDTO sitInfo = sitDao.searchSitRegDetail(sit_backup_id);
+    	List<DocRegDTO> sitDoc = docRegDao.search(sit_backup_id);
+    	List<SitCertDTO> sitCert = sitCertDao.search(sit_backup_id);
     	List<SitRejectDTO> rejectList = rejectDao.listRejectedReasons();
     	
     	model.addAttribute("sitInfo", sitInfo);
@@ -161,7 +163,66 @@ public class AdminMemberController
     
     // 시터 회원 정보 목록 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/adminsitlist.action", method = RequestMethod.GET) 
-    public String adminSitList(Model model, HttpSession session) 
+    public String adminSitList(@RequestParam(value = "page", defaultValue="1") int page
+							, @RequestParam(value = "searchKey", required = false) String searchKey 
+							, @RequestParam(value = "searchValue", required = false) String searchValue 
+							, Model model, HttpSession session)
+    { 
+    	// 관리자 확인 절차
+    	if (!isAdmin(session))
+    		return "redirect:/loginform.action";
+    	AdminDTO dto = getLoginAdmin(session);
+    	model.addAttribute("loginAdmin", dto);
+    	
+		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
+		
+		// 총 등록 요청 수
+		int totalCount = dao.countSit(searchKey, searchValue);
+        
+		PageHandler paging = new PageHandler(page, totalCount);
+		
+        List<SitDTO> sitList = dao.list(paging.getStart(), paging.getEnd(), searchKey, searchValue);
+        
+        model.addAttribute("sitList", sitList);
+        model.addAttribute("paging", paging);
+        model.addAttribute("searchKey", searchKey);
+        model.addAttribute("searchValue", searchValue);
+    	
+    	return "WEB-INF/view/adminSitList.jsp";
+    }
+    
+    // 시터 상세정보 페이지로 이동 및 데이터 전송
+    @RequestMapping(value = "/adminsitdetail.action", method = RequestMethod.GET) 
+    public String adminSitDetail(String sit_backup_id, Model model, HttpSession session)
+    {
+    	// 관리자 확인 절차
+	    if (!isAdmin(session))
+		    return "redirect:/loginform.action";
+		AdminDTO dto = getLoginAdmin(session);
+		model.addAttribute("loginAdmin", dto);
+		
+    	ISitDAO sitDao = sqlSession.getMapper(ISitDAO.class);
+    	IDocRegDAO docRegDao = sqlSession.getMapper(IDocRegDAO.class);
+    	ISitCertDAO sitCertDao = sqlSession.getMapper(ISitCertDAO.class);
+    	
+    	// 시터 개인정보, 자격증, 제출서류 정보
+    	SitDTO sitInfo = sitDao.adminSearchSitDetail(sit_backup_id);
+    	List<DocRegDTO> sitDoc = docRegDao.search(sit_backup_id);
+    	List<SitCertDTO> sitCert = sitCertDao.search(sit_backup_id);
+    	
+    	model.addAttribute("sitInfo", sitInfo);
+    	model.addAttribute("sitDocList", sitDoc);
+    	model.addAttribute("sitCertList", sitCert);
+    	
+    	return "WEB-INF/view/adminSitDetail.jsp"; 
+    }
+    
+    // 부모 회원 정보 목록 페이지로 이동 및 데이터 전송
+    @RequestMapping(value = "/adminparlist.action", method = RequestMethod.GET) 
+    public String adminParList(@RequestParam(value = "page", defaultValue="1") int page
+							 , @RequestParam(value = "searchKey", required = false) String searchKey 
+							 , @RequestParam(value = "searchValue", required = false) String searchValue 
+							 , Model model, HttpSession session)
     { 
     	// 관리자 확인 절차
     	if (!isAdmin(session))
@@ -171,18 +232,28 @@ public class AdminMemberController
     	
     	String result = null;
     	
-    	ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
+    	IParDAO dao = sqlSession.getMapper(IParDAO.class);
     	
+    	// 총 등록 요청 수
+		int totalCount = dao.adminCountPar(searchKey, searchValue);
+        
+		PageHandler paging = new PageHandler(page, totalCount);
+		
+        List<ParDTO> parList = dao.adminListPar(paging.getStart(), paging.getEnd(), searchKey, searchValue);
+        
+        model.addAttribute("parList", parList);
+        model.addAttribute("paging", paging);
+        model.addAttribute("searchKey", searchKey);
+        model.addAttribute("searchValue", searchValue);
     	
-    	
-    	result = "WEB-INF/view/adminSitList.jsp";
+    	result = "WEB-INF/view/adminParList.jsp";
     	
     	return result;
     }
     
     // 부모 회원 정보 목록 페이지로 이동 및 데이터 전송
-    @RequestMapping(value = "/adminparlist.action", method = RequestMethod.GET) 
-    public String adminParList(Model model, HttpSession session) 
+    @RequestMapping(value = "/adminpardetail.action", method = RequestMethod.GET) 
+    public String adminParDetail(Model model, HttpSession session) 
     { 
     	// 관리자 확인 절차
     	if (!isAdmin(session))
@@ -190,15 +261,11 @@ public class AdminMemberController
     	AdminDTO dto = getLoginAdmin(session);
     	model.addAttribute("loginAdmin", dto);
     	
-    	String result = null;
     	
-    	ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
-    	
+    	IParDAO dao = sqlSession.getMapper(IParDAO.class);
     	
     	
-    	result = "WEB-INF/view/adminParList.jsp";
-    	
-    	return result;
+    	return "WEB-INF/view/adminParDetail.jsp";
     }
     
     // 아이 정보 목록 페이지로 이동 및 데이터 전송

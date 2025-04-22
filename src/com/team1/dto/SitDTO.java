@@ -28,9 +28,11 @@ public class SitDTO
 	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 그동안 맡은 일반 돌봄 서비스 수, 시터가 그동안 맡은 긴급 돌봄 서비스 수
 	private int totalworktime, totalrating, month3rating, genCareCount, emgCareCount;
 	
-	// 시터가 가진 등급
-	private String grade;
-
+	// 시터가 가진 등급, 은행이름
+	private String grade, bank_type, acct_number;
+	
+	// 시터 근무 누적시간
+	private int worked_hour;
 	
 	// getter / setter 구성
 	public int getGenCareCount()
@@ -242,8 +244,35 @@ public class SitDTO
 	{
 		this.chk_date = chk_date;
 	}
+	public int getWorked_hour()
+	{
+		return worked_hour;
+	}
 
-	
+	public void setWorked_hour(int worked_hour)
+	{
+		this.worked_hour = worked_hour;
+	}
+
+	public String getBank_type()
+	{
+		return bank_type;
+	}
+
+	public void setBank_type(String bank_type)
+	{
+		this.bank_type = bank_type;
+	}
+
+	public String getAcct_number()
+	{
+		return acct_number;
+	}
+
+	public void setAcct_number(String acct_number)
+	{
+		this.acct_number = acct_number;
+	}
 	
 	
 	
