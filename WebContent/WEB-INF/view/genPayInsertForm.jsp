@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>genPayInsertForm.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/payment.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/payment.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <!-- <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>

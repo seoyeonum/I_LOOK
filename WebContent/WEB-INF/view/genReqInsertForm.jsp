@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>genReqInsertForm.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -157,10 +157,7 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="/parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 

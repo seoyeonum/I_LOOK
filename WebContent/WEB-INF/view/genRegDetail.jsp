@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>genRegDetail.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript">
 
     // 페이지 로드 완료 후 실행

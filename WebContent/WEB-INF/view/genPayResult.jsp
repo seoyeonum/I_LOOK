@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>genPayResult.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -57,10 +57,7 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -88,7 +85,7 @@
 				<div class="label complete-subject">일반 돌봄 결제 및 신청이 완료되었습니다.</div>
 	            <div class="result-info">
 	            	<div class="logo-complete">
-		                <img src="./images/logoimg.png" alt="하트 로고 이미지">
+		                <img src="<%=cp%>/images/logoimg.png" alt="하트 로고 이미지">
 		            </div>
 	   			</div>
 	            <div class="complete-details">

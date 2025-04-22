@@ -4,7 +4,6 @@
 
 package com.team1.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,13 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team1.dto.ChildDTO;
-import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
 import com.team1.dto.GenReqDTO;
 import com.team1.dto.GradesDTO;
@@ -42,7 +39,6 @@ import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGenReqDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.IParDAO;
-import com.team1.mybatis.IParLoginDAO;
 import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
 import com.team1.util.PageHandler;
@@ -178,6 +174,16 @@ public class GenReqController
 	    result = "WEB-INF/view/genSearchResult.jsp";
 		
 		return result;
+	}
+	
+	// ● AJAX 영역 html 조각 불러오기
+	@RequestMapping("/genreglistfragment.action")
+	public String genRegListFragment(Model model)
+	{
+	    //List<GenRegDTO> list = service.getList();
+	    //model.addAttribute("list", list);
+	    
+	    return "WEB-INF/view/genRegListFragment.jsp";
 	}
 	
 	// ● 2차 필터 결과
@@ -423,15 +429,19 @@ public class GenReqController
 		
 		// 현 보유 포인트 조회
 		IParDAO parDao = sqlSession.getMapper(IParDAO.class);
-		String parBackupId = parent.getPar_backup_id();		// = parDao.seachParBackupId(childBackupId);		
-		int point = parDao.searchPoint(parBackupId);
+		String parBackupId = parent.getPar_backup_id();		// = parDao.seachParBackupId(childBackupId);
+		
+		Integer pointObj = parDao.searchPoint(parBackupId);	//-- point 가 조회되지 않는 경우를 대비
+		int point = (pointObj != null) ? pointObj : 0;
 		
 		// 다음 페이지로 넘겨주는 값
-		// → 1일 돌봄 비용, 총 돌봄 일수, 일 돌봄 시간, 총 돌봄 비용
+		// → 1일 돌봄 비용, 총 돌봄 일수, 일 돌봄 시간, 총 돌봄 비용, 현 보유 포인트
 		model.addAttribute("price", price);
 		model.addAttribute("careDays", careDays);
 		model.addAttribute("careHours", careHours);
 		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("point", point);
+		
 		
 		result = "WEB-INF/view/genReqInsertForm.jsp";
 		
@@ -567,6 +577,7 @@ public class GenReqController
 			genPayDao.addGenPayRec(genReqDto);
 			
 			int point = (Integer) session.getAttribute("point");
+			genReqDto.setPoint(point);
 			
 			genPayDao.addGenPointUsed(genReqDto);
 			

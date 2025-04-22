@@ -10,9 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>genSearchResult.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script src="js/genFilter.js" defer></script>
+<script src="<%=cp%>/js/genFilter.js" defer></script>
 <script type="text/javascript">
 	
 	//이 페이지 로드 시,
@@ -208,8 +208,6 @@
 
 <!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -383,7 +381,8 @@
 		
 		<!-- 검색 결과 -->
 	    <div class="gen-results" id='resultArea'>
-		    <c:import url="/WEB-INF/view/genRegListFragment.jsp" />	<!-- action 처리 변경 필요 -->
+		    <%-- <c:import url="/WEB-INF/view/genRegListFragment.jsp" /> --%>
+		    <c:import url="/genreglistfragment.action" />
 		</div>
     
 	</div>
