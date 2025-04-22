@@ -26,9 +26,13 @@ public interface IGenPayDAO
 	public GenPayDTO searchNameGenPointUsed(String par_name);
 	
 	
-	// 2. 시터 입장 → 별도로 존재 Ⅹ
+	// 2. 시터 입장
 	
 	// 일반 돌봄 결제 내역 - 시터 읽은 날짜 기록 → (Ⅹ)
+	
+	// 시터가 부모의 신청을 거절하기 위해 일반 돌봄 신청 코드로 결제 취소 코드를 찾기
+	public String searchGenCC(String gen_req_id);
+	
 	
 	
 	

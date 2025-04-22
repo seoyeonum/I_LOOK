@@ -1,11 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정할 수 있는 경로
-%>
-<%
-
 %>
 <!DOCTYPE html>
 <html>
@@ -167,6 +164,7 @@
 		
 		$(".answerBtn").css("display", "none");
 		$(".rejectBtn").css("display", "none");
+		$("#reject").css("display", "none");
 		
 		
 		// 자기소개글 누르면 나오는 새 창.
@@ -181,9 +179,14 @@
 			//test
 			//alert("number1");
 			
-			$(".answerBtn").css("display", "inline");
-			$(".rejectBtn").css("display", "inline");
+			//alert($("#request_result").val());
 			
+			//if ($("#request_result").val() == "신청 있음")
+			//{
+				$(".answerBtn").css("display", "inline");
+				$(".rejectBtn").css("display", "inline");
+				$("#reject").css("display", "inline");
+			//}
 			/*
 			var str = "";
 			var message = "";
@@ -220,7 +223,7 @@
 			// AJAX 처리 
 			var params = "gen_req_id=" + $(this).val();
 			
-			alert(params); 	//gen_req_id=GREQ0022
+			//alert(params); 	//gen_req_id=GREQ0022
 			/*
 			id="name">.</div>
 			<div class="col-md-2" id="careDays">.</div>
@@ -237,41 +240,23 @@
 				type: "POST"
 				, url : "genregdetail.action"
 				, data: params
-				, dataType: "JSON"
+				, dataType: "html"
 				, success: function(data)
 				{
-					alert("성공~~~");
+					//alert("성공~~~");
 					
-					// 표 리셋
-					$("#name").html("");
-					$("#careDays").html("");
-					$("#gu_addr").html("");
-					$("#child_gender").html("");
-					$("#child_age").html("");
-					$("#medical_type").html("");
-					$("#allergie_type").html("");
-					$("#disability_type").html("");
-					$("#message").html("");
-					
-					// 표 표기
-					$("#name").html(data.chi_name);
-					$("#careDays").html(data.par_start_date + " ~ " + data.par_end_date + " | " + data.par_start_time + " ~ " + data.par_end_time);
-					$("#gu_addr").html(data.gu_addr);
-					$("#child_gender").html(data.child_gender);
-					$("#child_age").html(data.child_age);
-					$("#medical_type").html(data.medical_type);
-					$("#allergie_type").html(data.allergie_type);
-					$("#disability_type").html(data.disability_type);
-					$("#message").html(data.message);
-					
+					$("#data").html(data);
 					
 					// 예약 버튼과 취소 버튼에 밸류 새기기
-					$(".answerBtn").val(data.gen_req_id);
-					$(".rejectBtn").val(data.gen_req_id);
-				}
-				, beforeSend: function(xmlHttpservelt)
-				{
+					$(".answerBtn").val($(".reservation-btn").val());
+					$(".rejectBtn").val($(".reservation-btn").val());
 					
+					// 거절 사유 밸류
+					//$(".rejectReason").val();
+				}
+				, beforeSend: function(xmlHttpRequest)	//AJAX 요청 서버 전송 직전 실행
+				{
+					xmlHttpRequest.setRequestHeader("Accept", "text/html; charset=utf-8");	// 받아오는 값을 이렇게 하라고 설정하는 거라 중요함. 잊지 말기. 
 				}
 				, error: function(e)
 				{
@@ -289,7 +274,8 @@
 		{
 			if (confirm("정말 예약하시겠습니까?"))
 			{
-				$(location).attr("href", "sittergenreqansweredlist.action?answer=yes&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
+				//alert($(this).val()); >> GREQ0022 >> 성공
+				$(location).attr("href", "sittergenreqconfirminsert.action?sit_backup_id=" + $("#sit_backup_id").val() + "&gen_req_id=" + $(this).val());
 			}
 
 		});
@@ -298,8 +284,10 @@
 		{
 			if (confirm("정말 거절하시겠습니까?"))
 			{
+				//alert($("#reject").val());
 				//$(location).attr("href", "sittergenreqansweredlist.action?answer=yes&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
-				$(location).attr("href", "sittergenreqansweredlist.action?answer=no&sit_backup_id=" + ${sit_backup_id } + "&gen_req_id=" + $(this).val());
+				$(location).attr("href", "sittergenreqcancelinsert.action?sit_backup_id=" + $("#sit_backup_id").val()
+						+ "&gen_req_id=" + $(this).val() + "&reason_canceled_id=" + $("#reject").val());
 			}
 			
 		});
@@ -371,16 +359,11 @@
 						<div class="col-md-2">알레르기 유무</div>
 					</div>
 				</div>
-				<div class="info tbody" id="detailInfo">
-					<div class="row">
-						<div class="col-md-1" id="name">.</div>
-						<div class="col-md-2" id="careDays">.</div>
-						<div class="col-md-2" id="gu_addr">.</div>
-						<div class="col-md-1" id="child_gender">.</div>
-						<div class="col-md-1" id="child_age">.</div>
-						<div class="col-md-1" id="medical_type">.</div>
-						<div class="col-md-2" id="allergie_type">.</div>
-						<div class="col-md-2" id="disability_type">.</div>
+				
+				<div id="data">
+			<!-- <div class="info tbody" id="">
+					<div class="row" id="detailInfo">
+					부모 신청 정보
 					</div>
 				</div>
 				
@@ -393,15 +376,18 @@
 					<div class="row">
 						<div class="col-md-12" id="message" style="text-align: left;"> .</div>
 					</div>
+				</div> -->
 				</div>
 			</div> <!-- .info.table -->
 			
 			<div class="answerBtndiv" style="align-items: center;">
 			<button class="answerBtn" value="">예약하기</button> 
+			<button class="rejectBtn" value="">거절</button>
 			<select name="reject" id="reject">
-				
+				<c:forEach var="cancel" items="${cancelList }">
+					<option class="rejectReason" value="${cancel.reason_canceled_id }">${cancel.type }</option>
+				</c:forEach>
 			</select>
-			<button class="rejectBtn" value="0">거절</button>
 			</div>
 		</div>
 	
@@ -466,7 +452,8 @@
 					<button class="reservation-btn" value="${reg.gen_req_id }" type="button">상세 정보</button>
 					</c:if>
 					</div>
-					<div class="col-md-1">${reg.request_result }</div>
+					<div class="col-md-1" >${reg.request_result }</div>
+					<input type="hidden" value="${reg.request_result }" id="request_result" style="display: none;"/>
 				</div>
 			</c:forEach>
 			<%-- </c:forEach>  --%>
@@ -476,6 +463,9 @@
 
 	
 </div> <!-- .main container -->
+
+<input type="hidden" value="${sit_backup_id }" id="sit_backup_id" style="display: block;" />
+
 
 </main>
 

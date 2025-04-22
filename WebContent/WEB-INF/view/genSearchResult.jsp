@@ -93,21 +93,38 @@
   			var grades = ['A', 'B', 'C']; 				// 예: 여러 등급을 배열로 저장
   			var regions = ['SEOUL', 'BUSAN', 'DAEGU'];  // 예: 여러 지역을 배열로 저장
 			
-	  	    $.ajax({
-  	      			url: 'genregpossiblelist.action'
-  	     			, method: 'POST'
-  	     			, traditional: true
-  	      			, data: { grades : grades, regions : regions }  //category=A&type=premium 식으로 전달
-  	      			, dataType: 'html'
-  	      			, success: function(response)
-  	      			{
-  	        			$('#resultArea').html(response); // 응답으로 받은 HTML 조각을 리스트 영역에 삽입
-  	      			}
-  	      			, error: function(xhr, status, error)
-  	      			{
-			  	        console.error('Ajax 요청 실패:', error);	// 에러 발생
-			  	    }
-	  	   	});
+  		// AJAX 요청
+            $.ajax({
+                url: 'genregpossiblelist.action'
+                , method: 'POST'
+                , traditional: true
+                , data:
+                { 
+                    grades: grades 
+                    , regions: regions
+                    , genders: genders
+                    , ages: ages
+                    , certs: certs
+                }
+                , dataType: 'html'
+                , beforeSend: function(xmlHttpRequest)   // AJAX 요청 서버 전송 직전 실행
+                {
+                   xmlHttpRequest.setRequestHeader("Accept", "text/html; charset=utf-8");
+                }
+                , success: function(response)
+                {
+                   // 확인
+                    //console.log("응답 성공:", response);
+                   
+                    $('#resultArea').html(response);
+                }
+                , error: function(xmlHttpRequest, status, error)
+                {
+                    console.error('Ajax 요청 실패:', error);
+                    console.error('상태 코드:', xmlHttpRequest.status);
+                    console.error('응답 텍스트:', xmlHttpRequest.responseText);
+                }
+            });
 	  	});
  
 	});
