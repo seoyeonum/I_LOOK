@@ -33,11 +33,69 @@
 		ORDER BY GEN_REQ_ID
 	</select>
 	
-	<!-- 신청이 등록된 전체 수 확인 -->
-	<select id="countGenReq" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT 
-		FROM GEN_REQ
+	<!-- 관리자가 보는 신청이 등록된 일반돌봄 예약 전체 리스트 -->
+	<select id="adminListSitGenReg" resultType="com.team1.dto.GenReqDTO">
+	    SELECT *
+	    FROM (
+	        SELECT V.*, ROWNUM AS RN
+	        FROM (
+	            SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, PAR_NAME, NAME,
+	                   START_DATE, END_DATE, START_TIME, END_TIME, REQ_DATE, STATUS
+	            FROM ADMIN_GEN_REQ_VIEW
+	            WHERE 1=1
+			
+	            <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
+	                AND STATUS = #{statusFilter}
+	            </if>
+	
+	            <if test="searchKey != null and searchValue != null and searchValue != ''">
+	                <choose>
+	                    <when test="searchKey == 'par_name'">
+	                        AND PAR_NAME LIKE '%' || #{searchValue} || '%'
+	                    </when>
+	                    <when test="searchKey == 'par_backup_id'">
+	                        AND PAR_BACKUP_ID LIKE '%' || #{searchValue} || '%'
+	                    </when>
+	                </choose>
+	            </if>
+				<if test="dateRangeStart != null and dateRangeStart != ''">
+				    AND REQ_DATE >= #{dateRangeStart}
+				</if>
+	            ORDER BY REQ_DATE DESC
+	        ) V
+	    )
+	    WHERE RN BETWEEN #{start} AND #{end}
 	</select>
+
+
+	
+	<!-- 관리자가 보는 신청이 등록된 일반돌봄 예약 전체 개수 -->
+	<select id="adminCountGenReq" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS count
+	    FROM ADMIN_GEN_REQ_VIEW
+	    WHERE 1=1
+	
+	    <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
+	        AND STATUS = #{statusFilter}
+	    </if>
+	
+	    <if test="searchKey != null and searchValue != null and searchValue != ''">
+	        <choose>
+	            <when test="searchKey == 'par_name'">
+	                AND PAR_NAME LIKE '%' || #{searchValue} || '%'
+	            </when>
+	            <when test="searchKey == 'par_backup_id'">
+	                AND PAR_BACKUP_ID LIKE '%' || #{searchValue} || '%'
+	            </when>
+	        </choose>
+	    </if>
+	    
+	     <if test="dateRangeStart != null and dateRangeStart != ''">
+		    AND REQ_DATE >= #{dateRangeStart}
+		</if>
+	    
+	</select>
+
 	
 	<!-- 특정 아이디의 예약 등록건 찾기 -->
 	<select id="search" resultType="com.team1.dto.GenReqDTO">

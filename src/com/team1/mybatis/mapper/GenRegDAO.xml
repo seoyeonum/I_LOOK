@@ -305,8 +305,8 @@
 		            </if>
 		        </if>
 		        <if test="currentOnly != null and currentOnly == true">
-		            AND R.END_DATE >= SYSDATE
-		        </if>
+			        AND R.END_DATE >= SYSDATE
+			    </if>
 		        ORDER BY R.REG_DATE DESC
 		    ) T
 		)

@@ -46,7 +46,7 @@ String cp = request.getContextPath();
 								<option value="today">1일</option>
 								<option value="month">1개월</option>
 								<option value="3month">3개월</option>
-								<option value="custom">사용자 지정</option>
+								<option value="all">전체보기</option>
 							</select>
 						</div>
 

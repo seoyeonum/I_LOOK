@@ -29,8 +29,8 @@
 		AND GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
- 	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  	<!-- // 근무 지역 전체 열람 public ArrayList<WorkRegionPreferedDTO> listAllRegions(); -->
+ 	<select id="listAllRegions" resultType="com.team1.dto.WorkRegionPreferedDTO">
  		SELECT REGION_ID, NAME
  		FROM REGIONS
  	</select>

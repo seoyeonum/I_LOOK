@@ -5,14 +5,19 @@
 
 <mapper namespace="com.team1.mybatis.IAgesPreferedDAO">
 
+	<!-- // 시터 돌봄 선호 연령대 전체 열람 public ArrayList<AgesPreferedDTO> listAges(); -->
  	<select id="listAges" resultType="com.team1.dto.AgesPreferedDTO">
- 		SELECT GEN_REG_ID, AGE_TYPE_ID
-		FROM AGES_PREFERED
+ 		SELECT AP.AGE_PREFERED_ID AS AGE_PREFERED_ID
+	    	 , AP.GEN_REG_ID AS GEN_REG_ID
+		     , AP.AGE_TYPE_ID AS AGE_TYPE_ID
+		     , AT.TYPE AS TYPE
+		FROM AGES_PREFERED AP
+		JOIN AGE_TYPES AT
+		ON AP.AGE_TYPE_ID = AT.AGE_TYPE_ID
 		WHERE GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	<select id="listAllAges" resultType="com.team1.dto.AgesPreferedDTO"> 
- 	<!-- // 시터 돌봄 선호 연령대 전체 열람 public ArrayList<AgesPreferedDTO> listAges(); -->
  		SELECT AGE_TYPE_ID, TYPE
 		FROM AGE_TYPES
  	</select>

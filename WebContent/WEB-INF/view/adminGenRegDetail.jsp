@@ -33,7 +33,7 @@
 				<div class="left-column">
 					<!-- 사진 영역 -->
 					<div class="profile">
-						<span class="profile-text">시터 사진</span>
+						<img src="<%=cp%>/images/pictures/${genRegInfo.file_path}" alt="시터 사진">
 					</div>
 					
 					<!-- 자기소개 영역 -->
@@ -83,14 +83,16 @@
 					<div class="info-row">
 						<div class="info-header">근무 시작 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.start_time }" readonly>
+							<c:set var="startTime" value="${genRegInfo.start_time}" />
+							<input type="text" class="info-input" value="${startTime lt 10 ? '0' : ''}${startTime}:00" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 종료 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${genRegInfo.end_time }" readonly>
+							<c:set var="endTime" value="${genRegInfo.end_time}" />
+							<input type="text" class="info-input" value="${endTime lt 10 ? '0' : ''}${endTime}:00" readonly>
 						</div>
 					</div>
 					

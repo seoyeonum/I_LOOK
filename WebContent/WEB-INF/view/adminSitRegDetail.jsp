@@ -58,14 +58,13 @@
 		});
 		
 		
+		// 수락 모달 열기
 		$(".approve-btn").click(function()
 		{
-			var sitBackupId = "${sitInfo.sit_backup_id}";
-			
-			
+			$("#approveModal").show();
 		});
 		
-		// 모달 열기
+		// 거절 모달 열기
 		$(".reject-btn").click(function()
 		{
 		    $("#rejectModal").show();
@@ -76,7 +75,10 @@
 	function closeModal()
 	{
 	    $("#rejectModal").hide();
+	    $("#approveModal").hide();
 	}
+	
+	
 
 </script>
 </head>
@@ -98,7 +100,7 @@
 				<div class="content-body">
 					<div class="left-section">
 						<div class="profile">
-							<img src="<%=cp%>/images/${sitInfo.file_path}" alt="시터 사진" style="width: 200px; height: auto;">
+							<img src="<%=cp%>/images/pictures/${sitInfo.file_path}" alt="시터 사진" style="width: 200px; height: auto;">
 						</div>
 						<!-- 자격증 정보를 프로필 아래에 배치 -->
 						<div class="category-row">
@@ -199,29 +201,46 @@
 		</div>
 	</div>
 	<!-- 모달창 -->
-	<div id="rejectModal" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            거절 사유 선택
-        </div>
-        <div class="modal-body">
-            <form action="<%=cp%>/sitregreject.action" method="post">
-                <input type="hidden" name="sit_backup_id" value="${sitInfo.sit_backup_id}">
-                
-                <select name="sit_rejected_reason_id" required class="form-select">
-                    <option value="">-- 사유 선택 --</option>
-                    <c:forEach var="reason" items="${rejectList}">
-                        <option value="${reason.sit_rejected_reason_id}">${reason.reason}</option>
-                    </c:forEach>
-                </select>
-                
-                <div class="button-group">
-                    <button type="submit" class="btn reject-btn">거절하기</button>
-                    <button type="button" onclick="closeModal()" class="btn cancel-btn">취소</button>
-                </div>
-            </form>
-        </div>
+	<div id="approveModal" style="display: none;">
+	    <div class="modal-content">
+	        <div class="modal-body">
+	            <form action="<%=cp%>/sitregreject.action" method="post">
+	                <input type="hidden" name="sit_backup_id" value="${sitInfo.sit_backup_id}">
+	                
+	                <div>정말 승인하시겠습니까?</div>
+	                
+	                <div class="button-group">
+	                    <button type="submit" class="btn reject-btn">승인 하기</button>
+	                    <button type="button" onclick="closeModal()" class="btn cancel-btn">취소</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
     </div>
-</div>
+	<!-- 모달창 -->
+	<div id="rejectModal" style="display: none;">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            거절 사유 선택
+	        </div>
+	        <div class="modal-body">
+	            <form action="<%=cp%>/sitregreject.action" method="post">
+	                <input type="hidden" name="sit_backup_id" value="${sitInfo.sit_backup_id}">
+	                
+	                <select name="sit_rejected_reason_id" required class="form-select">
+	                    <option value="">-- 사유 선택 --</option>
+	                    <c:forEach var="reason" items="${rejectList}">
+	                        <option value="${reason.sit_rejected_reason_id}">${reason.reason}</option>
+	                    </c:forEach>
+	                </select>
+	                
+	                <div class="button-group">
+	                    <button type="submit" class="btn reject-btn">거절하기</button>
+	                    <button type="button" onclick="closeModal()" class="btn cancel-btn">취소</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>

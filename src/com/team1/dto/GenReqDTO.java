@@ -11,13 +11,14 @@ public class GenReqDTO
 	private String start_date, end_date;
 	private int start_time, end_time;
 	private String req_date, sit_read_date;
+	private String par_name, child_name; 
+	private String pay_status, status;
 	
 	// 속성 추가(→ 일반 돌봄 예약 신청 시 필요)
 	private String gen_pay_rec_id, gen_point_used_id;
 	private String pg_code;
 	private int pay_amount, point;
 	
-
 	// getter / setter 구성
 	public String getGen_req_id()
 	{
@@ -99,6 +100,38 @@ public class GenReqDTO
 	{
 		this.sit_read_date = sit_read_date;
 	}
+	public String getPar_name()
+	{
+		return par_name;
+	}
+	public void setPar_name(String par_name)
+	{
+		this.par_name = par_name;
+	}
+	public String getChild_name()
+	{
+		return child_name;
+	}
+	public void setChild_name(String child_name)
+	{
+		this.child_name = child_name;
+	}
+	public String getPay_status()
+	{
+		return pay_status;
+	}
+	public void setPay_status(String pay_status)
+	{
+		this.pay_status = pay_status;
+	}
+	public String getStatus()
+	{
+		return status;
+	}
+	public void setStatus(String status)
+	{
+		this.status = status;
+	}
 	public String getGen_pay_rec_id()
 	{
 		return gen_pay_rec_id;
@@ -138,6 +171,5 @@ public class GenReqDTO
 	public void setPoint(int point)
 	{
 		this.point = point;
-	} 
-	
+	}
 }
