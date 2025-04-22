@@ -34,7 +34,7 @@ public class SitCareListDTO
 	// 전체 주소, 상세 주소, 아이 키, 아이 몸무게, 아이 혈액형
 	private String road_addr, detailed_addr, height, weight, blood_type;
 	// 특이사항
-	private String speical_notes;
+	private String special_notes;
 	
 	
 	// 긴급 요청 코드, 신청 부모 이름, 아이 이름
@@ -312,14 +312,14 @@ public class SitCareListDTO
 		this.blood_type = blood_type;
 	}
 
-	public String getSpeical_notes()
+	public String getSpecial_notes()
 	{
-		return speical_notes;
+		return special_notes;
 	}
 
-	public void setSpeical_notes(String speical_notes)
+	public void setSpecial_notes(String special_notes)
 	{
-		this.speical_notes = speical_notes;
+		this.special_notes = special_notes;
 	}
 
 	public String getEmg_req_id()

@@ -589,6 +589,7 @@ input[type="file"] {
 			          
 				            <div class="container-panel">근무 종료 시간</div>
 				        	<div class="TimeGrid end-time">
+				        		<button type="button" class="timeBtn endTimeBtn" name="end_time" value="-" disabled="disabled">08:00</button>
 				        		<button type="button" class="timeBtn endTimeBtn" name="end_time" value="9">09:00</button>
 				        		<button type="button" class="timeBtn endTimeBtn" name="end_time" value="10">10:00</button>
 				        		<button type="button" class="timeBtn endTimeBtn" name="end_time" value="11">11:00</button>

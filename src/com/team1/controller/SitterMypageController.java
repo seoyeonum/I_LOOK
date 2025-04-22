@@ -6,18 +6,19 @@
  =============================*/
 package com.team1.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team1.dto.AgesPreferedDTO;
 import com.team1.dto.GenCanceledDTO;
@@ -30,6 +31,7 @@ import com.team1.mybatis.IAcctDAO;
 import com.team1.mybatis.IAgesPreferedDAO;
 import com.team1.mybatis.IGenCanceledDAO;
 import com.team1.mybatis.IGenConfirmedDAO;
+import com.team1.mybatis.IGenPayDAO;
 import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitAcctDAO;
@@ -49,7 +51,7 @@ public class SitterMypageController
 	
 	// 시터 마이 페이지 >> 개인정보 수정 컨트롤러
 	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
-	public String infoList(Model model, String sit_backup_id)
+	public String infoList(HttpSession session, Model model)
 	{
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
 		ISitAcctDAO sitAcctDao = sqlSession.getMapper(ISitAcctDAO.class);
@@ -67,7 +69,7 @@ public class SitterMypageController
 	
 	// 등급 확인 페이지 컨트롤러
 	@RequestMapping(value = "/gradescheck.action", method = RequestMethod.GET)
-	public String GradeCheck(Model model, String sit_backup_id)
+	public String GradeCheck(HttpSession session, Model model, String sit_backup_id)
 	{
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
 		IGradesDAO gradeDao = sqlSession.getMapper(IGradesDAO.class);
@@ -101,7 +103,7 @@ public class SitterMypageController
 	
 	// 폼으로 가는 링크
 	@RequestMapping(value = "/genreginsertform.action", method = RequestMethod.GET)
-	public String SitGenRegInsertForm(Model model, String sit_backup_id)
+	public String SitGenRegInsertForm(HttpSession session, Model model, String sit_backup_id)
 	{
 		String result = null;
 		
@@ -129,7 +131,7 @@ public class SitterMypageController
 	
 	// 근무 등록 테이블에 넣는 액션
 	@RequestMapping(value = "/genreginsert.action", method = RequestMethod.POST)
-	public String GenRegList(String sit_backup_id, @ModelAttribute GenRegDTO genRegdto
+	public String GenRegList(HttpSession session, String sit_backup_id, @ModelAttribute GenRegDTO genRegdto
 												, @ModelAttribute WorkRegionPreferedDTO workRPDto
 												, @ModelAttribute AgesPreferedDTO agePDto
 												, Model model)
@@ -176,7 +178,7 @@ public class SitterMypageController
 	
 	// 근무 등록 내역 확인 컨트롤러
 	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
-	public String GenRegList(Model model, String sit_backup_id)
+	public String GenRegList(HttpSession session, Model model, String sit_backup_id)
 	{
 		// 주소
 		String result = null;
@@ -184,6 +186,7 @@ public class SitterMypageController
 		// sqlSession 으로 의존성 주입
 		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
 		IWorkRegionPreferedDAO regionDao = sqlSession.getMapper(IWorkRegionPreferedDAO.class);
+		IGenCanceledDAO genCanDao = sqlSession.getMapper(IGenCanceledDAO.class);
 		
 		// 사이드바 이용을 위한 시터 백업 아이디 보내주기
 		model.addAttribute("sit_backup_id", sit_backup_id);
@@ -215,7 +218,9 @@ public class SitterMypageController
 		
 		// 를 하려고 했으나.......복수선택된 지역을 한 행으로 압축시킬 수가 없어 지역을 하나만 선택하게끔 페이지를 변경했다.
 		// 그래도 어쨌든 gen_reg_id는 필요하니 확인한다. 
+		/* ---------------------------------------------------------------------------------------------------
 		ArrayList<String> genRegId = new ArrayList<String>();
+		//System.out.println("냐야아아아아ㅏ");
 		while (sitcarelistDao.regList(sit_backup_id).iterator().hasNext())
 		{
 			// 그걸 ArrayList<String>에 담을 것이다. 
@@ -226,9 +231,10 @@ public class SitterMypageController
 			genRegId.add(sCListdto.getGen_reg_id());
 		}
 		
+		//System.out.println("안돼ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ");
 		// 이제 gen_reg_id 묶음이 생겼다. 여기서 하나씩 꺼내서 WorkRegionPreferdDTO 묶음을 만들자. 
 		// WorkRegionPreferedDTO 묶음 생성
-		ArrayList<WorkRegionPreferedDTO> wRPdto = new ArrayList<WorkRegionPreferedDTO>();
+		ArrayList<WorkRegionPreferedDTO> wRPdtolist = new ArrayList<WorkRegionPreferedDTO>();
 		
 		// genRegId(ArrayList<String>)에서 하나씩 꺼내기
 		while (genRegId.iterator().hasNext())
@@ -236,39 +242,93 @@ public class SitterMypageController
 			// 그걸 문자열로 만들기
 			String gen_reg_id = (String) genRegId.iterator().next();
 			// 이제 그걸 다시 또 ArrayList<WorkRegionPreferdDTO>에 넣기
-			wRPdto.add(regionDao.listRegions(gen_reg_id));
+			wRPdtolist.add(regionDao.sitRegion(gen_reg_id));
 		} 
 		
 		// 다 넣었으면 그걸 모델로 보내기.
-		model.addAttribute("wRPdtoList", wRPdto);
+		model.addAsttribute("wRPdtoList", wRPdtolist);
+		------------------------------------------------------------------------------------------------- */ 
+		
+		// 취소 범례 보여주기
+		model.addAttribute("cancelList", genCanDao.CanceledReason());
 		
 		// 주소 지정
 		result = "/WEB-INF/view/GenRegList.jsp";
 		return result;
 	}
 	
+	
+	
 	// 근무 등록 내역 상세보기 누르면 나오는 컨트롤러 >> AJAX 처리
+	@ResponseBody 
 	@RequestMapping(value = "/genregdetail.action", method = RequestMethod.POST)
-	public String GenRegDetailList(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model) 
+	public String GenRegDetailList(HttpSession session, @RequestParam("gen_req_id") String gen_req_id
+									, Model model
+									, HttpServletResponse response) 
 	{
+		//System.out.println("컨트롤러 진입 성공");
 		String result = null;
 		
 		ISitCareListDAO IsclDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
-		// 두 개 필요하니 다시 보냄
-		model.addAttribute("sit_backup_id", sit_backup_id);
-		model.addAttribute("gen_req_id", gen_req_id);
-		// 정보 보냄
-		model.addAttribute("reqDetail", IsclDao.regDetailedList(gen_req_id));
+		// gen_req_id 필요하니 다시 보냄
+	    //model.addAttribute(gen_req_id, gen_req_id);
 		
-		result = "/WEB-INF/view/SitterGenReqDetail.jsp";
+	    SitCareListDTO dto = IsclDao.regDetailedList(gen_req_id);
+		// 정보 보냄
+	    /*
+		map.put("chi_name", IsclDao.regDetailedList(gen_req_id).getChi_name());
+		map.put("par_start_date", IsclDao.regDetailedList(gen_req_id).getPar_start_date());
+		map.put("par_end_date", IsclDao.regDetailedList(gen_req_id).getPar_end_date());
+		map.put("par_start_time", IsclDao.regDetailedList(gen_req_id).getPar_start_time());
+		map.put("par_end_time", IsclDao.regDetailedList(gen_req_id).getPar_end_time());
+		map.put("gu_addr", IsclDao.regDetailedList(gen_req_id).getGu_addr());
+		map.put("child_gender", IsclDao.regDetailedList(gen_req_id).getChild_gender());
+		map.put("child_age", IsclDao.regDetailedList(gen_req_id).getChild_age());
+		map.put("medical_type", IsclDao.regDetailedList(gen_req_id).getMedical_type());
+		map.put("allergie_type", IsclDao.regDetailedList(gen_req_id).getAllergie_type());
+		map.put("disability_type", IsclDao.regDetailedList(gen_req_id).getDisability_type());
+		map.put("message", IsclDao.regDetailedList(gen_req_id).getMessage());
+		*/
+	    
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("<div class=\"info tbody\" id=\"\">");
+	    sb.append("<div class=\"row\" id=\"detailInfo\">");
+	    sb.append("<div class='col-md-1' id='name'>" + dto.getPar_name() + "</div>");
+	    sb.append("<div class='col-md-2' id='careDays'>" + dto.getPar_start_date() +
+	    		" ~ " + dto.getPar_end_date() + "<br />" + dto.getPar_start_time() + "시 ~ " + dto.getPar_end_time() + "시</div>");
+	    sb.append("<div class='col-md-2' id='gu_addr'>" + dto.getGu_addr() + "</div>");
+	    sb.append("<div class='col-md-1' id='child_gender'>" + dto.getChild_gender() + "</div>");
+	    sb.append("<div class='col-md-1' id='child_age'>" + dto.getChild_age() + "</div>");
+	    sb.append("<div class='col-md-1' id='medical_type'>" + dto.getMedical_type() +"</div>");
+	    sb.append("<div class='col-md-2' id='allergie_type'>" + dto.getAllergie_type() + "</div>");
+	    sb.append("<div class='col-md-2' id='disability_type'>" + dto.getDisability_type() + "</div>");
+	    sb.append("</div>");
+	    sb.append("</div>");
+	    sb.append("<div class='info thead'>");
+	    sb.append("<div class='row'>");
+	    sb.append("<div class='col-md-12' style='text-align: center;'> 전달 메시지</div>");
+	    sb.append("</div>");
+	    sb.append("</div>");
+	    sb.append("<div class='info tbody'>");
+	    sb.append("<div class='row'>");
+	    sb.append("<div class='col-md-12' id='message' style='text-align: left;''>" + dto.getMessage() + "</div>");
+	    sb.append("</div>");
+	    sb.append("</div>");
+		
+	    response.setContentType("text/html; charset=UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+	    
+	    result = sb.toString();
+	    //System.out.println(result);
+		//System.out.println("냣뇨");
 		
 		return result;
 	}
 	
 	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredlist.action?answer=yes&sit_backup_id=", method = RequestMethod.GET)
-	public String AnswerYes(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
+	@RequestMapping(value = "/sittergenreqconfirminsert.action", method = RequestMethod.GET)
+	public String AnswerYes(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
 	{
 		String result = null;
 		
@@ -276,11 +336,11 @@ public class SitterMypageController
 		GenConfirmedDTO gcfDto = new GenConfirmedDTO();
 		
 		gcfDto.setGen_req_id(gen_req_id);
-		gcfDto.setPar_read_date(null);
 		
 		// 돌봄 확정에 insert >> int로 분기 처리 가능
 		gcfDao.add(gcfDto);
 		
+		// 다음 페이지를 위해 아이디 추가
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
 		// 돌봄 제공 내역으로 리다이렉트
@@ -290,19 +350,37 @@ public class SitterMypageController
 	}
 	
 	
-	// 근무 등록 내역에서 돌봄 취소하면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredno.action", method = RequestMethod.GET)
-	public String AnswerNo(@RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
+	// 근무 등록 내역에서 돌봄 거절하면 나오는 컨트롤러
+	@RequestMapping(value = "/sittergenreqcancelinsert.action", method = RequestMethod.GET)
+	public String AnswerNo(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, String sit_backup_id
+							, String reason_canceled_id, Model model)
 	{
 		String result = null;
 		
+		// 의존성 주입
+		IGenPayDAO payDao = sqlSession.getMapper(IGenPayDAO.class);
 		IGenCanceledDAO gcDao = sqlSession.getMapper(IGenCanceledDAO.class);
 		GenCanceledDTO gcDto = new GenCanceledDTO();
 		
-		gcDto.setGen_req_id(gen_req_id);
+		// 취소 테이블에 넣으려면 gen_canceled_id, gen_pay_rec_id, reason_canceled_id가 필요한데, 
+		// 이중 1은 시퀀스로 자동생성, 2는 찾아야 함, 3은 이미 있다.
+		// 따라서 gen_pay_rec_id를 찾는다.
+		String gen_pay_rec_id = payDao.searchGenCC(gen_req_id);
 		
-		// 돌봄 취소에 insert
+		System.out.println(gen_pay_rec_id);
+		// 일반 결제 코드 주입
+		gcDto.setGen_pay_rec_id(gen_pay_rec_id);
+		gcDto.setReason_canceled_id(reason_canceled_id);
+		
+		// 일반 돌봄 예약 취소에 insert
 		gcDao.addGenCanceled(gcDto);
+		
+		// 일반 돌봄 환불 내역에 insert 해야 한다.  
+		// gen_refunded_id, gen_canceled_id, amount, refunded_date, point, pg_code
+		// 1은 자동 생성, 2는 가져와야 함, 찾아야 함, sysdate, 찾아야 함, 찾아야 함, 
+		
+		// 일반 돌봄 환불 내역에도 insert 해야 함
+		gcDao.addGenRefunded(gcDto);
 		
 		// 돌봄 제공 내역으로 리다이렉트
 		result = "redirect:sittergenreqansweredlist.action";
@@ -342,8 +420,8 @@ public class SitterMypageController
 	
 	
 	// 돌봄 제공 내역 확인 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredlist.action", method = RequestMethod.GET)
-	public String AnswerList(Model model, String sit_backup_id) 
+	@RequestMapping(value = "/sittergenreqansweredlist.action", method = RequestMethod.GET)
+	public String AnswerList(HttpSession session, Model model, String sit_backup_id) 
 	{
 		String result = null;
 		
@@ -354,18 +432,20 @@ public class SitterMypageController
 		
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
+		//System.out.println("값 받아옴");
 		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
 		
 		return result;
 	}
 	
+	// 근무 등록 내역 확인 >> 자기소개서 자세히 보기 클릭 >> 새창으로 나오는 자기소개
 	// 돌봄 제공 내역 확인 >> 자기소개서 자세히 보기 클릭 >> 새창으로 나오는 자기소개
 	@RequestMapping(value = "/sitterregintroduction.action", method = RequestMethod.GET)
-	public String SitterRegIntroduction(@RequestParam("gen_reg_id") String gen_reg_id, Model model)
+	public String SitterRegIntroduction(HttpSession session, @RequestParam("gen_reg_id") String gen_reg_id, Model model)
 	{
 		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
 		
-		model.addAttribute("register", genRegDao.regList(gen_reg_id));
+		model.addAttribute("register", genRegDao.regOnesearch(gen_reg_id));
 		
 		return "/WEB-INF/view/SitterRegIntroduction.jsp";
 	}
@@ -373,7 +453,7 @@ public class SitterMypageController
 	// 돌봄 제공 내역 확인 상세 정보 새창 처리 컨트롤러
 	// 돌봄 완료 내역 확인 + 돌봄 제공 내역 확인 >> 일반 돌봄 클릭 >> 상세 정보 버튼 클릭 >> 새창으로 나오는 상세 정보.
 	@RequestMapping(value = "/pargenreqdetail.action", method = RequestMethod.GET)
-	public String ParGenReqDetailList(@RequestParam("gen_req_id") String gen_req_id, Model model)
+	public String ParGenReqDetailList(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, Model model)
 	{
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
@@ -386,7 +466,7 @@ public class SitterMypageController
 	
 	// 돌봄 완료 내역 띄우기
 	@RequestMapping(value = "/carecompletelist.action", method = RequestMethod.GET)
-	public String CareCompleteList(Model model, String sit_backup_id)
+	public String CareCompleteList(HttpSession session, Model model, String sit_backup_id)
 	{
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
