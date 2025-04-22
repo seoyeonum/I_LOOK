@@ -127,7 +127,7 @@ input, select
     flex-direction: column;
     box-shadow: 2px 2px 0 #e5e5e5;
     width: 545px;
-    height: 250px;
+    height: 300px;
 }
 
 /* 일반 돌봄 시터 간단 정보 박스 */
@@ -198,12 +198,6 @@ input, select
     height: 350px;
 }
 
-
-
-
-
-
-
 #primary-filter-form
 {
 	display: flex;
@@ -237,10 +231,14 @@ input, select
     /* align-items: center; */
 }
 
-.date-range input, .time-range select
+.date-range input
 {
     flex: 1;
-    width: 152px;
+}
+
+.time-range select
+{
+    flex: 1;
 }
 
 
@@ -409,10 +407,6 @@ input, select
 	justify-content: center;
 	width: 1070px;
 }
-
-
-
-
 
 /* 시터 사진 */
 .sitter-photo
@@ -684,4 +678,366 @@ ul
 .page button:hover
 {
 	color: #f0f0f0;
+}
+
+/* 캐러셀 관련 스타일 */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 300%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    width: 33.33%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.carousel-item h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.carousel-item p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background-color: white;
+}
+
+/* 첫 번째 슬라이드: 분홍색 계열 */
+.carousel-item:nth-child(1) {
+    background: linear-gradient(135deg, #e28c99, #d05475);
+}
+
+/* 두 번째 슬라이드: 보라색 계열 */
+.carousel-item:nth-child(2) {
+    background: linear-gradient(135deg, #dcb9ff, #8265b5);
+}
+
+/* 세 번째 슬라이드: 파란색 계열 */
+.carousel-item:nth-child(3) {
+    background: linear-gradient(135deg, #aad5ff, #5199e4);
+}
+
+/* 추천 시터 섹션 */
+.sitter-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.sitter-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.sitter-item {
+    min-width: 100%;
+    display: flex;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    box-sizing: border-box;
+    gap: 0 20px;
+}
+
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(226, 140, 153, 0.7);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-btn:hover {
+    background: rgba(226, 140, 153, 1);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* 공지사항 리스트 스타일 */
+.notice-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notice-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+.notice-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #555;
+}
+
+.notice-date {
+    color: #999;
+    font-size: 0.9em;
+    margin-left: 15px;
+}
+
+.notice-badge {
+    background-color: #e28c99;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+/* 공지사항과 시터검색 컨테이너 */
+.content-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.more-link {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto;
+    text-decoration: none;
+}
+
+.more-link:hover {
+    color: #e28c99;
+}
+
+.box-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 별점 표시 */
+.star-rating {
+    color: #FFD700;
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+/* 배너 섹션 */
+.banner-section {
+	background: linear-gradient(135deg, #f9f0f2, #fce8ec);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: unset;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 1100px;
+}
+
+.banner-content {
+    flex: 1;
+}
+
+.banner-title {
+    font-size: 22px;
+    color: #d05475;
+    margin-bottom: 10px;
+}
+
+.banner-text {
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.banner-image {
+    width: 120px;
+    height: 120px;
+    margin-left: 20px;
+    background: url('/api/placeholder/120/120') center center no-repeat;
+    background-size: contain;
+}
+
+/* 최근 이용 내역 */
+.recent-history {
+    /* margin-top: 15px; */
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.history-info {
+    flex: 1;
+}
+
+.history-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.history-sitter {
+    font-weight: bold;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.tag-regular {
+    background-color: #aad5ff;
+    color: #1f6c96;
+}
+
+.tag-emergency {
+    background-color: #febdb4;
+    color: #d9534f;
+}
+
+/* 추가 헤더 스타일 */
+.section-header {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 15px; */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.section-icon {
+    color: #e28c99;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 추가: 캐러셀 화살표 */
+.main-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.main-carousel-arrow:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.main-carousel-prev {
+    left: 10px;
+}
+
+.main-carousel-next {
+    right: 10px;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 추가 인터랙션 스타일 */
+.sitter-item:hover {
+    box-shadow: 0 5px 15px rgba(226, 140, 153, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.notice-item:hover .notice-title {
+    color: #e28c99;
+    transition: color 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
 }

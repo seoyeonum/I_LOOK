@@ -76,6 +76,7 @@ public class GenReqController
 		//session.setAttribute("id", id);
 		
 		result = "WEB-INF/view/genMain.jsp";
+		
 		return result;
 	}
 	
