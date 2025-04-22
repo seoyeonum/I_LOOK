@@ -4,6 +4,12 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team1.mybatis.IGenCanceledDAO">
+
+	<!-- 취소를 위한 취소 범례 테이블 가져오기 -->
+	<select id="CanceledReason" resultType="com.team1.dto.GenCanceledDTO">
+		SELECT REASON_CANCELED_ID, TYPE
+		FROM REASONS_CANCELED
+	</select>
 	
 	<!-- 일반 돌봄 예약 취소 리스트 확인 -->
 	<select id="listAllCanceledReq" resultType="com.team1.dto.GenCanceledDTO">
@@ -107,6 +113,10 @@
 	<!-- 2-1. 예약 확정 전 취소 환불 내역 -->
 	<!-- 예약 확정 전 취소 환불 내역 추가 -->
 	<insert id="addGenRefunded">
+	<selectKey keyProperty="gen_refunded_id" resultType="String" order="BEFORE">
+		SELECT 'GREF' || TO_CHAR(SEQ_GREF.NEXTVAL, 4, '0')
+		FROM DUAL
+	</selectKey>
 		INSERT INTO GEN_REFUNDED (GEN_REFUNDED_ID, GEN_CANCELED_ID, AMOUNT, REFUNDED_DATE, POINT, PG_CODE)
 		VALUES (#{gen_refunded_id}, #{gen_canceled_id}, #{amount}, #{refunded_date}, #{point}, #{pg_code})
 	</insert>

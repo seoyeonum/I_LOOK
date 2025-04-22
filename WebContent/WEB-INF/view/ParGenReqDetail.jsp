@@ -117,7 +117,7 @@
 			</tr>
 			<tr>
 				<td class="key">특이사항</td>
-				<td>${list.speical_notes }</td>
+				<td>${list.special_notes }</td>
 			</tr>
 			<tr>
 				<td class="key">전달 메시지</td>

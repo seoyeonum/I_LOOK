@@ -66,7 +66,6 @@
 		WHERE PAR_REG_ID = #{par_reg_id}
 	</update>
 	
-	
 	<!-- (부모 백업 코드로) 현재 보유 포인트 조회 -->
 	<select id = "searchPoint" resultType="java.lang.Integer">
 		SELECT SUM( CASE 
@@ -91,9 +90,17 @@
 	</select>
 	
 	<!-- 회원가입 중복 체크 -->
-		<select id="checkId" parameterType="String" resultType="int">
-		    SELECT COUNT(*) 
-		    FROM PAR_REG 
-		    WHERE PAR_REG_ID = #{par_reg_id}
-		</select>
+	<select id="checkId" parameterType="String" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM PAR_REG 
+	    WHERE PAR_REG_ID = #{par_reg_id}
+	</select>
+	
+	<!-- (아이 백업 코드로) 부모 백업 코드 조회 -->
+	<select id="seachParBackupId" resultType="java.lang.String">
+		SELECT P.PAR_BACKUP_ID
+		FROM CHILD_BACKUP C JOIN PAR_BACKUP P
+		ON C.PAR_BACKUP_ID = P.PAR_BACKUP_ID
+		WHERE CHILD_BACKUP_ID = #{child_backup_id}
+	</select>
 </mapper>

@@ -10,9 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>genSearchResult.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script src="js/genFilter.js" defer></script>
+<script src="<%=cp%>/js/genFilter.js" defer></script>
 <script type="text/javascript">
 	
 	//이 페이지 로드 시,
@@ -147,6 +147,7 @@
 		            //console.log("응답 성공:", response);
 		        	
 		            $('#resultArea').html(response);
+		            updateButtonStates();		// AJAX 이후에도 시터 버튼 비활성화 실행
 		        }
 		        , error: function(xmlHttpRequest, status, error)
 		        {
@@ -158,22 +159,8 @@
 		});
   	    
   	    //=================== 페이지 로드 시 돌봄 신청 상태에 따라 버튼 비활성화 ==================
-	    $('.box-preview').each(function() 		
-   	    {
-   	        // 현재 box-preview 내의 상태 텍스트 가져오기
-   	        var status = $(this).find('.sitter-status-hidden').text();
-   	        
-   	        // 해당 box-preview 내의 버튼 요소 
-   	        var button = $(this).find('.gen-btn-small');
-   	        
-   	        // 상태가 "예약중"인 경우 버튼 변경
-   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
-   	        {
-   	            button.text("예약중");
-   	            button.prop('disabled', true);
-   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
-   	        }
-   	    });
+	  	
+  	    updateButtonStates();		//-- 함수 3. 으로 분리함
 	});
 
  	
@@ -194,6 +181,26 @@
 	    document.getElementById('pageForm').submit();
 	}
  	
+ 	// 함수 3. 예약 상태에 따른 버튼 비활성화 함수
+ 	function updateButtonStates()
+ 	{
+ 		$('.box-preview').each(function() 		
+   	    {
+   	        // 현재 box-preview 내의 상태 텍스트 가져오기
+   	        var status = $(this).find('.sitter-status-hidden').text();
+   	        
+   	        // 해당 box-preview 내의 버튼 요소 
+   	        var button = $(this).find('.gen-btn-small');
+   	        
+   	        // 상태가 "예약중"인 경우 버튼 변경
+   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
+   	        {
+   	            button.text("예약중");
+   	            button.prop('disabled', true);
+   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
+   	        }
+   	    });
+ 	}
   
 </script>
 </head>
@@ -201,8 +208,6 @@
 
 <!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -376,7 +381,8 @@
 		
 		<!-- 검색 결과 -->
 	    <div class="gen-results" id='resultArea'>
-		    <c:import url="/WEB-INF/view/genRegListFragment.jsp" />	<!-- action 처리 변경 필요 -->
+		    <%-- <c:import url="/WEB-INF/view/genRegListFragment.jsp" /> --%>
+		    <c:import url="/genreglistfragment.action" />
 		</div>
     
 	</div>

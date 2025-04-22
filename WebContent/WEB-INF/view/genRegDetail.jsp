@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>genRegDetail.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript">
 
     // 페이지 로드 완료 후 실행
@@ -31,7 +31,7 @@
             // opener: 현재 창을 연 부모창
             // location: 이동할 URL
             // href: ...로 이동
-            window.opener.location.href = 'genReqInsertForm.action?genRegId=${genRegId}';
+            window.opener.location.href = 'gereqinsertform.action?genRegId=${genRegId}';
             
             // 현재 창 닫기
             window.close();

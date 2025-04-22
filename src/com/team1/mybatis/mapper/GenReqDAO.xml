@@ -7,10 +7,15 @@
 
 	<!-- 일반 돌봄 예약 신청(등록) -->
 	<insert id="add">
+	<selectKey keyProperty="gen_req_id" resultType="String" order="BEFORE">
+		SELECT 'GREQ' || LPAD(SEQ_GREQ.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
 		INSERT INTO GEN_REQ (GEN_REQ_ID, GEN_REG_ID, CHILD_BACKUP_ID, MESSAGE, START_DATE, END_DATE
 		, START_TIME, END_TIME, REQ_DATE, SIT_READ_DATE)
-		VALUES(#{gen_req_id}, #{gen_reg_id}, #{child_backup_id}, #{message}, #{start_date}, #{end_date}
-		, #{start_time}, #{end_time}, #{req_date}, #{sit_read_date})
+		VALUES(#{gen_req_id}, #{gen_reg_id}, #{child_backup_id}, #{message}
+				, TO_DATE(#{start_date},'YYYY-MM-DD'), TO_DATE(#{end_date},'YYYY-MM-DD')
+				, #{start_time}, #{end_time}, DEFAULT, NULL)
 	</insert>
 	
 	<!-- 일반 돌봄 예약 삭제 -->

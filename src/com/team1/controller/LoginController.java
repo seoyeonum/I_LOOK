@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController
 {
-    // 통합 로그인 처리
+    // ● 통합 로그인 처리
     @RequestMapping(value = "/login.action", method = RequestMethod.POST)
     public void loginRedirect(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
@@ -45,12 +46,27 @@ public class LoginController
         request.getRequestDispatcher(redirectUrl).forward(request, response);
     }
     
-    @RequestMapping(value = "iLook.action", method = RequestMethod.GET) 
+    // ● 초기 페이지 요청
+    @RequestMapping(value = "/iLook.action", method = RequestMethod.GET) 
     public String iLookRedirect(Model model) throws Exception
     {
     	String result = "";
     	
     	result = "WEB-INF/view/logIn.jsp";
+    	
+    	return result;
+    }
+    
+    // ● 로그아웃
+    @RequestMapping(value = "/logout.action", method = RequestMethod.GET) 
+    public String logout(Model model, HttpSession session)
+    {
+    	String result = "";
+    	
+    	// 로그아웃 전 모든 세션 정보 지우기
+    	session.invalidate();		//-- 모든 세션 값 삭제
+    	
+    	result = "redirect:/iLook.action?logout=success";
     	
     	return result;
     }

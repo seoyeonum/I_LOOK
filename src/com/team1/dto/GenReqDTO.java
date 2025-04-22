@@ -14,6 +14,11 @@ public class GenReqDTO
 	private String par_name, child_name; 
 	private String pay_status, status;
 	
+	// 속성 추가(→ 일반 돌봄 예약 신청 시 필요)
+	private String gen_pay_rec_id, gen_point_used_id;
+	private String pg_code;
+	private int pay_amount, point;
+	
 	// getter / setter 구성
 	public String getGen_req_id()
 	{
@@ -111,13 +116,13 @@ public class GenReqDTO
 	{
 		this.child_name = child_name;
 	}
-	public String getPay_status() 
+	public String getPay_status()
 	{
-	    return pay_status;
+		return pay_status;
 	}
-	public void setPay_status(String pay_status) 
+	public void setPay_status(String pay_status)
 	{
-	    this.pay_status = pay_status;
+		this.pay_status = pay_status;
 	}
 	public String getStatus()
 	{
@@ -127,5 +132,44 @@ public class GenReqDTO
 	{
 		this.status = status;
 	}
-	
+	public String getGen_pay_rec_id()
+	{
+		return gen_pay_rec_id;
+	}
+	public void setGen_pay_rec_id(String gen_pay_rec_id)
+	{
+		this.gen_pay_rec_id = gen_pay_rec_id;
+	}
+	public String getGen_point_used_id()
+	{
+		return gen_point_used_id;
+	}
+	public void setGen_point_used_id(String gen_point_used_id)
+	{
+		this.gen_point_used_id = gen_point_used_id;
+	}
+	public String getPg_code()
+	{
+		return pg_code;
+	}
+	public void setPg_code(String pg_code)
+	{
+		this.pg_code = pg_code;
+	}
+	public int getPay_amount()
+	{
+		return pay_amount;
+	}
+	public void setPay_amount(int pay_amount)
+	{
+		this.pay_amount = pay_amount;
+	}
+	public int getPoint()
+	{
+		return point;
+	}
+	public void setPoint(int point)
+	{
+		this.point = point;
+	}
 }
