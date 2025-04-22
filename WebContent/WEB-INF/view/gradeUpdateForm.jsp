@@ -21,7 +21,13 @@
 	        $("#file_path").click();
 	    });
 	    
-	 	// 미리보기
+	    // 기존 이미지가 있다면 미리보기 보여주기
+	    if ($("#previewImage").attr("src") && $("#previewImage").attr("src") !== "") 
+	    {
+	        $("#imagePreview").show();
+	    }
+	    
+	    // 미리보기
 	    $("#file_path").change(function(e) 
 	    {
 	        if (this.files && this.files[0]) 
@@ -34,7 +40,6 @@
 	                $("#imagePreview").show(); 
 	            }
 	            reader.readAsDataURL(this.files[0]);
-	            
 	        }
 	    });
 	
@@ -122,7 +127,6 @@
 				<form action="gradeupdate.action" method="post" enctype="multipart/form-data" id="gradeForm">
 				
 					<div class="content-body">
-					
 						<!-- 왼쪽 컬럼 - 등급 이미지 업로드 -->
 						<div class="left-column">
 							<div class="image">

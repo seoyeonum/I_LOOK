@@ -54,6 +54,7 @@ body {
     
 }
 
+/* 타이틀 영역 */
 .content-title {
     margin: 0;
     font-size: 30px;
@@ -61,13 +62,17 @@ body {
     padding-left: 5px;
 }
 
-/* 날짜필터 */
+/* 필터 영역 */
+.content-filter-area {
+    padding: 15px 20px;
+    width: 100%;
+}
+
 
 .content-filter {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 15px;
+    gap: 600px;
     width: 100%;
 }
 
@@ -77,6 +82,13 @@ body {
     gap: 8px;
 }
 
+/* 날짜 필터 */
+.date-filter {
+	display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 /* 검색폼 */
 .search-form form {
     display: flex;
@@ -84,7 +96,7 @@ body {
     gap: 5px;
 }
 
-.selectFiled {
+.selectField{
     padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 4px;

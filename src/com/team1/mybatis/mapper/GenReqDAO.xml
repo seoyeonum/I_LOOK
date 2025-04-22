@@ -40,9 +40,8 @@
 	        SELECT V.*, ROWNUM AS RN
 	        FROM (
 	            SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, PAR_NAME, NAME,
-	                   START_DATE, END_DATE, START_TIME, END_TIME, REQ_DATE, STATUS,
-	                   CASE WHEN pay_amount IS NOT NULL THEN '결제완료' ELSE '미결제' END AS pay_status
-	            FROM GEN_REQ_DETAIL_VIEW
+	                   START_DATE, END_DATE, START_TIME, END_TIME, REQ_DATE, STATUS
+	            FROM ADMIN_GEN_REQ_VIEW
 	            WHERE 1=1
 			
 	            <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
@@ -59,11 +58,9 @@
 	                    </when>
 	                </choose>
 	            </if>
-	            
-	             <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
-                	AND REQ_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1
-            	</if>
-	
+				<if test="dateRangeStart != null and dateRangeStart != ''">
+				    AND REQ_DATE >= #{dateRangeStart}
+				</if>
 	            ORDER BY REQ_DATE DESC
 	        ) V
 	    )
@@ -75,7 +72,7 @@
 	<!-- 관리자가 보는 신청이 등록된 일반돌봄 예약 전체 개수 -->
 	<select id="adminCountGenReq" resultType="java.lang.Integer">
 	    SELECT COUNT(*) AS count
-	    FROM GEN_REQ_DETAIL_VIEW
+	    FROM ADMIN_GEN_REQ_VIEW
 	    WHERE 1=1
 	
 	    <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
@@ -92,9 +89,11 @@
 	            </when>
 	        </choose>
 	    </if>
-	     <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
-                AND REQ_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1
-           </if>
+	    
+	     <if test="dateRangeStart != null and dateRangeStart != ''">
+		    AND REQ_DATE >= #{dateRangeStart}
+		</if>
+	    
 	</select>
 
 	

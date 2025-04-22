@@ -12,6 +12,118 @@
 <title>adminGenRegList.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/adminGenRegList.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	// 경로 선언
+	const cp = '<%=cp %>';
+	
+	// 뒤로가기/앞으로가기 대응
+	window.addEventListener('popstate', function(event) 
+	{
+	    loadListFromUrl();
+	});
+	
+	$(document).ready(function()
+	{
+		// 날짜범위 변경시 Ajax 호출
+		$('select[name="currentOnly"]').change(function()
+		{
+			loadList(1);
+		});
+		
+		
+	});
+
+	// ajax 데이터 출력 함수
+	function loadList(page)
+	{
+		// 변수 선언
+		const currentOnly = $('select[name="currentOnly"]').val();
+		const searchKey = $('select[name="searchKey"]').val();
+		const searchValue = $('input[name="searchValue"]').val();
+		
+		$.ajax(
+		{
+			url: cp + '/admingenreglistajax.action'
+		  , method: 'GET'
+		  , data:
+			{
+			 	page: page
+			  , searchKey: searchKey
+			  , searchValue: searchValue
+			  , currentOnly: currentOnly
+			}
+		  , success: function(response)
+			{
+				$('#listArea').html(response);
+				
+				var newUrl = "admingenreglist.action?page=" + page;
+				
+				if (searchKey)
+				{
+					newUrl += "&searchKey=" + searchKey;
+				}
+				if (searchValue)
+				{
+					newUrl += "&searchValue=" + encodeURIComponent(searchValue);
+				}
+				
+				history.pushState(null, '', newUrl);
+	        }
+	        ,error: function(xhr, status, error)
+	        {
+	            console.error('에러 발생:', error);
+	        }
+		});
+	}
+	
+	// ajax url 표현 함수
+	function loadListFromUrl()
+	{
+		// 현재 URL 기준으로 파라미터 읽기
+        const urlParams = new URLSearchParams(window.location.search);
+		
+		const page = urlParams.get('page') || 1;
+		const searchKey = urlParams.get('searchKey') || '';
+		const searchValue = urlParams.get('searchValue') || '';
+		const currentOnly = urlParams.get('currentOnly') || '';
+		
+		$.ajax(
+		{
+			url: cp + '/admingenreglistajax.action'
+		  , method: 'GET'
+		  , data:
+			{
+			 	page: page
+			  , searchKey: searchKey
+			  , searchValue: searchValue
+			  , currentOnly: currentOnly
+			}
+		  , success: function(response)
+			{
+				$('#listArea').html(response);
+				
+				var newUrl = "admingenreglist.action?page=" + page;
+				
+				if (searchKey)
+				{
+					newUrl += "&searchKey=" + searchKey;
+				}
+				if (searchValue)
+				{
+					newUrl += "&searchValue=" + encodeURIComponent(searchValue);
+				}
+				
+				history.pushState(null, '', newUrl);
+	        }
+	        ,error: function(xhr, status, error)
+	        {
+	            console.error('에러 발생:', error);
+	        }
+		});
+	};
+
+</script>
 </head>
 <body>
 
@@ -26,30 +138,35 @@
 
 			<!-- 메인 콘텐츠 영역 -->
 			<main class="main-content">
+			
+				<!-- 타이틀 영역 -->
 				<div class="content-header">
 					<h1 class="content-title">근무 등록 내역</h1>
+				</div>
+				
+				<!-- 필터 영역 -->
+				<div class="content-filter-area">
+					<div class="content-filter">
+					
+						<!-- 날짜 필터 -->
+						<div class="filter-group date-filter">
+							<select name="currentOnly" id="currentOnlySelect" class="selectField">
+							    <option value="" selected>날짜 : 전체</option>
+							    <option value="true">등록 중</option>
+							</select>
+						</div>
 
-					<!-- 날짜 필터 -->
-					<div class="filter-group date-filter">
-						<select name="currentOnly" id="currentOnlySelect" class="selectField">
-						    <option value="true"  selected>진행 중</option>
-						    <option value="false">전체</option>
-						</select>
-					</div>
-
-					<!-- 검색 폼 -->
-					<div class="search-form">
-						<form action="admingenreglist.action" name="searchForm"
-							method="get">
-							<select name="searchKey" class="selectFiled">
-								<option value="name" ${searchKey == 'name' ? 'selected' : ''}>이름</option>
-								<option value="sit_backup_id"
-									${searchKey == 'sit_backup_id' ? 'selected' : ''}>시터
-									코드</option>
-							</select> <input type="text" name="searchValue" class="txt"
-								value="${searchValue }"> <input type="submit" value="검색"
-								class="btn search-btn">
-						</form>
+						<!-- 검색 폼 -->
+						<div class="filter-group search-form">
+							<form action="admingenreglist.action" name="searchForm" method="get">
+								<select name="searchKey" class="selectField">
+									<option value="name" ${searchKey == 'name' ? 'selected' : ''}>이름</option>
+									<option value="sit_backup_id" ${searchKey == 'sit_backup_id' ? 'selected' : ''}>시터코드</option>
+								</select> 
+								<input type="text" name="searchValue" class="txt" value="${searchValue }"> 
+								<input type="submit" value="검색" class="btn search-btn">
+							</form>
+						</div>
 					</div>
 				</div>
 
@@ -58,73 +175,23 @@
 						<div class="info-header">
 							<div class="info-cell">번호</div>
 							<div class="info-cell">이름</div>
+							<div class="info-cell">근무 등록 코드</div>
 							<div class="info-cell">시작일</div>
 							<div class="info-cell">종료일</div>
 							<div class="info-cell">시작 시간</div>
 							<div class="info-cell">종료 시간</div>
-							<div class="info-cell">시터 코드</div>
 							<div class="info-cell">등록일</div>
 							<div class="info-cell">상세보기</div>
 							<div class="info-cell">삭제</div>
 						</div>
 
-						<!-- 데이터 행 - 실제 사용시 반복문으로 처리 -->
-						<c:forEach var="genRegList" items="${genRegList }"
-							varStatus="status">
-							<div class="info-row">
-								<div class="info-cell">${paging.startNum - status.index}</div>
-								<div class="info-cell">${genRegList.name }</div>
-								<div class="info-cell">${fn:substring(genRegList.start_date, 0, 10) }</div>
-								<div class="info-cell">${fn:substring(genRegList.end_date, 0, 10) }</div>
-								<c:set var="startTime" value="${genRegList.start_time}" />
-								<c:set var="endTime" value="${genRegList.end_time}" />
-								<div class="info-cell">${startTime lt 10 ? '0' : ''}${startTime}:00</div>
-								<div class="info-cell">${endTime lt 10 ? '0' : ''}${endTime}:00</div>
-								<div class="info-cell">${genRegList.sit_backup_id }</div>
-								<div class="info-cell">${fn:substring(genRegList.reg_date, 0, 10)}</div>
-								<div class="info-cell">
-									<div class="action-buttons">
-										<button type="button" class="btn detail-btn"
-											onclick="location.href='<%=cp%>/admingenregdetail.action?gen_reg_id=${genRegList.gen_reg_id}&sit_reg_id=${genRegList.sit_reg_id }'">상세보기</button>
-									</div>
-								</div>
-								<div class="info-cell">
-									<div class="action-buttons">
-										<button type="button" class="btn delete-btn">삭제</button>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
+						<!-- 데이터 행 -->
+						<div id="listArea">	
+						<c:import url="adminGenRegListAjax.jsp"></c:import>
+						</div>
 					</div>
 
-					<!-- 페이징 영역 -->
-					<div class="page">
-						<c:if test="${paging.totalPage >= 1}">
-							<c:if test="${paging.startPage > 1}">
-								<a
-									href="admingenreglist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
-							</c:if>
-
-							<c:forEach var="p" begin="${paging.startPage}"
-								end="${paging.endPage}">
-								<c:choose>
-									<c:when test="${p == paging.page}">
-										<strong>${p}</strong>
-									</c:when>
-									<c:otherwise>
-										<a
-											href="admingenreglist.action?page=${p}&searchKey=${searchKey}&searchValue=${searchValue}">${p}</a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
-							<c:if test="${paging.endPage < paging.totalPage}">
-								<a
-									href="admingenreglist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}">
-									> </a>
-							</c:if>
-						</c:if>
-					</div>
+					<!-- 페이징 영역 ajax 처리 -->
 				</div>
 			</main>
 		</div>

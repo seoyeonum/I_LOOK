@@ -4,8 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +48,7 @@ public class AdminServiceController
 	public String adminGenRegList(@RequestParam(value = "page", defaultValue="1") int page
 								, @RequestParam(value = "searchKey", required = false) String searchKey 
 								, @RequestParam(value = "searchValue", required = false) String searchValue 
-								, @RequestParam(value = "currentOnly", required = false) Boolean currentOnly 
+								, @RequestParam(value = "currentOnly", defaultValue = "false") Boolean currentOnly 
 								, Model model, HttpSession session)
 	{
 		// 관리자 확인 절차
@@ -80,50 +78,39 @@ public class AdminServiceController
 		return "WEB-INF/view/adminGenRegList.jsp";
 	}
 	
-	/*
-	 * // 시터 근무등록 ajax 처리
-	 * 
-	 * @RequestMapping(value="/admingenreglist.ajax", method=RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String adminGenRegListAjax(@RequestParam(value = "page",
-	 * defaultValue = "1") int page,
-	 * 
-	 * @RequestParam(value = "searchKey", required = false) String searchKey,
-	 * 
-	 * @RequestParam(value = "searchValue", required = false, defaultValue = "")
-	 * String searchValue,
-	 * 
-	 * @RequestParam(value = "currentOnly", required = false) Boolean currentOnly) {
-	 * IGenRegDAO dao = sqlSession.getMapper(IGenRegDAO.class);
-	 * 
-	 * System.out.println("★★★ adminGenRegListAjax 도착 성공");
-	 * System.out.println("searchKey: " + searchKey);
-	 * System.out.println("searchValue: " + searchValue);
-	 * System.out.println("currentOnly: " + currentOnly);
-	 * 
-	 * Map<String, Object> result = new HashMap<>();
-	 * 
-	 * // currentOnly null 처리 - 비어있는 값이 전달되면 null로 처리되어 에러 발생할 수 있음 if (currentOnly
-	 * == null && "".equals(searchValue.trim())) { currentOnly = true; // 기본값: 진행 중
-	 * }
-	 * 
-	 * // 검색어 공백 처리 if (searchValue != null && searchValue.trim().isEmpty()) {
-	 * searchValue = null; }
-	 * 
-	 * int totalCount = dao.adminCountSitGenReg(searchKey, searchValue,
-	 * currentOnly); PageHandler paging = new PageHandler(page, totalCount);
-	 * List<GenRegDTO> list = dao.adminListSitGenReg(paging.getStart(),
-	 * paging.getEnd(), searchKey, searchValue, currentOnly);
-	 * 
-	 * System.out.println("★★★ list size: " + list.size());
-	 * 
-	 * result.put("list", list); result.put("paging", paging);
-	 * 
-	 * try { // Jackson ObjectMapper를 사용하여 Map을 JSON 문자열로 변환 ObjectMapper
-	 * objectMapper = new ObjectMapper(); return
-	 * objectMapper.writeValueAsString(result); } catch (Exception e) {
-	 * e.printStackTrace(); return "{\"error\": \"데이터 변환 중 오류가 발생했습니다.\"}"; } }
-	 */
+	// 시터 근무등록 ajax 처리
+	@RequestMapping(value = "/admingenreglistajax.action", method = RequestMethod.GET)
+	public String adminGenRegListAjax(@RequestParam(value = "page", defaultValue="1") int page
+								, @RequestParam(value = "searchKey", required = false) String searchKey 
+								, @RequestParam(value = "searchValue", required = false) String searchValue 
+								, @RequestParam(value = "currentOnly", defaultValue = "false") Boolean currentOnly 
+								, Model model, HttpSession session)
+	{
+		// 관리자 확인 절차
+		if (!isAdmin(session))
+        	return "redirect:/loginform.action";
+        AdminDTO dto = getLoginAdmin(session);
+        model.addAttribute("loginAdmin", dto);
+
+        IGenRegDAO dao = sqlSession.getMapper(IGenRegDAO.class);
+        
+        // 근무 등록 개수
+        int totalCount = dao.adminCountSitGenReg(searchKey, searchValue, currentOnly);
+        
+        // 페이징 처리 객체 생성
+        PageHandler paging = new PageHandler(page, totalCount);
+        		
+        // 근무 등록 내역 목록 조회
+        List<GenRegDTO> genRegList = dao.adminListSitGenReg(paging.getStart(), paging.getEnd(), searchKey, searchValue, currentOnly);
+        
+        // 모델에 데이터 담기
+        model.addAttribute("genRegList", genRegList);
+        model.addAttribute("paging", paging);
+		
+		return "WEB-INF/view/adminGenRegListAjax.jsp";
+	}
+	
+	
 	
 	// 시터 등록요청 상세정보 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/admingenregdetail.action", method = RequestMethod.GET) 
@@ -171,90 +158,103 @@ public class AdminServiceController
 		return result;
 	}
 	
-	// 예약신청내역으로 이동 및 데이터 전송
-	@RequestMapping(value = "/adminreqlist.action", method = RequestMethod.GET)
-	public String adminReqList(Model model, HttpSession session
-	                         , @RequestParam(defaultValue="normal") String careType
-	                         , @RequestParam(required=false, defaultValue = "all") String statusFilter
-	                         , @RequestParam(required=false) String searchKey
-	                         , @RequestParam(required=false) String searchValue
-	                         , @RequestParam(required = false, defaultValue = "week") String dateRange
-	                         , @RequestParam(required=false) String startDate
-	                         , @RequestParam(required=false) String endDate
-	                         , @RequestParam(defaultValue="1") int page)
+	// 예약신청내역 공통 리스트 준비 메서드( + ajax)
+	private Map<String, Object> prepareGenReqList(String careType, String statusFilter, String searchKey
+											    , String searchValue, String dateRange, int page)
 	{
-	    if (!isAdmin(session))
-	        return "redirect:/loginform.action";
-	    AdminDTO dto = getLoginAdmin(session);
-	    model.addAttribute("loginAdmin", dto);
-	    
-	    // 날짜 자동 계산
-	    if ((startDate == null || startDate.isEmpty()) && (endDate == null || endDate.isEmpty()))
+	    Map<String, Object> params = new HashMap<>();
+	    String dateRangeStart = null;
+
+	    if (!"allDay".equals(dateRange)) 
 	    {
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	        Calendar cal = Calendar.getInstance();
 
-	        endDate = sdf.format(new Date()); // 오늘 날짜
-	        switch (dateRange)
+	        switch (dateRange) 
 	        {
-	            case "week":
-	                cal.add(Calendar.DATE, -7);
-	                break;
-	            case "month":
-	                cal.add(Calendar.MONTH, -1);
-	                break;
-	            case "3month":
-	                cal.add(Calendar.MONTH, -3);
-	                break;
-	            case "all":
-	                endDate = null;
-	                startDate = null;
-	                break;
+	            case "week": cal.add(Calendar.DATE, -7); break;
+	            case "month": cal.add(Calendar.MONTH, -1); break;
+	            case "3month": cal.add(Calendar.MONTH, -3); break;
 	        }
-	        if (startDate == null)  // all이 아닌 경우만 s tartDate 세팅
-	            startDate = sdf.format(cal.getTime());
+	        dateRangeStart = sdf.format(cal.getTime());
 	    }
 
-	    Map<String, Object> params = new HashMap<>();
 	    params.put("statusFilter", statusFilter);
 	    params.put("searchKey", searchKey);
 	    params.put("searchValue", searchValue);
-	    params.put("startDate", startDate);
-	    params.put("endDate", endDate);
+	    params.put("dateRange", dateRange);
+	    params.put("dateRangeStart", dateRangeStart);
 
-	    int totalCount = 0;
-	    List<GenReqDTO> list = Collections.emptyList();
 	    IGenReqDAO reqDao = sqlSession.getMapper(IGenReqDAO.class);
 
-	    if ("normal".equals(careType))
-	    {
-	        totalCount = reqDao.adminCountGenReq(params);
+	    int totalCount = reqDao.adminCountGenReq(params);
+	    PageHandler paging = new PageHandler(page, totalCount);
 
-	        PageHandler paging = new PageHandler(page, totalCount);
-	        params.put("start", paging.getStart());
-	        params.put("end", paging.getEnd());
+	    params.put("start", paging.getStart());
+	    params.put("end", paging.getEnd());
 
-	        list = reqDao.adminListSitGenReg(params);
-	        model.addAttribute("paging", paging);
-	    }
-	    else if ("emergency".equals(careType))
-	    {
-	        // ★ 긴급돌봄 처리 예정
-	    }
+	    List<GenReqDTO> list = reqDao.adminListSitGenReg(params);
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("list", list);
+	    result.put("paging", paging);
+
+	    return result;
+	}
+	
+	// 예약신청내역으로 이동 및 데이터 전송
+	@RequestMapping(value = "/adminreqlist.action", method = RequestMethod.GET)
+	public String adminReqList(Model model, HttpSession session
+	                         , @RequestParam(defaultValue="normal") String careType
+	                         , @RequestParam(defaultValue="all") String statusFilter
+	                         , @RequestParam(required=false) String searchKey
+	                         , @RequestParam(required=false) String searchValue
+	                         , @RequestParam(defaultValue="allDay") String dateRange
+	                         , @RequestParam(defaultValue="1") int page)
+	{
+	    // 관리자 로그인 체크
+	    if (!isAdmin(session))
+	        return "redirect:/loginform.action";
+
+	    AdminDTO dto = getLoginAdmin(session);
+	    model.addAttribute("loginAdmin", dto);
+
+	    
+	    // 공통 메서드 호출
+	    Map<String, Object> result = prepareGenReqList(careType, statusFilter, searchKey, searchValue, dateRange, page);
+
 
 	    // model 세팅
-	    model.addAttribute("list", list);
+	    model.addAttribute("list", result.get("list"));
 	    model.addAttribute("careType", careType);
 	    model.addAttribute("statusFilter", statusFilter);
 	    model.addAttribute("searchKey", searchKey);
 	    model.addAttribute("searchValue", searchValue);
 	    model.addAttribute("dateRange", dateRange);
-	    model.addAttribute("startDate", startDate);
-	    model.addAttribute("endDate", endDate);
-	    model.addAttribute("totalCount", totalCount);
-
+	    model.addAttribute("paging", result.get("paging"));
+	    
 	    return "WEB-INF/view/adminReqList.jsp";
 	}
+	
+	// 예약내역 ajax 처리
+	@RequestMapping(value = "/admingenreqlistajax.action", method = RequestMethod.GET)
+	public String adminGenReqListAjax(Model model
+	                                , @RequestParam(defaultValue="normal") String careType
+	                                , @RequestParam(defaultValue="all") String statusFilter
+	                                , @RequestParam(required=false) String searchKey
+	                                , @RequestParam(required=false) String searchValue
+	                                , @RequestParam(defaultValue="allDay") String dateRange
+	                                , @RequestParam(defaultValue="1") int page)
+	{
+		 // 공통 메서드 호출
+	    Map<String, Object> result = prepareGenReqList(careType, statusFilter, searchKey, searchValue, dateRange, page);
+
+	    model.addAttribute("list", result.get("list"));
+	    model.addAttribute("paging", result.get("paging"));
+
+	    return "WEB-INF/view/adminReqListAjax.jsp";
+	}
+
 
 	
 	// 결제내역으로 이동 및 데이터 전송
