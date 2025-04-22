@@ -161,7 +161,7 @@
             <input type="submit" value="Login">
 
             <div id="loginMenu">
-                <a href="Member.jsp" class="btn">회원가입</a>
+                <a href="/membership.action" class="btn">회원가입</a>
                 <button type="button" class="btn" onclick="alert('준비 중입니다.')">아이디 · 비밀번호 찾기</button>
             </div>
 <%-- 

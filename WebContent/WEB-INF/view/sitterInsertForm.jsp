@@ -117,7 +117,7 @@
 
 <div id="title">I,Look</div>
 
-<form action="<%=cp %>/sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="/sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
     <div class="form-section">
         <h2>회원요청</h2>
     </div>
