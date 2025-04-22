@@ -41,11 +41,7 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<!-- → jstl import 구문으로 변경 -->
-	<%-- <c:import url="/parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
