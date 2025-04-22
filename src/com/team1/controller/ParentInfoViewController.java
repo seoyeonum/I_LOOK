@@ -1,3 +1,4 @@
+/*
 package com.team1.controller;
 
 import javax.servlet.http.HttpSession;
@@ -41,3 +42,4 @@ public class ParentInfoViewController
         return "/WEB-INF/view/ParentInfo.jsp";
     }
 }
+*/

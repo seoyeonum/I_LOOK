@@ -65,12 +65,12 @@ public class GenReqController
 		// 접근 권한 있다면 아래 내용 순차 진행
 		//----------------------------------------------------------------
 		
-		String id = parent.getId();
+		String parBackupId = parent.getPar_backup_id();
 		
 		// 부모 id 기반으로 아이 이름 조회
-		IChildDAO ChildDao = sqlSession.getMapper(IChildDAO.class);
+		IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
-		listName = ChildDao.listName(id);
+		listName = childDao.listName(parBackupId);
 		
 		model.addAttribute("listName", listName);
 		//session.setAttribute("id", id);
@@ -103,8 +103,8 @@ public class GenReqController
 		IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
 		//String id = (String) session.getAttribute("id");
-		String id = parent.getId();
-		listName = childDao.listName(id);
+		String parBackupId = parent.getPar_backup_id();
+		listName = childDao.listName(parBackupId);
 		
 		// (이전 페이지에서 건넨 값을 다음 페이지로 전달)
 		model.addAttribute("listName", listName);

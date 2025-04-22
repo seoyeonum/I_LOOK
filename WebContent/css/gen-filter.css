@@ -227,35 +227,22 @@ input, select
 
 
 
-/* 돌봄 희망 날짜 */
-.date-range
+/* 돌봄 희망 날짜 , 돌봄 희망 시간 */
+.date-range, .time-range
 {
     display: flex;
     gap: 10px;
     white-space: nowrap;
     margin-bottom: 8px;
+    /* align-items: center; */
 }
 
-.date-range input
+.date-range input, .time-range select
 {
     flex: 1;
     width: 152px;
 }
 
-/* 돌봄 희망 시간 */
-.time-range
-{
-    display: flex;
-    gap: 10px;
-    white-space: nowrap;
-    margin-bottom: 8px;
-}
-
-.time-range select
-{
-    flex: 1;
-    width: 112px;
-}
 
 /* 시간 설정 경고 문구 */
 .warning
