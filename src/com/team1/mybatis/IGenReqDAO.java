@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.team1.dto.ChildDTO;
 import com.team1.dto.GenReqDTO;
 
 public interface IGenReqDAO
@@ -28,6 +29,10 @@ public interface IGenReqDAO
 	public int adminCountGenReq(Map<String, Object> params);
 	
 	// 특정 아이디의 예약 등록건 찾기
-	public int search (GenReqDTO gen_req);
+	public int search(GenReqDTO gen_req);
 	
+	// 부모 기준 예약 내역 조회 (최근 이용 내역 및 이용 상태 표시용)
+	public ArrayList<GenReqDTO> findByParent(String par_backup_id);
+	
+	public ArrayList<ChildDTO> listByParent(String parBackupId);
 }

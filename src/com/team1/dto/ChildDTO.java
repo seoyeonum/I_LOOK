@@ -16,6 +16,9 @@ public class ChildDTO
 	private String child_medical_id, medical_type_id, type;
 	private String child_allergy_id, allergy_type_id;
 	private String child_disability_id, disability_type_id;
+	private String disability; 
+	private String disease;    
+	private String allergy;
 	
 	private String gender;							//-- 성별
 	private String road_addr, detailed_addr;		//-- 도로명 주소, 상세주소
@@ -93,6 +96,14 @@ public class ChildDTO
 	{
 		this.blood_type = blood_type;
 	}
+	public int getAge()
+	{
+		return age;
+	}
+	public void setAge(int age)
+	{
+		this.age = age;
+	}
 	public int getHeight()
 	{
 		return height;
@@ -165,30 +176,53 @@ public class ChildDTO
 	{
 		this.disability_type_id = disability_type_id;
 	}
-	public String getGender() {
+	public String getDisability()
+	{
+		return disability;
+	}
+	public void setDisability(String disability)
+	{
+		this.disability = disability;
+	}
+	public String getDisease()
+	{
+		return disease;
+	}
+	public void setDisease(String disease)
+	{
+		this.disease = disease;
+	}
+	public String getAllergy()
+	{
+		return allergy;
+	}
+	public void setAllergy(String allergy)
+	{
+		this.allergy = allergy;
+	}
+	public String getGender()
+	{
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(String gender)
+	{
 		this.gender = gender;
 	}
-	public String getRoad_addr() {
+	public String getRoad_addr()
+	{
 		return road_addr;
 	}
-	public void setRoad_addr(String road_addr) {
+	public void setRoad_addr(String road_addr)
+	{
 		this.road_addr = road_addr;
 	}
-	public String getDetailed_addr() {
+	public String getDetailed_addr()
+	{
 		return detailed_addr;
 	}
-	public void setDetailed_addr(String detailed_addr) {
+	public void setDetailed_addr(String detailed_addr)
+	{
 		this.detailed_addr = detailed_addr;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	
-	
+
 }

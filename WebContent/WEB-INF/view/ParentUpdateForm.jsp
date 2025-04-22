@@ -143,18 +143,18 @@
 		</form>
 
 		<!-- ✅ 탈퇴 사유 박스 (처음에는 안 보이게) -->
-		<div id="withdrawReasonBox" style="display: none; margin-top: 20px;">
-			<label for="reason_withdrawed_id">탈퇴 사유 선택:</label>
-			<select id="reason_withdrawed_id" name="reason_withdrawed_id">
-				<option value="">-- 탈퇴 사유 선택 --</option>
-				<option value="001">서비스가 만족스럽지 않음</option>
-				<option value="002">다른 서비스를 이용 중</option>
-				<option value="003">일시적으로 이용 중단</option>
-				<option value="004">개인 사정</option>
-				<option value="999">기타</option>
-			</select>
-			<button type="button" class="btn delete-btn" onclick="withdrawConfirm();">탈퇴 확정</button>
-		</div>
+			<div id="withdrawReasonBox" style="display: none; margin-top: 20px;">
+				<label for="reason_withdrawed_id">탈퇴 사유 선택:</label>
+				<select id="reason_withdrawed_id" name="reason_withdrawed_id">
+					<option value="">-- 탈퇴 사유 선택 --</option>
+					<option value="001">서비스가 만족스럽지 않음</option>
+					<option value="002">다른 서비스를 이용 중</option>
+					<option value="003">일시적으로 이용 중단</option>
+					<option value="004">개인 사정</option>
+					<option value="999">기타</option>
+				</select>
+				<button type="button" class="btn delete-btn" onclick="withdrawConfirm();">탈퇴 확정</button>
+			</div>
 	</div>
 </div>
 
