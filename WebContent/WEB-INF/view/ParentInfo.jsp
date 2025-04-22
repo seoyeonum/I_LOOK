@@ -41,14 +41,18 @@
             </div>
         </div>
 
-        <!-- 부모 정보 -->
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-            <div class="submenu">
-                <a href="parentinfoview.action">부모 정보 보기</a>
-                <a href="#">부모 정보 수정</a>
-            </div>
-        </div>
+		<!-- 부모 정보 -->
+		<div class="menu-item">
+		    <div><i class="fa-solid fa-user-group"></i> 부모 정보 관리</div>
+		    <div class="submenu">
+		        <a href="parentinfoview.action">부모 정보 보기</a>
+		        <a href="#">부모 정보 수정</a>
+		    </div>
+		</div>
+
+		
+</div>
+        
 
         <!-- 돌봄 이용 -->
         <div class="menu-item">
@@ -58,8 +62,8 @@
                 <a href="#">이용 완료 내역</a>
             </div>
         </div>
-    </div>
-</div>
+ </div>
+
 
 <div class="page-title">
     <h2>부모 상세정보</h2>
@@ -82,7 +86,7 @@
 
             <div class="input-field">
                 <label for="id">아이디 :</label>
-                <input type="text" id="id" value="${parent.par_reg_id}" readonly="readonly">
+                <input type="text" id="id" value="${parent.id}" readonly="readonly">
             </div>
 
             <div class="input-field">

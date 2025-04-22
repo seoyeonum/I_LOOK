@@ -4,8 +4,184 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.team1.mybatis.IChildDAO">
-	
-	<!-- 아이 정보 등록 -->
+
+    <!-- [1] 아이 백업 등록 -->
+    <insert id="addChildBackup" parameterType="com.team1.dto.ChildDTO">
+        <selectKey keyProperty="child_backup_id" resultType="String" order="BEFORE">
+            SELECT 'CBAC' || LPAD(CHILD_BACKUP_SEQ.NEXTVAL, 4, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO CHILD_BACKUP (CHILD_BACKUP_ID, PAR_BACKUP_ID, REG_DATE)
+        VALUES (#{child_backup_id}, #{par_backup_id}, SYSDATE)
+    </insert>
+
+    <!-- [2] 아이 정보 등록 -->
+    <insert id="add" parameterType="com.team1.dto.ChildDTO">
+        <selectKey keyProperty="child_reg_id" resultType="String" order="BEFORE">
+            SELECT 'CREG' || LPAD(CHILD_REG_SEQ.NEXTVAL, 4, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO CHILD_REG (
+            CHILD_REG_ID, CHILD_BACKUP_ID, NAME, HEIGHT, WEIGHT,
+            SSN_FIRST, SSN_SECOND, SPECIAL_NOTES, BLOOD_TYPE
+        ) VALUES (
+            #{child_reg_id}, #{child_backup_id}, #{name}, #{height}, #{weight},
+            #{ssn_first}, #{ssn_second}, #{special_notes}, #{blood_type}
+        )
+    </insert>
+
+    <!-- [3] 부모 백업 ID 조회 -->
+    <select id="findParBackupId" parameterType="string" resultType="string">
+        SELECT PAR_BACKUP_ID
+        FROM PAR_BACKUP
+        WHERE ID = #{id}
+    </select>
+
+    <!-- [4~6] 지병/알레르기/장애 등록 -->
+    <insert id="addDisease" parameterType="com.team1.dto.ChildDTO">
+        <selectKey keyProperty="child_medical_id" resultType="String" order="BEFORE">
+            SELECT 'CMD' || LPAD(CHILD_MEDICAL_SEQ.NEXTVAL, 4, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO CHILD_MEDICALS (
+            CHILD_MEDICAL_ID, MEDICAL_TYPE_ID, REG_DATE, CHILD_REG_ID
+        ) VALUES (
+            #{child_medical_id}, #{medical_type_id}, SYSDATE,
+            (SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id})
+        )
+    </insert>
+
+    <insert id="addAllergy" parameterType="com.team1.dto.ChildDTO">
+        <selectKey keyProperty="child_allergy_id" resultType="String" order="BEFORE">
+            SELECT 'CAL' || LPAD(CHILD_ALLERGY_SEQ.NEXTVAL, 4, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO CHILD_ALLERGIES (
+            CHILD_ALLERGY_ID, ALLERGIE_TYPE_ID, REG_DATE, CHILD_REG_ID
+        ) VALUES (
+            #{child_allergy_id}, #{allergy_type_id}, SYSDATE,
+            (SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id})
+        )
+    </insert>
+
+    <insert id="addDisability" parameterType="com.team1.dto.ChildDTO">
+        <selectKey keyProperty="child_disability_id" resultType="String" order="BEFORE">
+            SELECT 'CDS' || LPAD(CHILD_DISABILITY_SEQ.NEXTVAL, 4, '0') FROM DUAL
+        </selectKey>
+        INSERT INTO CHILD_DISABILITIES (
+            CHILD_DISABILITY_ID, DISABILITY_TYPE_ID, REG_DATE, CHILD_REG_ID
+        ) VALUES (
+            #{child_disability_id}, #{disability_type_id}, SYSDATE,
+            (SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id})
+        )
+    </insert>
+
+    <!-- [7] 유형 목록 -->
+    <select id="getDisabilityTypes" resultType="com.team1.dto.ChildDTO">
+        SELECT DISABILITY_TYPE_ID, TYPE FROM DISABILITY_TYPES
+    </select>
+
+    <select id="getAllergyTypes" resultType="com.team1.dto.ChildDTO">
+        SELECT ALLERGIE_TYPE_ID AS allergy_type_id, TYPE FROM ALLERGIE_TYPES
+    </select>
+
+    <select id="getMedicalTypes" resultType="com.team1.dto.ChildDTO">
+        SELECT MEDICAL_TYPE_ID AS medical_type_id, TYPE FROM MEDICAL_TYPES
+    </select>
+
+    <!-- [8] 아이 이름 목록 -->
+    <select id="listName" resultType="com.team1.dto.ChildDTO">
+        SELECT C.CHILD_BACKUP_ID, CR.NAME
+        FROM PAR_BACKUP P
+        JOIN CHILD_BACKUP C ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+        JOIN CHILD_REG CR ON C.CHILD_BACKUP_ID = CR.CHILD_BACKUP_ID
+        WHERE P.PAR_BACKUP_ID = #{parBackupId} 
+    </select>
+
+    <!-- [9] 아이 정보 수정 -->
+    <update id="modifyByBackupId" parameterType="com.team1.dto.ChildDTO">
+        UPDATE CHILD_REG
+        SET HEIGHT = #{height},
+            WEIGHT = #{weight},
+            SPECIAL_NOTES = #{special_notes}
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </update>
+
+    <!-- [10] 단일 아이 조회 -->
+    <select id="findByBackupId" resultType="com.team1.dto.ChildDTO">
+        SELECT *
+        FROM CHILD_REG
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </select>
+
+    <!-- [11] 부모 기준 아이 전체 상세 조회 -->
+    <select id="findAllChildDetailsByParentBackup" resultType="com.team1.dto.ChildDTO">
+        SELECT *
+        FROM V_CHILD_DETAIL
+        WHERE PAR_BACKUP_ID = #{par_backup_id}
+    </select>
+
+    <!-- [12~14] 삭제 기능 -->
+    <delete id="removeDiseaseByBackup" parameterType="string">
+        DELETE FROM CHILD_MEDICALS
+        WHERE CHILD_REG_ID IN (
+            SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id}
+        )
+    </delete>
+
+    <delete id="removeAllergyByBackup" parameterType="string">
+        DELETE FROM CHILD_ALLERGIES
+        WHERE CHILD_REG_ID IN (
+            SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id}
+        )
+    </delete>
+
+    <delete id="removeDisabilityByBackup" parameterType="string">
+        DELETE FROM CHILD_DISABILITIES
+        WHERE CHILD_REG_ID IN (
+            SELECT CHILD_REG_ID FROM CHILD_REG WHERE CHILD_BACKUP_ID = #{child_backup_id}
+        )
+    </delete>
+
+    <!-- [14-1] 아이 등록 정보 삭제 -->
+    <delete id="removeByBackupId" parameterType="string">
+        DELETE FROM CHILD_REG
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </delete>
+
+    <!-- [14-2] 아이 백업 정보 삭제 -->
+    <delete id="removeChildBackup" parameterType="string">
+        DELETE FROM CHILD_BACKUP
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </delete>
+
+    <!-- [15] 뷰 단일 조회 -->
+	<select id="findChildInfoByBackupId" resultType="com.team1.dto.ChildDTO">
+	    SELECT 
+	        CHILD_BACKUP_ID,
+	        CHILD_REG_ID,
+	        NAME,
+	        HEIGHT,
+	        WEIGHT,
+	        SSN_FIRST,
+	        SSN_SECOND,
+	        SPECIAL_NOTES,
+	        BLOOD_TYPE,
+	        DISABILITY_TYPE_NAME AS disability,
+	        MEDICAL_TYPE_NAME AS disease,
+	        ALLERGY_TYPE_NAME AS allergy,
+	        PAR_BACKUP_ID
+	    FROM V_CHILD_DETAIL
+	    WHERE CHILD_BACKUP_ID = #{child_backup_id}
+</select>
+
+	<select id="listByParent" resultType="com.team1.dto.ChildDTO">
+	    SELECT * 
+	    FROM CHILD_BACKUP C 
+	    JOIN CHILD_REG R ON C.CHILD_BACKUP_ID = R.CHILD_BACKUP_ID 
+	    WHERE C.PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+
+</mapper>
+
+<!-- 	
+	아이 정보 등록
 	<insert id="add">
 		INSERT INTO CHILD_REG (CHILD_REG_ID, CHILD_BACKUP_ID, NAME, HEIGHT, WEIGHT
 		, SSN_FIRST, SSN_SECOND
@@ -14,7 +190,7 @@
 		, #{ssn_first}, #{ssn_second}, #{special_notes}, #{blood_type})
 	</insert>
 	
-	<!-- 아이 정보 수정 -->
+	아이 정보 수정
 	<update id="modify">
 		UPDATE CHILD_REG
 		SET NAME = #{name}
@@ -24,19 +200,19 @@
 		WHERE CHILD_REG_ID = #{child_reg_id}
 	</update>
 	
-	<!-- 아이 정보 삭제 -->
+	아이 정보 삭제
 	<delete id="remove">
 		DELETE FROM CHILD_REG
 		WHERE CHILD_REG_ID = #{child_reg_id}
 	</delete>
 	
-	<!-- 아이 리스트 -->
+	아이 리스트
 	<select id="list" resultType="com.team1.dto.ChildDTO">
 		SELECT *
 		FROM V_CHILD_INFO
 	</select>
 	
-	<!-- 아이 이름 리스트 -->
+	아이 이름 리스트
 	<select id="listName" resultType="com.team1.dto.ChildDTO">
 		SELECT C.CHILD_BACKUP_ID, CR.NAME
 		FROM PAR_BACKUP P JOIN CHILD_BACKUP C
@@ -46,14 +222,14 @@
 		WHERE P.ID = #{id}
 	</select>
 	
-	<!-- 특정 아이 리스트 -->
+	특정 아이 리스트
 	<select id="childList" resultType="com.team1.dto.ChildDTO">
 		SELECT *
 		FROM V_CHILD_INFO
 		WHERE CHILD_REG_ID = #{child_reg_id}
 	</select>
 	
-	<!-- (일반 돌봄 신청을 위한) 특정 아이 정보 조회 -->
+	(일반 돌봄 신청을 위한) 특정 아이 정보 조회
 	<select id="searchChildInfo" resultType="com.team1.dto.ChildDTO">
 		SELECT VC.NAME AS NAME
 		     , CASE WHEN SUBSTR(VC.SSN_SECOND, 1, 1) = '3' OR SUBSTR(VC.SSN_SECOND, 1, 1) = '1' THEN '남'
@@ -79,50 +255,50 @@
 		WHERE VC.CHILD_BACKUP_ID = #{child_backup_id}
 	</select>
 	
-	<!-- 아이 전체 인원 수 -->
+	아이 전체 인원 수
 	<select id="countChild" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM V_CHILD_INFO
 	</select>
 	
-	<!-- 아이 지병 등록 -->
+	아이 지병 등록
 	<insert id="addDisease">
 		INSERT INTO CHILD_MEDICALS (CHILD_MEDICAL_ID, MEDICAL_TYPE_ID, REG_DATE, CHILD_REG_ID)
 		VALUES (#{child_medical_id}, #{medical_type_id}, #{reg_date}, #{child_reg_id})
 	</insert>
 	
-	<!-- 아이 지병 삭제 -->
+	아이 지병 삭제
 	<delete id="removeDisease">
 		DELETE FROM CHILD_MEDICALS
 		WHERE CHILD_MEDICAL_ID = #{child_medical_id}	
 	</delete>
 	
-	<!-- 아이 알레르기 등록 -->
+	아이 알레르기 등록
 	<insert id="addAllergy">
 		INSERT INTO CHILD_ALLERGIES (CHILD_ALLERGY_ID, ALLERGIE_TYPE_ID, REG_DATE, CHILD_REG_ID)
 		VALUES (#{child_allergy_id}, #{allergie_type_id}, #{reg_date}, #{child_reg_id})
 	</insert>
 	
-	<!-- 아이 알레르기 삭제 -->
+	아이 알레르기 삭제
 	<delete id="removeAllergy">
 		DELETE FROM CHILD_ALLERGIES
 		WHERE CHILD_ALLERGY_ID = #{child_allergy_id}
 	</delete>
 	
-	<!-- 아이 장애 등록 -->
+	아이 장애 등록
 	<insert id="addDisability">
 		INSERT INTO CHILD_DISABILITIES (CHILD_DISABILITY_ID, DISABILITY_TYPE_ID, REG_DATE, CHILD_REG_ID)
 		VALUES (#{child_disability_id}, #{disability_type_id}, #{reg_date}, #{child_reg_id})
 	</insert>
 	
 	
-	<!-- 아이 장애 삭제 -->
+	아이 장애 삭제
 	<delete id="removeDisability">
 		DELETE FROM CHILD_DISABILITIES
 		WHERE CHILD_DISABILITY_ID = #{child_disability_id}
 	</delete>
 	
-	<!-- 아이 지병/알레르기/장애 조회 -->
+	아이 지병/알레르기/장애 조회
 	<select id="listChildMedicalName" resultType="java.lang.String">
 		SELECT TYPE AS NAME
 		FROM GEN_CHILD_MEDICAL_VIEW
@@ -130,4 +306,4 @@
 	</select>
 	
 	
-</mapper>
+</mapper> -->
