@@ -1,7 +1,5 @@
 package com.team1.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,15 +19,17 @@ public class SitterloginController
     private SqlSession sqlSession;
 
     // 시터 로그인 처리
-    @RequestMapping(value = "/sitterlogin.action", method = RequestMethod.GET)
+    @RequestMapping(value = "/sitterlogin.action", method = RequestMethod.POST)
     public String sitterLogin(@RequestParam("id") String id,
                                @RequestParam("pw") String pw,
                                HttpSession session)
     {
         ISitLoginDAO dao = sqlSession.getMapper(ISitLoginDAO.class);
 
-        List<SitDTO> sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
+        SitDTO sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
 
+        
+        System.out.println(sitter.getSit_backup_id());
         if (sitter != null) // 로그인 성공
         {
             session.setAttribute("loginSitter", sitter);
