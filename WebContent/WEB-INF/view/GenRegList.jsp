@@ -460,7 +460,6 @@
 			</div>
 		</div><!-- .reservation-table -->
 	</div><!-- .content-container -->
-
 	
 </div> <!-- .main container -->
 

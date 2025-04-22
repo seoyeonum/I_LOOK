@@ -12,7 +12,7 @@ import com.team1.dto.AgesPreferedDTO;
 
 public interface IAgesPreferedDAO
 {
-	// 시터 돌봄 선호 연령대 열람
+	// 일반 근무 등록 시에 근무 등록 아이디를 넣으면 시터 돌봄 선호 연령대를 열람할 수 있음
 	public ArrayList<AgesPreferedDTO> listAges(String gen_reg_id);
 	
 	// 시터 돌봄 선호 연령대 전체 열람

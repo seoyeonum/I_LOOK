@@ -35,7 +35,6 @@
  		FROM REGIONS
  	</select>
  	
- 	
  	<insert id="addRegions" parameterType="com.team1.dto.WorkRegionPreferedDTO"> <!-- public int addRegions(WorkRegionPreferedDTO regions); -->
  	<selectKey keyProperty="work_region_prefered_id" resultType="String" order="BEFORE">
       SELECT 'SWOR' || LPAD(SEQ_SWOR.NEXTVAL, 4, '0') FROM DUAL
@@ -43,7 +42,6 @@
 	 	INSERT INTO WORK_REGION_PREFERED(WORK_REGION_PREFERED_ID, REGION_ID, GEN_REG_ID)
 		VALUES(#{work_region_prefered_id}, #{region_id}, #{gen_reg_id})
  	</insert>
- 	
  	
  	<update id="modifyRegions"> <!-- public int modifyRegions(WorkRegionPreferedDTO regions); -->
 	 	UPDATE WORK_REGION_PREFERED

@@ -6,9 +6,6 @@
  =============================*/
 package com.team1.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,7 +50,7 @@ public class SitterMypageController
 	
 	
 	// 시터 마이 페이지 >> 개인정보 수정 컨트롤러
-	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
 	public String infoList(HttpSession session, Model model)
 	{
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
@@ -147,7 +144,7 @@ public class SitterMypageController
 
 		// 그런데 이 genRegdto에는 sit_backup_id가 없다.
 		genRegdto.setSit_backup_id(sit_backup_id);
-		
+
 		//System.out.println(sit_backup_id);
 		
 		// int 나오니까 이걸로 분기 처리 가능. --> 나중에.
@@ -176,8 +173,7 @@ public class SitterMypageController
 		
 		return result;
 	}
-	
-	
+
 	// genRegInsertComplete.jsp로 보내졌고, 그 파일엔 이미 알아서 버튼링크 처리가 되어 있으니 따로 뭘 더 안 만들어도 됨.
 	
 	// 근무 등록 내역 확인 컨트롤러
@@ -222,7 +218,7 @@ public class SitterMypageController
 		
 		// 를 하려고 했으나.......복수선택된 지역을 한 행으로 압축시킬 수가 없어 지역을 하나만 선택하게끔 페이지를 변경했다.
 		// 그래도 어쨌든 gen_reg_id는 필요하니 확인한다. 
-		/*
+		/* ---------------------------------------------------------------------------------------------------
 		ArrayList<String> genRegId = new ArrayList<String>();
 		//System.out.println("냐야아아아아ㅏ");
 		while (sitcarelistDao.regList(sit_backup_id).iterator().hasNext())
@@ -234,7 +230,6 @@ public class SitterMypageController
 			// 따라서 지역 리스트를 뽑아오는 쿼리도 같은 방식으로 정렬해야 옳게 나올 것이다. 
 			genRegId.add(sCListdto.getGen_reg_id());
 		}
-		
 		
 		//System.out.println("안돼ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ");
 		// 이제 gen_reg_id 묶음이 생겼다. 여기서 하나씩 꺼내서 WorkRegionPreferdDTO 묶음을 만들자. 
@@ -251,12 +246,11 @@ public class SitterMypageController
 		} 
 		
 		// 다 넣었으면 그걸 모델로 보내기.
-		model.addAttribute("wRPdtoList", wRPdtolist);
-		*/ 
+		model.addAsttribute("wRPdtoList", wRPdtolist);
+		------------------------------------------------------------------------------------------------- */ 
 		
 		// 취소 범례 보여주기
 		model.addAttribute("cancelList", genCanDao.CanceledReason());
-		
 		
 		// 주소 지정
 		result = "/WEB-INF/view/GenRegList.jsp";
@@ -322,7 +316,6 @@ public class SitterMypageController
 	    sb.append("</div>");
 	    sb.append("</div>");
 		
-	    
 	    response.setContentType("text/html; charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 	    
@@ -395,6 +388,36 @@ public class SitterMypageController
 		return result;
 	}
 	
+	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredyes.action", method = RequestMethod.GET)
+	public String AnswerYes(String sit_backup_id, Model model)
+	{
+		String result = null;
+		
+		// 돌봄 확정에 insert
+		
+		// 돌봄 제공 내역으로 리다이렉트
+		result = "redirect:sittergenreqansweredlist.action";
+		
+		return result;
+	}
+	
+	
+	// 근무 등록 내역에서 돌봄 취소하면 나오는 컨트롤러
+	@RequestMapping(value = "sittergenreqansweredno.action", method = RequestMethod.GET)
+	public String AnswerNo(String sit_backup_id, Model model)
+	{
+		String result = null;
+		
+		// 돌봄 취소에 insert
+		
+		// 돌봄 제공 내역으로 리다이렉트
+		result = "redirect:sittergenreqansweredlist.action";
+		
+		return result;
+	}
+	
+	
 	
 	// 돌봄 제공 내역 확인 컨트롤러
 	@RequestMapping(value = "/sittergenreqansweredlist.action", method = RequestMethod.GET)
@@ -410,7 +433,6 @@ public class SitterMypageController
 		model.addAttribute("sit_backup_id", sit_backup_id);
 		
 		//System.out.println("값 받아옴");
-		
 		result = "/WEB-INF/view/SitterGenReqAnsweredList.jsp";
 		
 		return result;

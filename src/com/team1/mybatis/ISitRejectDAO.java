@@ -4,6 +4,7 @@
 =====================*/
 
 package com.team1.mybatis;
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,8 +18,10 @@ public interface ISitRejectDAO
 											, @Param("end") int end
 											, @Param("searchKey") String searchKey
 				                            , @Param("searchValue") String searchValue);
+	
 	// [관리자] 승인 거절 명수 확인
-	public int countSitRej(String searchKey, String searchValue);
+	public int countSitRej(@Param("searchKey") String searchKey
+            			 , @Param("searchValue") String searchValue);
 	
 	// [관리자] 승인 거절
 	public int rejectSit(SitRejectDTO rejectDto);

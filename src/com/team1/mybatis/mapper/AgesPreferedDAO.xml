@@ -8,6 +8,7 @@
  	<select id="listAges" resultType="com.team1.dto.AgesPreferedDTO">
  		SELECT GEN_REG_ID, AGE_TYPE_ID
 		FROM AGES_PREFERED
+		WHERE GEN_REG_ID = #{gen_reg_id}
  	</select>
  	
  	<select id="listAllAges" resultType="com.team1.dto.AgesPreferedDTO"> 
@@ -23,7 +24,6 @@
  		INSERT INTO AGES_PREFERED(AGE_PREFERED_ID, GEN_REG_ID, AGE_TYPE_ID)
 		VALUES(#{age_prefered_id}, #{gen_reg_id}, #{age_type_id})
  	</insert>
- 	
  	
  	<update id="modifyAges">
 	 	UPDATE DOC_REG
