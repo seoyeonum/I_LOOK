@@ -42,12 +42,12 @@
 		
 		$("#home").click(function()
 		{
-			window.location.href = "genmain.action?id=${id}";
+			window.location.href = "genmain.action";
 		});
 		
 		$("#myPage").click(function()
 		{
-			window.location.href = "childused.action?id=${id}";
+			window.location.href = "childused.action";
 		});
 	});
   

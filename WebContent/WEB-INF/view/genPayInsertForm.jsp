@@ -53,7 +53,7 @@
         <button class="disabled-button" onclick="alertNotSupported()">네이버페이</button>
     </div>
 
-    <p class="info">※ 실제 결제는 이루어지지 않습니다. 데모 페이지입니다.</p>
+    <p class="info">※ 실제 결제는 이루어지지 않습니다. <a href="genpayresult.action">다음으로 이동</a>합니다.</p>
 </div>
 
 <script>

@@ -177,7 +177,7 @@
 		</div>
 		
 		<div class="sub-body-form">
-			<form action="genpayinsertform.action">
+			<form action="genpayinsertform.action" method="post">
 			
 				<!-- 1. 신청하는 시터님 관련 정보 -->
 				<!--

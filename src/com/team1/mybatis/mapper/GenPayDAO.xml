@@ -50,19 +50,15 @@
 	
 	<!-- 일반 돌봄 결제 내역 추가 -->
 	<insert id="addGenPayRec">
-		INSERT INTO GEN_PAY_REC (GEN_PAY_REC_ID, GEN_REQ_ID, PAY_AMOUNT, PG_CODE)
-		VALUES (#{gen_pay_rec_id}, #{gen_req_id}, #{pay_amount}, #{pg_code})
+		<selectKey keyProperty="gen_pay_rec_id" resultType="String" order="BEFORE">
+			SELECT 'GPAY' || LPAD(SEQ_GPAY.NEXTVAL, 4, '0') 
+			FROM DUAL
+		</selectKey>
+		INSERT INTO GEN_PAY_REC (GEN_PAY_REC_ID, GEN_REQ_ID, PAY_DATE, PAY_AMOUNT, PG_CODE, PAR_READ_DATE)
+		VALUES (#{gen_pay_rec_id}, #{gen_req_id}, DEFAULT, #{pay_amount}, #{pg_code}, NULL)
 	</insert>
 	
-	<!-- (일반 돌봄 예약 신청 코드로) 특정 일반 돌봄 결제 내역 상세 열람 -->
-	<!--
-	<select id="searchBackupIdGenPayRec" resultType="com.team1.mybatis.GenPayDTO">
 		
-	</select>
-	-->
-	<!-- → 보유 포인트까지 한 쿼리에 넣었더니 TOO MANY VALUES 에러 발생 -->
-
-	
 	<!-- 일반 돌봄 결제 내역 - 부모 읽은 날짜 기록 -->
 	<update id="updateGenPayRecParRead">
 		UPDATE GEN_PAY_REC
@@ -72,7 +68,11 @@
 	
 	<!-- 일반 돌봄 포인트 차감 내역 추가 -->
 	<insert id="addGenPointUsed">
-		INSERT INTO GEN_POINT_USED (GEN_POINT_USED_ID, GEN_PAY_REC_ID, POINT_SUBJECT, POINT)
+	<selectKey keyProperty="gen_point_used_id" resultType="String" order="BEFORE">
+		SELECT 'GUSE' || LPAD(SEQ_GUSE.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
+		INSERT INTO GEN_POINT_USED (GEN_POINT_USED_ID, GEN_PAY_REC_ID, POINT_SUBJECT, POINT, USED_DATE)
 		VALUES (#{gen_point_used_id}
 		        ,#{gen_pay_rec_id}
 		        , ( SELECT P.PAR_BACKUP_ID
@@ -85,7 +85,7 @@
 		                        JOIN PAR_BACKUP P
 		                        ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
 		            WHERE PAY.GEN_PAY_REC_ID = #{gen_pay_rec_id})
-		        , #{point})
+		        , #{point}, DEFAULT)
 	</insert>
 	
 	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 → ParDAO.xml 로 이동 -->

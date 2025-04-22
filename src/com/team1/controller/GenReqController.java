@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +31,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.team1.dto.ChildDTO;
 import com.team1.dto.GenPayDTO;
 import com.team1.dto.GenRegDTO;
+import com.team1.dto.GenReqDTO;
 import com.team1.dto.GradesDTO;
 import com.team1.dto.ParDTO;
 import com.team1.dto.SitCertDTO;
 import com.team1.dto.WorkRegionPreferedDTO;
 import com.team1.mybatis.IChildDAO;
+import com.team1.mybatis.IGenPayDAO;
 import com.team1.mybatis.IGenRegDAO;
+import com.team1.mybatis.IGenReqDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.IParDAO;
 import com.team1.mybatis.IParLoginDAO;
@@ -313,6 +317,9 @@ public class GenReqController
 		model.addAttribute("preferedAge", preferedAge);
 		model.addAttribute("listSitCert", listSitCert);
 		
+		// (추가로 세션에 필터 값 저장)
+		session.setAttribute("genRegId", genRegId);
+		
 		result = "WEB-INF/view/genRegDetail.jsp";
 		
 		return result;
@@ -354,7 +361,7 @@ public class GenReqController
 		// 다음 페이지로 넘겨주는 값
 		// → 근무 등록 코드, 특정 근무 등록 정보
 		//    , 시터 선호 근무 지역, 시터 선호 돌봄 연령대, 시터 보유 자격증
-		model.addAttribute("genRegId", genRegId);
+		//model.addAttribute("genRegId", genRegId);
 		model.addAttribute("genDetail", genDetail);
 		model.addAttribute("preferedRegion", preferedRegion);
 		model.addAttribute("preferedAge", preferedAge);
@@ -432,8 +439,9 @@ public class GenReqController
 	}
 	
 	// ● 일반 돌봄 결제 진행 폼
-	@RequestMapping(value="/genpayinsertform.action", method = RequestMethod.GET)
-	public String genPayInsertForm(Model model, HttpSession session, HttpServletRequest request)
+	@RequestMapping(value="/genpayinsertform.action", method = RequestMethod.POST)
+	public String genPayInsertForm(@RequestParam("message") String message
+								, Model model, HttpSession session, HttpServletRequest request)
 	{
 		String result = null;
 		
@@ -446,9 +454,9 @@ public class GenReqController
 		// 접근 권한 있다면 아래 내용 순차 진행
 		//----------------------------------------------------------------
 
-		// 아래 필요한 데이터 전부 담아 전달
+		// (결제/포인트 데이터)
 		
-		// 포인트 가져오기
+		// 사용 포인트 가져오기
 		String pointStr = request.getParameter("point");
 		int point = (pointStr != null && !pointStr.isEmpty()) ? Integer.parseInt(pointStr) : 0;
 
@@ -464,11 +472,22 @@ public class GenReqController
 		model.addAttribute("finalPrice", finalPrice);
 		model.addAttribute("productName", productName);
 		
+		// (추가로 세션에 필터 값 저장)
+		// 포인트 차감 대상자 → 세션에 있음(par_backup_id)
+		// 포인트 차감액 → 세션에 추가
+		session.setAttribute("point", point);
+		session.setAttribute("finalPrice", finalPrice);
 		
-		// (결제 비용 데이터)
-		// (포인트 차감 데이터)
+		//--------------------------------------------------
+		
 		// (일반 돌봄 신청 데이터)
 		
+		// 세션에 부쳐주는 값
+		// 아이 백업코드, 돌봄 이용 시작일, 종료일, 시작시, 종료시 → 세션에 있음
+		// 전달 메시지 → 세션에 추가
+		session.setAttribute("message", message);
+		
+		// 확인
 		System.out.println("결제 과정 수행");
 		
 		result = "WEB-INF/view/genPayInsertForm.jsp";
@@ -477,8 +496,9 @@ public class GenReqController
 	}
 	
 	// ● 일반 돌봄 결제 완료 안내
+	@Transactional
 	@RequestMapping(value="/genpayresult.action", method = RequestMethod.GET)
-	public String genPayResult(GenPayDTO dto, HttpSession session)
+	public String genPayResult(Model model, HttpSession session)
 	{
 		String result = null;
 		
@@ -491,22 +511,106 @@ public class GenReqController
 		// 접근 권한 있다면 아래 내용 순차 진행
 		//----------------------------------------------------------------
 		
-		// (결제 내역 데이터 추가 액션)
-		// (포인트 차감 데이터 추가 액션)
-		// (일반 돌봄 신청 데이터 추가 액션)
+		try
+		{
+			// 액션 수행에 필요한 데이터가 세션에 없다면 초기 화면으로 이동!
+			if (!checkSessionAttrs(session, "genRegId", "childBackupId", "message"
+					, "dateStart", "dateEnd", "timeStart", "timeEnd", "finalPrice", "point"))
+			{
+			    return "redirect:/iLook.action";
+			}
+			
+			// (일반 돌봄 신청 데이터 추가 액션)
+			//-- 예약신청코드, 근무 등록 코드, 아이 백업코드, 전달메시지, 돌봄 시작/종료/시작/종료
+			//   예약 신청일시
+			GenReqDTO genReqDto = new GenReqDTO();
+			
+			String genRegId = (String) session.getAttribute("genRegId");
+			String childBackupId = (String) session.getAttribute("childBackupId");
+			String message = (String) session.getAttribute("message");
+			String dateStart = (String) session.getAttribute("dateStart");
+			String dateEnd = (String) session.getAttribute("dateEnd");
+			int timeStart = (Integer) session.getAttribute("timeStart");
+			int timeEnd = (Integer) session.getAttribute("timeEnd");
+			
+			System.out.println(childBackupId);
+			System.out.println(dateStart);
+			System.out.println(dateEnd);
+			
+			genReqDto.setGen_reg_id(genRegId);
+			genReqDto.setChild_backup_id(childBackupId);
+			genReqDto.setMessage(message);
+			genReqDto.setStart_date(dateStart);
+			genReqDto.setEnd_date(dateEnd);
+			genReqDto.setStart_time(timeStart);
+			genReqDto.setEnd_time(timeEnd);
+			
+			// 테스트 시 주석 풀기
+			IGenReqDAO genReqDao = sqlSession.getMapper(IGenReqDAO.class);
+			genReqDao.add(genReqDto);
+			
+			//-----------------------------------------------------------
+			
+			// (결제/포인트 추가 액션)
+			
+			//GenPayDTO genPayDto = new GenPayDTO();
+			// 같은 DTO 사용하여 데이터 값 유지
+			
+			int payAmount = (Integer) session.getAttribute("finalPrice");
+			String pgCode = "T123456789";
+			
+			genReqDto.setPay_amount(payAmount);
+			genReqDto.setPg_code(pgCode);
+			
+			// 테스트 시 주석 풀기
+			IGenPayDAO genPayDao = sqlSession.getMapper(IGenPayDAO.class);
+			genPayDao.addGenPayRec(genReqDto);
+			
+			int point = (Integer) session.getAttribute("point");
+			
+			genPayDao.addGenPointUsed(genReqDto);
+			
+			//-----------------------------------------------------------
+			
+			// (돌봄 정보 세션 비워주기)
+			
+			if (session.getAttribute("dateStart") != null)
+				session.removeAttribute("dateStart");
+			if (session.getAttribute("dateEnd") != null)
+				session.removeAttribute("dateEnd");
+			if (session.getAttribute("timeStart") != null)
+				session.removeAttribute("timeStart");
+			if (session.getAttribute("timeEnd") != null)
+				session.removeAttribute("timeEnd");
+			if (session.getAttribute("genRegId") != null)
+				session.removeAttribute("genRegId");
+			if (session.getAttribute("childBackupId") != null)
+				session.removeAttribute("childBackupId");
+			if (session.getAttribute("message") != null)
+				session.removeAttribute("message");
+			if (session.getAttribute("finalPrice") != null)
+				session.removeAttribute("finalPrice");
+			if (session.getAttribute("point") != null)
+				session.removeAttribute("point");
+			
+			
+			// 확인 ------------------------------------------
+			String id = parent.getId();
+			String dateStart2 = (String) session.getAttribute("dateStart");
+			
+			System.out.println("Session ID: " + session.getId());
+			System.out.println("dateStart in Session after: " + dateStart2);
+			System.out.println("Parent ID in Session after: " + id);
+			// -----------------------------------------------
+			
+		}
+		catch (Exception e)
+		{
+			System.out.println("트랜잭션 오류 발생: " + e.getMessage());
+            throw e; 		//-- 롤백을 위한 예외 throw
+		}
 		
-		// (돌봄 정보 세션 비워주기)
-		// if (session.getAttribute("dateStart") != null) {
-	    //session.removeAttribute("dateStart");
-	    //System.out.println("세션에서 dateStart 제거 완료");
-		//}
-		
-		session.getAttribute("id");
 		result = "WEB-INF/view/genPayResult.jsp";
-		
-		System.out.println("Session ID: " + session.getId());
-		System.out.println("Parent ID in Session: " + session.getAttribute("id"));
-		
 		return result;
 	}
 	
@@ -548,5 +652,19 @@ public class GenReqController
             return null;
         }
     }
+	
+	// ○ 함수 3. 세션 값 체크
+	private boolean checkSessionAttrs(HttpSession session, String... keys)
+	{
+	    for (String key : keys)
+	    {
+	        if (session.getAttribute(key) == null)
+	        {
+	            System.out.println("세션에 " + key + " 없음!");
+	            return false;
+	        }
+	    }
+	    return true;
+	}
 	
 }

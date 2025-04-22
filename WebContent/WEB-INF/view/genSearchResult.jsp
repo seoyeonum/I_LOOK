@@ -147,6 +147,7 @@
 		            //console.log("응답 성공:", response);
 		        	
 		            $('#resultArea').html(response);
+		            updateButtonStates();		// AJAX 이후에도 시터 버튼 비활성화 실행
 		        }
 		        , error: function(xmlHttpRequest, status, error)
 		        {
@@ -158,22 +159,8 @@
 		});
   	    
   	    //=================== 페이지 로드 시 돌봄 신청 상태에 따라 버튼 비활성화 ==================
-	    $('.box-preview').each(function() 		
-   	    {
-   	        // 현재 box-preview 내의 상태 텍스트 가져오기
-   	        var status = $(this).find('.sitter-status-hidden').text();
-   	        
-   	        // 해당 box-preview 내의 버튼 요소 
-   	        var button = $(this).find('.gen-btn-small');
-   	        
-   	        // 상태가 "예약중"인 경우 버튼 변경
-   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
-   	        {
-   	            button.text("예약중");
-   	            button.prop('disabled', true);
-   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
-   	        }
-   	    });
+	  	
+  	    updateButtonStates();		//-- 함수 3. 으로 분리함
 	});
 
  	
@@ -194,6 +181,26 @@
 	    document.getElementById('pageForm').submit();
 	}
  	
+ 	// 함수 3. 예약 상태에 따른 버튼 비활성화 함수
+ 	function updateButtonStates()
+ 	{
+ 		$('.box-preview').each(function() 		
+   	    {
+   	        // 현재 box-preview 내의 상태 텍스트 가져오기
+   	        var status = $(this).find('.sitter-status-hidden').text();
+   	        
+   	        // 해당 box-preview 내의 버튼 요소 
+   	        var button = $(this).find('.gen-btn-small');
+   	        
+   	        // 상태가 "예약중"인 경우 버튼 변경
+   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
+   	        {
+   	            button.text("예약중");
+   	            button.prop('disabled', true);
+   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
+   	        }
+   	    });
+ 	}
   
 </script>
 </head>
