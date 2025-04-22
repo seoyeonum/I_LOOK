@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+    request.setCharacterEncoding("UTF-8");
+    String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -80,20 +80,18 @@
     </div>
 </div>
 
-
 <div class="page-title">
     <h2>아이 정보 등록하기</h2>
 </div>
 
 <div class="container">
     <div class="insert-content">
-
-        <form action="${pageContext.request.contextPath}/childinsert.action" method="post" onsubmit="return validateForm();">
+        <form action="childinsert.action" method="post" onsubmit="return validateForm();">
             <div class="input-field">
                 <label for="name">이름 :</label>
-                <input type="text" id="name" name="name" value="김창식">
+                <input type="text" id="name" name="name" required>
             </div>
-            
+
             <div class="input-field">
                 <label for="ssn_first">주민번호 앞자리 :</label>
                 <input type="text" id="ssn_first" name="ssn_first" required maxlength="6">
@@ -106,62 +104,12 @@
 
             <div class="input-field">
                 <label for="height">키 :</label>
-                <div class="input-with-unit">
-                    <input type="number" id="height" name="height" value="110">
-                    <span>cm</span>
-                </div>
+                <input type="number" id="height" name="height" required>
             </div>
-    
+
             <div class="input-field">
                 <label for="weight">몸무게 :</label>
-                <div class="input-with-unit">
-                    <input type="number" id="weight" name="weight" value="20">
-                    <span>kg</span>
-                </div>
-            </div>
-    
-            <div class="input-field">
-                <label for="blood">혈액형 :</label>
-                <div class="input-with-unit">
-                    <input type="text" id="blood" name="blood" value="A">
-                    <span>형</span>
-                </div>
-            </div>
-    
-            <div class="input-field">
-                <label for="disability">장애:</label>
-                <div class="input-with-unit">
-                    <select id="disability" name="disability">
-                        <option value="없음">없음</option>
-                        <option value="select1">자폐 스펙트럼 장애</option>
-                        <option value="select2">뇌성마비 </option>
-                        <option value="select3">지적장애</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="input-field">
-                <label for="disease">지병:</label>
-                <div class="input-with-unit">
-                    <select id="disease" name="disease">
-                        <option value="없음">없음</option>
-                        <option value="select1">면역결핍 질환</option>
-                        <option value="select2">심장병</option>
-                        <option value="select3">감기</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="input-field">
-                <label for="allergy">알레르기:</label>
-                <div class="input-with-unit">
-                    <select id="allergy" name="allergy">
-                        <option value="없음">없음</option>
-                        <option value="select1">꽃가루 알레르기</option>
-                        <option value="select2">우유 알레르기</option>
-                        <option value="select3">꽃가루 알레르기</option>
-                    </select>
-                </div>
+                <input type="number" id="weight" name="weight" required>
             </div>
 
             <div class="input-field">
@@ -174,9 +122,44 @@
                     <option value="AB">AB</option>
                 </select>
             </div>
-    
+
+            <div class="input-field">
+                <label for="disability_type_id">장애 :</label>
+                <select name="disability_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="d" items="${disabilities}">
+                        <option value="${d.disability_type_id}">${d.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label for="medical_type_id">지병 :</label>
+                <select name="medical_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="m" items="${medicals}">
+                        <option value="${m.medical_type_id}">${m.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label for="allergy_type_id">알레르기 :</label>
+                <select name="allergy_type_id">
+                    <option value="없음">없음</option>
+                    <c:forEach var="a" items="${allergies}">
+                        <option value="${a.allergy_type_id}">${a.type}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <label for="special_notes">특이사항 :</label>
+                <textarea name="special_notes" rows="4" cols="50"></textarea>
+            </div>
+
             <div class="form-buttons">
-                <button type="submit" class="btn update-btn">등록하기</button>
+                <button type="submit">등록하기</button>
             </div>
         </form>
     </div>

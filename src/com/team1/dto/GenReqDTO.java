@@ -11,8 +11,14 @@ public class GenReqDTO
 	private String start_date, end_date;
 	private int start_time, end_time;
 	private String req_date, sit_read_date;
-	private String par_name, child_name; 
-	private String pay_status, status;
+	private String child_name;      // 아이 이름
+	private String sitter_name;     // 시터 이름
+	private String sitter_level;    // 시터 등급
+	private String total_hours;     // 이용 시간 (예: 3시간)
+	private String status;        // 예약 상태 ("예약완료", "예약확정" 등)
+
+	private String par_name; 
+	private String pay_status;
 	
 	// 속성 추가(→ 일반 돌봄 예약 신청 시 필요)
 	private String gen_pay_rec_id, gen_point_used_id;
@@ -100,14 +106,6 @@ public class GenReqDTO
 	{
 		this.sit_read_date = sit_read_date;
 	}
-	public String getPar_name()
-	{
-		return par_name;
-	}
-	public void setPar_name(String par_name)
-	{
-		this.par_name = par_name;
-	}
 	public String getChild_name()
 	{
 		return child_name;
@@ -116,13 +114,29 @@ public class GenReqDTO
 	{
 		this.child_name = child_name;
 	}
-	public String getPay_status()
+	public String getSitter_name()
 	{
-		return pay_status;
+		return sitter_name;
 	}
-	public void setPay_status(String pay_status)
+	public void setSitter_name(String sitter_name)
 	{
-		this.pay_status = pay_status;
+		this.sitter_name = sitter_name;
+	}
+	public String getSitter_level()
+	{
+		return sitter_level;
+	}
+	public void setSitter_level(String sitter_level)
+	{
+		this.sitter_level = sitter_level;
+	}
+	public String getTotal_hours()
+	{
+		return total_hours;
+	}
+	public void setTotal_hours(String total_hours)
+	{
+		this.total_hours = total_hours;
 	}
 	public String getStatus()
 	{
@@ -131,6 +145,22 @@ public class GenReqDTO
 	public void setStatus(String status)
 	{
 		this.status = status;
+	}
+	public String getPar_name()
+	{
+		return par_name;
+	}
+	public void setPar_name(String par_name)
+	{
+		this.par_name = par_name;
+	}
+	public String getPay_status()
+	{
+		return pay_status;
+	}
+	public void setPay_status(String pay_status)
+	{
+		this.pay_status = pay_status;
 	}
 	public String getGen_pay_rec_id()
 	{
@@ -172,4 +202,7 @@ public class GenReqDTO
 	{
 		this.point = point;
 	}
+
+	
+	
 }
