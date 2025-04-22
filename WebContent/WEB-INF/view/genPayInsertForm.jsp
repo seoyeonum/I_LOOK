@@ -7,10 +7,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>genPayInsertForm.jsp</title>
-    <link rel="stylesheet" type="text/css" href="css/payment.css">
-    <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<meta charset="UTF-8">
+<title>genPayInsertForm.jsp</title>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/payment.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<!-- <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <body>
 <div class="container">
@@ -18,20 +20,20 @@
 
     <form class="payment-form" onsubmit="return requestCardPayment(event)">
         <label for="product">상품명</label>
-        <input type="text" id="product" name="product" value="샘플 상품" required readonly>
+        <input type="text" id="product" name="product" value="${productName}" required readonly>
 
         <label for="amount">금액 (₩)</label>
-        <input type="number" id="amount" name="amount" value="10000" required readonly>
+        <input type="number" id="amount" name="amount" value="${finalPrice }" required readonly>
 
         <label for="card-company">카드사 선택</label>
         <select id="card-company" name="card-company" required>
-            <option value="">카드사를 선택하세요</option>
-            <option value="shinhan">신한카드</option>
-            <option value="kb">KB국민카드</option>
-            <option value="samsung">삼성카드</option>
-            <option value="hyundai">현대카드</option>
-            <option value="lotte">롯데카드</option>
-        </select>
+		    <option value="">카드사를 선택하세요</option>
+		    <option value="01">신한카드</option> <!-- 번호 코드 사용 -->
+		    <option value="02">KB국민카드</option>
+		    <option value="03">삼성카드</option>
+		    <option value="04">현대카드</option>
+		    <option value="05">롯데카드</option>
+		</select>
 
         <label for="card-number">카드 번호</label>
         <input type="text" id="card-number" name="card-number" placeholder="1234-5678-9012-3456" maxlength="19" required>
@@ -51,21 +53,23 @@
         <button class="disabled-button" onclick="alertNotSupported()">네이버페이</button>
     </div>
 
-    <p class="info">※ 실제 결제는 이루어지지 않습니다. 데모 페이지입니다.</p>
+    <p class="info">※ 실제 결제는 이루어지지 않습니다. <a href="genpayresult.action">다음으로 이동</a>합니다.</p>
 </div>
 
 <script>
-    const IMP = window.IMP;
-    IMP.init("imp00000000"); // 테스트용 가맹점 코드
+    window.IMP.init("imp00000000"); 	// 테스트용 가맹점 코드 설정
 
     // 자동 하이픈 및 입력 제한
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function ()
+    {
+    	// 카드 번호 → "-" 자동 입력    	
         document.getElementById('card-number').addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '').substring(0, 16);
             let sections = value.match(/.{1,4}/g);
             e.target.value = sections ? sections.join('-') : '';
         });
 
+        // 카드 유효 기간 → "/" 자동 입력
         document.getElementById('expiry').addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '').substring(0, 4);
             if (value.length >= 3) {
@@ -73,32 +77,41 @@
             }
             e.target.value = value;
         });
-
+		
+        // CVC → 숫자만 입력 가능
         document.getElementById('cvc').addEventListener('input', function (e) {
             e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
         });
     });
 
-    function requestCardPayment(event) {
-        event.preventDefault();
+    // 결제하기 클릭 시 수행 함수
+    function requestCardPayment(event)
+    {
+        event.preventDefault();		// 폼 제출 방지
 
-        const amount = parseInt(document.getElementById('amount').value);
-        const name = document.getElementById('product').value;
-        const buyer_name = "홍길동";
-        const buyer_email = "test@example.com";
+        const amount = parseInt('${finalPrice}');				// 결제 금액
+        const name = "I_LOOK_일반돌봄";							// 상품명
+        const buyer_name = "홍길동";							// 구매자 이름
+        const buyer_email = "test@example.com";					// 구매자 이메일
 
+        // 결제 요청
         IMP.request_pay({
-            pg: "html5_inicis",
-            pay_method: "card",
-            merchant_uid: "order_" + new Date().getTime(),
-            name: name,
-            amount: amount,
-            buyer_email: buyer_email,
-            buyer_name: buyer_name
-        }, function (rsp) {
-            if (rsp.success) {
+            pg: "html5_inicis",									// PG사 → 이니시스
+            pay_method: "card",									// 결제 수단 → 신용카드
+            merchant_uid: "order_" + new Date().getTime(),		// 주문 번호 생성
+            name: name,											// 상품명
+            amount: amount,										// 결제 금액
+            buyer_email: buyer_email,							// 구매자 이메일
+            buyer_name: buyer_name								// 구매자 이름
+        }, function (rsp)
+        {
+        	//결과 처리
+            if (rsp.success)
+            {
                 alert("✅ 결제 성공!\n주문번호: " + rsp.merchant_uid + "\nimp_uid: " + rsp.imp_uid);
-            } else {
+            }
+            else
+            {
                 alert("❌ 결제 실패: " + rsp.error_msg);
             }
         });

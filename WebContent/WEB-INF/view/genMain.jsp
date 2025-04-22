@@ -9,9 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <title>genMain.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script src="js/genFilter.js" defer></script>
+<script src="<%=cp%>/js/genFilter.js" defer></script>
 <script type="text/javascript">
 
     // 이 페이지 로드 시,
@@ -41,11 +41,7 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<!-- → jstl import 구문으로 변경 -->
-	<%-- <c:import url="/parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -121,7 +117,7 @@
 				        	<span>까지</span>
 				        </div>
 				        <div class="warning" id="max-time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
-				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 2시간부터 이용 가능합니다.</div>
+				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 1시간부터 이용 가능합니다.</div>
 				    </div>
 				
 				    <button type="submit" class="btn btn-large" id="primary-search-btn">시터 찾기</button>

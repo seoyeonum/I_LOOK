@@ -6,7 +6,6 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
-
 import com.team1.dto.WorkRegionPreferedDTO;
 
 public interface IWorkRegionPreferedDAO

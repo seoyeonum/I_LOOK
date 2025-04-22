@@ -10,6 +10,9 @@ public interface IGradesDAO
 	// 등급 리스트 조회
 	public ArrayList<GradesDTO> listGrade();
 	
+	// (등급명으로) 특정 등급 목록 조회
+	public GradesDTO searchGradeInfo(String grade_name);
+	
 	// 등급 데이터 추가
 	public int addGrade(GradesDTO grades);
 	
