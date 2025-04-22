@@ -86,7 +86,7 @@
 
 <div class="container">
     <div class="insert-content">
-        <form action="${pageContext.request.contextPath}/childinsert.action" method="post" onsubmit="return validateForm();">
+        <form action="childinsert.action" method="post" onsubmit="return validateForm();">
             <div class="input-field">
                 <label for="name">이름 :</label>
                 <input type="text" id="name" name="name" required>

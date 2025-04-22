@@ -23,10 +23,9 @@ public class ParentMypageController
     @RequestMapping("/parentmypage.action")
     public String parentMypage(HttpSession session, Model model)
     {
-    	 System.out.println("왕왕 집가고싶다.");
         // 1. 세션에서 부모 로그인 객체 꺼내기
         ParDTO parent = (ParDTO) session.getAttribute("loginParent");
-        System.out.println(parent);
+        
         // 2. 로그인 여부 확인
         if (parent == null || parent.getId() == null)
         {

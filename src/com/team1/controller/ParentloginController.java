@@ -34,6 +34,7 @@ public class ParentloginController
         if (parent != null)
         {
             session.setAttribute("loginParent", parent);
+            session.setAttribute("par_backup_id", parent.getPar_backup_id());
             return "genMain.jsp";
         }
         else 

@@ -16,6 +16,9 @@ public class ChildDTO
 	private String child_medical_id, medical_type_id, type;
 	private String child_allergy_id, allergy_type_id;
 	private String child_disability_id, disability_type_id;
+	private String disability; 
+	private String disease;    
+	private String allergy;
 	
 	// getter / setter 구성
 	public String getChild_backup_id()
@@ -162,4 +165,29 @@ public class ChildDTO
 	{
 		this.disability_type_id = disability_type_id;
 	}
+	public String getDisability()
+	{
+		return disability;
+	}
+	public void setDisability(String disability)
+	{
+		this.disability = disability;
+	}
+	public String getDisease()
+	{
+		return disease;
+	}
+	public void setDisease(String disease)
+	{
+		this.disease = disease;
+	}
+	public String getAllergy()
+	{
+		return allergy;
+	}
+	public void setAllergy(String allergy)
+	{
+		this.allergy = allergy;
+	}
+	
 }

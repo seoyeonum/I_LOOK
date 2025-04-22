@@ -43,4 +43,21 @@
 		ORDER BY GEN_REQ_ID
 	</select>
 
+
+	<!-- 부모 기준 예약 내역 조회 -->
+	<select id="findByParent" resultType="com.team1.dto.GenReqDTO">
+	    SELECT *
+	    FROM PARENT_USED_VIEW
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	    ORDER BY START_DATE DESC
+	</select>
+
+	<select id="listByParent" parameterType="String" resultType="com.team1.dto.ChildDTO">
+	    SELECT *
+	    FROM CHILD_BACKUP CB
+	    JOIN CHILD_REG CR ON CB.CHILD_BACKUP_ID = CR.CHILD_BACKUP_ID
+	    WHERE CB.PAR_BACKUP_ID = #{parBackupId}
+	    ORDER BY CR.NAME
+	</select>
+
 </mapper>
