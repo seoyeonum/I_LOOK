@@ -125,19 +125,24 @@
             margin-top: 10px;
         }
     </style>
+    <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
+    <script>
+        alert("로그아웃이 완료되었습니다.");
+    </script>
+	<% } %>
 </head>
 <body>
 <main>
     <!-- 로고 이미지 -->
     <div class="logoImg">
-        <img src="./logoimg.png" style="height: 400px;">
+        <img src="<%= cp %>/images/logoimg.png" style="height: 400px;">
     </div>
 
     <!-- 로그인 박스 -->
     <div class="login-wrapper">
         <div id="slogan">돌봄이 필요한 부모님과<br>일자리를 원하는 시터를 잇는 플랫폼</div>
         <div style="display: flex; align-items: center;">
-			<img src="./logo.png" id="logo"> 
+			<img src="<%= cp %>/images/logo.png" id="logo"> 
 			<span id="logoName">아이.룩</span>
         </div>
 

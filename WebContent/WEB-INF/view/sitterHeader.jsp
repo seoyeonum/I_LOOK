@@ -9,9 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <title>sitterHeader.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/mainFrame.css">
-<link rel="stylesheet" type="text/css" href="css/notify.css">
-<script src="js/notify.js" defer></script>
+<link rel="stylesheet" type="text/css" href="<%= cp %>/css/mainFrame.css">
+<link rel="stylesheet" type="text/css" href="<%= cp %>/css/notify.css">
+<script src="<%= cp %>/js/notify.js" defer></script>
 </head>
 <body>
 <div id="wrapper">
@@ -20,20 +20,23 @@
     <!-- 단, 관리자와 부모/시터 회원간의 헤더 항목 다르게 표시해야 함 -->
     <header>
         <div id="logo">
-            <img src="images/logo.png" height="120px">
+            <img src="<%= cp %>/images/logo.png" height="120px">
         </div>
         <nav>
             <button type="button" class="menuBtn presentPage" id="emg"
             onclick="window.location.href='<%=cp%>/emgmain.action'">홈</button>
+            <button type="button" class="menuBtn" id="noticeList">공지사항</button>
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
-            <button type="button" class="menuBtn" id="gen">일반돌봄서비스</button>
+            <button type="button" class="menuBtn" id="gen"
+            onclick="window.location.href='<%=cp%>/genreginsertform.action'">일반돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
-            onclick="window.location.href='<%=cp%>/sittermypage.action?id=${id}'">마이페이지</button>
+            onclick="window.location.href='<%=cp%>/sittermypage.action'">마이페이지</button>
             <button type="button" class="menuBtn" id="notify-btn">
                 알림함
                 <span id="notify-badge">3</span>
             </button>
-            <button type="button" class="menuBtn">로그아웃</button>
+            <button type="button" class="menuBtn"
+            onclick="window.location.href='<%=cp%>/logout.action'">로그아웃</button>
         </nav>
   	</header>
 </div>

@@ -1,17 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 	
-	int point = 600;
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>genReqInsertForm.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -76,7 +76,7 @@
     		$("#point-spend").text(0);
     		
     		// 최종 비용 업데이트
-    		updateFinalPrice();
+    		calcPrice();
     		
     	});
     	
@@ -87,9 +87,10 @@
     		// 입력한 포인트 값 가져오기
     		// 『||』: 앞의 값이 없다면 || 뒤의 값 사용
     		var pointInput = parseInt($("#point-input").val()) || 0;
-    		var maxPoint = <%= point %>;
+    		var maxPoint = ${point != null ? point : 0};
     		
     		// 유효성 검사
+    		
     		if (pointInput < 100 && pointInput > 0)
     		{
     			alert("최소 100원부터 사용 가능합니다.");
@@ -106,7 +107,7 @@
     		$("#point-spend").text(pointInput);
     		
     		// 최종 금액 업데이트
-    		updateFinalPrice();
+    		calcPrice();
     	});
     	
     	
@@ -119,6 +120,10 @@
     	        alert("결제 진행 확인을 위해 체크박스 체크 바랍니다.");
     	        return;
     	    }
+    	    
+    		// 최종 가격을 hidden 필드에 저장 (콤마 제거)
+    	    var finalPrice = $("#final-price").text().replace(/,/g, '');	//-- 정규 표현식 이용
+    	    $("#hidden-final-price").val(finalPrice);
     	    
     	    // 체크되어 있다면 폼 제출 → genPayInsertForm.jsp
     	    $("form").submit();
@@ -138,7 +143,7 @@
  	// 함수 2.결제 금액 계산 함수
  	function calcPrice()
  	{
-   	    var basePrice = 25200; 								// 기본 비용
+   	    var basePrice = ${totalPrice}; 						// 기본 비용
    	    var pointUsed = parseInt($("#point-spend").text()); // 사용 포인트
    	    var finalPrice = basePrice - pointUsed; 			// 최종 비용
    	    
@@ -152,10 +157,7 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="/parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -172,8 +174,7 @@
 		</div>
 		
 		<div class="sub-body-form">
-			<!-- <form action="genpayinsertfrom.action"> -->
-			<form action="genpayresult.action">
+			<form action="genpayinsertform.action" method="post">
 			
 				<!-- 1. 신청하는 시터님 관련 정보 -->
 				<!--
@@ -184,32 +185,89 @@
 					<div class="label">돌봄 희망 시터</div>
 		            <div class="gen-info">
 		            	<div class="form-group" id="toggle-sitter-req">
-			                <div class="sitter-name">김탄 시터&nbsp;<span class="badge male">남</span> </div>
+			                <div class="sitter-name">${genDetail.name}&nbsp;
+			                	<c:choose>
+								<c:when test="${genDetail.gender == '남'}">
+									<span class="badge male">${genDetail.gender}</span>
+								</c:when>
+								<c:when test="${genDetail.gender == '여'}">
+									<span class="badge female">${genDetail.gender}</span>
+								</c:when>
+								<c:otherwise>
+									1=0 <!-- 항상 거짓. 즉, 쿼리 수행 X -->
+								</c:otherwise>
+								</c:choose>
+			                </div>
 			                <div class="sitter-details">
-			                    <div><img src="" alt="🥉">브론즈 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-			                	<div>최근 평점: ⭐4.9 (7건)</div>
-			                    <div>전체 평점: ⭐4.76 (123건)</div>
+			                    <div class="sitter-grade">
+			                    	<span class="sitter-grade-img">
+				             			<img src="<c:url value='/${genDetail.grade_file_path}' />" 
+				             			width="20" height="20" alt="시터 등급 이미지">
+				             		</span>
+				             		&nbsp;${genDetail.grade} 시터
+				             	</div>
+			                	<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
+            					<div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
 			            	</div>
 		            	</div>
 		            	<!-- 아래는 접힐 내용 -->
 		            	<div class="form-group" id="sitter-req-hidden">
 			            	<hr><br>
 			            	<div class="sitter-details">
-			                    <div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-			                	<div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-			                	<div>지역:
-			                    	<span class="badge">서초구</span>
-			                    	<span class="badge">강남구</span>
+			                    <fmt:parseDate var="startDateParsed" value="${genDetail.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:parseDate var="endDateParsed" value="${genDetail.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<div>돌봄 등록 일자: 📆
+									<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+								</div>
+								
+			                	<div>돌봄 등록 시간: ⏰
+					            <c:choose>
+								<c:when test="${genDetail.start_time < 12}">
+									오전 ${genDetail.start_time}시
+								</c:when>
+								<c:otherwise>
+									오후 ${genDetail.start_time == 12 ? 12 : genDetail.start_time-12}시
+								</c:otherwise>
+								</c:choose>
+								~
+								<c:choose>
+								<c:when test="${genDetail.end_time < 12}">
+									오전 ${genDetail.end_time}시
+								</c:when>
+								<c:otherwise>
+								    오후 ${genDetail.end_time == 12 ? 12 : genDetail.end_time-12}시
+								</c:otherwise>
+								</c:choose>
+								</div>
+			
+			                	<c:if test="${preferedRegion} != null">
+			                    <div>지역:&nbsp;
+			                    <c:forEach var="pr" items="${preferedRegion}">
+			                    	<span class="badge">${pr.name}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>자신있는 돌봄 연령대:
-			                    	<span class="badge">영아</span>
-			                    	<span class="badge">아동</span>
+			                    </c:if>
+			                    
+			                    <c:if test="${preferedAge} != null">
+			               		<div>자신있는 돌봄 연령대:&nbsp;
+			               		<c:forEach var="pa" items="${preferedAge}">
+			                    	<span class="badge">${pa.age}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>보유 자격:
-			                    	<span class="badge">보육 교사 2급</span>
+			                    </c:if>
+			                    
+			                    <c:if test="${listSitCert} != null">
+			               		<div>보유 자격:&nbsp;
+			               		<c:forEach var="cert" items="${listSitCert}">
+			                    	<span class="badge">${cert}</span>
+					            </c:forEach>
 			                    </div>
-			                	<div>시터님의 한 마디: 아이들과 함께 일하는 순간이 가장 행복해요. :)</div>
-			                	<div>마지막 근무일: 2025.03.14.</div>
+					            </c:if>
+			                    	
+			                    <div>시터님의 한 마디: ${genDetail.introduction}</div>
+			                	<div>마지막 근무일: <!-- 2025.03.14. --></div>
 			            	</div>
 			            </div>
 		            	<!-- 여기까지 접혀 들어가도록 -->
@@ -231,27 +289,66 @@
 					<div class="label">돌봄 희망 아이</div>
 		            <div class="gen-info">
 		            	<div class="form-group">
-			                <div class="child-name">김충식&nbsp;<span class="badge male">남</span> </div>
+			                <div class="child-name">${childInfo.name}&nbsp;
+			                	<c:choose>
+								<c:when test="${childInfo.gender == '남'}">
+									<span class="badge male">${childInfo.gender}</span>
+								</c:when>
+								<c:when test="${childInfo.gender == '여'}">
+									<span class="badge female">${childInfo.gender}</span>
+								</c:when>
+								<c:otherwise>
+									1=0 <!-- 항상 거짓. 즉, 쿼리 수행 X -->
+								</c:otherwise>
+								</c:choose>
+			                </div>
 			                <div class="gen-details">
-			                    <div>돌봄 희망 일자: 📆2025.04.03.~2025.04.03.</div>
-			                	<div>돌봄 희망 시간: ⏰오전 8시 ~ 오전 10시</div>
-			                	<div>돌봄 장소: 종로구 사직로 161, 101동 1392호</div>
-			                	<div>아이 연령: 만 4 세</div>
+			                    <fmt:parseDate var="startDateParsed" value="${dateStart}" pattern="yyyy-MM-dd"/>
+								<fmt:parseDate var="endDateParsed" value="${dateEnd}" pattern="yyyy-MM-dd"/>
+								<div>돌봄 희망 일자: 📆
+									<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~
+								<fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+								</div>
+								
+			                	<div>돌봄 희망 시간: ⏰
+					            <c:choose>
+								<c:when test="${timeStart < 12}">
+									오전 ${timeStart}시
+								</c:when>
+								<c:otherwise>
+									오후 ${timeStart == 12 ? 12 : timeStart-12}시
+								</c:otherwise>
+								</c:choose>
+								~
+								<c:choose>
+								<c:when test="${timeEnd < 12}">
+									오전 ${timeEnd}시
+								</c:when>
+								<c:otherwise>
+								    오후 ${timeEnd == 12 ? 12 : timeEnd-12}시
+								</c:otherwise>
+								</c:choose>
+								</div>
+								
+			                	<div>돌봄 장소: ${childInfo.road_addr}, ${childInfo.detailed_addr }</div>
+			                	<div>아이 연령: 만&nbsp;${childInfo.age }&nbsp;세</div>
 		                    </div>
 		                    <div class="gen-details child-has">
 		                    	<div>장애 및 지병, 알레르기:</div>
 		                    	<div>
 		                    		<ul>
-		                    			<li>꽃가루 알레르기</li>
-		                    			<li>호두 알레르기</li>
+		                    		<c:forEach var="medical" items="${listMedical}">
+		                    			<li>${medical }</li>
+		                    		</c:forEach>
 		                    		</ul>
 		                    	</div>
 		                    </div>
 		                    <div class="gen-details">
-		                    	<div><span class="star">*</span>신장: (미입력)</div>
-		                    	<div><span class="star">*</span>몸무게: (미입력)</div>
-		                    	<div><span class="star">*</span>혈액형: A</div>
-		                    	<div><span class="star">*</span>기타 특이사항: 아이가 낯가림이 조금 있습니다.</div>
+		                    	<div><span class="star">*</span>신장(cm): ${childInfo.height != null ? childInfo.height : '(미입력)'}</div>
+		                    	<div><span class="star">*</span>몸무게(kg): ${childInfo.weight != null ? childInfo.weight : '(미입력)'}</div>
+		                    	<div><span class="star">*</span>혈액형: ${childInfo.blood_type != null ? childInfo.blood_type : '(미입력)'}</div>
+		                    	<div><span class="star">*</span>기타 특이사항: ${childInfo.special_notes != null ? childInfo.special_notes : '(미입력)'}</div>
 		                    </div>
 		                    <br>
 		                    <div class="gen-details">
@@ -275,7 +372,7 @@
 			                <div class="name">전달 메시지</div>
 			                <div class="gen-details">
 			                    <div>
-			                    	<input type="text" id="msg-input" maxlength="160"
+			                    	<input type="text" id="msg-input" name=message maxlength="160"
 			                    	placeholder="(시터님에게 전달하실 말씀을 적어주세요.)"/>	<!-- 현재 ERD 상 varchar2(500)이라 160자 정도 입력 가능.. -->
 				                    <button type="button" id="msg-reset" class="btn gen-btn-small" >다시 작성</button>
 			                    </div>
@@ -306,32 +403,53 @@
 		            	<div class="form-group">
 			                <div class="name">결제 비용</div>
 			                <div class="gen-details">
-			                	<div>1일 돌봄 비용: 12,600 (원)</div>
-			                	<div>총 지불 비용: 25,200 (원)</div>
+			                	<div>1일 돌봄 비용: <fmt:formatNumber value="${price}" type="number" groupingUsed="true" /> (원)</div>
+			                	<div>총 돌봄 시간:
+			                		<fmt:formatNumber value="${careDays}" type="number" groupingUsed="true" />
+			                		×
+			                		<fmt:formatNumber value="${careHours}" type="number" groupingUsed="true" />
+			                		=
+			                		<fmt:formatNumber value="${careDays * careHours}" type="number" groupingUsed="true" /> (시간)
+			                	</div>
+			                	<div>총 지불 비용:
+				                	<fmt:formatNumber value="${price}" type="number" groupingUsed="true" />
+				                	×
+				                	<fmt:formatNumber value="${careDays}" type="number" groupingUsed="true" />
+				                	×
+				                	<fmt:formatNumber value="${careHours}" type="number" groupingUsed="true" />
+				                	=
+				                	<fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" /> (원)
+				                </div>
 			                </div>
-			            </div>
-			            <div class="form-group">
+		           		</div>
+		            	<div class="form-group">
 			                <div class="name">포인트 사용</div>
 			                <div class="gen-details">
-			                	<div>현재 보유 포인트: <%= point %>원</div>
-			                	<div class="row-items">사용할 포인트: 
-			                    	<input type="text" id="point-input" min="100" max="<%= point %>" placeholder="(사용할 포인트)"/>원
-			                    	<button type="button" id="point-reset" class="btn gen-btn-small" >취소</button>
-			                    	<button type="button" id="point-use" class="btn gen-btn-small">적용</button>
-			                    </div>
-			                </div>
-		                    <div class="gen-details">
-			                    <div><span class="star">*최소 100원부터 사용 가능합니다.</span></div>
-			                </div>
-			            </div>
-			            <div class="form-group">
-			                <div class="name">결제 예정 금액</div>
-			                <div class="gen-details">
-			                	<div>25,200 - <span id="point-spend">0</span> = <span id="final-price">25,200</span></div>		                	
-			                </div>
-			            </div>
-		   			</div>
-		        </div>
+		                	<div>현재 보유 포인트: <fmt:formatNumber value="${empty point ? 0 : point}" type="number" groupingUsed="true" />원</div>
+		                	<div class="row-items">사용할 포인트: 
+		                    	<input type="text" id="point-input" name="point"
+		                    	 min="100" max="${point}" value="0" placeholder="(사용할 포인트)"/>원
+		                    	<button type="button" id="point-reset" class="btn gen-btn-small" >취소</button>
+		                    	<button type="button" id="point-use" class="btn gen-btn-small">적용</button>
+		                    </div>
+		                </div>
+	                    <div class="gen-details">
+		                    <div><span class="star">*최소 100원부터 사용 가능합니다.</span></div>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <div class="name">결제 예정 금액</div>
+		                <div class="gen-details">
+		                	<div><fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" />
+		                	 -
+		                	<span id="point-spend">0</span>
+		                	 = 
+		                	<span id="final-price"><fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" /></span>원</div>
+		                	<input type="hidden" id="hidden-final-price" name="finalPrice" value="" />
+		                </div>
+		            </div>
+	   			</div>
+	        </div>
 		        
 		        <!-- 5. 결제 정보 확인 -->
 		        <div class="box-req">

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -9,9 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>genSearchResult.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/gen-filter.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/css/gen-filter.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script src="js/genFilter.js" defer></script>
+<script src="<%=cp%>/js/genFilter.js" defer></script>
 <script type="text/javascript">
 	
 	//이 페이지 로드 시,
@@ -70,6 +71,7 @@
         	$("#range-price").slideToggle(500);
     	});
   		
+  		/* 
 	  	// 가격 range 값 변경 시 current-price로 표시
   	    $('input[name="price"]').on('input', function()
   	    {
@@ -85,42 +87,120 @@
   	    var formattedInitialPrice = Number(initialPrice).toLocaleString('ko-KR');
   	    $('#current-price').text(formattedInitialPrice + '원');
   	    
-  	    
+ 		
+  	    */  	    
   	    //=================== 사이드 바 AJAX 기능 ==================
-  	    
 	  	$('#secondary-search-btn').on('click', function()
-  		{
-  			var grades = ['A', 'B', 'C']; 				// 예: 여러 등급을 배열로 저장
-  			var regions = ['SEOUL', 'BUSAN', 'DAEGU'];  // 예: 여러 지역을 배열로 저장
-			
-	  	    $.ajax({
-  	      			url: 'genregpossiblelist.action'
-  	     			, method: 'POST'
-  	     			, traditional: true
-  	      			, data: { grades : grades, regions : regions }  //category=A&type=premium 식으로 전달
-  	      			, dataType: 'html'
-  	      			, success: function(response)
-  	      			{
-  	        			$('#resultArea').html(response); // 응답으로 받은 HTML 조각을 리스트 영역에 삽입
-  	      			}
-  	      			, error: function(xhr, status, error)
-  	      			{
-			  	        console.error('Ajax 요청 실패:', error);	// 에러 발생
-			  	    }
-	  	   	});
-	  	});
- 
+	  	{
+			// 선택된 체크박스 값 가져오기
+		    var grades = [];
+		    $('input[name="grade"]:checked').each(function()
+		    {
+		        grades.push($(this).val());
+		    });
+		    
+		    var regions = [];
+		    $('input[name="region"]:checked').each(function()
+		    {
+		        regions.push($(this).val());
+		    });
+		    
+		    var genders = [];
+		    $('input[name="gender"]:checked').each(function()
+		    {
+		        genders.push($(this).val());
+		    });
+		    
+		    var ages = [];
+		    $('input[name="age"]:checked').each(function()
+		    {
+		        ages.push($(this).val());
+		    });
+		    
+		    var certs = [];
+		    $('input[name="cert"]:checked').each(function()
+		    {
+		        certs.push($(this).val());
+		    });
+		    
+		    // AJAX 요청
+		    $.ajax({
+		        url: 'genregpossiblelist.action'
+		        , method: 'POST'
+		        , traditional: true
+		        , data:
+		        { 
+		            grades: grades 
+		            , regions: regions
+		            , genders: genders
+		            , ages: ages
+		            , certs: certs
+		        }
+		        , dataType: 'html'
+		        , beforeSend: function(xmlHttpRequest)	// AJAX 요청 서버 전송 직전 실행
+		        {
+		        	xmlHttpRequest.setRequestHeader("Accept", "text/html; charset=utf-8");
+		        }
+		        , success: function(response)
+		        {
+		        	// 확인
+		            //console.log("응답 성공:", response);
+		        	
+		            $('#resultArea').html(response);
+		            updateButtonStates();		// AJAX 이후에도 시터 버튼 비활성화 실행
+		        }
+		        , error: function(xmlHttpRequest, status, error)
+		        {
+		            console.error('Ajax 요청 실패:', error);
+		            console.error('상태 코드:', xmlHttpRequest.status);
+		            console.error('응답 텍스트:', xmlHttpRequest.responseText);
+		        }
+		    });
+		});
+  	    
+  	    //=================== 페이지 로드 시 돌봄 신청 상태에 따라 버튼 비활성화 ==================
+	  	
+  	    updateButtonStates();		//-- 함수 3. 으로 분리함
 	});
 
  	
  	// 함수 1. 돌봄 신청 클릭 시 새 창(genRegDetail.jsp) 열기
     function openDetailWindow(genRegId)
  	{
-    	// 두 번째 파라미터 : '_blank' → 새 창 열기
+ 		// 두 번째 파라미터 : '_blank' → 새 창 열기
         // 세 번째 파라미터 : 창 옵션 (크기, 스크롤바 등)
         /* window.open('./genRegDetail.jsp?sitterId=' + sitterId, '_blank', 'width=640,height=500'); */
         window.open('genregpossibledetail.action?genRegId=' + genRegId, '_blank', 'width=640,height=500');
     }
+ 	
+ 	
+ 	// 함수 2. 페이지 이동을 위한 폼 제출 함수
+    function goToPage(page)
+	{
+	    document.getElementById('pageInput').value = page;
+	    document.getElementById('pageForm').submit();
+	}
+ 	
+ 	// 함수 3. 예약 상태에 따른 버튼 비활성화 함수
+ 	function updateButtonStates()
+ 	{
+ 		$('.box-preview').each(function() 		
+   	    {
+   	        // 현재 box-preview 내의 상태 텍스트 가져오기
+   	        var status = $(this).find('.sitter-status-hidden').text();
+   	        
+   	        // 해당 box-preview 내의 버튼 요소 
+   	        var button = $(this).find('.gen-btn-small');
+   	        
+   	        // 상태가 "예약중"인 경우 버튼 변경
+   	        if (status.indexOf("예약가능") == -1)		// '예약가능' 이 없다면,
+   	        {
+   	            button.text("예약중");
+   	            button.prop('disabled', true);
+   	            button.css({'background-color': '#cccccc', 'disabled':'disabled', 'cursor': 'not-allowed'});
+   	        }
+   	    });
+ 	}
   
 </script>
 </head>
@@ -128,8 +208,6 @@
 
 <!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<%-- <c:import url="./parentMainFrame.html" charEncoding="UTF-8" /> --%>
-	<!-- → action 처리로 변경 -->
 	<c:import url="/parentheader.action"/>
 </div>
 
@@ -220,102 +298,23 @@
 			    <div class="form-group">
 			    	<div class="label" id="toggle-grade">시터 등급</div>
 			        <div class="checkbox-group" id="checkbox-grade">
+			        	<c:forEach var="grade" items="${listGrade}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="rookie" checked="checked">신입
+			                <input type="checkbox" name="grade" value="${grade.name}" checked="checked" autocomplete="off">${grade.name}
 			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="bronze" checked="checked">브론즈
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="silver" checked="checked">실버
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="gold" checked="checked">골드
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="grade" value="platinum" checked="checked">플래티넘
-			            </label>
+			            </c:forEach>
 			        </div>
 			    </div>
 			    
 				<div class="form-group">
 					<div class="label" id="toggle-region">근무 지역</div>
 					<div class="checkbox-group"  id="checkbox-region">
+						<c:forEach var="region" items="${listAllRegions}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="region" value="1" checked="checked" autocomplete="off">강남구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="2" checked="checked" autocomplete="off">강동구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="3" checked="checked" autocomplete="off">강북구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="4" checked="checked" autocomplete="off">강서구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="5" checked="checked" autocomplete="off">관악구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="6" checked="checked" autocomplete="off">광진구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="7" checked="checked" autocomplete="off">구로구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="8" checked="checked" autocomplete="off">금천구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="9" checked="checked" autocomplete="off">노원구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="10" checked="checked" autocomplete="off">도봉구  
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="11" checked="checked" autocomplete="off">동대문구 
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="12" checked="checked" autocomplete="off">동작구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="13" checked="checked" autocomplete="off">마포구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="14" checked="checked" autocomplete="off">서대문구 
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="15" checked="checked" autocomplete="off">서초구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="16" checked="checked" autocomplete="off">성동구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="17" checked="checked" autocomplete="off">성북구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="18" checked="checked" autocomplete="off">송파구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="19" checked="checked" autocomplete="off">양천구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="20" checked="checked" autocomplete="off">영등포구 
-			            </label>                                                                  
-			            <label class="checkbox-label">                                            
-			                <input type="checkbox" name="region" value="21" checked="checked" autocomplete="off">용산구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="22" checked="checked" autocomplete="off">은평구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="23" checked="checked" autocomplete="off">종로구  
-			            </label>                                                                   
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="24" checked="checked" autocomplete="off">중구   
-			            </label>                                          
-			            <label class="checkbox-label">                                             
-			                <input type="checkbox" name="region" value="25" checked="checked" autocomplete="off">중랑구   
-			            </label>
+			                <input type="checkbox" name="region" value="${region.region_id}"
+			                 checked="checked" autocomplete="off">${region.name}  
+			            </label>   
+			            </c:forEach>
 			        </div>                                                            
 				</div>                                                                          
 				<div class="form-group">
@@ -332,7 +331,7 @@
 				<div class="form-group">
 					<div class="label" id="toggle-age">시터 연령대</div>
 					<div class="checkbox-group" id="checkbox-age">
-			            <label class="checkbox-label">
+						<label class="checkbox-label">
 			                <input type="checkbox" name="age" value="20" checked="checked">20대
 			            </label>
 			            <label class="checkbox-label">
@@ -352,23 +351,15 @@
 				<div class="form-group">
 					<div class="label" id="toggle-cert">시터 보유 자격증</div>
 					<div class="checkbox-group" id="checkbox-cert">
+					
+						<c:forEach var="cert" items="${listCertType}">
 			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="1" checked="checked">보육 교사 1급 (특수)
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="2" checked="checked">보육 교사 1급
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="3" checked="checked">보육 교사 2급 (특수)
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="4" checked="checked">보육 교사 2급
-			            </label>
-			            <label class="checkbox-label">
-			                <input type="checkbox" name="cert" value="5" checked="checked">특수 교사
-			            </label>
+			                <input type="checkbox" name="cert" value="${cert.cert_type_id }" checked="checked">${cert.type }
+			            </label>  
+			            </c:forEach>
 			        </div>
 				</div>
+				<!-- 
 				<div class="form-group">
 					<div class="label" id="toggle-price">전체 돌봄 비용</div>
 			        <div class="range-group" id="range-price">
@@ -382,7 +373,7 @@
 			            </label>
 			        </div>
 				</div>
-	
+	 			-->
 				<button type="button" class="btn" id="secondary-search-btn">필터 적용</button>
 			</form>
 			</div>
@@ -390,105 +381,10 @@
 		
 		<!-- 검색 결과 -->
 	    <div class="gen-results" id='resultArea'>
-	    	<div class="sub-subject">
-	        	<h2>검색 결과 (${countPrimaryGenReg})</h2>
-	        </div>
-	        <!-- 일반 돌봄 각 등록 건 -->
-	       	<!-- <form action="genregdetail.action" method="post" target="_blank"> -->
-	        <!-- 
-	        listPrimaryGenReg 
-	         R.GEN_REG_ID, R.NAME, R.TITLE, R.START_DATE, R.END_DATE, R.START_TIME, R.END_TIME, STATUS
-	         -->
-	       	<c:forEach var="genReg" items="${listPrimaryGenReg}">
-	       	
-	       	
-		        <div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit01.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">${genReg.name }</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🥉">브론즈 시터</div>		<!-- 대체 텍스트 수정 필요 -->
-		                	<div>최근 평점 ⭐4.9 (7건)</div>
-		                    <div>전체 평점 ⭐4.76 (123건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰
-		                    <c:choose>
-							    <c:when test="${genReg.start_date < 12}">
-							        오전 ${genReg.start_date}시
-							    </c:when>
-							    <c:otherwise>
-							        오후 ${genReg.start_date == 12 ? 12 : genReg.start_date-12}시
-							    </c:otherwise>
-							</c:choose></div>
-		                </div>
-		                <button type="submit" class="btn gen-btn-small"
-		                onclick="openDetailWindow(${genReg.gen_reg_id})">돌봄 신청</button>
-		            </div>
-		        </div>
-		    
-	       	</c:forEach>
-		    
-		    <!-- -------------------------------------------------------------------------------------------------- -->
-		    
-		    
-		    	<div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit01.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">김탄</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🥉">브론즈 시터</div>		<!-- 대체 텍스트 수정 필요 -->
-		                	<div>최근 평점 ⭐4.9 (7건)</div>
-		                    <div>전체 평점 ⭐4.76 (123건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="submit" class="btn gen-btn-small" onclick="openDetailWindow(1)">돌봄 신청</button>
-
-		            </div>
-		        </div>
-		        
-		        
-				<div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit02.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">차은상</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🥈">실버 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-		                    <div>최근 평점 ⭐4.3 (3건)</div>
-		                    <div>전체 평점 ⭐4.56 (290건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="submit" class="btn gen-btn-small"  onclick="openDetailWindow(2)">돌봄 신청</button>
-		            </div>
-		        </div>
-		    
-		    
-		        <div class="box-preview">
-		            <div class="sitter-photo">
-		                <img src="./images/sit03.jpg" alt="시터 사진">
-		            </div>
-		            <div class="sitter-info">
-		                <div class="sitter-name">최영도</div>
-		                <div class="sitter-details">
-		                    <div><img src="" alt="🌱">신입 시터</div>	<!-- 대체 텍스트 수정 필요 -->
-		                    <div>최근 평점 ⭐4.8 (3건)</div>
-		                    <div>전체 평점 ⭐4.5 (3건)</div>
-		                	<div>돌봄 등록 일자: 📆2025.03.31.~2025.04.11.</div>
-		                    <div>돌봄 등록 시간: ⏰오전 9시 ~ 오후 2시</div>
-		                </div>
-		                <button type="button" class="btn gen-btn-small" onclick="openDetailWindow(3)">돌봄 신청</button>
-		             </div>
-		        </div>
-		    <!-- </form> -->
-	    </div>
-		
+		    <%-- <c:import url="/WEB-INF/view/genRegListFragment.jsp" /> --%>
+		    <c:import url="/genreglistfragment.action" />
+		</div>
+    
 	</div>
 </div>
 

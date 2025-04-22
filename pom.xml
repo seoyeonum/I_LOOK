@@ -6,10 +6,7 @@
 	<artifactId>I_LOOK</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<properties>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
+
 	<dependencies>
 		<!-- Servlet API -->
 		<dependency>
@@ -39,7 +36,15 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>5.3.34</version>
 		</dependency>
-
+		
+		 <!-- JSP API -->
+	    <dependency>
+	        <groupId>javax.servlet.jsp</groupId>
+	        <artifactId>javax.servlet.jsp-api</artifactId>
+	        <version>2.3.1</version>
+	        <scope>provided</scope>
+	    </dependency>
+	    
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

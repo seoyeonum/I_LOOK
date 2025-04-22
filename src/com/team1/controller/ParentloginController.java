@@ -34,12 +34,14 @@ public class ParentloginController
         if (parent != null)
         {
             session.setAttribute("loginParent", parent);
+
             session.setAttribute("par_backup_id", parent.getPar_backup_id());
-            return "genMain.jsp";
+            return "forward:/genmain.action";			//-- action 요청으로 변경!			
+
         }
         else 
         {
-            return "redirect:/login.action?error=1";
+        	return "redirect:/iLook.action";			//-- 처음 화면 action 요청으로 변경!
         }
     }
 }

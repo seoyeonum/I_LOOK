@@ -1,6 +1,6 @@
-/*=============================
-    SitterInsertController.java
-=============================*/
+/*===============================
+    sitterInsertController.java
+=============================== */
 
 package com.team1.controller;
 
@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team1.dto.DocRegDTO;
@@ -71,7 +73,7 @@ public class sitterInsertController
             doc.setDoc_type_id("001");
             doc.setSit_reg_id(sitter.getSit_reg_id());
             doc.setFile_path("/uploads/" + fileName);
-            docdao.sitaddDoc(doc);
+            docdao.addDoc(doc);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +89,7 @@ public class sitterInsertController
             doc.setDoc_type_id("002");
             doc.setSit_reg_id(sitter.getSit_reg_id());
             doc.setFile_path("/uploads/" + fileName);
-            docdao.sitaddDoc(doc);
+            docdao.addDoc(doc);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +114,7 @@ public class sitterInsertController
                         cert.setCert_type_id(certTypeId); // 사용자 선택
                         cert.setSit_reg_id(sitter.getSit_reg_id());
                         cert.setFile_path("/uploads/" + fileName);
-                        certdao.sitaddCert(cert);
+                        certdao.addCert(cert);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -125,4 +127,5 @@ public class sitterInsertController
         return "redirect:/iLook.action";
         //return "redirect:/iLook.action?joined=true";
     }
+
 }

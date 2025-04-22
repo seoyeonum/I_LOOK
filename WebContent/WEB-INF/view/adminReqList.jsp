@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -10,6 +11,127 @@
 <meta charset="UTF-8">
 <title>adminReqList.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/adminReqList.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+	const cp = '<%=cp %>';
+	// 뒤로가기/앞으로가기 대응
+	window.addEventListener('popstate', function(event) 
+	{
+	    loadListFromUrl();
+	});
+	
+	$(document).ready(function()
+	{
+		// 페이지 열릴 때 url 기준 페이지 열림
+		loadListFromUrl();
+
+	    // 돌봄유형 변경시 Ajax 호출
+	    $('input[name="careType"]').change(function() 
+	    {
+	        loadList(1);
+	    });
+
+	    // 예약상태 변경시 Ajax 호출
+	    $('select[name="statusFilter"]').change(function() 
+	    {
+	        loadList(1);
+	    });
+
+	    // 날짜범위 변경시 Ajax 호출
+	    $('select[name="dateRange"]').change(function() 
+	    {
+	        loadList(1);
+	    });
+		
+	});
+
+	function loadList(page) 
+	{
+		// 변수 선언
+	    const careType = $('input[name="careType"]:checked').val();
+	    const statusFilter = $('select[name="statusFilter"]').val();
+	    const dateRange = $('select[name="dateRange"]').val();
+	    const searchKey = $('select[name="searchKey"]').val();
+	    const searchValue = $('input[name="searchValue"]').val();
+	    
+	    $.ajax(
+	    {
+	        url: cp + '//admingenreqlistajax.action'
+	      , method: 'GET'
+	      , data: 
+	        {
+	    	 	page: page
+	    	  , careType: careType
+	    	  , statusFilter: statusFilter
+	    	  , dateRange: dateRange
+	    	  , searchKey: searchKey
+	    	  , searchValue: searchValue
+	        }
+	        , success: function(response) 
+	        {
+	            $('#listArea').html(response);
+
+	            var newUrl = "adminreqlist.action?page=" + page
+	                       + "&careType=" + careType
+	                       + "&statusFilter=" + statusFilter
+	                       + "&dateRange=" + dateRange;
+
+	            if (searchKey) 
+	            {
+	                newUrl += "&searchKey=" + searchKey;
+	            }
+	            if (searchValue) 
+	            {
+	                newUrl += "&searchValue=" + encodeURIComponent(searchValue);
+	            }
+
+	            history.pushState(null, '', newUrl);
+	        }
+	        ,error: function(xhr, status, error)
+	        {
+	            console.error('에러 발생:', error);
+	        }
+	    });
+	}
+	
+	function loadListFromUrl() 
+    {
+        // 현재 URL 기준으로 파라미터 읽기
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const page = urlParams.get('page') || 1;
+        const careType = urlParams.get('careType') || 'normal';
+        const statusFilter = urlParams.get('statusFilter') || 'all';
+        const dateRange = urlParams.get('dateRange') || 'allDay';
+        const searchKey = urlParams.get('searchKey') || '';
+        const searchValue = urlParams.get('searchValue') || '';
+
+        $.ajax(
+        {
+            url: cp + '/admingenreqlistajax.action'
+         , method: 'GET'
+         , data: 
+           {
+        	    page: page
+	    	  , careType: careType
+	    	  , statusFilter: statusFilter
+	    	  , dateRange: dateRange
+	    	  , searchKey: searchKey
+	    	  , searchValue: searchValue
+            },
+            success: function(response) 
+            {
+                $('#listArea').html(response);
+            },
+            error: function(xhr, status, error) 
+            {
+                console.error('에러 발생:', error);
+            }
+        });
+    }
+		
+</script>
 </head>
 <body>
 
@@ -32,16 +154,19 @@
 				<!-- 필터 영역 -->
 				<div class="content-filter-area">
 					<div class="content-filter">
+					
 						<!-- 돌봄 유형 필터 -->
 						<div class="filter-group care-type-filter">
-							<label><input type="radio" name="careType" value="general" checked>일반돌봄</label> 
-							<label><input type="radio" name="careType" value="emergency" checked>긴급돌봄</label>
+							<label><input type="radio" name="careType" value="normal"
+								<c:if test="${careType == 'normal'}">checked</c:if>>일반돌봄</label>
+							<label><input type="radio" name="careType" value="emergency"
+								<c:if test="${careType == 'emergency'}">checked</c:if>>긴급돌봄</label>
 						</div>
 
 						<!-- 예약 상태 필터 -->
 						<div class="filter-group status-filter">
-							<select name="reservationStatus" class="selectField">
-								<option value="all">예약 상태: 전체</option>
+							<select name="statusFilter" class="selectField">
+								<option value="all" selected="selected">예약 상태 : 전체</option>
 								<option value="request">예약 신청</option>
 								<option value="confirmed">예약 확정</option>
 								<option value="completed">예약 완료</option>
@@ -52,118 +177,51 @@
 						<!-- 날짜 필터 -->
 						<div class="filter-group date-filter">
 							<select name="dateRange" class="selectField">
-								<option value="week">기본 1주일</option>
-								<option value="today">1일</option>
+								<option value="allDay" selected="selected">날짜 : 전체</option>
+								<option value="week">1주일</option>
 								<option value="month">1개월</option>
 								<option value="3month">3개월</option>
-								<option value="custom">사용자 지정</option>
 							</select>
 						</div>
-						
-						<!-- 날짜 사용자 지정 -->
-						<div id="customDate" style="display: none; margin-top: 10px;">
-							<label>시작일: <input type="date" name="startDate" id="startDate"></label>
-							<label>종료일: <input type="date" name="endDate" id="endDate"></label>
+						<div id="customDate" style="display: none;">
+					    <label>시작일: <input type="date" name="startDate" id="startDate" value="${startDate}"></label>
+					    <label>종료일: <input type="date" name="endDate" id="endDate" value="${endDate}"></label>
 						</div>
-						
+					
 						<!-- 검색 폼 -->
-						<div class="search-form">
-							<form action="" name="searchForm" method="post">
-								<select name="searchKey" class="selectFiled">
-									<option value="name">이름</option>
-									<option value="subject">부모 코드</option>
-									<option value="subject">시터 코드</option>
-								</select> <input type="text" name="searchValue" class="txt" value="">
-								<input type="button" value="검색" class="btn search-btn"
-									onclick="sendIt()">
+						<div class="search-filter">
+							<form action="adminreqlist.action" method="get" name="searchForm">
+								<select name="searchKey" class="selectField">
+						            <option value="par_name" <c:if test="${searchKey eq 'par_name'}">selected</c:if>>부모 이름</option>
+						            <option value="par_backup_id" <c:if test="${searchKey eq 'par_backup_id'}">selected</c:if>>부모 코드</option>
+						        </select>
+						        <input type="text" name="searchValue" class="txt" value="${searchValue}">
+								<input type="submit" value="검색" class="btn search-btn">
 							</form>
 						</div>
 					</div>
 				</div>
-
+				
 				<div class="content-body">
 					<div class="info-wrapper">
 						<div class="info-header">
 							<div class="info-cell">번호</div>
-							<div class="info-cell">예약 번호</div>
-							<div class="info-cell">상태</div>
 							<div class="info-cell">부모 이름</div>
-							<div class="info-cell">시터 이름</div>
+							<div class="info-cell">예약 번호</div>
+							<div class="info-cell">근무 등록 번호</div>
 							<div class="info-cell">예약일</div>
-							<div class="info-cell">결제상태</div>
+							<div class="info-cell">상태</div>
 							<div class="info-cell">상세보기</div>
 							<div class="info-cell">삭제</div>
 						</div>
-
-						<!-- 데이터 행 - 실제 사용시 반복문으로 처리 -->
-						<div class="info-row">
-							<div class="info-cell">3</div>
-							<div class="info-cell">GREQ00002</div>
-							<div class="info-cell">예약 신청</div>
-							<div class="info-cell">김민준</div>
-							<div class="info-cell">이시연</div>
-							<div class="info-cell">2025-04-05</div>
-							<div class="info-cell">미결제</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn detail-btn"
-										onclick="location.href='adminGenReqDetail.jsp'">상세보기</button>
-								</div>
-							</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn delete-btn">삭제</button>
-								</div>
-							</div>
-						</div>
-
-						<div class="info-row">
-							<div class="info-cell">2</div>
-							<div class="info-cell">EREQ00002</div>
-							<div class="info-cell">예약 신청</div>
-							<div class="info-cell">홍길동</div>
-							<div class="info-cell">임꺽정</div>
-							<div class="info-cell">2025-04-03</div>
-							<div class="info-cell">결제완료</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn detail-btn"
-										onclick="location.href='adminGenReqDetail.jsp'">상세보기</button>
-								</div>
-							</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn delete-btn">삭제</button>
-								</div>
-							</div>
-						</div>
-
-						<div class="info-row">
-							<div class="info-cell">1</div>
-							<div class="info-cell">GREQ00001</div>
-							<div class="info-cell">예약 확정</div>
-							<div class="info-cell">고지섭</div>
-							<div class="info-cell">풋사과</div>
-							<div class="info-cell">2025-04-03</div>
-							<div class="info-cell">결제완료</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn detail-btn"
-										onclick="location.href='adminGenReqDetail.jsp'">상세보기</button>
-								</div>
-							</div>
-							<div class="info-cell">
-								<div class="action-buttons">
-									<button type="button" class="btn delete-btn">삭제</button>
-								</div>
-							</div>
+						
+						<!-- 데이터 행 -->
+						<div id="listArea">	
+						<c:import url="adminReqListAjax.jsp"></c:import>
 						</div>
 					</div>
 
-					<!-- 페이징 영역 -->
-					<div class="page">
-						<p>1 Prev 21 22 23 24 25 26 27 28 29 30 Next 42</p>
-					</div>
+					<!-- 페이지 영역 ajax -->
 				</div>
 			</main>
 		</div>
@@ -171,3 +229,4 @@
 
 </body>
 </html>
+

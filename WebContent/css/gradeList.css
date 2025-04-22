@@ -130,12 +130,14 @@ body {
 }
 
 .btn {
-    padding: 5px 15px;
-    background-color: #f8f8f8;
-    color: #333;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: #fff;  
+    color: #333;             
+    border: 1px solid #ddd;
 }
 
 .btn:hover {

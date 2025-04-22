@@ -19,6 +19,14 @@
 		{
 			$(location).attr("href", "gradeupdateform.action?grade_id=" + $(this).val());
 		});
+		
+		$(".delete-btn").click(function()
+		{
+			if (confirm("정말 삭제하시겠습니까?")) 
+		    {
+		        $(location).attr("href", "gradedelete.action?grade_id=" + $(this).val());
+		    }
+		});
 	});
 
 </script>
@@ -74,7 +82,7 @@
 						<div class="info-cell">${grade.daily_max_time }시간</div>
 						<div class="info-cell">${grade.grade_pay }</div>
 						<div class="info-cell">
-							<img alt="${grade.name } 이미지" src="${grade.file_path }.gif" class="info-cell-img" width="50px" height="50px">
+							<img alt="${grade.name } 이미지" src="${cp}${grade.file_path }" class="info-cell-img" width="50px" height="50px">
 						</div>
 						<div class="info-cell">
 							<div class="action-buttons">
@@ -83,7 +91,7 @@
 						</div>
 						<div class="info-cell">
 							<div class="action-buttons">
-								<button type="button" class="btn delete-btn">삭제</button>
+								<button type="button" class="btn delete-btn" value="${grade.grade_id }">삭제</button>
 							</div>
 						</div>
 					</div>

@@ -21,6 +21,9 @@ import com.team1.dto.GenCanceledDTO;
 
 public interface IGenCanceledDAO
 {
+	// 취소를 위한 취소 범례 테이블 가져오기
+	public ArrayList<GenCanceledDTO> CanceledReason();
+	
 	// 일반 돌봄 예약 취소 리스트 확인
 	public ArrayList<GenCanceledDTO> listAllCanceledReq();
 	

@@ -19,8 +19,14 @@ public interface ISitCareListDAO
 	public ArrayList<SitCareListDTO> regList(String sit_backup_id);
 	
 	// 근무 등록 내역 확인의 상세 정보 AJAX 처리
-	public ArrayList<SitCareListDTO> regDetailedList(String gen_req_id);
+	public SitCareListDTO regDetailedList(String gen_req_id);
 	
+	// 돌봄 제공 수락
+	public int yesCare(String gen_req_id);
+	
+	// 돌봄 제공 거절
+	public int noCare(String gen_req_id);
+	 
 	// 돌봄 제공 내역 확인
 	public ArrayList<SitCareListDTO> answerList(String sit_backup_id);
 	

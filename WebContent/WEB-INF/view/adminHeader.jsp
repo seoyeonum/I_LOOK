@@ -22,7 +22,7 @@
 			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/adminsitreglist.action'">회원 관리</button>
 			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/admingenreglist.action'">서비스 관리</button>				
 			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/admininfo.action'">마이 페이지</button>
-			<button type="button" class="menuBtn">로그아웃</button>
+			<button type="button" class="menuBtn" onclick="location.href='<%=cp%>/logout.action'">로그아웃</button>
 		</nav>
 	</header>
 </div>
