@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.team1.dto.ChildConditionDTO;
 import com.team1.dto.ChildDTO;
 
 public interface IChildDAO
@@ -64,5 +65,29 @@ public interface IChildDAO
 	
 	// 아이 지병/알레르기/장애 조회
 	public ArrayList<String> listChildMedicalName(String child_backup_id);
+	
+	// [관리자] 아이 정보 조회
+	public List<ChildDTO> adminListChild(@Param("start") int start
+										 , @Param("end") int end
+							             , @Param("searchKey") String searchKey
+							             , @Param("searchValue") String searchValue);
+	
+	// [관리자] 등록된 아이 수
+	public int adminCountChild(@Param("searchKey") String searchKey
+										, @Param("searchValue") String searchValue);
+	
+	// [관리자]부모 코드로 아이 정보 조회
+	public List<ChildDTO> adminSearchChild(String par_backup_id);
+	
+	// 아이 코드로 아이 지병 정보 조회  
+	public List<ChildConditionDTO> adminSearchMedical(String child_backup_id);
+	
+	// 아이 코드로 아이 알레르기 정보 조회 
+	public List<ChildConditionDTO> adminSearchAllergy(String child_backup_id);
+	
+	// 아이 코드로 아이 장애 정보 조회 
+	public List<ChildConditionDTO> adminSearchDisability(String child_backup_id);
+	
+
 }
 

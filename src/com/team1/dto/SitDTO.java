@@ -28,81 +28,16 @@ public class SitDTO
 	// 총 근무 시간, 전체 평균 점수, 3개월 평균 점수, 시터가 그동안 맡은 일반 돌봄 서비스 수, 시터가 그동안 맡은 긴급 돌봄 서비스 수
 	private int totalworktime, totalrating, month3rating, genCareCount, emgCareCount;
 	
-	// 시터가 가진 등급
-	private String grade;
-
+	// 시터가 가진 등급, 은행이름
+	private String grade, bank_type, acct_number;
 	
+	// 시터 근무 누적시간, 리뷰수 
+	private int worked_hour, review_count;
+
+	// 평균별점
+	private double average_rating;
+
 	// getter / setter 구성
-	public int getGenCareCount()
-	{
-		return genCareCount;
-	}
-
-	public void setGenCareCount(int genCareCount)
-	{
-		this.genCareCount = genCareCount;
-	}
-
-	public int getEmgCareCount()
-	{
-		return emgCareCount;
-	}
-
-	public void setEmgCareCount(int emgCareCount)
-	{
-		this.emgCareCount = emgCareCount;
-	}
-	
-	public int getTotalworktime()
-	{
-		return totalworktime;
-	}
-
-	public void setTotalworktime(int totalworktime)
-	{
-		this.totalworktime = totalworktime;
-	}
-
-	public int getTotalrating()
-	{
-		return totalrating;
-	}
-
-	public void setTotalrating(int totalrating)
-	{
-		this.totalrating = totalrating;
-	}
-
-	public int getMonth3rating()
-	{
-		return month3rating;
-	}
-
-	public void setMonth3rating(int month3rating)
-	{
-		this.month3rating = month3rating;
-	}
-
-	public String getGrade()
-	{
-		return grade;
-	}
-
-	public void setGrade(String grade)
-	{
-		this.grade = grade;
-	}
-
-	public String getSit_chk_id()
-	{
-		return sit_chk_id;
-	}
-
-	public void setSit_chk_id(String sit_chk_id)
-	{
-		this.sit_chk_id = sit_chk_id;
-	}
-
 	public String getSit_backup_id()
 	{
 		return sit_backup_id;
@@ -233,6 +168,16 @@ public class SitDTO
 		this.file_path = file_path;
 	}
 
+	public String getSit_chk_id()
+	{
+		return sit_chk_id;
+	}
+
+	public void setSit_chk_id(String sit_chk_id)
+	{
+		this.sit_chk_id = sit_chk_id;
+	}
+
 	public String getChk_date()
 	{
 		return chk_date;
@@ -243,8 +188,114 @@ public class SitDTO
 		this.chk_date = chk_date;
 	}
 
-	
-	
-	
+	public int getTotalworktime()
+	{
+		return totalworktime;
+	}
+
+	public void setTotalworktime(int totalworktime)
+	{
+		this.totalworktime = totalworktime;
+	}
+
+	public int getTotalrating()
+	{
+		return totalrating;
+	}
+
+	public void setTotalrating(int totalrating)
+	{
+		this.totalrating = totalrating;
+	}
+
+	public int getMonth3rating()
+	{
+		return month3rating;
+	}
+
+	public void setMonth3rating(int month3rating)
+	{
+		this.month3rating = month3rating;
+	}
+
+	public int getGenCareCount()
+	{
+		return genCareCount;
+	}
+
+	public void setGenCareCount(int genCareCount)
+	{
+		this.genCareCount = genCareCount;
+	}
+
+	public int getEmgCareCount()
+	{
+		return emgCareCount;
+	}
+
+	public void setEmgCareCount(int emgCareCount)
+	{
+		this.emgCareCount = emgCareCount;
+	}
+
+	public String getGrade()
+	{
+		return grade;
+	}
+
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
+
+	public String getBank_type()
+	{
+		return bank_type;
+	}
+
+	public void setBank_type(String bank_type)
+	{
+		this.bank_type = bank_type;
+	}
+
+	public String getAcct_number()
+	{
+		return acct_number;
+	}
+
+	public void setAcct_number(String acct_number)
+	{
+		this.acct_number = acct_number;
+	}
+
+	public int getWorked_hour()
+	{
+		return worked_hour;
+	}
+
+	public void setWorked_hour(int worked_hour)
+	{
+		this.worked_hour = worked_hour;
+	}
+
+	public int getReview_count()
+	{
+		return review_count;
+	}
+
+	public void setReview_count(int review_count)
+	{
+		this.review_count = review_count;
+	}
+
+	public double getAverage_rating()
+	{
+		return average_rating;
+	}
+
+	public void setAverage_rating(double average_rating)
+	{
+		this.average_rating = average_rating;
+	}
 	
 }
