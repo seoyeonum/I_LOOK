@@ -32,7 +32,7 @@ public class SitterloginController
         if (sitter != null) // 로그인 성공
         {
             session.setAttribute("loginSitter", sitter);
-            return "WEB-INF/view/sitterMain.jsp";
+            return "forward:/emgmain.action";
         }
         else // 로그인 실패
         {

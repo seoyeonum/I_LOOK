@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>시터 회원가입 페이지</title>
-<link rel="stylesheet" href="css/parentInsertForm.css">
+<link rel="stylesheet" href="<%= cp %>/css/parentInsertForm.css">
 <script type="text/javascript">
     // 카카오 주소 API를 위한 함수
     function searchAddress() {
@@ -33,7 +33,7 @@
             return;
         }
 
-        fetch("<c:url value='/CheckDuplicateIdServlet'/>?userId=" + encodeURIComponent(userId))
+        fetch("<c:url value='/sitcheckid.action'/>?userId=" + encodeURIComponent(userId))
             .then(res => res.json())
             .then(data => {
                 if (data.exists) {
@@ -117,7 +117,7 @@
 
 <div id="title">I,Look</div>
 
-<form action="<%=cp %>/sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
+<form action="sitterInsert.action" method="POST" onsubmit="return checkPasswordBeforeSubmit()" class="signup-form">
     <div class="form-section">
         <h2>회원요청</h2>
     </div>

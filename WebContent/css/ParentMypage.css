@@ -537,4 +537,31 @@
     {
         display: block;
     }
+    
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #333;
+    margin: 0 2px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    background-color: #eee;
+}
+
+.pagination a[style*="bold"] {
+    background-color: #ffcce0;
+    font-weight: bold;
+}
+
+
 }

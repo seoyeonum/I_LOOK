@@ -14,10 +14,13 @@ public interface IGradesDAO
 	public GradesDTO searchGradeInfo(String grade_name);
 	
 	// 등급 데이터 추가
-	public int addGrade(GradesDTO grades);
+	public int addGrade(GradesDTO grade);
 	
 	// 등급 수정
-	public int modifyGrade(GradesDTO grades);
+	public int modifyGrade(GradesDTO grade);
+	
+	// 등급 리스트 조회
+	public GradesDTO searchGrade(String grade_id);
 	
 	// 등급 삭제
 	public int removeGrade(String grade_id);
@@ -29,7 +32,7 @@ public interface IGradesDAO
 	public int searchGenWageLately();
 	
 	// 일반돌봄 시급 수정
-	public int modifyGenWage(GradesDTO grades);
+	public int modifyGenWage(GradesDTO grade);
 	
 	// 긴급돌봄 시급 조회
 	public GradesDTO listEmgWage();
@@ -38,7 +41,7 @@ public interface IGradesDAO
 	public int searchEmgWageLately();
 	
 	// 긴급돌봄 시급 수정
-	public int modifyEmgWage(GradesDTO grades);
+	public int modifyEmgWage(GradesDTO grade);
 	
 	
 }

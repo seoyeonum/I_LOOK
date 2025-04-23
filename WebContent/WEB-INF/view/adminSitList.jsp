@@ -27,10 +27,10 @@
                 <h1 class="content-title">시터 회원 정보</h1>
 
                 <div class="search-form">
-                    <form action="" name="searchForm" method="post">
+                    <form action="" name="searchForm" method="get">
                         <select name="searchKey" class="selectFiled">
-                            <option value="sitterCode">시터 코드</option>
                             <option value="name">이름</option>
+                            <option value="sitterCode">시터 코드</option>
                         </select>
                         <input type="text" name="searchValue" class="txt" value="">
                         <input type="button" value="검색" class="btn search-btn" onclick="sendIt()">
