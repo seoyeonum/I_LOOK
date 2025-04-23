@@ -331,11 +331,5 @@
 		#{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{tel}, #{zip_code}, #{file_path})
 	</insert>
 	
-	<!-- 시터 회원 가입 중복 체크 -->
-	<select id="checkId" resultType="java.lang.Integer">
-	<!-- 여기에 중복 가입 여부 체크 쿼리 필요 -->
-		SELECT COUNT(*) AS COUNT
-		FROM SIT_BACKUP
-		WHERE ID = #{id}
-	</select>
+	<!-- checkId → SitLogin.xml -->
 </mapper>

@@ -101,7 +101,7 @@
 					<c:if test="${preferedRegion} != null">
                     <div>지역:&nbsp;
                     <c:forEach var="pr" items="${preferedRegion}">
-                    	<span class="badge">${pr.name}</span>
+                    	<span class="badge">${pr}</span>
 		            </c:forEach>
                     </div>
                     </c:if>
@@ -109,7 +109,7 @@
                     <c:if test="${preferedAge} != null">
                		<div>자신있는 돌봄 연령대:&nbsp;
                		<c:forEach var="pa" items="${preferedAge}">
-                    	<span class="badge">${pa.age}</span>
+                    	<span class="badge">${pa}</span>
 		            </c:forEach>
                     </div>
                     </c:if>

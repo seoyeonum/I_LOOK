@@ -26,9 +26,6 @@ public interface IParDAO
 	// ■ 부모 정보 조회 (PAR_BACKUP_ID 기준, JOIN 사용)
 	public ParDTO search(String par_backup_id);
 
-	// ■ 회원가입 시 ID(=PAR_REG_ID) 중복 체크
-	public int checkId(String par_reg_id);
-
 	// ■ 부모 회원 수정 (update 사용)
 	public int update(ParDTO par); // ✅ 이 메서드만 사용 (modify는 삭제 또는 미사용)
 

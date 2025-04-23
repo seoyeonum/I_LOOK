@@ -29,7 +29,7 @@ import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.ISitDAO;
 
 @Controller
-public class sitterInsertController
+public class SitterInsertController
 {
     @Autowired
     private SqlSession sqlSession;

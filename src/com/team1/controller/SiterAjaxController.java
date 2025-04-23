@@ -1,19 +1,17 @@
 package com.team1.controller;
 
-import com.team1.mybatis.ISitDAO;
+import com.team1.mybatis.ISitLoginDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class SiterAjaxController
 {
     @Autowired
-    private ISitDAO sitDao;
+    private ISitLoginDAO sitLoginDao;
 
     @RequestMapping(value = "/sitcheckid.action", method = RequestMethod.GET)
     public void checkId(@RequestParam("userId") String id, HttpServletResponse response) throws IOException 
@@ -23,7 +21,7 @@ public class SiterAjaxController
         
         try
         {
-            int count = sitDao.checkId(id);
+            int count = sitLoginDao.checkId(id);
             
             // 간단한 텍스트 응답으로 결과 전송
             //-- 200(요청성공), 400(잘못된 요청), 404(리소스를 찾을 수 없음), 500(서버 내부 오류)
