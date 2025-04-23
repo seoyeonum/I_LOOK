@@ -19,7 +19,7 @@ public class SitterloginController
     private SqlSession sqlSession;
 
     // 시터 로그인 처리
-    @RequestMapping(value = "/sitterlogin.action", method = RequestMethod.POST)
+    @RequestMapping(value = "/sitterlogin.action", method = {RequestMethod.GET, RequestMethod.POST})
     public String sitterLogin(@RequestParam("id") String id,
                                @RequestParam("pw") String pw,
                                HttpSession session)
