@@ -312,7 +312,7 @@
 	<!-- ① 시터 백업 삽입 (addBackup) -->
 	<insert id="addBackup" parameterType="com.team1.dto.SitDTO">
 	<selectKey keyProperty="sit_backup_id" resultType="String" order="BEFORE">
-		SELECT 'SBAC' || LPAD(SIT_BACKUP_SEQ.NEXTVAL, 4, '0') 
+		SELECT 'SBAC' || LPAD(SBAC_SEQ.NEXTVAL, 4, '0') 
 		FROM DUAL
 	</selectKey>
 		INSERT INTO SIT_BACKUP (SIT_BACKUP_ID, ID, REG_DATE)
@@ -322,19 +322,20 @@
 	<!-- ② 시터 백업 코드로 SIT_REG 확인 및 회원 등록 -->
 	<insert id="add" parameterType="com.team1.dto.SitDTO">
 	<selectKey keyProperty="sit_reg_id" resultType="String" order="BEFORE">
-		SELECT 'SREG' || LPAD(SIT_REG_SEQ.NEXTVAL, 4, '0') 
+		SELECT 'SREG' || LPAD(SREG_SEQ.NEXTVAL, 4, '0') 
 		FROM DUAL
 	</selectKey>
 		INSERT INTO SIT_REG (SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, 
-		SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE)
+		SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, TEL, ZIP_CODE, FILE_PATH)
 		VALUES(#{sit_reg_id}, #{sit_backup_id}, #{pw}, #{name}, 
-		#{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{zip_code})
+		#{ssn_first}, #{ssn_second}, #{road_addr}, #{detailed_addr}, #{tel}, #{zip_code}, #{file_path})
 	</insert>
 	
 	<!-- 시터 회원 가입 중복 체크 -->
 	<select id="checkId" resultType="java.lang.Integer">
 	<!-- 여기에 중복 가입 여부 체크 쿼리 필요 -->
-		SELECT 1 <!-- 무조건 true -->
-		FROM DUAL
+		SELECT COUNT(*) AS COUNT
+		FROM SIT_BACKUP
+		WHERE ID = #{id}
 	</select>
 </mapper>

@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>sidebarMypage.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/sidebar.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 </head>
 
