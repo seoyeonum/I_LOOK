@@ -21,7 +21,7 @@ public class membershipController
 	// 회원 유형에 따라 부모 회원가입 폼으로 이동
 	@RequestMapping(value = "/parentInsertForm.action", method = RequestMethod.GET)
 	public String showParentInsertForm() {
-		return "parentInsertForm.jsp";  // 부모 회원가입 폼 페이지
+		return "WEB-INF/view/parentInsertForm.jsp";  // 부모 회원가입 폼 페이지
 	}
 	
 	// 회원 유형에 따라 시터 회원가입 폼으로 이동

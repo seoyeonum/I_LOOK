@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function()
 </head>
 <body>
 
-<!-- sitterheader.html을 삽입할 위치 -->
 <div id="header-container">
 	<c:import url="/sitterheader.action"/>
 </div>
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function()
 			            </div>
 			        </div>
 			        <div class="request-action">
-			            <div class="payment-info">시급 15,000원</div>
+			            <!-- <div class="payment-info">시급 15,000원</div> -->
 			            <!-- <button class="btn emg-btn-small">신청하기</button> -->
 			        </div>
 			    </div>
@@ -96,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function()
 			            </div>
 			        </div>
 			        <div class="request-action">
-			            <div class="payment-info">시급 18,000원</div>
+			            <!-- <div class="payment-info">시급 18,000원</div> -->
 			            <!-- <button class="btn emg-btn-small">신청하기</button> -->
 			        </div>
 			    </div>
@@ -113,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function()
 			            </div>
 			        </div>
 			        <div class="request-action">
-			            <div class="payment-info">시급 16,000원</div>
+			            <!-- <div class="payment-info">시급 16,000원</div> -->
 			            <!-- <button class="btn emg-btn-small">신청하기</button> -->
 			        </div>
 			    </div>
