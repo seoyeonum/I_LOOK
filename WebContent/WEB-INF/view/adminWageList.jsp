@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>adminWageList.jsp</title>
-<link rel="stylesheet" type="text/css" href="css/adminReqList.css">
+<link rel="stylesheet" type="text/css" href="css/adminWageList.css">
 </head>
 <body>
 

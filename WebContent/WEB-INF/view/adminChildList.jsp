@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
     request.setCharacterEncoding("UTF-8");
     String cp = request.getContextPath();
@@ -27,16 +28,14 @@
                 <h1 class="content-title">아이 정보</h1>
 
                 <div class="search-form">
-                    <form action="" name="searchForm" method="post">
-                        <select name="searchKey" class="selectFiled">
-                            <option value="childCode">아이 코드</option>
-                            <option value="childName">이름</option>
-                            <option value="parentCode">부모 코드</option>
-                        </select>
-                        <input type="text" name="searchValue" class="txt" value="">
-                        <input type="button" value="검색" class="btn search-btn" onclick="sendIt()">
-                    </form>
-                </div>
+					<form action="adminsitlist.action" name="searchForm" method="get">
+						<select name="searchKey" class="selectFiled">
+							<option value="name" ${searchKey == 'name' ? 'selected' : ''}>이름</option>
+						</select> 
+						<input type="text" name="searchValue" class="txt" value="${searchValue }">
+					    <input type="submit" value="검색" class="btn search-btn">
+					</form>
+				</div>
             </div>
 
             <div class="content-body">
@@ -53,57 +52,49 @@
                     </div>
 
                     <!-- 예시 데이터 (실제 사용 시 DB 연동하여 반복문으로 처리) -->
+                    <c:forEach var="list" items="${childList }" varStatus="status">
                     <div class="info-row-child">
-                    	<div class="info-cell">1</div>
-                        <div class="info-cell">김민수</div>
-                        <div class="info-cell">5</div>
-                        <div class="info-cell">남</div>
-                        <div class="info-cell">PBAC00001</div>
-                        <div class="info-cell">CREG00001</div>
-                        <div class="info-cell">2025-04-01</div>
+                    	<div class="info-cell">${paging.startNum - status.index}</div>
+                        <div class="info-cell">${list.name }</div>
+                        <div class="info-cell">${list.age }</div>
+                        <div class="info-cell">${list.gender }</div>
+                        <div class="info-cell">${list.par_backup_id }</div>
+                        <div class="info-cell">${list.child_backup_id }</div>
+                        <div class="info-cell">${fn:substring(list.reg_date, 0, 10)}</div>
                         <div class="info-cell">
                             <div class="action-buttons">
-                                <button type="button" class="btn detail-btn">상세보기</button>
+                                <button type="button" class="btn detail-btn" 
+                                 onclick="location.href='<%=cp%>/adminpardetail.action?par_backup_id=${list.par_backup_id}'">상세 보기</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="info-row-child">
-                    	<div class="info-cell">2</div>
-                        <div class="info-cell">김혜원</div>
-                        <div class="info-cell">7</div>
-                        <div class="info-cell">여</div>
-                        <div class="info-cell">PBAC00002</div>
-                        <div class="info-cell">CREG00002</div>
-                        <div class="info-cell">2025-04-02</div>
-                        <div class="info-cell">
-                            <div class="action-buttons">
-                                <button type="button" class="btn detail-btn">상세보기</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 스크롤 혹은 리스트 확인용 예시 더미 데이터 -->
-                    <div class="info-row-child">
-                    	<div class="info-cell">3</div>
-                        <div class="info-cell">박정우</div>
-                        <div class="info-cell">4</div>
-                        <div class="info-cell">남</div>
-                        <div class="info-cell">PBAC00003</div>
-                        <div class="info-cell">CREG00003</div>
-                        <div class="info-cell">2025-04-03</div>
-                        <div class="info-cell">
-                            <div class="action-buttons">
-                                <button type="button" class="btn detail-btn">상세보기</button>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
 
-                <!-- 페이징 영역 -->
-                <div class="page">
-                    <p>1 Prev 21 22 23 24 25 26 27 28 29 30 Next 42</p>
-                </div>
+                <!-- 페이지 영역 -->
+				<div class="page">
+					<c:if test="${paging.totalPage >= 1}">
+						<c:if test="${paging.startPage > 1}">
+							<a href="adminsitlist.action?page=${paging.startPage-1}&searchKey=${searchKey}&searchValue=${searchValue}">&lt;</a>
+						</c:if>
+
+						<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
+							<c:choose>
+								<c:when test="${p == paging.page}">
+									<strong>${p}</strong>
+								</c:when>
+								<c:otherwise>
+									<a href="adminsitlist.action?page=${p}
+										&searchKey=${searchKey}&searchValue=${searchValue}">${p}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+						<c:if test="${paging.endPage < paging.totalPage}">
+							<a href="adminsitlist.action?page=${paging.endPage+1}&searchKey=${searchKey}&searchValue=${searchValue}"> > </a>
+						</c:if>
+					</c:if>
+				</div>
             </div>
         </main>
     </div>

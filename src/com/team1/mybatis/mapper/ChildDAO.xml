@@ -177,6 +177,74 @@
 	    JOIN CHILD_REG R ON C.CHILD_BACKUP_ID = R.CHILD_BACKUP_ID 
 	    WHERE C.PAR_BACKUP_ID = #{par_backup_id}
 	</select>
+	
+	<!-- [관리자] 아이 정보 목록 조회 -->
+	<select id="adminListChild" resultType="com.team1.dto.ChildDTO">
+        
+       SELECT *
+		FROM
+		(
+			SELECT ROWNUM RN, S.*
+		    FROM
+		    (
+		        SELECT *
+		        FROM V_ADMIN_CHILD
+		        WHERE 1=1
+		        <if test="searchKey != null and searchValue != null and searchValue != ''">
+		            <if test="searchKey == 'name'">
+		                AND NAME LIKE '%' || #{searchValue} || '%'
+		            </if>		           
+		        </if>
+		        ORDER BY CHILD_BACKUP_ID DESC
+		    ) S
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
+    </select>
+    
+	<!-- [관리자] 등록된 아이 수-->
+	<select id="adminCountChild" resultType="java.lang.Integer">
+        
+        SELECT COUNT(*) AS COUNT
+        FROM V_ADMIN_CHILD
+        WHERE 1=1
+        <if test="searchKey != null and searchValue != null and searchValue != ''">
+            <if test="searchKey == 'name'">
+                AND NAME LIKE '%' || #{searchValue} || '%'
+            </if>
+        </if>
+        
+    </select>
+    
+	<!-- [관리자] 부모 코드로 아이 정보 조회 -->
+	<select id="adminSearchChild" resultType="com.team1.dto.ChildDTO">
+        SELECT *
+        FROM V_ADMIN_CHILD
+        WHERE PAR_BACKUP_ID = #{par_backup_id}
+    </select>
+	
+	<!-- 아이 코드로 아이 지병 정보 조회 -->
+	<select id="adminSearchMedical" resultType="com.team1.dto.ChildConditionDTO">
+        SELECT *
+        FROM V_CHILD_MEDICAL
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </select>
+	
+	<!-- 아이 코드로 아이 알레르기 정보 조회 -->
+	<select id="adminSearchAllergy" resultType="com.team1.dto.ChildConditionDTO">
+        SELECT *
+        FROM V_CHILD_ALLERGY
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </select>
+	
+	
+	<!-- 아이 코드로 아이 장애 정보 조회 -->
+	<select id="adminSearchDisability" resultType="com.team1.dto.ChildConditionDTO">
+        SELECT *
+        FROM V_CHILD_DISABILITY
+        WHERE CHILD_BACKUP_ID = #{child_backup_id}
+    </select>
+
+
 
 	<!-- (일반 돌봄 신청을 위한) 특정 아이 정보 조회 -->
 	<select id="searchChildInfo" resultType="com.team1.dto.ChildDTO">
@@ -211,6 +279,5 @@
 		FROM GEN_CHILD_MEDICAL_VIEW
 		WHERE CHILD_BACKUP_ID = #{child_backup_id}
 	</select>
-	
 	
 </mapper>

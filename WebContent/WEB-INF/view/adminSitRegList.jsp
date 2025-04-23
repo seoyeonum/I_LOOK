@@ -51,7 +51,7 @@
 							<div class="info-cell">상세보기</div>
 						</div>
 
-						<!-- 예시 데이터 -->
+						<!-- 데이터 -->
 						<c:forEach var="sitReg" items="${sitRegList }" varStatus="status">
 							<div class="info-row-sitReg">
 								<div class="info-cell">${paging.startNum - status.index}</div>
@@ -63,7 +63,7 @@
 								<div class="info-cell">
 									<div class="action-buttons">
 										<button type="button" class="btn detail-btn"
-											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_reg_id=${sitReg.sit_reg_id}&source=req'">상세보기</button>
+											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_backup_id=${sitReg.sit_backup_id}&source=req'">상세 보기</button>
 											
 									</div>
 								</div>

@@ -21,5 +21,5 @@ public interface IDocRegDAO
 	// public int removeDoc(DocRegDTO docreg);
 	
 	// [관리자] 회원가입 코드로 테이블 찾기
-	public List<DocRegDTO> search(String sit_reg_id);
+	public List<DocRegDTO> search(String sit_backup_id);
 }
