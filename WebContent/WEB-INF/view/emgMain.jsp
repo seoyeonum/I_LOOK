@@ -13,27 +13,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-// 이 페이지 로드 시,
-document.addEventListener('DOMContentLoaded', function()
-{
-	//=================== 헤더 버튼 클래스 변경 ==================
-		
-    // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
-    var firstButton = document.querySelector('.menuBtn.presentPage');
-    if (firstButton)
-    {
-        firstButton.classList.remove('presentPage');
-    }
-   
-    // id가 'emg'인 버튼을 선택
-    var button = document.querySelector('#emg');
-    // 만약 버튼이 존재하면
-    if (button)
-    {
-        // 'presentPage' 클래스 추가
-        button.classList.add('presentPage');
-    }
-});
+
+	// 이 페이지 로드 시,
+	document.addEventListener('DOMContentLoaded', function()
+	{
+		//=================== 헤더 버튼 클래스 변경 ==================
+			
+	    // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton)
+	    {
+	        firstButton.classList.remove('presentPage');
+	    }
+	   
+	    // id가 'emg'인 버튼을 선택
+	    var button = document.querySelector('#emg');
+	    // 만약 버튼이 존재하면
+	    if (button)
+	    {
+	        // 'presentPage' 클래스 추가
+	        button.classList.add('presentPage');
+	    }
+	});
 </script>
 </head>
 <body>

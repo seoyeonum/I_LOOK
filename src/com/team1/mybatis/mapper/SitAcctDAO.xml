@@ -7,9 +7,14 @@
 
 
 	<select id="list" resultType="com.team1.dto.SitAcctDTO"> <!-- // 시터 계좌 열람 public ArrayList<SitAcctDTO> list(String sit_reg_id); -->
-		SELECT BANK_TYPE, ACCT_NUMBER
-		FROM SIT_VIEW
-		WHERE SIT_REG_ID = #{sit_reg_id}
+		SELECT BTYPES.TYPE AS BANK_TYPE
+		, AREG.ACCT_NUMBER AS ACCT_NUMBER
+		FROM SIT_REG SREG
+		JOIN ACCT_REG AREG
+		ON SREG.SIT_REG_ID = AREG.SIT_REG_ID
+		JOIN BANK_TYPES BTYPES
+		ON AREG.BANK_TYPE_ID = BTYPES.BANK_TYPE_ID
+		WHERE AREG.SIT_REG_ID = #{sit_reg_id}
 	</select>
 
 

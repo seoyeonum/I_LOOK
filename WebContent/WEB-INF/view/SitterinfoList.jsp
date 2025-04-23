@@ -149,27 +149,36 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-</script>
 
+	//이 페이지 로드 시,
+	document.addEventListener('DOMContentLoaded', function()
+	{
+		//=================== 헤더 버튼 클래스 변경 ==================
+			
+	    // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton)
+	    {
+	        firstButton.classList.remove('presentPage');
+	    }
+	   
+	    // id가 'emg'인 버튼을 선택
+	    var button = document.querySelector('#mypage');
+	    // 만약 버튼이 존재하면
+	    if (button)
+	    {
+	        // 'presentPage' 클래스 추가
+	        button.classList.add('presentPage');
+	    }
+	});
+	
+</script>
 
 </head>
 <body>
-<div id="wrapper">
-        <!--헤더 부분은 공용으로 모든 뷰페이지에 사용하고 메인부분만 변경하는 부분으로 생각했었어 각 뷰페이지에 헤더부분만 같아도 통일감을 가질 것 같아서-->
-        <header>
-            <div id="logo">
-                <img src="./images/logo.png" height="120px">
-            </div>
-            <nav>
-                <button type="button" class="menuBtn presentPage">홈</button>
-                <button type="button" class="menuBtn">스케줄러</button>
-                <button type="button" class="menuBtn">긴급돌봄서비스</button>
-                <button type="button" class="menuBtn">마이페이지</button>
-                <button type="button" class="menuBtn">알림함</button>
-                <button type="button" class="menuBtn">로그아웃</button>
-            </nav>
-        </header>
-	</div>
+<div id="header-container">
+	<c:import url="/sitterheader.action"/>
+</div>
 
 
 
@@ -178,7 +187,7 @@
 	<div class="side-bar-container">
 		<div class="side-bar" >
 			<ul class="side-menu" >
-				<li><a href="">시터 마이 페이지</a>
+				<li><a href="sitterinfolist.action?sit_backup_id=${sit_backup_id }">시터 마이 페이지</a>
 					<ul>
 						<li><a href="sitterinfolist.action?sit_backup_id=${list.sit_backup_id }" style="font-weight: bold; color: #1AB223">개인정보 수정</a></li>
 						<li><a href="gradescheck.action?sit_backup_id=${list.sit_backup_id }">등급 확인</a></li>
