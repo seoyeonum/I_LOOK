@@ -26,8 +26,7 @@
         <div class="info-cell">
             <div class="action-buttons">
                 <button type="button" class="btn detail-btn"
-                    onclick="location.href='<%=request.getContextPath()%>/admingenreqdetail.action?gen_req_id=
-                    ${list.gen_req_id}&careType=normal'">상세보기</button>
+                    onclick="location.href='<%=cp%>/admingenreqdetail.action?gen_req_id=${list.gen_req_id}&careType=normal'">상세보기</button>
             </div>
         </div>
         <div class="info-cell">

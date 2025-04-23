@@ -65,7 +65,7 @@ String cp = request.getContextPath();
 								<div class="info-cell">
 									<div class="action-buttons">
 										<button type="button" class="btn detail-btn"
-											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_reg_id=${sitReject.sit_reg_id}&source=reject'">상세보기</button>
+											onclick="location.href='<%=cp%>/adminsitregdetail.action?sit_backup_id=${sitReject.sit_backup_id}&source=reject'">상세 보기</button>
 									</div>
 								</div>
 							</div>

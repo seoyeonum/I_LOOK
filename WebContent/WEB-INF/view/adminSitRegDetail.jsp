@@ -37,8 +37,8 @@
 				var fullUrl = "<%=cp%>/images/" + folder + "/" + filePath;
 				
 				// 팝업창 사이즈
-		        var popupWidth = 1200;
-		        var popupHeight = 1000;
+		        var popupWidth = 800;
+		        var popupHeight = 600;
 		        
 		        // 현재 브라우저 화면 크기
 		        var screenWidth = window.screen.width;
@@ -77,9 +77,6 @@
 	    $("#rejectModal").hide();
 	    $("#approveModal").hide();
 	}
-	
-	
-
 </script>
 </head>
 <body>
@@ -100,7 +97,7 @@
 				<div class="content-body">
 					<div class="left-section">
 						<div class="profile">
-							<img src="<%=cp%>/images/pictures/${sitInfo.file_path}" alt="시터 사진" style="width: 200px; height: auto;">
+							<img src="<%=cp%>/images/pictures/${sitInfo.file_path}" onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';" style="width: 200px; height: auto;">
 						</div>
 						<!-- 자격증 정보를 프로필 아래에 배치 -->
 						<div class="category-row">
@@ -186,7 +183,7 @@
 				    <div class="bottom-btn">
 				        <form action="<%=cp%>//sitreginsert.action" method="post">
 				            <input type="hidden" name="sit_backup_id" value="${sitInfo.sit_backup_id}">
-				            <button type="submit" class="btn approve-btn">승인</button>
+				            <button type="button" class="btn approve-btn">승인</button>
 				            <button type="button" class="btn reject-btn">거절</button>
 				        </form>
 				     	    <button class="btn cancel-btn" onclick="location.href='<%=cp%>/adminsitreglist.action'">뒤로가기</button>
@@ -204,13 +201,13 @@
 	<div id="approveModal" style="display: none;">
 	    <div class="modal-content">
 	        <div class="modal-body">
-	            <form action="<%=cp%>/sitregreject.action" method="post">
+	            <form action="<%=cp%>/sitreginsert.action" method="post">
 	                <input type="hidden" name="sit_backup_id" value="${sitInfo.sit_backup_id}">
 	                
 	                <div>정말 승인하시겠습니까?</div>
 	                
 	                <div class="button-group">
-	                    <button type="submit" class="btn reject-btn">승인 하기</button>
+	                    <button type="submit" class="btn approve-btn">승인 하기</button>
 	                    <button type="button" onclick="closeModal()" class="btn cancel-btn">취소</button>
 	                </div>
 	            </form>

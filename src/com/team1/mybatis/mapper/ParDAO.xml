@@ -97,7 +97,54 @@
         INSERT INTO PAR_WITHDRAWED (PAR_WITHDRAWED_ID, WITHDRAWED_DATE, PAR_BACKUP_ID, REASON_WITHDRAWED_ID)
         VALUES (#{par_withdrawed_id}, SYSDATE, #{par_backup_id}, #{reason_withdrawed_id})
     </insert>
+    
+    <!-- ◆ 탈퇴 시 기록 제거 -->
+	<delete id="delete" parameterType="String">
+	    DELETE FROM PAR_REG
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</delete>
 
+
+	<!-- ◆ [관리자] 부모 전체 목록 조회 -->
+    <select id="adminListPar" resultType="com.team1.dto.ParDTO">
+        SELECT *
+		FROM
+		(
+		    SELECT S.*, ROWNUM RN
+		    FROM
+		    (
+		        SELECT PAR_BACKUP_ID, NAME, PW, TEL, SSN_FIRST, SSN_SECOND,
+		               ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, REG_DATE, CHILD_COUNT
+		        FROM V_ADMIN_PAR
+		        WHERE 1=1
+		        <if test="searchKey != null and searchValue != null and searchValue != ''">
+		            <if test="searchKey == 'name'">
+		                AND NAME LIKE '%' || #{searchValue} || '%'
+		            </if>
+		            <if test="searchKey == 'tel'">
+		                AND TEL LIKE '%' || #{searchValue} || '%'
+		            </if>
+		        </if>
+		        ORDER BY PAR_BACKUP_ID DESC
+		    ) S
+		) 
+		WHERE RN BETWEEN #{start} AND #{end}
+    </select>
+
+	<!-- ◆ [관리자] 부모 전체 인원 수 조회 -->
+    <select id="adminCountPar" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS COUNT
+		FROM V_ADMIN_PAR
+        WHERE 1=1
+        <if test="searchKey != null and searchValue != null and searchValue != ''">
+            <if test="searchKey == 'name'">
+                AND NAME LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchKey == 'tel'">
+                AND TEL LIKE '%' || #{searchValue} || '%'
+            </if>
+        </if>
+    </select>	
 </mapper>
 
 	<!-- 부모 회원 수정 -->

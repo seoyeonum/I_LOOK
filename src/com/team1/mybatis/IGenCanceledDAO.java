@@ -38,6 +38,9 @@ public interface IGenCanceledDAO
 	// 예약 확정 전 취소 내역 추가
 	public int addGenCanceled(GenCanceledDTO g);
 	
+	// 예약 확정 전 (시터의) 취소 내역 추가 + 환불 진행
+	public int addGenCancelAndRefund();
+		
 	// 예약 확정 전 취소 내역 리스트 확인
 	//public ArrayList<GenCanceledDTO> listGenCanceled();
 	//-- 『adminReqList.jsp』 에 확정 전/후 따른 취소 내역은 없길래
@@ -68,6 +71,7 @@ public interface IGenCanceledDAO
 	/* 1-2. 예약 확정 후 시터의 취소 내역 */
 	// 예약 확정 후 (시터의) 취소 내역 추가
 	public int addGenSitConfirmedCanceled(GenCanceledDTO g);
+	
 	
 	// 예약 확정 후 (시터의) 취소 내역 리스트 확인
 	//public ArrayList<GenCanceledDTO> listGenSitConfirmedCanceled();

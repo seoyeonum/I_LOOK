@@ -19,6 +19,11 @@ public interface IParWithdrawedDAO
 	// 탈퇴 회원 인원 수 확인
 	public int countWithdrawed();
 	
+	// 해당 par_backup_id로 탈퇴 이력이 있는지 확인
+	// 탈퇴하면 재로그인 불가능 위해.
+	public int checkWithdrawed(String par_backup_id);
+
+	
 	// 조회
 	// public ParWithdrawedDTO search(String id);
 }

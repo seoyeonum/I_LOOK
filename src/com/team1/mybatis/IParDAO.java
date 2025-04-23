@@ -6,8 +6,13 @@
 package com.team1.mybatis;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.team1.dto.ParDTO;
 import com.team1.dto.ParWithdrawedDTO;
+import com.team1.dto.SitDTO;
 
 public interface IParDAO
 {
@@ -47,5 +52,22 @@ public interface IParDAO
 
 	// (아이 백업 코드로) 부모 백업 코드 조회
 	public String seachParBackupId(String child_backup_id);
+	
+
+	// 부모 정보 삭제 (탈퇴 시)
+	public int delete(String par_backup_id);
+	
+
+	// [관리자] 부모 전체 목록 조회 
+	public List<ParDTO> adminListPar(@Param("start") int start
+							 , @Param("end") int end
+				             , @Param("searchKey") String searchKey
+				             , @Param("searchValue") String searchValue);
+
+	// [관리자] 부모 전체 인원 수 조회
+	public int adminCountPar(@Param("searchKey") String searchKey
+						, @Param("searchValue") String searchValue);
+	
+    
 
 }

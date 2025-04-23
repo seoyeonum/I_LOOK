@@ -14,6 +14,16 @@ public class GenConfirmedDTO
 	private String gen_memos_par_id, rec_date;
 	private String gen_wage_id, paid_date, acct_number, bank_name;
 	private int wage;
+	private int num;   // 번호 (ROWNUM)
+	private String sitter_name;
+	private String child_name;
+	private String start_date;
+	private String end_date;
+	private int work_hours;  
+	private String par_backup_id;
+	private String child_backup_id;
+	private String care_status;
+	private String care_type;
 	
 	// getter / setter 구성
 	public String getGen_confirmed_id()
@@ -120,5 +130,85 @@ public class GenConfirmedDTO
 	{
 		this.wage = wage;
 	}
-	
+	public int getNum()
+	{
+		return num;
+	}
+	public void setNum(int num)
+	{
+		this.num = num;
+	}
+	public String getSitter_name()
+	{
+		return sitter_name;
+	}
+	public void setSitter_name(String sitter_name)
+	{
+		this.sitter_name = sitter_name;
+	}
+	public String getChild_name()
+	{
+		return child_name;
+	}
+	public void setChild_name(String child_name)
+	{
+		this.child_name = child_name;
+	}
+	public String getStart_date()
+	{
+		return start_date;
+	}
+	public void setStart_date(String start_date)
+	{
+		this.start_date = start_date;
+	}
+	public String getEnd_date()
+	{
+		return end_date;
+	}
+	public void setEnd_date(String end_date)
+	{
+		this.end_date = end_date;
+	}
+	public int getWork_hours()
+	{
+		return work_hours;
+	}
+	public void setWork_hours(int work_hours)
+	{
+		this.work_hours = work_hours;
+	}
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
+	}
+	public String getChild_backup_id()
+	{
+		return child_backup_id;
+	}
+	public void setChild_backup_id(String child_backup_id)
+	{
+		this.child_backup_id = child_backup_id;
+	}
+	public String getCare_status()
+	{
+		return care_status;
+	}
+	public void setCare_status(String care_status)
+	{
+		this.care_status = care_status;
+	}
+	public String getCare_type()
+	{
+		return care_type;
+	}
+	public void setCare_type(String care_type)
+	{
+		this.care_type = care_type;
+	}
+
 }

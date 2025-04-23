@@ -16,7 +16,7 @@ public interface ISitCertDAO
 	public ArrayList<SitCertDTO> listCertType();
 
 	// [시터] 자격증 열람
-	public List<SitCertDTO> search(String sit_reg_id);
+	public List<SitCertDTO> search(String sit_backup_id);
 	
 	// [시터] 자격증 등록
 	public int addCert(SitCertDTO sitcert);

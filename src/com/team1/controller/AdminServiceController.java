@@ -255,7 +255,19 @@ public class AdminServiceController
 	    return "WEB-INF/view/adminReqListAjax.jsp";
 	}
 
-
+	// 예약신청 내역 상세보기로 이동 및 데이터 전송
+	@RequestMapping(value = "/admingenreqdetail.action", method = RequestMethod.GET)
+	public String adminGenReqDetail(@RequestParam(defaultValue="normal") String careType
+			 						, String gen_req_id, Model model, HttpSession session)
+	{
+		// 관리자 확인 절차
+		if (!isAdmin(session))
+			return "redirect:/loginform.action";
+		AdminDTO dto = getLoginAdmin(session);
+		model.addAttribute("loginAdmin", dto);
+		
+		return "WEB-INF/view/adminGenReqDetail.jsp";
+	}
 	
 	// 결제내역으로 이동 및 데이터 전송
 	@RequestMapping(value = "/adminpayreclist.action", method = RequestMethod.GET)
