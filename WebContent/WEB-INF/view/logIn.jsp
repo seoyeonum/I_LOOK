@@ -125,9 +125,16 @@
             margin-top: 10px;
         }
     </style>
+    
     <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
     <script>
         alert("로그아웃이 완료되었습니다.");
+    </script>
+	<% } %>
+	
+	<% if (request.getParameter("sitterinsert") != null && request.getParameter("sitterinsert").equals("success")) { %>
+    <script>
+        alert("시터 회원 요청이 완료되었습니다.");
     </script>
 	<% } %>
 </head>
