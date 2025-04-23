@@ -30,7 +30,7 @@
             <button type="button" class="menuBtn" id="gen"
             onclick="window.location.href='<%=cp%>/genreginsertform.action'">일반돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"
-            onclick="window.location.href='<%=cp%>/sittermypage.action'">마이페이지</button>
+            onclick="window.location.href='<%=cp%>/sitterinfolist.action'">마이페이지</button>
             <button type="button" class="menuBtn" id="notify-btn">
                 알림함
                 <span id="notify-badge">3</span>

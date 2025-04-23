@@ -1,20 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-    request.setCharacterEncoding("UTF-8");
-    String cp = request.getContextPath();
-%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>아이 정보 수정 페이지</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ChildUpdateForm.css">
-<script>
-    function confirmUpdate() {
-        return confirm("정말로 수정하시겠습니까?");
-    }
-</script>
+
 </head><%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
