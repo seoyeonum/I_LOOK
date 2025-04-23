@@ -28,6 +28,7 @@ public class SitterloginController
 
         SitDTO sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
 
+        
         if (sitter != null) // 로그인 성공
         {
             session.setAttribute("loginSitter", sitter);

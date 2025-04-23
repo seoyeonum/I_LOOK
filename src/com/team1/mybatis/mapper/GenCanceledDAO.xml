@@ -49,6 +49,14 @@
 		VALUES (#{gen_canceled_id}, #{gen_pay_rec_id}, #{reason_canceled_id})
 	</insert>
 	
+	
+	<!-- // 예약 확정 전 (시터의) 취소 내역 추가 + 환불 진행 -->
+	<insert id="addGenCancelAndRefund">
+	
+	
+	</insert>
+	
+	
 	<!-- 예약 확정 전 취소 내역 - 시터 읽은 날짜 기록 -->
 	<update id="updateGenCanceledSitRead">
 		UPDATE GEN_CANCELED
