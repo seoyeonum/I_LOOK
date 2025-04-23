@@ -293,19 +293,19 @@ pageContext.setAttribute("parentSignups", 60);
 				<div class="stat-card">
 					<i class="fas fa-user-plus stat-icon"></i>
 					<div class="stat-title">회원가입 요청 수</div>
-					<div class="stat-value">${memberRequestCount}</div>
+					<div class="stat-value"><c:out value="${countReg}" default="0" /> 건</div>
 				</div>
 
 				<div class="stat-card">
 					<i class="fas fa-calendar-check stat-icon"></i>
 					<div class="stat-title">오늘 일반돌봄 예약</div>
-					<div class="stat-value">${todayGeneralCount}</div>
+					<div class="stat-value"><c:out value="${countGenReq}" default="0" /> 건</div>
 				</div>
 
 				<div class="stat-card">
 					<i class="fas fa-heartbeat stat-icon"></i>
 					<div class="stat-title">오늘 긴급돌봄 예약</div>
-					<div class="stat-value">${todayEmergencyCount}</div>
+					<div class="stat-value">0 건</div>
 				</div>
 
 				<div class="stat-card">
@@ -322,7 +322,7 @@ pageContext.setAttribute("parentSignups", 60);
 					<div class="content-header">
 						월별 예약 건수 (일반/긴급)
 						<div class="view-toggle">
-							<span id="toggle-chart">차트 보기</span> <i class="fas fa-chart-bar"></i>
+							<i class="fas fa-chart-bar"></i>
 						</div>
 					</div>
 					<div class="content-body">

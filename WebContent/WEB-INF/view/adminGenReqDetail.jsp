@@ -34,8 +34,7 @@
 					<!-- 자기소개 영역 -->
 					<div class="intro-section">
 						<div class="intro-header">메시지</div>
-						<textarea readonly>애기가 가끔 혼잣말 해도 놀라지말아요.
-						밥은 2번 챙겨주세요.</textarea>
+						<textarea readonly>${genReq.message}</textarea>
 					</div>
 				</div>
 				
@@ -44,14 +43,14 @@
 					<div class="info-row">
 						<div class="info-header">예약 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="GREQ00001" readonly>
+							<input type="text" class="info-input" value="${genReq.gen_req_id}" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">근무 등록 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="GREG00001" onclick="location.href='adminGenRegDetail.jsp'" readonly>
+							<input type="text" class="info-input" value="${genReq.gen_reg_id}" readonly>
 						</div>
 					</div>
 					
