@@ -29,11 +29,10 @@ public class SitterloginController
         SitDTO sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
 
         
-        System.out.println(sitter.getSit_backup_id());
         if (sitter != null) // 로그인 성공
         {
             session.setAttribute("loginSitter", sitter);
-            return "sitterMain.jsp";
+            return "WEB-INF/view/sitterMain.jsp";
         }
         else // 로그인 실패
         {
