@@ -39,7 +39,7 @@ public interface IGenCanceledDAO
 	public int addGenCanceled(GenCanceledDTO g);
 	
 	// 예약 확정 전 (시터의) 취소 내역 추가 + 환불 진행
-	public int addGenCancelAndRefund();
+	public void addGenCancelAndRefund(GenCanceledDTO g);
 		
 	// 예약 확정 전 취소 내역 리스트 확인
 	//public ArrayList<GenCanceledDTO> listGenCanceled();

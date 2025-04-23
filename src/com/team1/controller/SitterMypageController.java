@@ -458,17 +458,19 @@ public class SitterMypageController
 		// 취소 테이블에 넣으려면 gen_canceled_id, gen_pay_rec_id, reason_canceled_id가 필요한데, 
 		// 이중 1은 시퀀스로 자동생성, 2는 찾아야 함, 3은 이미 있다.
 		// 따라서 gen_pay_rec_id를 찾는다.
-		String gen_pay_rec_id = payDao.searchGenCC(gen_req_id);
+		//String gen_pay_rec_id = payDao.searchGenCC(gen_req_id);
 		
-		System.out.println(gen_pay_rec_id);
+		//System.out.println(gen_pay_rec_id);
 		// 일반 결제 코드 주입
-		gcDto.setGen_pay_rec_id(gen_pay_rec_id);
+		gcDto.setReason_canceled_id(gen_req_id);
 		gcDto.setReason_canceled_id(reason_canceled_id);
+		
+		
+		//System.out.println(gen_req_id + reason_canceled_id); >> 데이터 잘 왔음
 		
 		// 일반 돌봄 예약 취소에 insert
 		// >> 프로시저로 만들었기 때문에 프로시저로 처리한다. 
-		
-		
+		gcDao.addGenCancelAndRefund(gcDto); // 이 처리가 실패한 것인 듯?
 		
 		
 		// 돌봄 제공 내역으로 리다이렉트
