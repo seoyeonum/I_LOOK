@@ -13,11 +13,26 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 
-    // 페이지가 로드되면 sitterMainFrame.html을 불러오기
-    $(document).ready(function() {
-  		$.get('./sitterMainFrame.html', function(data) {
-    		$('#header-container').html(data);  // #header-container에 HTML 삽입
-  		});
+	//이 페이지 로드 시,
+	document.addEventListener('DOMContentLoaded', function()
+	{
+		//=================== 헤더 버튼 클래스 변경 ==================
+			
+	    // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton)
+	    {
+	        firstButton.classList.remove('presentPage');
+	    }
+	   
+	    // id가 'emg'인 버튼을 선택
+	    var button = document.querySelector('#emg');
+	    // 만약 버튼이 존재하면
+	    if (button)
+	    {
+	        // 'presentPage' 클래스 추가
+	        button.classList.add('presentPage');
+	    }
 	});
     
  	// 돌봄 신청 클릭 시 새 창(emgRegInsertForm.jsp) 열기
@@ -35,9 +50,8 @@
 
 <!-- 시터 메인 페이지 (긴급 돌봄 정보 리스트) -->
 
-<!-- sitterMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
-	<c:import url="./sitterMainFrame.html" charEncoding="UTF-8" />
+	<c:import url="/sitterheader.action"/>
 </div>
 
 <div id="body-container">
