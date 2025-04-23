@@ -128,10 +128,30 @@
     <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
     <script>
         alert("로그아웃이 완료되었습니다.");
+        
+        // 로그아웃 메시지
+        <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
+            alert("로그아웃이 완료되었습니다.");
+        <% } %>
+
+        // 탈퇴 완료 메시지
+        <% if (request.getParameter("message") != null) { %>
+            alert("<%= request.getParameter("message") %>");
+        <% } %>
     </script>
 	<% } %>
+
 </head>
 <body>
+<!-- 탈퇴 후 재로그인 안되는 메세지 -->
+<% if (request.getAttribute("message") != null) { %>
+    <script>
+        alert("<%= request.getAttribute("message") %>");
+    </script>
+<% } %>
+
+
+
 <main>
     <!-- 로고 이미지 -->
     <div class="logoImg">

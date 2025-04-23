@@ -4,13 +4,22 @@
 
 package com.team1.mybatis;
 
+import java.util.ArrayList;
+
 import com.team1.dto.SitWithdrawedDTO;
 
 public interface ISitWithdrawedDAO
 {
 	// 시터 탈퇴 내역 추가
-	public int add(SitWithdrawedDTO s);
+	public int add(SitWithdrawedDTO sitter_withdrawed);
 	
+	public int checkWithdrawed(String sit_backup_id);  // 탈퇴 여부 확인
+	
+	// 탈퇴 회원 인원 수 확인
+	public int countWithdrawed();
+
+	// 탈퇴 회원 리스트 확인
+	public ArrayList<SitWithdrawedDTO> list();
 	// 시터 탈퇴 내역 리스트 확인
 	// public ArrayList<SitWithdrawedDTO> list();
 	//-- 『adminSitList.jsp』 기준 탈퇴 리스트 찾는 항목 없어서 배제

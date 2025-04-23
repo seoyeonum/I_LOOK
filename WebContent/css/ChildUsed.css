@@ -368,7 +368,7 @@
     padding-bottom: 10px;
 }
 
-.history-item 
+/* .history-item 
 {
     display: grid;
     grid-template-columns: 50px 1fr 1fr 1fr 1fr 120px;
@@ -377,7 +377,7 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* 테이블 헤더 */
 .history-item.header 
@@ -418,12 +418,13 @@
 .history-item 
 {
     display: grid;
-   	grid-template-columns: 50px 2fr 1fr 1fr 1fr 120px;
-    gap: 10px;
-    padding: 5px;
+    grid-template-columns: 40px 2fr 1fr 1fr 1fr 1fr 100px;  /* ← 간격 조정 */
+    gap: 5px;                                               /* ← gap 줄임 */
+    padding: 5px 10px;                                      /* ← padding 줄임 */
     background-color: white;
     border-radius: 3px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    align-items: center;     
 }
 
 /* 각 항목의 내용 중앙 정렬 */
@@ -433,10 +434,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: 12px;  
 }
 
 
-.details-btn 
+/* .details-btn 
 {
 	padding: 4px 4px;  
     font-size: 10px;
@@ -447,13 +449,51 @@
     transition: background-color 0.3s ease;
     width: 60px;
     margin-left: 30px;
+} */
+
+.details-btn {
+    padding: 4px 8px;              /* ← 좌우(padding-left/right)를 8px 정도로 줄임 */
+    font-size: 12px;               /* 글씨 크기 유지 */
+    border: 2px solid #ffb3d9;
+    color: #808080; 
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 60px;               /* 버튼 최소 너비 설정 (넘어가지 않게) */
+    height: 30px;       
 }
 
-.details-btn:hover 
+.details-btn:hover {
+    background-color: #ffb3d9;
+    color: white;
+}
+
+.history-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* -------- 상태 + 버튼 묶는 영역 -------- */
+
+.history-status
 {
-    background-color: #ffffff;
+ color: #555;                /* 시터 이름과 동일한 색 (#555) */
+    font-size: 12px;
+    font-weight: normal;        /* ← 시터 이름과 굵기 통일 (bold 지우기) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+
+.history-status-btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 상태와 버튼 사이 간격 */
+}
 /* 페이지네이션 버튼 스타일 */
 .pagination-controls button 
 {
@@ -528,3 +568,36 @@
     justify-content: center;
     align-items: center;
 }
+
+/* -------- 이용 상태 컬러 + 버튼 위치 -------- */
+/* .history-status {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 10px;         옆에 버튼 나열 가능
+}
+ */
+ 
+ .history-item.header span {
+    font-weight: bold;
+    color: #777;           /* ← 시터 이름과 같은 컬러 (#555 또는 #777) */
+    font-size: 13px;       /* ← 항목 제목 크기 */
+    text-align: center;
+}
+
+/* 항목 내용 (데이터) 스타일 */
+.history-item span {
+    font-size: 12px;        /* ← 항목 내용 크기 */
+    color: #555;            /* ← 시터 이름과 동일한 색상 */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 상태별 색상 */
+.history-status.예약중        { background-color: #dbeeff; color: #3178c6; }
+.history-status.돌봄중        { background-color: #ffe5b4; color: #e67e22; }
+.history-status.돌봄완료      { background-color: #d5f5e3; color: #27ae60; }
+.history-status.돌봄취소      { background-color: #f9d6d5; color: #e74c3c; }
+.history-status.확정전취소    { background-color: #eadff5; color: #8e44ad; }
+
+

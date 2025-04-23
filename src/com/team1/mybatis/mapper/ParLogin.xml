@@ -25,4 +25,17 @@
 		  WHERE B.ID = #{id}
 		    AND R.PW = #{pw}
 	</select>
+	<select id="findById" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT PAR_BACKUP_ID, ID
+	    FROM PAR_BACKUP
+	    WHERE ID = #{id}
+	</select>
+	
+	<select id="findPwByBackupId" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT 
+	        PW
+	    FROM PAR_REG
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+
 </mapper>

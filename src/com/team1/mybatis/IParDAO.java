@@ -53,6 +53,11 @@ public interface IParDAO
 	// (아이 백업 코드로) 부모 백업 코드 조회
 	public String seachParBackupId(String child_backup_id);
 	
+
+	// 부모 정보 삭제 (탈퇴 시)
+	public int delete(String par_backup_id);
+	
+
 	// [관리자] 부모 전체 목록 조회 
 	public List<ParDTO> adminListPar(@Param("start") int start
 							 , @Param("end") int end
@@ -63,6 +68,6 @@ public interface IParDAO
 	public int adminCountPar(@Param("searchKey") String searchKey
 						, @Param("searchValue") String searchValue);
 	
-     
+    
 
 }

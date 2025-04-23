@@ -108,12 +108,24 @@
 
 
 	<!-- 부모 기준 예약 내역 조회 -->
-	<select id="findByParent" resultType="com.team1.dto.GenReqDTO">
-	    SELECT *
-	    FROM PARENT_USED_VIEW
-	    WHERE PAR_BACKUP_ID = #{par_backup_id}
-	    ORDER BY START_DATE DESC
-	</select>
+<select id="findByParent" resultType="com.team1.dto.GenReqDTO">
+    SELECT
+        PAR_BACKUP_ID,
+        CHILD_BACKUP_ID,
+        CHILD_NAME,
+        SITTER_NAME,
+        START_DATE,
+        END_DATE,
+        START_TIME,
+        END_TIME,
+        CARE_STATUS,
+        CARE_TYPE,
+        WORK_HOURS,
+        SITTER_LEVEL
+    FROM V_PAR_CARE
+    WHERE PAR_BACKUP_ID = #{par_backup_id}
+    ORDER BY START_DATE DESC
+</select>
 
 	<select id="listByParent" parameterType="String" resultType="com.team1.dto.ChildDTO">
 	    SELECT *

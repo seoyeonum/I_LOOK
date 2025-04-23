@@ -28,4 +28,21 @@
 		WHERE B.ID = #{id}
 		    AND R.PW = #{pw}
 	</select>
+	
+<select id="findPwByBackupId" parameterType="String" resultType="com.team1.dto.SitDTO">
+    SELECT 
+        PW
+    FROM SIT_REG
+    WHERE SIT_BACKUP_ID = #{sit_backup_id}
+</select>
+
+<select id="findById" parameterType="String" resultType="com.team1.dto.SitDTO">
+    SELECT 
+        B.SIT_BACKUP_ID AS sit_backup_id,
+        B.ID AS id
+    FROM SIT_BACKUP B
+    WHERE B.ID = #{id}
+</select>
+
+
 </mapper>
