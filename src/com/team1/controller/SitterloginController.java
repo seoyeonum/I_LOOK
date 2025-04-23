@@ -1,4 +1,4 @@
-package com.team1.controller;
+/*package com.team1.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,14 +28,13 @@ public class SitterloginController
                                HttpServletRequest request)
     {
         ISitLoginDAO dao = sqlSession.getMapper(ISitLoginDAO.class);
+        SitDTO sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
 
-        // 1️. ID → SIT_BACKUP_ID 조회
-        SitDTO sitterBackup = dao.findById(id);  
-
-        if (sitterBackup == null)
+        
+        if (sitter != null) // 로그인 성공
         {
-            request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "/WEB-INF/view/logIn.jsp";
+            session.setAttribute("loginSitter", sitter);
+            return "forward:/emgmain.action";
         }
 
         String sit_backup_id = sitterBackup.getSit_backup_id();
@@ -64,4 +63,4 @@ public class SitterloginController
         session.setAttribute("sit_backup_id", sit_backup_id);
         return "forward:/sitterMain.action";  // 시터 메인 페이지로 이동
     }
-}
+}*/

@@ -237,7 +237,25 @@ input[type="file"] {
 	
 	$(document).ready(function()
 	{
+		//=================== 헤더 버튼 클래스 변경 ==================
 		
+	    // menuBtn 와 presentPage를 클래스로 가지는 첫 엘리먼트에서 presentPage 클래스 제거
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton)
+	    {
+	        firstButton.classList.remove('presentPage');
+	    }
+	   
+	    // id가 'emg'인 버튼을 선택
+	    var button = document.querySelector('#gen');
+	    // 만약 버튼이 존재하면
+	    if (button)
+	    {
+	        // 'presentPage' 클래스 추가
+	        button.classList.add('presentPage');
+	    }
+	    
+	    
 		// 시작 날짜 선택
 		var startDate = flatpickr("#startDate", 
 		{
@@ -510,24 +528,9 @@ input[type="file"] {
 
 </head>
 <body>
-    <div id="wrapper">
-        <!-- 상단 -->
-        <div id="header">
-            <div id="logo">
-            	<a href="sitterMain.jsp">
-                	<img src="<%=cp %>/images/logo.png" height="120px"> 
-                </a>
-            </div>
-            <div class="nav">
-                <button type="button" class="menuBtn">홈</button>
-                <button type="button" class="menuBtn">로그아웃</button>
-                <button type="button" class="menuBtn">스케줄러</button>
-                <button type="button" class="menuBtn">근무 등록</button>
-                <button type="button" class="menuBtn">마이페이지</button>
-                <button type="button" class="menuBtn">알림함</button>
-            </div>
-        </div>
-        
+<div id="">
+	<c:import url="/sitterheader.action"/>
+</div>
         <!-- 본문 -->
         <div id="main">
         	<form id="genRegInsert" action="genreginsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="post">

@@ -53,13 +53,26 @@ public class SitterMypageController
 	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
 	public String infoList(HttpSession session, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		//System.out.println(sit_backup_id);
+
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+		
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
 		ISitAcctDAO sitAcctDao = sqlSession.getMapper(ISitAcctDAO.class);
-		ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+		//ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
 		IAcctDAO acctDao = sqlSession.getMapper(IAcctDAO.class);
 		
-		model.addAttribute("list", dao.sitIdSearch("SBAC0001"));
-		model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch("SBAC0001").getSit_reg_id()));
+		model.addAttribute("list", dao.sitIdSearch(sit_backup_id));
+		model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()));
 		model.addAttribute("banklist", acctDao.list());
 		
 		return "/WEB-INF/view/SitterinfoList.jsp";
@@ -69,8 +82,20 @@ public class SitterMypageController
 	
 	// 등급 확인 페이지 컨트롤러
 	@RequestMapping(value = "/gradescheck.action", method = RequestMethod.GET)
-	public String GradeCheck(HttpSession session, Model model, String sit_backup_id)
+	public String GradeCheck(HttpSession session, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+		
 		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
 		IGradesDAO gradeDao = sqlSession.getMapper(IGradesDAO.class);
 		
@@ -101,10 +126,22 @@ public class SitterMypageController
 		return "/WEB-INF/view/GradesCheck.jsp";
 	}
 	
-	// 폼으로 가는 링크
+	// 근무 등록 폼으로 가는 링크
 	@RequestMapping(value = "/genreginsertform.action", method = RequestMethod.GET)
-	public String SitGenRegInsertForm(HttpSession session, Model model, String sit_backup_id)
+	public String SitGenRegInsertForm(HttpSession session, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		String result = null;
 		
 		IAgesPreferedDAO agePreferdao = sqlSession.getMapper(IAgesPreferedDAO.class);
@@ -131,11 +168,23 @@ public class SitterMypageController
 	
 	// 근무 등록 테이블에 넣는 액션
 	@RequestMapping(value = "/genreginsert.action", method = RequestMethod.POST)
-	public String GenRegList(HttpSession session, String sit_backup_id, @ModelAttribute GenRegDTO genRegdto
+	public String GenRegList(HttpSession session, @ModelAttribute GenRegDTO genRegdto
 												, @ModelAttribute WorkRegionPreferedDTO workRPDto
 												, @ModelAttribute AgesPreferedDTO agePDto
 												, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		String result = null;
 
 		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
@@ -178,8 +227,20 @@ public class SitterMypageController
 	
 	// 근무 등록 내역 확인 컨트롤러
 	@RequestMapping(value = "/genreglist.action", method = RequestMethod.GET)
-	public String GenRegList(HttpSession session, Model model, String sit_backup_id)
+	public String GenRegList(HttpSession session, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+		
 		// 주소
 		String result = null;
 		
@@ -266,6 +327,16 @@ public class SitterMypageController
 									, Model model
 									, HttpServletResponse response) 
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+
 		//System.out.println("컨트롤러 진입 성공");
 		String result = null;
 		
@@ -328,8 +399,20 @@ public class SitterMypageController
 	
 	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
 	@RequestMapping(value = "/sittergenreqconfirminsert.action", method = RequestMethod.GET)
-	public String AnswerYes(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, String sit_backup_id, Model model)
+	public String AnswerYes(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		String result = null;
 		
 		IGenConfirmedDAO gcfDao = sqlSession.getMapper(IGenConfirmedDAO.class);
@@ -352,9 +435,19 @@ public class SitterMypageController
 	
 	// 근무 등록 내역에서 돌봄 거절하면 나오는 컨트롤러
 	@RequestMapping(value = "/sittergenreqcancelinsert.action", method = RequestMethod.GET)
-	public String AnswerNo(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, String sit_backup_id
+	public String AnswerNo(HttpSession session, @RequestParam("gen_req_id") String gen_req_id
 							, String reason_canceled_id, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		String result = null;
 		
 		// 의존성 주입
@@ -373,56 +466,33 @@ public class SitterMypageController
 		gcDto.setReason_canceled_id(reason_canceled_id);
 		
 		// 일반 돌봄 예약 취소에 insert
-		gcDao.addGenCanceled(gcDto);
+		// >> 프로시저로 만들었기 때문에 프로시저로 처리한다. 
 		
-		// 일반 돌봄 환불 내역에 insert 해야 한다.  
-		// gen_refunded_id, gen_canceled_id, amount, refunded_date, point, pg_code
-		// 1은 자동 생성, 2는 가져와야 함, 찾아야 함, sysdate, 찾아야 함, 찾아야 함, 
 		
-		// 일반 돌봄 환불 내역에도 insert 해야 함
-		gcDao.addGenRefunded(gcDto);
+		
 		
 		// 돌봄 제공 내역으로 리다이렉트
 		result = "redirect:sittergenreqansweredlist.action";
 		
 		return result;
 	}
-	
-	// 근무 등록 내역에서 돌봄 예스 누르면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredyes.action", method = RequestMethod.GET)
-	public String AnswerYes(String sit_backup_id, Model model)
-	{
-		String result = null;
-		
-		// 돌봄 확정에 insert
-		
-		// 돌봄 제공 내역으로 리다이렉트
-		result = "redirect:sittergenreqansweredlist.action";
-		
-		return result;
-	}
-	
-	
-	// 근무 등록 내역에서 돌봄 취소하면 나오는 컨트롤러
-	@RequestMapping(value = "sittergenreqansweredno.action", method = RequestMethod.GET)
-	public String AnswerNo(String sit_backup_id, Model model)
-	{
-		String result = null;
-		
-		// 돌봄 취소에 insert
-		
-		// 돌봄 제공 내역으로 리다이렉트
-		result = "redirect:sittergenreqansweredlist.action";
-		
-		return result;
-	}
-	
-	
 	
 	// 돌봄 제공 내역 확인 컨트롤러
 	@RequestMapping(value = "/sittergenreqansweredlist.action", method = RequestMethod.GET)
-	public String AnswerList(HttpSession session, Model model, String sit_backup_id) 
+	public String AnswerList(HttpSession session, Model model) 
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		String result = null;
 		
 		ISitCareListDAO sitcarelistDao = sqlSession.getMapper(ISitCareListDAO.class);
@@ -443,6 +513,16 @@ public class SitterMypageController
 	@RequestMapping(value = "/sitterregintroduction.action", method = RequestMethod.GET)
 	public String SitterRegIntroduction(HttpSession session, @RequestParam("gen_reg_id") String gen_reg_id, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		IGenRegDAO genRegDao = sqlSession.getMapper(IGenRegDAO.class);
 		
 		model.addAttribute("register", genRegDao.regOnesearch(gen_reg_id));
@@ -455,6 +535,16 @@ public class SitterMypageController
 	@RequestMapping(value = "/pargenreqdetail.action", method = RequestMethod.GET)
 	public String ParGenReqDetailList(HttpSession session, @RequestParam("gen_req_id") String gen_req_id, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+		
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
 		model.addAttribute("list", sitCareListDao.answerDetailedList(gen_req_id));
@@ -466,8 +556,20 @@ public class SitterMypageController
 	
 	// 돌봄 완료 내역 띄우기
 	@RequestMapping(value = "/carecompletelist.action", method = RequestMethod.GET)
-	public String CareCompleteList(HttpSession session, Model model, String sit_backup_id)
+	public String CareCompleteList(HttpSession session, Model model)
 	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
 		ISitCareListDAO sitCareListDao = sqlSession.getMapper(ISitCareListDAO.class);
 		
 		model.addAttribute("completeList", sitCareListDao.genCompleteList(sit_backup_id));
@@ -476,5 +578,57 @@ public class SitterMypageController
 		
 		return "/WEB-INF/view/CareCompleteList.jsp";
 	}
+	
+	
+	// 시터 탈퇴
+	@RequestMapping(value = "/sitterwithdraw.action", method = RequestMethod.GET)
+	public String SitterWithdraw(HttpSession session, Model model)
+	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+				
+		model.addAttribute("sit_backup_id", sit_backup_id);
+		
+		
+		return "/WEB-INF/view/SitterWithdraw.jsp";
+	}
+	
+	
+	// 시터 탈퇴 완료
+	@RequestMapping(value = "/sitterwithdrawed.action", method = RequestMethod.GET)
+	public String SitterWithdrawed(HttpSession session, Model model, String entered_pw)
+	{
+		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		
+		if (sitter == null)
+			return "redirect:/iLook.action";
+		
+		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+		
+		String sit_backup_id = sitter.getSit_backup_id();
+		
+		// ============================================================================== 밑은 내가 이미 해놓은 것들.
+		
+		//
+		if (entered_pw == sitter.getPw())
+		{
+			return "/WEB-INF/view/SitterWithdrawed.jsp";
+		}
+		
+		return "redirect:/sitterwithdraw.action";
+	}
+	
+	
+	
 	
 }
