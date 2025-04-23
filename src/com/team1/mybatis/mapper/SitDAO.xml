@@ -109,9 +109,7 @@
  	
 	<!-- 백업 아이디 시터 상세정보 조회 -->
 	<select id="adminSearchSitDetail" resultType="com.team1.dto.SitDTO"> 
-	 	SELECT SIT_REG_ID, SIT_BACKUP_ID, ID, PW, REG_DATE, NAME, SSN_FIRST, SSN_SECOND
-		, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH, GRADE, WORKED_HOUR
-		, BANK_TYPE, ACCT_NUMBER
+	 	SELECT *
 		FROM V_ADMIN_SIT_ALL
 		WHERE SIT_BACKUP_ID = #{sit_backup_id}
 	</select>

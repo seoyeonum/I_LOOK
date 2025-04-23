@@ -1,6 +1,8 @@
 package com.team1.dto;
 // 아이 데이터 자료형 클래스 (백업, 아이등록, 지병/알레르기/장애)
 
+import java.util.List;
+
 public class ChildDTO
 {
 	// CHILD_BACKUP_ID, PAR_BACKUP_ID, REG_DATE
@@ -23,6 +25,11 @@ public class ChildDTO
 	private String gender;							//-- 성별
 	private String road_addr, detailed_addr;		//-- 도로명 주소, 상세주소
 	
+	// 아이별 상태 리스트
+    private List<ChildConditionDTO> medicalList;
+    private List<ChildConditionDTO> allergyList;
+    private List<ChildConditionDTO> disabilityList;
+    
 	// getter / setter 구성
 	public String getChild_backup_id()
 	{
@@ -224,5 +231,29 @@ public class ChildDTO
 	{
 		this.detailed_addr = detailed_addr;
 	}
-
+	public List<ChildConditionDTO> getMedicalList()
+	{
+		return medicalList;
+	}
+	public void setMedicalList(List<ChildConditionDTO> medicalList)
+	{
+		this.medicalList = medicalList;
+	}
+	public List<ChildConditionDTO> getAllergyList()
+	{
+		return allergyList;
+	}
+	public void setAllergyList(List<ChildConditionDTO> allergyList)
+	{
+		this.allergyList = allergyList;
+	}
+	public List<ChildConditionDTO> getDisabilityList()
+	{
+		return disabilityList;
+	}
+	public void setDisabilityList(List<ChildConditionDTO> disabilityList)
+	{
+		this.disabilityList = disabilityList;
+	}
+	
 }

@@ -55,14 +55,13 @@ $(document).ready(function()
     var maskedSecond = ssnSecond.substring(0, 1) + "*".repeat(ssnSecond.length - 1);
 
     document.getElementById("ssn").value = ssnFirst + "-" + maskedSecond;
-    
-    
 	
 });
 
 </script>
 </head>
 <body>
+<pre>${sitInfo}</pre>
 	<div class="wrap">
 		<header>
 			<c:import url="adminHeader.jsp"></c:import>
@@ -91,8 +90,25 @@ $(document).ready(function()
 						        </c:forEach>
 						    </div>
 						</div>
+						
+						<div class="category-row">
+						    <div class="category-title">평균 별점</div>
+						    <div class="category-options">
+						        <input type="text" class="info-input" value="평균 별점 : ${sitInfo.average_rating } 점" readonly="readonly"
+						         style="width: 150px; text-align: center;">
+						    </div>
+						</div>
+						
+						<div class="category-row">
+						    <div class="category-title">누적 리뷰 수</div>
+						    <div class="category-options">
+						        <input type="text" class="info-input" value="누적 리뷰 수 : ${sitInfo.review_count } 건" readonly="readonly"
+						        style="width: 150px; text-align: center;">
+						    </div>
+						</div>
 					</div>
-
+					
+					
 					<div class="info-section">
 						<div class="info-row">
 							<div class="info-header">시터 코드</div>
@@ -145,7 +161,7 @@ $(document).ready(function()
 						<div class="info-row">
 							<div class="info-header">누적 근로 시간</div>
 							<div class="info-cell">
-								<input type="text" class="info-input" value="${sitInfo.worked_hour }" readonly>
+								<input type="text" class="info-input" value="${sitInfo.worked_hour } 시간" readonly>
 							</div>
 						</div>
 						<div class="info-row">
@@ -179,7 +195,6 @@ $(document).ready(function()
 				</div>
 				
 				<div class="bottom-btn">
-					
 					<button class="btn cancel-btn" onclick="location.href='<%=cp%>/adminsitlist.action'">뒤로가기</button>
 				</div>
 			</main>

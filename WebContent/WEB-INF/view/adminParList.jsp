@@ -45,8 +45,8 @@
 						<div class="info-cell">번호</div>
 						<div class="info-cell">이름</div>
 						<div class="info-cell">연락처</div>
-						<div class="info-cell">부모 코드</div>
 						<div class="info-cell">아이 수</div>
+						<div class="info-cell">부모 코드</div>
 						<div class="info-cell">가입일</div>
 						<div class="info-cell">상세 보기</div>
 					</div>
@@ -57,8 +57,8 @@
                     	<div class="info-cell">${paging.startNum - status.index}</div>
                     	<div class="info-cell">${list.name }</div>
                         <div class="info-cell">${list.tel }</div>
-                        <div class="info-cell">${list.par_backup_id }</div>
                         <div class="info-cell">${list.child_count } 명</div>
+                        <div class="info-cell">${list.par_backup_id }</div>
                         <div class="info-cell">${fn:substring(list.reg_date, 0, 10)}</div>
                         
                         <div class="info-cell">

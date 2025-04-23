@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team1.dto.AdminDTO;
+import com.team1.dto.ChildDTO;
 import com.team1.dto.DocRegDTO;
 import com.team1.dto.ParDTO;
 import com.team1.dto.SitCertDTO;
 import com.team1.dto.SitDTO;
 import com.team1.dto.SitRejectDTO;
+import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IDocRegDAO;
 import com.team1.mybatis.IParDAO;
 import com.team1.mybatis.ISitCertDAO;
@@ -251,9 +253,9 @@ public class AdminMemberController
     	return result;
     }
     
-    // 부모 회원 정보 목록 페이지로 이동 및 데이터 전송
+    // 부모 회원 상세정보 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/adminpardetail.action", method = RequestMethod.GET) 
-    public String adminParDetail(Model model, HttpSession session) 
+    public String adminParDetail(String par_backup_id, Model model, HttpSession session) 
     { 
     	// 관리자 확인 절차
     	if (!isAdmin(session))
@@ -261,16 +263,37 @@ public class AdminMemberController
     	AdminDTO dto = getLoginAdmin(session);
     	model.addAttribute("loginAdmin", dto);
     	
+    	IParDAO parDao = sqlSession.getMapper(IParDAO.class);
+    	IChildDAO childDao = sqlSession.getMapper(IChildDAO.class);
     	
-    	IParDAO dao = sqlSession.getMapper(IParDAO.class);
+    	// 부모정보, 아이 개인정보, 알러지, 질병, 장애 정보
+    	ParDTO parent = parDao.search(par_backup_id);
+    	List<ChildDTO> childList = childDao.adminSearchChild(par_backup_id);
     	
+    	// 아이의 알러지, 질병, 장애 정보 담기
+    	for (ChildDTO child : childList) 
+    	{
+    	    String childId = child.getChild_backup_id();
+
+    	    child.setMedicalList(childDao.adminSearchMedical(childId));
+    	    child.setAllergyList(childDao.adminSearchAllergy(childId));
+    	    child.setDisabilityList(childDao.adminSearchDisability(childId));
+    	}
+    	
+    	// 모델에 담아서 보내기
+    	model.addAttribute("parent", parent);
+    	model.addAttribute("childList", childList);
     	
     	return "WEB-INF/view/adminParDetail.jsp";
     }
     
+    
     // 아이 정보 목록 페이지로 이동 및 데이터 전송
     @RequestMapping(value = "/adminchildlist.action", method = RequestMethod.GET) 
-    public String adminChildList(Model model, HttpSession session) 
+    public String adminChildList(@RequestParam(value = "page", defaultValue="1") int page
+							   , @RequestParam(value = "searchKey", required = false) String searchKey 
+							   , @RequestParam(value = "searchValue", required = false) String searchValue 
+							   , Model model, HttpSession session) 
     { 
     	// 관리자 확인 절차
     	if (!isAdmin(session))
@@ -278,15 +301,20 @@ public class AdminMemberController
     	AdminDTO dto = getLoginAdmin(session);
     	model.addAttribute("loginAdmin", dto);
     	
-    	String result = null;
+    	IChildDAO dao = sqlSession.getMapper(IChildDAO.class);
+ 
+    	// 등록된 아이 수
+    	int totalCount = dao.adminCountChild(searchKey, searchValue);
     	
-    	ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
+    	PageHandler paging = new PageHandler(page, totalCount);
     	
+    	List<ChildDTO> childList = dao.adminListChild(paging.getStart(), paging.getEnd(), searchKey, searchValue);
     	
+    	// 모델에 담아서 보내기
+    	model.addAttribute("childList", childList);
+    	model.addAttribute("paging", paging);
     	
-    	result = "WEB-INF/view/adminChildList.jsp";
-    	
-    	return result;
+    	return "WEB-INF/view/adminChildList.jsp";
     }
     
     // 시터 위반 내역 페이지로 이동 및 데이터 전송

@@ -9,7 +9,7 @@ public class ParDTO
 	
 	// 주요 속성 구성
 	private String par_reg_id, par_backup_id, name, pw, tel, ssn_first,ssn_second, road_addr, detailed_addr;
-	private String id, reg_date;
+	private String id, reg_date, child_back_id;
 	private int zip_code, child_count;
 	
 	// getter / setter 구성
@@ -141,6 +141,16 @@ public class ParDTO
 	public void setChild_count(int child_count)
 	{
 		this.child_count = child_count;
+	}
+
+	public String getChild_back_id()
+	{
+		return child_back_id;
+	}
+
+	public void setChild_back_id(String child_back_id)
+	{
+		this.child_back_id = child_back_id;
 	}
 	
 	
