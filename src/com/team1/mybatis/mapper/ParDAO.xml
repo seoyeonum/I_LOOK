@@ -97,6 +97,13 @@
         INSERT INTO PAR_WITHDRAWED (PAR_WITHDRAWED_ID, WITHDRAWED_DATE, PAR_BACKUP_ID, REASON_WITHDRAWED_ID)
         VALUES (#{par_withdrawed_id}, SYSDATE, #{par_backup_id}, #{reason_withdrawed_id})
     </insert>
+    
+    <!-- ◆ 탈퇴 시 기록 제거 -->
+	<delete id="delete" parameterType="String">
+	    DELETE FROM PAR_REG
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</delete>
+
 
 </mapper>
 

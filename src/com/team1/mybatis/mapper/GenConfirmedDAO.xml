@@ -66,5 +66,29 @@
 		FROM GEN_MEMOS_PAR
 		ORDER BY REC_DATE DESC
 	</select>
+	
+<!-- 돌봄 완료 내역 조회 (페이징용 ROWNUM 포함) -->
+<select id="findByParent" parameterType="String" resultType="com.team1.dto.GenConfirmedDTO">
+    SELECT 
+        REQ_ID AS gen_req_id,                         <!-- DTO 변경 없이 field 맞춤 -->
+        CARE_TYPE AS care_type,
+        PAR_BACKUP_ID AS par_backup_id,
+        CHILD_BACKUP_ID AS child_backup_id,
+        CHILD_NAME AS child_name,
+        SITTER_NAME AS sitter_name,
+        START_DATE AS start_date,
+        END_DATE AS end_date,
+        WORK_HOURS AS work_hours,
+        CARE_STATUS AS care_status
+    FROM V_PAR_CARE_DONE
+    WHERE PAR_BACKUP_ID = #{par_backup_id}
+      AND (CARE_STATUS = '일반돌봄 완료' OR CARE_STATUS = '긴급돌봄 완료')
+    ORDER BY END_DATE DESC
+</select>
+
+
+
+
+
 
 </mapper>

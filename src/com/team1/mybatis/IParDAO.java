@@ -47,5 +47,9 @@ public interface IParDAO
 
 	// (아이 백업 코드로) 부모 백업 코드 조회
 	public String seachParBackupId(String child_backup_id);
+	
+	// 부모 정보 삭제 (탈퇴 시)
+	public int delete(String par_backup_id);
+	
 
 }

@@ -23,4 +23,8 @@ public interface ISitLoginDAO
 	// public SitDTO loginCheck(@Param("id") String id, @Param("pw") String pw);
 	public List<SitDTO> loginCheck(@Param("id") String id, @Param("pw") String pw);
 
+	public SitDTO findById(String id);  // ID로 백업 코드 조회
+	public SitDTO findPwByBackupId(String sit_backup_id);  // PW 확인용
+
+
 }
