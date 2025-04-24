@@ -40,7 +40,7 @@
  	{
         // 두 번째 파라미터 : '_blank' → 새 창 열기
         // 세 번째 파라미터 : 창 옵션 (크기, 스크롤바 등)
-        window.open('./emgRegInsertForm.jsp?parentId=' + parentId, '_blank', 'width=640,height=500');
+        window.open('./emgreginsertform.action?parentId=' + parentId, '_blank', 'width=640,height=500');
     }
 
 </script>

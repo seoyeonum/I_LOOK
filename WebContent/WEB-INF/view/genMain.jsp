@@ -57,7 +57,7 @@
 	<div class="banner-section">
 	    <div class="banner-content">
 	        <h3 class="banner-title">우리 아이를 위한 특별한 돌봄</h3>
-	        <p class="banner-text">아이사랑에서는 전문 시터가 아이의 개성과 성향에 맞는<br>맞춤형 돌봄 서비스를 제공합니다.</p>
+	        <p class="banner-text"> I,LOOK 에서는 전문 시터가 아이의 개성과 성향에 맞는<br>맞춤형 돌봄 서비스를 제공합니다.</p>
 	        <button class="btn gen-btn-small">서비스 안내 보기</button>
 	    </div>
 	    <div class="banner-image"></div>

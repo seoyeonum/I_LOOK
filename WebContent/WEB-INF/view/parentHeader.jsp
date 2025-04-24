@@ -26,7 +26,8 @@
         <nav>
             <button type="button" class="menuBtn presentPage" id="gen"
             onclick="window.location.href='<%=cp%>/genmain.action'">홈</button>
-            <button type="button" class="menuBtn" id="noticeList">공지사항</button>
+            <button type="button" class="menuBtn" id="noticeList"
+            onclick="window.location.href='<%=cp%>/notice.action'">공지사항</button>
             <button type="button" class="menuBtn" id="schedule">스케줄러</button>
             <button type="button" class="menuBtn" id="emg">긴급돌봄서비스</button>
             <button type="button" class="menuBtn" id="mypage"

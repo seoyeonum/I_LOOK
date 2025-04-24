@@ -77,7 +77,7 @@
 	                	<div>아이 연령: 만 4 세</div>
 	            	</div>
 	            	<div class="emg-details">
-	            		지도 API로 도로명 주소 기반 핀 표시?
+	            		<!-- 지도 API로 도로명 주소 기반 핀 표시? -->
 	            	</div>	
 	   			</div>
 	        </div>
