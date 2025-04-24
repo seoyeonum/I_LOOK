@@ -22,7 +22,6 @@ listPrimaryGenReg
 <div class="box-preview">
     <div class="sitter-photo">
         <img src="<c:url value='<%= cp %>/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
-        <!-- 파일 경로 추후 수정 필요!! -->
     </div>
     <div class="sitter-info">
         <div class="sitter-title">
@@ -34,6 +33,7 @@ listPrimaryGenReg
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
              		<img src="<c:url value='<%= cp %>/${genReg.grade_file_path}' />" 
+
              		width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}

@@ -129,7 +129,8 @@
         CARE_STATUS,
         CARE_TYPE,
         WORK_HOURS,
-        SITTER_LEVEL
+        SITTER_LEVEL,
+        FILE_PATH
     FROM V_PAR_CARE
     WHERE PAR_BACKUP_ID = #{par_backup_id}
     ORDER BY START_DATE DESC

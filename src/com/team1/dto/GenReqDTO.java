@@ -16,6 +16,7 @@ public class GenReqDTO
 	private String par_name;
 	private String pay_status;
 	private String par_backup_id;
+	private String file_path;
 
 	// 결제 관련
 	private String gen_pay_rec_id, gen_point_used_id;
@@ -288,8 +289,16 @@ public class GenReqDTO
 	{
 		this.par_backup_id = par_backup_id;
 	}
-	
-	
+
+	public String getFile_path()
+	{
+		return file_path;
+	}
+
+	public void setFile_path(String file_path)
+	{
+		this.file_path = file_path;
+	}
 	
 	
 }
