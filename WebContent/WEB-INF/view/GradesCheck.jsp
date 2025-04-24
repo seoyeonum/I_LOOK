@@ -200,12 +200,14 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 			<div style="font-size:12pt; margin-bottom: 10px;">시터님의 등급을 확인하실 수 있고, 등급과 관련된 정보를 확인하실 수 있습니다.</div>
 			<div class="row grades main" style="border: 2px solid #ea9999; border-radius: 20px; display: flex; justify-content: space-around;">
 					<div class="sitter image col-md-2">
-						<img src="./images/logoimg.png" alt="" height="130" /> <br />
-						사진이 들어가는 곳입니다.
+						<img src="<%=cp %>/${list.file_path == null ? 'images/pictures/logoimg' : list.file_path }.png" alt="" height="130" /> <br />
+						시터님의 사진이 들어가는 곳입니다.
 					</div>
-					<div class="grades rank col-md-2">
-						<img src="./images/logoimg.png" alt="" height="130" /> <br />
+					<div class="grades rank col-md-2" style="margin-top: 40px;">
+						<img src="<%=cp %>/${grade.file_path }" alt="" height="130" /> <br />
+						<div style="font-size: 14pt; margin-top: 10px;">
 						${list.name }님의 등급은 ${mygrade.grade }입니다.
+						</div>
 					</div>
 					<div class="sitters info col-md-2" style="font-size: 16pt; width: 30%; padding: 20px;">
 						가입일: ${mygrade.chk_date }<br />

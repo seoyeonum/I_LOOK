@@ -112,7 +112,7 @@ public class SitterMypageController
 		model.addAttribute("emgCareCount", dao.emgCareCount(sit_backup_id));
 		
 		// 등급 리스트 조회
-		model.addAttribute("grade", gradeDao.listGrade());
+		model.addAttribute("grade", gradeDao.searchGradeInfo(dao.searchGrades(sit_backup_id).getGrade()));
 		
 		// [시터] 승급 시간 계산
 		model.addAttribute("promotion", dao.searchNextTime(dao.searchGrades(sit_backup_id).getGrade()));
@@ -196,8 +196,8 @@ public class SitterMypageController
 
 		//System.out.println(sit_backup_id);
 		
-		// int 나오니까 이걸로 분기 처리 가능. --> 나중에.
-		if (genRegdto.getIntroduction() == null)
+		// null 처리
+		if (genRegdto.getIntroduction() == null || genRegdto.getIntroduction() == "")
 		{
 			genRegdto.setIntroduction(" ");
 		}

@@ -52,11 +52,10 @@
 	
 	<!-- // 예약 확정 전 (시터의) 취소 내역 추가 + 환불 진행 -->
 	<insert id="addGenCancelAndRefund" statementType="CALLABLE" parameterType="com.team1.dto.GenCanceledDTO">
-    	 <![CDATA[
-    	 call PRC_GCAN_INSERT( 
-            #{gen_req_id, mode=IN, jdbcType=VARCHAR},
-            #{reason_canceled_id, mode=IN, jdbcType=VARCHAR} )
-          ]]>
+    	 {call PRC_GCAN_INSERT(
+        #{gen_req_id, jdbcType=VARCHAR, mode=IN},
+        #{reason_canceled_id, jdbcType=VARCHAR, mode=IN}
+   			 )}
 	</insert>
 	
 	
