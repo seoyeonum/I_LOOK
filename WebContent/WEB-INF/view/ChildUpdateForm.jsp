@@ -19,46 +19,14 @@
     </script>
 </c:if>
 
-<header>
-    <div id="logo">
-        <img src="/logo.png" height="120px">
-    </div>
-    <nav>
-        <button type="button" class="menuBtn presentPage">홈</button>
-        <button type="button" class="menuBtn">로그아웃</button>
-        <button type="button" class="menuBtn">스케줄러</button>
-        <button type="button" class="menuBtn">기단건복서비스</button>
-        <button type="button" class="menuBtn">마이페이지</button>
-        <button type="button" class="menuBtn">알림함</button>
-    </nav>
-</header>
+<!-- 상단 헤더 영역 -->
+<div id="header-container">
+    <c:import url="/parentheader.action"/>
+</div>
 
+<!-- 사이드 메뉴 -->
 <div class="sidebar">
-    <div class="sidebar-title">마이페이지</div>
-    <div class="menu">
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-            <div class="submenu">
-                <a href="#">아이 목록 보기</a>
-                <a href="#">신글 아이 등록</a>
-                <a href="#">아이 정보 수정</a>
-            </div>
-        </div>
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-            <div class="submenu">
-                <a href="#">부모 정보 보기</a>
-                <a href="#">부모 정보 수정</a>
-            </div>
-        </div>
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 동본 이용 현황</a>
-            <div class="submenu">
-                <a href="#">현재 이용 내역</a>
-                <a href="#">이용 완료 내역</a>
-            </div>
-        </div>
-    </div>
+    <c:import url="/parentsidebar.action"/>
 </div>
 
 <div class="page-title">

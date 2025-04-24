@@ -51,4 +51,21 @@
 		FROM SIT_BACKUP
 		WHERE ID = #{id}
 	</select>
+	
+	<!-- 승인 처리된 시터 아이디 -->
+	<select id="searchSitteChecked" resultType="java.lang.Integer">
+		SELECT S.ID AS ID
+		FROM SIT_BACKUP S JOIN SIT_CHK SC
+		ON S.SIT_BACKUP_ID = SC.SIT_BACKUP_ID
+		WHERE S.ID = #{id}
+	</select>
+	
+	<!-- 승인 거절된 시터 아이디 -->
+	<select id="searchSitteRejected" resultType="java.lang.Integer">
+		SELECT S.ID AS ID
+		FROM SIT_BACKUP S JOIN SIT_REJECTED SR
+		ON S.SIT_BACKUP_ID = SR.SIT_BACKUP_ID
+		WHERE S.ID = #{id}
+	</select>
+	
 </mapper>

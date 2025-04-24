@@ -324,7 +324,7 @@ input[readonly] {
             background-color: white;
             
             /* 변경 부분 */
-            margin-bottom: 80px;
+            /* margin-bottom: 80px; */
         }
 
         #logo {
