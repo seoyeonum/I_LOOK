@@ -25,7 +25,7 @@
     	INSERT INTO GRADES 
         (GRADE_ID, NAME, MIN_RANGE, MAX_RANGE, GRADE_PAY, FILE_PATH, DAILY_MAX_TIME, CHANGED_DATE)
     	VALUES 
-        (LPAD(GRADE_ID_SEQ.NEXTVAL, 3, '0')
+        (LPAD(SEQ_GRADE.NEXTVAL, 3, '0')
         , #{name}, #{min_range}, #{max_range}, #{grade_pay}, #{file_path}, #{daily_max_time}, SYSDATE)
 	</insert>
 
