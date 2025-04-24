@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function()
 </script>
 </head>
 <body>
-
 	<!-- 상단 헤더 영역 -->
 	<div id="header-container">
 		<c:import url="/parentheader.action" />
