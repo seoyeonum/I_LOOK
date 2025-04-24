@@ -7,6 +7,8 @@
 package com.team1.controller;
 
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -49,34 +51,54 @@ public class SitterMypageController
 	
 	
 	// 시터 마이 페이지 >> 개인정보 수정 컨트롤러
-	@RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
-	public String infoList(HttpSession session, Model model)
-	{
-		// 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
-		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
-		
-		if (sitter == null)
-			return "redirect:/iLook.action";
-		
-		// -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
-		
-		String sit_backup_id = sitter.getSit_backup_id();
-		//System.out.println(sit_backup_id);
+   @RequestMapping(value = "/sitterinfolist.action", method = RequestMethod.GET)
+   public String infoList(HttpSession session, Model model)
+   {
+      // 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+      SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+      
+      if (sitter == null)
+         return "redirect:/iLook.action";
+      
+      // -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+      
+      String sit_backup_id = sitter.getSit_backup_id();
+      //System.out.println(sit_backup_id);
 
-		// ============================================================================== 밑은 내가 이미 해놓은 것들.
-		
-		ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
-		ISitAcctDAO sitAcctDao = sqlSession.getMapper(ISitAcctDAO.class);
-		//ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
-		IAcctDAO acctDao = sqlSession.getMapper(IAcctDAO.class);
-		
-		model.addAttribute("list", dao.sitIdSearch(sit_backup_id));
-		model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()));
-		model.addAttribute("banklist", acctDao.list());
-		
-		return "/WEB-INF/view/SitterinfoList.jsp";
-		
-	}
+      // ============================================================================== 밑은 내가 이미 해놓은 것들.
+      
+      ISitDAO dao = sqlSession.getMapper(ISitDAO.class);
+      ISitAcctDAO sitAcctDao = sqlSession.getMapper(ISitAcctDAO.class);
+      //ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
+      IAcctDAO acctDao = sqlSession.getMapper(IAcctDAO.class);
+      
+      model.addAttribute("list", dao.sitIdSearch(sit_backup_id));
+      
+      // 확인 ----------------------------------------------
+      System.out.println("시터 백업 코드: " + sit_backup_id);
+      System.out.println("시터 등록 코드: " + dao.sitIdSearch(sit_backup_id).getSit_reg_id());
+      System.out.println("계좌번호: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getAcct_number());
+      System.out.println("은행이름: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getBank_type());
+      //----------------------------------------------------
+      
+      if (sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()) == null)
+      {
+         HashMap<String, String> bank = new HashMap<String, String>();
+         bank.put("BANK_TYPE", null);
+         bank.put("acct_number", "등록한 은행 계좌가 존재하지 않습니다.");
+         model.addAttribute("bank", bank);
+      }
+      else
+      {
+         model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()));
+      }
+      
+      
+      model.addAttribute("banklist", acctDao.list());
+      
+      return "/WEB-INF/view/SitterinfoList.jsp";
+      
+   }
 	
 	
 	// 등급 확인 페이지 컨트롤러
