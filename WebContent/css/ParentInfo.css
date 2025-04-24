@@ -115,9 +115,6 @@
             box-shadow: 0 10px 6px -6px #777;
             z-index: 100;
             background-color: white;
-            
-            /* 변경 부분 */
-            margin-bottom: 80px;
         }
 
         #logo {
@@ -214,6 +211,7 @@
     /* gap: 30px; */
     margin-bottom: 8%;
    	transform: translateX(25px); 
+   	 text-align: center; 
 }
 
 /* 제목 스타일 */

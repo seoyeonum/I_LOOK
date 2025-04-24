@@ -22,7 +22,7 @@ header
     height: 150px;
     width: 100%;
     display: flex;
-    gap: 40px;
+    /* gap: 40px; */
     justify-content: center;
     align-items: center;
     -webkit-box-shadow: 0 10px 6px -6px #777;
