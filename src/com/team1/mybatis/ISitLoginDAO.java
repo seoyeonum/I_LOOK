@@ -27,4 +27,9 @@ public interface ISitLoginDAO
 	// 시터 회원 가입 중복 체크
 	public int checkId(String sit_reg_id);
 
+	// 승인 처리된 시터 백업 아이디
+	public int searchSitteChecked(String id);
+	
+	// 승인 거절된 시터 백업 아이디
+	public int searchSitteRejected(String id);
 }

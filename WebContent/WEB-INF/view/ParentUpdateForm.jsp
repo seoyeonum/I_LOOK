@@ -75,7 +75,7 @@ String cp = request.getContextPath();
 	<div class="sidebar">
 		<c:import url="/WEB-INF/view/parentSidebar.jsp"/>
 	</div>
-
+	
 	<div class="page-title">
 		<h2>부모 정보 수정하기</h2>
 	</div>

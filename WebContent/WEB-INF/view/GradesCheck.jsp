@@ -168,11 +168,13 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 </head>
 
 <body>
+
+<div id="header-container">
+<c:import url="/sitterheader.action"/>
+</div>
+
 <div id="wrapper">
-	<!--헤더 부분은 공용으로 모든 뷰페이지에 사용하고 메인부분만 변경하는 부분으로 생각했었어 각 뷰페이지에 헤더부분만 같아도 통일감을 가질 것 같아서-->
-	<div id="header-container">
-	<c:import url="/sitterheader.action"/>
-	</div>
+	
 	<main>
 		<div class="main container" style="display: flex;">
 			<!-- 사이드 바 컨테이너 -->
