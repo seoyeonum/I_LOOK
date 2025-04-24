@@ -578,6 +578,7 @@ public class AdminServiceController
 	}
 	
 	// 공지사항으로 이동 및 데이터 전송
+	/*
 	@RequestMapping(value = "/noticelist.action", method = RequestMethod.GET)
 	public String noticeList(Model model, HttpSession session)
 	{
@@ -593,7 +594,7 @@ public class AdminServiceController
 		
 		return result;
 	}
-		
+	*/
 	
 	// 관리자 검증 메소드
 	private boolean isAdmin(HttpSession session)

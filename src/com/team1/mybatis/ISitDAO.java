@@ -81,6 +81,12 @@ public interface ISitDAO
 	
 	// [시터 회원가입 ▶ 회원 등록]
 	public int add(SitDTO sitter);
+
+	// [시터 회원가입 ▶ 승인 거절 여부 확인]
+	public int checkSitterRejected(String sit_backup_id);
+
+	// [시터 회원가입 ▶ 승인 완료 확인]
+	public int checkSitterApproved(String sit_backup_id);
 	
 
 }

@@ -8,7 +8,7 @@
     <!-- [1] 아이 백업 등록 -->
     <insert id="addChildBackup" parameterType="com.team1.dto.ChildDTO">
         <selectKey keyProperty="child_backup_id" resultType="String" order="BEFORE">
-            SELECT 'CBAC' || LPAD(CHILD_BACKUP_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'CBAC' || LPAD(SEQ_CBAC.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO CHILD_BACKUP (CHILD_BACKUP_ID, PAR_BACKUP_ID, REG_DATE)
         VALUES (#{child_backup_id}, #{par_backup_id}, SYSDATE)
@@ -17,7 +17,7 @@
     <!-- [2] 아이 정보 등록 -->
     <insert id="add" parameterType="com.team1.dto.ChildDTO">
         <selectKey keyProperty="child_reg_id" resultType="String" order="BEFORE">
-            SELECT 'CREG' || LPAD(CHILD_REG_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'CREG' || LPAD(SEQ_CREG.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO CHILD_REG (
             CHILD_REG_ID, CHILD_BACKUP_ID, NAME, HEIGHT, WEIGHT,
@@ -38,7 +38,7 @@
     <!-- [4~6] 지병/알레르기/장애 등록 -->
     <insert id="addDisease" parameterType="com.team1.dto.ChildDTO">
         <selectKey keyProperty="child_medical_id" resultType="String" order="BEFORE">
-            SELECT 'CMD' || LPAD(CHILD_MEDICAL_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'CMED' || LPAD(SEQ_CMED.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO CHILD_MEDICALS (
             CHILD_MEDICAL_ID, MEDICAL_TYPE_ID, REG_DATE, CHILD_REG_ID
@@ -50,7 +50,7 @@
 
     <insert id="addAllergy" parameterType="com.team1.dto.ChildDTO">
         <selectKey keyProperty="child_allergy_id" resultType="String" order="BEFORE">
-            SELECT 'CAL' || LPAD(CHILD_ALLERGY_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'CALL' || LPAD(SEQ_CALL.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO CHILD_ALLERGIES (
             CHILD_ALLERGY_ID, ALLERGIE_TYPE_ID, REG_DATE, CHILD_REG_ID
@@ -62,7 +62,7 @@
 
     <insert id="addDisability" parameterType="com.team1.dto.ChildDTO">
         <selectKey keyProperty="child_disability_id" resultType="String" order="BEFORE">
-            SELECT 'CDS' || LPAD(CHILD_DISABILITY_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'CDIS' || LPAD(SEQ_CDIS.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO CHILD_DISABILITIES (
             CHILD_DISABILITY_ID, DISABILITY_TYPE_ID, REG_DATE, CHILD_REG_ID
