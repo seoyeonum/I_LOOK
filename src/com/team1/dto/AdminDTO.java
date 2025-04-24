@@ -4,7 +4,9 @@ public class AdminDTO
 {
 	// 주소 속성 구성 -- 관리자 번호, 아이디, 비밀번호, 계좌번호, 은행명
 	private String admin_reg_id, id, pw, admin_acct_code, bank_name;
+	
 
+	
 	// getter / setter 구성
 	public String getAdmin_reg_id()
 	{
@@ -55,5 +57,6 @@ public class AdminDTO
 	{
 		this.bank_name = bank_name;
 	}
+	
 }
 
