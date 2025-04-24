@@ -42,7 +42,7 @@ public class ParentMypageController
         IChildDAO dao = sqlSession.getMapper(IChildDAO.class);
         List<ChildDTO> childList = dao.listName(parBackupId);
         model.addAttribute("childList", childList);
-System.out.println("childList");
+        //System.out.println("childList");
         return "WEB-INF/view/ParentMypage.jsp";
     }
 
