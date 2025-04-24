@@ -75,7 +75,7 @@
     <!-- ◆ 부모 백업 추가 (ID 생성 포함) -->
     <insert id="addBackup" parameterType="com.team1.dto.ParDTO">
         <selectKey keyProperty="par_backup_id" resultType="String" order="BEFORE">
-            SELECT 'PBAC' || LPAD(PAR_BACKUP_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'PBAC' || LPAD(SEQ_PBAC.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO PAR_BACKUP (PAR_BACKUP_ID, ID, REG_DATE)
         VALUES (#{par_backup_id}, #{id}, SYSDATE)
@@ -84,7 +84,7 @@
     <!-- ◆ 부모 등록 (회원가입 시 사용) -->
     <insert id="add" parameterType="com.team1.dto.ParDTO">
         <selectKey keyProperty="par_reg_id" resultType="String" order="BEFORE">
-            SELECT 'PREG' || LPAD(PAR_REG_SEQ.NEXTVAL, 4, '0') FROM DUAL
+            SELECT 'PREG' || LPAD(SEQ_PREG.NEXTVAL, 4, '0') FROM DUAL
         </selectKey>
         INSERT INTO PAR_REG (PAR_REG_ID, PAR_BACKUP_ID, NAME, PW, TEL, 
                              SSN_FIRST, SSN_SECOND, ROAD_ADDR, DETAILED_ADDR, ZIP_CODE)

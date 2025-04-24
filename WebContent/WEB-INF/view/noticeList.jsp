@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -13,50 +14,40 @@
 <script type="text/javascript">
     
     // 이 페이지 로드 시,
-    document.addEventListener('DOMContentLoaded', function()
-    {
-    	//객체 생성
-        var xmlHttp = new XMLHttpRequest();
-    	
-    	// xmlHttp 요청 준비
-        xmlHttp.open('GET', './parentMainFrame.html', true);
-        
-        // xmlHttp 서버 응답 완료 후 아래를 실행
-        xmlHttp.onload = function()
-        {        	
-        	// onload 요청을 성공적으로 처리 시
-            if (xmlHttp.status == 200)
-            {
-            	// 업무 처리 → xmlHttp 응답 데이터를 헤더에 넣기.
-                document.getElementById('header-container').innerHTML = xmlHttp.responseText;
-            	
-             	// 헤더가 로드된 후 버튼 클래스 변경
-                // menuBtn 와 presentPage를 클래스로 가지는 엘리먼트에서 presentPage 클래스 제거
-                var firstButton = document.querySelector('.menuBtn.presentPage');
-                if (firstButton)
-                {
-                    firstButton.classList.remove('presentPage');
-                }
-                
-                // menuBtn 을 클래스로 가지는 엘리먼트 중
-                var buttons = document.querySelectorAll('.menuBtn');
-                if (buttons.length >= 2)
-                {
-                	// 0번째 엘리먼트에 presentPage 클래스 추가 (0부터 시작)
-                    buttons[0].classList.add('presentPage');
-                }
-            }
-        };
-        
-        xmlHttp.send();
+	document.addEventListener('DOMContentLoaded', function () {
+        var firstButton = document.querySelector('.menuBtn.presentPage');
+        if (firstButton) {
+            firstButton.classList.remove('presentPage');
+        }
+        var button = document.querySelector('#noticeList');
+        if (button) {
+            button.classList.add('presentPage');
+        }
+
     });
 
 </script>
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
-<div id="header-container"></div>
+<!-- 상단 헤더 영역 -->
+<div id="header-container">
+    <c:choose>
+        <c:when test="${not empty parent}">
+            <c:import url="/parentheader.action"></c:import>
+        </c:when>
+        <c:when test="${not empty sitter}">
+            <c:import url="/sitterheader.action"></c:import>
+        </c:when>
+        <c:when test="${not empty admin}">
+            <c:import url="adminHeader.jsp"></c:import>
+        </c:when>
+        <c:otherwise>
+            <!-- 기본 헤더 또는 아무 작업도 하지 않음 -->
+        </c:otherwise>
+    </c:choose>
+</div>
+
 
 <div id="body-container">
 	<div id="wrapper-header">
@@ -78,7 +69,14 @@
                 </select>
                 <input type="text" placeholder="검색어를 입력하세요">
                 <button type="button" class="btn">검색</button>
-                <button type="button" class="btn">등록</button>
+                <c:choose>
+			        <c:when test="${not empty admin}">
+		                <button type="button" class="btn">등록</button>
+			        </c:when>
+			        <c:otherwise>
+			            <!-- 기본 헤더 또는 아무 작업도 하지 않음 -->
+			        </c:otherwise>
+			    </c:choose>
             </div>
         </div>
         

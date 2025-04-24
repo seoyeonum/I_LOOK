@@ -11,6 +11,8 @@
 <title>부모 회원가입 페이지</title>
 <link rel="stylesheet" href="css/parentInsertForm.css">
 <script type="text/javascript">
+	
+
     // 카카오 주소 API를 위한 함수
     function searchAddress() {
         new daum.Postcode({
@@ -133,7 +135,7 @@
     <div class="form-group">
         <label class="required" for="userId">아이디</label>
         <div class="input-container">
-            <input type="text" class="text" id="userId" name="par_reg_id" required>
+            <input type="text" class="text" id="userId" name="id" required>
             <button type="button" class="duplicate-check" onclick="checkId()">중복체크</button>
         </div>
         <span id="id-check-message"></span>

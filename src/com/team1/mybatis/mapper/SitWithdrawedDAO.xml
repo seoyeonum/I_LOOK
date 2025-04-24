@@ -41,7 +41,7 @@
 	<insert id="add" parameterType="com.team1.dto.ParWithdrawedDTO">
 	    <!-- 시퀀스 설정 -->
 	    <selectKey keyProperty="sit_withdrawed_id" resultType="String" order="BEFORE">
-	        SELECT 'SWIT' || LPAD(SIT_WITHDRAWED_SEQ.NEXTVAL, 4, '0') FROM DUAL
+	        SELECT 'SWIT' || LPAD(SEQ_SWIT.NEXTVAL, 4, '0') FROM DUAL
 	    </selectKey>
 	    
 	    INSERT INTO SIT_WITHDRAWED 

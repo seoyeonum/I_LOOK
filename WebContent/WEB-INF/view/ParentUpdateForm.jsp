@@ -12,6 +12,21 @@ String cp = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="css/ParentUpdateForm.css">
 
 <script>
+
+ document.addEventListener('DOMContentLoaded', function()
+		{
+			var firstButton = document.querySelector('.menuBtn.presentPage');
+			if (firstButton)
+			{
+				firstButton.classList.remove('presentPage');
+			}
+			var button = document.querySelector('#mypage');
+			if (button)
+			{
+				button.classList.add('presentPage');
+			}
+		});
+			
 	// 수정 확인
 	function confirmUpdate()
 	{
@@ -51,46 +66,16 @@ String cp = request.getContextPath();
 		</script>
 	</c:if>
 
-	<header>
-		<div id="logo">
-			<img src="${cp}/logo.png" height="120px">
-		</div>
-		<nav>
-			<button type="button" class="menuBtn presentPage">홈</button>
-			<button type="button" class="menuBtn">로그아웃</button>
-			<button type="button" class="menuBtn">스케줄러</button>
-			<button type="button" class="menuBtn">긴급돌봄서비스</button>
-			<button type="button" class="menuBtn">마이페이지</button>
-			<button type="button" class="menuBtn">알림함</button>
-		</nav>
-	</header>
-
-	<div class="sidebar">
-		<div class="sidebar-title">마이페이지</div>
-		<div class="menu">
-			<div class="menu-item">
-				<a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-				<div class="submenu">
-					<a href="#">아이 목록 보기</a> <a href="#">신규 아이 등록</a> <a href="#">아이
-						정보 수정</a>
-				</div>
-			</div>
-			<div class="menu-item">
-				<a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-				<div class="submenu">
-					<a href="#">부모 정보 보기</a> <a href="#">부모 정보 수정</a>
-				</div>
-			</div>
-			<div class="menu-item">
-				<a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용
-					현황</a>
-				<div class="submenu">
-					<a href="#">현재 이용 내역</a> <a href="#">이용 완료 내역</a>
-				</div>
-			</div>
-		</div>
+	<!-- 상단 헤더 영역 -->
+	<div id="header-container">
+		<c:import url="/parentheader.action" />
 	</div>
 
+	<!-- 사이드 메뉴 -->
+	<div class="sidebar">
+		<c:import url="/WEB-INF/view/parentSidebar.jsp"/>
+	</div>
+	
 	<div class="page-title">
 		<h2>부모 정보 수정하기</h2>
 	</div>
@@ -122,45 +107,40 @@ String cp = request.getContextPath();
 					<label for="tel">전화번호 :</label> <input type="text" id="tel"
 						name="tel" value="${parent.tel}" required>
 				</div>
+<div class="input-field">
+    <label for="zip_code">우편번호 :</label>  
+    <input type="text" id="zip_code" name="zip_code" value="${parent.zip_code}" readonly>
+    <button type="button" onclick="execDaumPostcode()" class="btn">주소 찾기</button>
+</div>
 
-				<div class="input-field">
-					<label for="zip_code">우편번호 :</label> <input type="text"
-						id="zip_code" name="zip_code" value="${parent.zip_code}" readonly>
-					<button type="button" onclick="execDaumPostcode()">주소 찾기</button>
-				</div>
+<div class="input-field">
+    <label for="road_addr">도로명 주소 :</label>  
+    <input type="text" id="road_addr" name="road_addr" value="${parent.road_addr}" readonly>
+</div>
 
-				<div class="input-field">
-					<label for="road_addr">도로명 주소 :</label> <input type="text"
-						id="road_addr" name="road_addr" value="${parent.road_addr}"
-						readonly>
-				</div>
+<div class="input-field">
+    <label for="detailed_addr">상세 주소 :</label>  
+    <input type="text" id="detailed_addr" name="detailed_addr" value="${parent.detailed_addr}">
+</div>
 
-				<div class="input-field">
-					<label for="detailed_addr">상세 주소 :</label> <input type="text"
-						id="detailed_addr" name="detailed_addr"
-						value="${parent.detailed_addr}">
-				</div>
+<!-- 버튼들 전부 btn class로만! -->
+<div class="form-buttons">
+    <button type="submit" class="btn">수정하기</button>
+    <button type="button" class="btn" onclick="showWithdrawReason();">탈퇴하기</button>
+</div>
 
-				<div class="form-buttons">
-					<button type="submit" class="btn update-btn">수정하기</button>
-					<button type="button" class="btn delete-btn"
-						onclick="showWithdrawReason();">탈퇴하기</button>
-				</div>
-			</form>
+<!-- 탈퇴 사유와 탈퇴 확정도 btn class! -->
+<div class="form-buttons" id="withdrawReasonBox" style="display: none;">
+    <select id="reason_withdrawed_id" name="reason_withdrawed_id">
+        <option value="">-- 탈퇴 사유 선택 --</option>
+        <c:forEach var="reason" items="${withdrawReasons}">
+            <option value="${reason.reason_withdrawed_id}">${reason.type}</option>
+        </c:forEach>
+    </select>
+    <button type="button" class="btn" onclick="withdrawConfirm();">탈퇴 확정</button>
+</div>
 
-			<!-- ✅ 탈퇴 사유 박스 (처음에는 안 보이게) -->
-			<div id="withdrawReasonBox" style="display: none; margin-top: 20px;">
-				<select id="reason_withdrawed_id" name="reason_withdrawed_id">
-					<option value="">-- 탈퇴 사유 선택 --</option>
-					<c:forEach var="reason" items="${withdrawReasons}">
-						<option value="${reason.reason_withdrawed_id}">${reason.type}</option>
-					</c:forEach>
-				</select>
-				<button type="button" class="btn delete-btn"
-					onclick="withdrawConfirm();">탈퇴 확정</button>
-			</div>
-		</div>
-	</div>
+
 
 	<!-- 주소 API -->
 	<script

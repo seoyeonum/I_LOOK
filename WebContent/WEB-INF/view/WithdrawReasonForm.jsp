@@ -10,55 +10,33 @@
 <meta charset="UTF-8">
 <title>부모 탈퇴 페이지</title>
 <link rel="stylesheet" type="text/css" href="css/WithdrawReasonForm.css">
+<script type="text/javascript">
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function()
+{
+	var firstButton = document.querySelector('.menuBtn.presentPage');
+	if (firstButton)
+	{
+		firstButton.classList.remove('presentPage');
+	}
+	var button = document.querySelector('#mypage');
+	if (button)
+	{
+		button.classList.add('presentPage');
+	}
+</script>
 </head>
 <body>
 
-<header>
-    <div id="logo">
-        <img src="./logo.png" height="120px"></div>
-        <nav>
-            <button type="button" class="menuBtn presentPage">홈</button>
-            <button type="button" class="menuBtn">로그아웃</button>
-            <button type="button" class="menuBtn">스케줄러</button>
-            <button type="button" class="menuBtn">긴급돌봄서비스</button>
-            <button type="button" class="menuBtn">마이페이지</button>
-            <button type="button" class="menuBtn">알림함</button>
-        </nav>
-</header>
+	<!-- 상단 헤더 영역 -->
+	<div id="header-container">
+		<c:import url="/parentheader.action" />
+	</div>
 
-<div class="sidebar">
-	<div class="sidebar-title">마이페이지</div>
-	  <div class="menu">
-	
-	    <!-- 아이 정보 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-	      <div class="submenu">
-	        <a href="#">아이 목록 보기</a>
-	        <a href="#">신규 아이 등록</a>
-	        <a href="#">아이 정보 수정</a>
-	      </div>
-	    </div>
-	
-	    <!-- 부모 정보 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-	      <div class="submenu">
-	        <a href="#">부모 정보 보기</a>
-	        <a href="#">부모 정보 수정</a>
-	      </div>
-	    </div>
-	
-	    <!-- 돌봄 이용 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
-	      <div class="submenu">
-	        <a href="#">현재 이용 내역</a>
-	        <a href="#">이용 완료 내역</a>
-	      </div>
-	    </div>
-	  </div>
-</div>
+	<!-- 사이드 메뉴 -->
+	<div class="sidebar">
+		<c:import url="/parentsidebar.action" />
+	</div>
 
 <div class="page-title">
     <h2>회원 탈퇴하기</h2>

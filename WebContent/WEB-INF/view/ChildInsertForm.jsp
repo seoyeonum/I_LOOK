@@ -11,6 +11,19 @@
 <title>아이 등록 페이지</title>
 <link rel="stylesheet" type="text/css" href="css/ChildInsertForm.css">
 <script>
+	document.addEventListener('DOMContentLoaded', function () 
+			{
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton) {
+	        firstButton.classList.remove('presentPage');
+	    }
+	    var button = document.querySelector('#mypage');
+	    if (button) 
+	    {
+	        button.classList.add('presentPage');
+	    }
+
+
     // 주민번호 앞자리와 뒷자리 유효성 검사
     function validateForm() {
         const ssnFirst = document.getElementById("ssn_first").value;
@@ -35,49 +48,14 @@
 </head>
 <body>
 
-<header>
-    <div id="logo">
-        <img src="${pageContext.request.contextPath}/logo.png" height="120px">
-    </div>
-    <nav>
-        <button type="button" class="menuBtn presentPage">홈</button>
-        <button type="button" class="menuBtn">로그아웃</button>
-        <button type="button" class="menuBtn">스케줄러</button>
-        <button type="button" class="menuBtn">긴급돌봄서비스</button>
-        <button type="button" class="menuBtn">마이페이지</button>
-        <button type="button" class="menuBtn">알림함</button>
-    </nav>
-</header>
+<!-- 상단 헤더 영역 -->
+<div id="header-container">
+    <c:import url="/parentheader.action"/>
+</div>
 
+<!-- 사이드 메뉴 -->
 <div class="sidebar">
-    <div class="sidebar-title">마이페이지</div>
-    <div class="menu">
-        <!-- 아이 정보 -->
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-            <div class="submenu">
-                <a href="#">아이 목록 보기</a>
-                <a href="#">신규 아이 등록</a>
-                <a href="#">아이 정보 수정</a>
-            </div>
-        </div>
-        <!-- 부모 정보 -->
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-            <div class="submenu">
-                <a href="#">부모 정보 보기</a>
-                <a href="#">부모 정보 수정</a>
-            </div>
-        </div>
-        <!-- 돌봄 이용 -->
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
-            <div class="submenu">
-                <a href="#">현재 이용 내역</a>
-                <a href="#">이용 완료 내역</a>
-            </div>
-        </div>
-    </div>
+    <c:import url="/parentsidebar.action"/>
 </div>
 
 <div class="page-title">
@@ -92,15 +70,14 @@
                 <input type="text" id="name" name="name" required>
             </div>
 
-            <div class="input-field">
-                <label for="ssn_first">주민번호 앞자리 :</label>
-                <input type="text" id="ssn_first" name="ssn_first" required maxlength="6">
-            </div>
+<div class="input-field">
+    <label for="ssn_first">주민등록번호 :</label>  
+    <input type="text" id="ssn_first" name="ssn_first" required maxlength="6" style="width:100px;">
+    <span>-</span>
+    <input type="text" id="ssn_second" name="ssn_second" required maxlength="7" style="width:100px;">
+</div>
 
-            <div class="input-field">
-                <label for="ssn_second">주민번호 뒷자리 :</label>
-                <input type="text" id="ssn_second" name="ssn_second" required maxlength="7">
-            </div>
+
 
             <div class="input-field">
                 <label for="height">키 :</label>
@@ -158,9 +135,10 @@
                 <textarea name="special_notes" rows="4" cols="50"></textarea>
             </div>
 
-            <div class="form-buttons">
-                <button type="submit">등록하기</button>
-            </div>
+<div class="form-buttons">
+    <button type="submit" class="btn pretty-btn">등록하기</button>
+</div>
+
         </form>
     </div>
 </div>
