@@ -322,9 +322,6 @@ input[readonly] {
             box-shadow: 0 10px 6px -6px #777;
             z-index: 100;
             background-color: white;
-            
-            /* 변경 부분 */
-            margin-bottom: 80px;
         }
 
         #logo {
@@ -409,7 +406,7 @@ input[readonly] {
 .container 
 {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding: 40px;
     margin-left: 650px;
@@ -518,7 +515,7 @@ input[readonly] {
 }
 
 /* 수정하기 및 탈퇴하기 버튼 스타일 */
-.form-buttons 
+/* .form-buttons 
 {
     display: flex;
     justify-content: center;
@@ -544,6 +541,33 @@ input[readonly] {
 {
     background-color: #ffb3d9;  
     color: white;             
+} */
+
+/* 버튼 영역 중앙 배치 */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* 수정하기, 탈퇴하기 버튼 디자인 (통일된 스타일) */
+.btn {
+  padding: 6px 20px;           /* ⬅️ 크기 줄임: 세로 6px, 가로 20px */
+  font-size: 13px;                  /* 글씨 크기 */
+  background-color: #ffffff;          /* 배경색 흰색 */
+  border: 2px solid #ffb3d9;          /* 핑크색 테두리 */
+  border-radius: 6px;                 /* 둥근 모서리 */
+  color: #ffb3d9;                     /* 글씨 색 핑크 */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ffb3d9;          /* 호버 시 핑크 배경 */
+  color: white;                       /* 글씨 흰색으로 변경 */
 }
 
 /* readonly 상태인 입력 필드의 스타일 */
