@@ -36,12 +36,13 @@ body {
 }
 
 /* 레이아웃 스타일 */
+
 #wrapper {
-    position: relative;
+   /*  position: relative;
     width: 60%;
     min-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 20px; */
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     border-radius: 8px;
@@ -246,7 +247,7 @@ input[type="file"] {
 	        firstButton.classList.remove('presentPage');
 	    }
 	   
-	    // id가 'emg'인 버튼을 선택
+	    // id가 'gen'인 버튼을 선택
 	    var button = document.querySelector('#gen');
 	    // 만약 버튼이 존재하면
 	    if (button)
@@ -534,8 +535,8 @@ input[type="file"] {
         <!-- 본문 -->
         <div id="main">
         	<form id="genRegInsert" action="genreginsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="post">
-	        	<div class="regTitle">
-		        	<h2 class="title">근무 등록</h2>
+	        	<div class="regTitle container">
+		        	<h2 class="title regTitle">근무 등록</h2>
      		        	<span class="required">* 표시는 필수 입력 항목입니다.</span>
 			        <div class="verification"></div>
 	       		</div>
