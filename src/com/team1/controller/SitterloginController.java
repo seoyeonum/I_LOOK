@@ -15,7 +15,7 @@ import com.team1.mybatis.ISitLoginDAO;
 import com.team1.mybatis.ISitWithdrawedDAO;
 
 @Controller
-public class SitterLoginController
+public class SitterloginController
 {
     @Autowired
     private SqlSession sqlSession;
