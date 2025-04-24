@@ -5,30 +5,29 @@
 
 <mapper namespace="com.team1.mybatis.IGenReviewDAO">
 
-<<<<<<< HEAD
     <!-- ⭐ 일반 돌봄 리뷰 등록 -->
-<insert id="addGenReviews">
-    INSERT INTO GEN_REVIEWS (
-        GEN_REVIEW_ID,
-        GEN_CONFIRMED_ID,
-        RATING,
-        REVIEWED_DATE,
-        POINT,
-        POINT_SUBJECT,
-        USED_TIME,
-        PAR_READ_DATE
-    )
-    VALUES (
-        #{gen_review_id},
-        #{gen_confirmed_id},
-        #{rating},
-        SYSDATE,
-        #{point_amount},
-        #{point_subject},
-        #{used_time},
-        NULL
-    )
-</insert>
+	<insert id="addGenReviews">
+	    INSERT INTO GEN_REVIEWS (
+	        GEN_REVIEW_ID,
+	        GEN_CONFIRMED_ID,
+	        RATING,
+	        REVIEWED_DATE,
+	        POINT,
+	        POINT_SUBJECT,
+	        USED_TIME,
+	        PAR_READ_DATE
+	    )
+	    VALUES (
+	        #{gen_review_id},
+	        #{gen_confirmed_id},
+	        #{rating},
+	        SYSDATE,
+	        #{point_amount},
+	        #{point_subject},
+	        #{used_time},
+	        NULL
+	    )
+	</insert>
 
     <!-- ⭐ 리뷰 삭제 -->
     <delete id="removeGenReviews">
@@ -157,7 +156,7 @@
 	</select>
 	
 	<!-- 돌봄 확정 아이디로 특정 리뷰 확인 -->
-<!-- 	<select id="findByRequestId" resultType="com.team1.dto.GenReviewDTO">
+	<!-- 	<select id="findByRequestId" resultType="com.team1.dto.GenReviewDTO">
 		SELECT GEN_REVIEW_ID, GEN_CONFIRMED_ID, RATING, REVIEWED_DATE
 		, POINT, POINT_SUBJECT, USED_TIME, PAR_READ_DATE
 		FROM GEN_REVIEWS

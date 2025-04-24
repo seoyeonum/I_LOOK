@@ -32,11 +32,11 @@ public class ParentLoginController
 
         // 1️. ID → PAR_BACKUP_ID 조회
 
-        //if (parentBackup == null)
-        //{
-        //    request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
-        //    return "/WEB-INF/view/logIn.jsp";
-        //}
+        if (parentBackup == null)
+        {
+            request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+            return "/WEB-INF/view/logIn.jsp";
+        }
 
         String par_backup_id = parentBackup.getPar_backup_id();
 
