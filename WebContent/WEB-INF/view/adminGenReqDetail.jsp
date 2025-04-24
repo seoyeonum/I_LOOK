@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -57,42 +58,56 @@
 					<div class="info-row">
 						<div class="info-header">부모 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="PBAC00001" onclick="location.href='adminParDetail.jsp'" readonly>
+							<input type="text" class="info-input" value="${genReq.par_backup_id}" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
-						<div class="info-header">이름</div>
+						<div class="info-header">아이 코드</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="김민준" readonly>
+							<input type="text" class="info-input" value="${genReq.child_backup_id}" readonly>
+						</div>
+					</div>
+					<div class="info-row">
+						<div class="info-header">부모 이름</div>
+						<div class="info-cell">
+							<input type="text" class="info-input" value="${genReq.par_name}" readonly>
+						</div>
+					</div>
+					<div class="info-row">
+						<div class="info-header">아이 이름</div>
+						<div class="info-cell">
+							<input type="text" class="info-input" value="${genReq.child_name}" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">이용 시작일</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="2025-04-10" readonly>
+							<input type="text" class="info-input" value="${fn:substring(genReq.start_date, 0, 10)}" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">이용 종료일</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="2025-04-20" readonly>
+							<input type="text" class="info-input" value="${fn:substring(genReq.end_date, 0, 10)}" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">이용 시작 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="08:00" readonly>
+							<c:set var="startTime" value="${genReq.start_time}" />
+							<input type="text" class="info-input" value="${startTime lt 10 ? '0' : ''}${startTime}:00" readonly>
 						</div>
 					</div>
 					
 					<div class="info-row">
 						<div class="info-header">이용 종료 시간</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="11:00" readonly>
+							<c:set var="endTime" value="${genReq.end_time}" />
+							<input type="text" class="info-input" value="${endTime lt 10 ? '0' : ''}${endTime}:00" readonly>
 						</div>
 					</div>
 					<div class="info-row">
@@ -112,8 +127,9 @@
 			
 			<!-- 하단 버튼 영역 -->
 			<div class="bottom-btn">
-				<button class="submit-btn">뒤로가기</button>
+				<button class="btn cancel-btn" onclick="location.href='<%=cp%>/adminreqlist.action'">뒤로가기</button>
 			</div>
+			
 		</main> 
 	</div>
 </div>
