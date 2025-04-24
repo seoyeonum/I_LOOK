@@ -17,7 +17,7 @@
         if (firstButton) {
             firstButton.classList.remove('presentPage');
         }
-        var button = document.querySelector('#gen');
+        var button = document.querySelector('#mypage');
         if (button) {
             button.classList.add('presentPage');
         }
@@ -64,31 +64,7 @@
 
 <!-- 사이드 메뉴 -->
 <div class="sidebar">
-    <div class="sidebar-title">마이페이지</div>
-    <div class="menu">
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-child"></i> 아이 정보 관리</a>
-            <div class="submenu">
-                <a href="#">아이 목록 보기</a>
-                <a href="#">신규 아이 등록</a>
-                <a href="#">아이 정보 수정</a>
-            </div>
-        </div>
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-            <div class="submenu">
-                <a href="#">부모 정보 보기</a>
-                <a href="#">부모 정보 수정</a>
-            </div>
-        </div>
-        <div class="menu-item">
-            <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
-            <div class="submenu">
-                <a href="#">현재 이용 내역</a>
-                <a href="#">이용 완료 내역</a>
-            </div>
-        </div>
-    </div>
+    <c:import url="/parentsidebar.action"/>
 </div>
 
 <!-- 메인 컨텐츠 영역 -->
