@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>리뷰 및 별점 페이지</title>
 <link rel="stylesheet" href="css/ReviewInsertForm.css">
+
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function()
 		{
@@ -24,9 +25,6 @@ document.addEventListener('DOMContentLoaded', function()
 				button.classList.add('presentPage');
 			}
 		});
-</script>
-
-<script type="text/javascript">
 // 페이지가 로드된 후 실행되도록 설정
 document.addEventListener('DOMContentLoaded', function() {
     // 별점 기능
@@ -119,30 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	<div class="sidebar">
 		<c:import url="/WEB-INF/view/parentSidebar.jsp" />
 	</div>
-	
-	    <!-- 부모 정보 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-user-group"></i> 부모 정보 관리</a>
-	      <div class="submenu">
-	        <a href="#">부모 정보 보기</a>
-	        <a href="#">부모 정보 수정</a>
-	      </div>
-	    </div>
-	
-	    <!-- 돌봄 이용 -->
-	    <div class="menu-item">
-	      <a href="#"><i class="fa-solid fa-house-chimney-user"></i> 돌봄 이용 현황</a>
-	      <div class="submenu">
-	        <a href="#">현재 이용 내역</a>
-	        <a href="#">이용 완료 내역</a>
-	      </div>
-	    </div>
 
  <div id="review-header">
      <h2>별점 및 리뷰</h2>
  </div>
 
-<div id="wrapper">
+<div id="whole-star">
     <!-- 별점 선택 -->
     <div class="rating-section">
         <h2>별점 부여</h2>

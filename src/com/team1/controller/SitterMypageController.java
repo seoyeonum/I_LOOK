@@ -75,16 +75,16 @@ public class SitterMypageController
       model.addAttribute("list", dao.sitIdSearch(sit_backup_id));
       
       // 확인 ----------------------------------------------
-      System.out.println("시터 백업 코드: " + sit_backup_id);
-      System.out.println("시터 등록 코드: " + dao.sitIdSearch(sit_backup_id).getSit_reg_id());
-      System.out.println("계좌번호: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getAcct_number());
-      System.out.println("은행이름: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getBank_type());
+      //System.out.println("시터 백업 코드: " + sit_backup_id);
+      //System.out.println("시터 등록 코드: " + dao.sitIdSearch(sit_backup_id).getSit_reg_id());
+      //System.out.println("계좌번호: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getAcct_number());
+      //System.out.println("은행이름: " + sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getBank_type());
       //----------------------------------------------------
       
       if (sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()) == null)
       {
          HashMap<String, String> bank = new HashMap<String, String>();
-         bank.put("BANK_TYPE", null);
+         bank.put("BANK_TYPE", "미등록");
          bank.put("acct_number", "등록한 은행 계좌가 존재하지 않습니다.");
          model.addAttribute("bank", bank);
       }

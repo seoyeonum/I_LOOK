@@ -185,29 +185,21 @@
  	
  	
  	<select id="sitIdSearch" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 백업 아이디로 자기 정보 찾기 public SitDTO sitIdSearch(String sit_backup_id); -->
-	 	SELECT R.SIT_REG_ID AS sit_reg_id
-		, R.SIT_BACKUP_ID AS sit_backup_id
-		, B.ID AS ID
-		, B.REG_DATE AS REG_DATE
-		, R.PW AS PW
-		, R.NAME AS NAME
-		, R.SSN_FIRST AS SSN_FIRST
-		, R.SSN_SECOND AS SSN_SECOND
-		, R.ROAD_ADDR AS ROAD_ADDR
-		, R.DETAILED_ADDR AS DETAILED_ADDR
-		, R.ZIP_CODE AS ZIP_CODE
-		, R.TEL AS TEL
-		, R.FILE_PATH AS FILE_PATH
-		FROM SIT_REG R
-		JOIN SIT_BACKUP B 
-		ON B.SIT_BACKUP_ID = R.SIT_BACKUP_ID
-		JOIN SIT_CHK C
-		ON B.SIT_BACKUP_ID = C.SIT_BACKUP_ID
-		JOIN ACCT_REG AREG
-		ON AREG.SIT_REG_ID = R.SIT_REG_ID
-		JOIN BANK_TYPES BTYPES
-		ON AREG.BANK_TYPE_ID = BTYPES.BANK_TYPE_ID
-		WHERE B.SIT_BACKUP_ID = #{sit_backup_id}
+	 	SELECT SIT_REG_ID AS sit_reg_id
+		, SIT_BACKUP_ID AS sit_backup_id
+		, ID AS ID
+		, REG_DATE AS REG_DATE
+		, PW AS PW
+		, NAME AS NAME
+		, SSN_FIRST AS SSN_FIRST
+		, SSN_SECOND AS SSN_SECOND
+		, ROAD_ADDR AS ROAD_ADDR
+		, DETAILED_ADDR AS DETAILED_ADDR
+		, ZIP_CODE AS ZIP_CODE
+		, TEL AS TEL
+		, FILE_PATH AS FILE_PATH
+		FROM V_ADMIN_SIT_ALL
+		WHERE SIT_BACKUP_ID = #{sit_backup_id}
 	</select>
 	
 	<select id="searchGrades" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 등급 찾기 public SitDTO searchGrades(String id); -->

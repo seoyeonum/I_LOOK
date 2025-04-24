@@ -11,6 +11,19 @@
 <title>아이 등록 페이지</title>
 <link rel="stylesheet" type="text/css" href="css/ChildInsertForm.css">
 <script>
+	document.addEventListener('DOMContentLoaded', function () 
+			{
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton) {
+	        firstButton.classList.remove('presentPage');
+	    }
+	    var button = document.querySelector('#mypage');
+	    if (button) 
+	    {
+	        button.classList.add('presentPage');
+	    }
+
+
     // 주민번호 앞자리와 뒷자리 유효성 검사
     function validateForm() {
         const ssnFirst = document.getElementById("ssn_first").value;
@@ -57,15 +70,14 @@
                 <input type="text" id="name" name="name" required>
             </div>
 
-            <div class="input-field">
-                <label for="ssn_first">주민번호 앞자리 :</label>
-                <input type="text" id="ssn_first" name="ssn_first" required maxlength="6">
-            </div>
+<div class="input-field">
+    <label for="ssn_first">주민등록번호 :</label>  
+    <input type="text" id="ssn_first" name="ssn_first" required maxlength="6" style="width:100px;">
+    <span>-</span>
+    <input type="text" id="ssn_second" name="ssn_second" required maxlength="7" style="width:100px;">
+</div>
 
-            <div class="input-field">
-                <label for="ssn_second">주민번호 뒷자리 :</label>
-                <input type="text" id="ssn_second" name="ssn_second" required maxlength="7">
-            </div>
+
 
             <div class="input-field">
                 <label for="height">키 :</label>
@@ -123,9 +135,10 @@
                 <textarea name="special_notes" rows="4" cols="50"></textarea>
             </div>
 
-            <div class="form-buttons">
-                <button type="submit">등록하기</button>
-            </div>
+<div class="form-buttons">
+    <button type="submit" class="btn pretty-btn">등록하기</button>
+</div>
+
         </form>
     </div>
 </div>

@@ -26,7 +26,7 @@
 
 <!-- 사이드 메뉴 -->
 <div class="sidebar">
-    <c:import url="/parentsidebar.action"/>
+    <c:import url="/WEB-INF/view/parentSidebar.jsp"/>
 </div>
 
 <div class="page-title">

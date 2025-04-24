@@ -10,18 +10,31 @@
 <meta charset="UTF-8">
 <title>부모 상세정보 페이지</title>
 <link rel="stylesheet" type="text/css" href="css/ParentInfo.css">
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function()
+		{
+			var firstButton = document.querySelector('.menuBtn.presentPage');
+			if (firstButton)
+			{
+				firstButton.classList.remove('presentPage');
+			}
+			var button = document.querySelector('#mypage');
+			if (button)
+			{
+				button.classList.add('presentPage');
+			}
+</script>
 </head>
 <body>
+	<!-- 상단 헤더 영역 -->
+	<div id="header-container">
+		<c:import url="/parentheader.action" />
+	</div>
 
-<!-- 상단 헤더 영역 -->
-<div id="header-container">
-    <c:import url="/parentheader.action"/>
-</div>
-
-<!-- 사이드 메뉴 -->
-<div class="sidebar">
-    <c:import url="/parentsidebar.action"/>
-</div>
+	<!-- 사이드 메뉴 -->
+	<div class="sidebar">
+		<c:import url="/parentsidebar.action" />
+	</div>
 
 
 <div class="page-title">
