@@ -52,7 +52,7 @@
 	
 	<div class="banner-section">
 	    <div class="banner-content">
-	        <h3 class="banner-title">아이사랑 시터님, 환영합니다!</h3>
+	        <h3 class="banner-title">${sitName} 시터님, 환영합니다!</h3>
 	        <p class="banner-text">오늘도 아이들에게 행복한 시간을 선물해 주세요.<br>시터님의 따뜻한 돌봄이 아이들의 미래를 밝게 합니다.</p>
 	        <!-- <button class="btn emg-btn-small">시터 가이드 보기</button> -->
 	    </div>
@@ -119,7 +119,7 @@
 			    </div>
 			    
 			    <div class="see-more-container">
-			        <a href="./emgReqList.jsp" class="see-more-link">더보기 <i class="fas fa-angle-right"></i></a>
+			        <a href="emgreqlist.action" class="see-more-link">더보기 <i class="fas fa-angle-right"></i></a>
 			    </div>
 			</div>
 		</div>

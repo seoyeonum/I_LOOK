@@ -12,6 +12,18 @@
 <title>돌봄 완료 내역</title>
 <link rel="stylesheet" href="css/CareCompleted.css">
 <script type="text/javascript">
+
+	document.addEventListener('DOMContentLoaded', function () {
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton) {
+	        firstButton.classList.remove('presentPage');
+	    }
+	    var button = document.querySelector('#gen');
+	    if (button) {
+	        button.classList.add('presentPage');
+	    }
+	});
+    
     let currentPage = 1;
     const itemsPerPage = 8;
 
@@ -62,33 +74,14 @@
 </head>
 <body>
 
-<header>
-    <div id="logo"><img src="<%= cp %>/logo.png" height="120px"></div>
-    <nav>
-        <button class="menuBtn presentPage">홈</button>
-        <button class="menuBtn">로그아웃</button>
-        <button class="menuBtn">스케줄러</button>
-        <button class="menuBtn">긴급돌봄서비스</button>
-        <button class="menuBtn">마이페이지</button>
-        <button class="menuBtn">알림함</button>
-    </nav>
-</header>
-        
-<div class="sidebar">
-    <div class="sidebar-title">마이페이지</div>
-    <div class="menu">
-        <div class="menu-item"><a href="#">아이 정보 관리</a></div>
-        <div class="menu-item"><a href="#">부모 정보 관리</a></div>
-        <div class="menu-item">
-            <a href="#">돌봄 이용 현황</a>
-            <div class="submenu">
-                <a href="#">현재 이용 내역</a>
-                <a href="#">이용 완료 내역</a>
-            </div>
-        </div>
-    </div>
+<div id="header-container">
+    <c:import url="/parentheader.action"/>
 </div>
-
+ 
+<div class="sidebar">
+    <c:import url="/WEB-INF/view/parentSidebar.jsp"/>
+</div>
+ 
 <div id="finish-header"><h2>돌봄 완료 내역</h2></div>
 
 <div class="booking-list">
