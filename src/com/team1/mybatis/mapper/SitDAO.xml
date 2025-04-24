@@ -324,4 +324,18 @@
 	</insert>
 	
 	<!-- checkId → SitLogin.xml -->
+	
+	<!-- 시터 관리자 승인 거부 확인 -->
+	<select id="checkSitterRejected" parameterType="String" resultType="int">
+	    SELECT COUNT(*)
+	    FROM SIT_REJECTED
+	    WHERE SIT_BACKUP_ID = #{sit_backup_id}
+	</select>
+	
+	<!-- 승인 여부 확인 -->
+	<select id="checkSitterApproved" parameterType="String" resultType="int">
+	    SELECT COUNT(*)
+	    FROM SIT_CHK
+	    WHERE SIT_BACKUP_ID = #{sit_backup_id}
+	</select>
 </mapper>
