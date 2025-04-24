@@ -5,7 +5,6 @@
 
 <mapper namespace="com.team1.mybatis.IGenReviewDAO">
 
-<<<<<<< HEAD
     <!-- ⭐ 일반 돌봄 리뷰 등록 -->
 <insert id="addGenReviews">
     INSERT INTO GEN_REVIEWS (

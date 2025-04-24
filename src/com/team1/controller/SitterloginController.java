@@ -15,7 +15,7 @@ import com.team1.mybatis.ISitLoginDAO;
 import com.team1.mybatis.ISitWithdrawedDAO;
 
 @Controller
-public class SitterLoginController
+public class SitterloginController
 {
     @Autowired
     private SqlSession sqlSession;
@@ -64,7 +64,7 @@ public class SitterLoginController
         // 🔓 정상 로그인
         session.setAttribute("loginSitter", sitterBackup);
         session.setAttribute("sit_backup_id", sit_backup_id);
-        return "forward:/sitterMain.action";  // 시터 메인 페이지로 이동
+        return "forward:/emgmain.action";  // 시터 메인 페이지로 이동
     }
     
 }

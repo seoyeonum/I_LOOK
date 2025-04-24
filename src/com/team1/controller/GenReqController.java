@@ -316,7 +316,7 @@ public class GenReqController
         
         // (시터 백업 코드로) 시터 객관식 리뷰 조회
         IGenReviewDAO genReviewDao = sqlSession.getMapper(IGenReviewDAO.class);
-        ArrayList<String> listReview = genReviewDao.listReviewByBackupId(sitBackupId);
+        //ArrayList<String> listReview = genReviewDao.listReviewByBackupId(sitBackupId);
         
         // 확인
         //System.out.println(preferedRegion.isEmpty());
@@ -332,7 +332,7 @@ public class GenReqController
 		model.addAttribute("preferedRegion", preferedRegion);
 		model.addAttribute("preferedAge", preferedAge);
 		model.addAttribute("listSitCert", listSitCert);
-		model.addAttribute("listReview", listReview);
+		//model.addAttribute("listReview", listReview);
 		
 		// (추가로 세션에 필터 값 저장)
 		session.setAttribute("genRegId", genRegId);

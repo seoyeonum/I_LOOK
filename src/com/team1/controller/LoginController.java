@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController
 {
     // ● 통합 로그인 처리
-    @RequestMapping(value = "/login.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.action", method = RequestMethod.POST)
     public void loginRedirect(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         String userType = request.getParameter("userType");
@@ -25,7 +25,8 @@ public class LoginController
         String id = request.getParameter("id");
 
         String redirectUrl = "";
-
+        
+        //System.out.println(userType);
         switch (userType)
         {
             case "admin":

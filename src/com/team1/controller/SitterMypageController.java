@@ -7,6 +7,8 @@
 package com.team1.controller;
 
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -71,7 +73,27 @@ public class SitterMypageController
 		IAcctDAO acctDao = sqlSession.getMapper(IAcctDAO.class);
 		
 		model.addAttribute("list", dao.sitIdSearch(sit_backup_id));
-		model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()));
+		
+		System.out.println(sit_backup_id);
+		System.out.println(dao.sitIdSearch(sit_backup_id).getSit_reg_id());
+		System.out.println(sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getAcct_number());
+		System.out.println(sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()).getBank_type());
+		System.out.println(sit_backup_id);
+		
+		
+		
+		if (sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()) == null)
+		{
+			HashMap<String, String> bank = new HashMap<String, String>();
+			bank.put("BANK_TYPE", "000");
+			bank.put("acct_number", "등록한 은행 계좌가 존재하지 않습니다.");
+			model.addAttribute("bank", bank);
+		}
+		else
+		{
+			model.addAttribute("bank", sitAcctDao.list(dao.sitIdSearch(sit_backup_id).getSit_reg_id()));
+		}
+		
 		model.addAttribute("banklist", acctDao.list());
 		
 		return "/WEB-INF/view/SitterinfoList.jsp";
