@@ -98,7 +98,7 @@
 			</c:otherwise>
 			</c:choose>
 			</div>
-					<c:if test="${preferedRegion} != null">
+					<c:if test="${not empty preferedRegion}">
                     <div>지역:&nbsp;
                     <c:forEach var="pr" items="${preferedRegion}">
                     	<span class="badge">${pr}</span>
@@ -106,7 +106,7 @@
                     </div>
                     </c:if>
                     
-                    <c:if test="${preferedAge} != null">
+                    <c:if test="${not empty preferedAge}">
                		<div>자신있는 돌봄 연령대:&nbsp;
                		<c:forEach var="pa" items="${preferedAge}">
                     	<span class="badge">${pa}</span>
@@ -114,16 +114,25 @@
                     </div>
                     </c:if>
                     
-                    <c:if test="${listSitCert} != null">
+                    <c:if test="${not empty listSitCert}">
                		<div>보유 자격:&nbsp;
                		<c:forEach var="cert" items="${listSitCert}">
                     	<span class="badge">${cert}</span>
 		            </c:forEach>
                     </div>
 		            </c:if>
+		            
+		            <c:if test="${not empty listReview}">
+               		<div>돌봄 후기:&nbsp;
+               		<c:forEach var="review" items="${listReview}">
+                    	<span class="badge">${review}</span>
+		            </c:forEach>
+                    </div>
+		            </c:if>
+		            
                     	
                     <div>시터님의 한 마디: ${genDetail.introduction}</div>
-                	<div>마지막 근무일: <!-- 2025.03.14. --></div>
+                	<!-- <div>마지막 근무일: 2025.03.14.</div> -->
             	</div>	
    			</div>
         </div>

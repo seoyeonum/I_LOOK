@@ -13,7 +13,7 @@
 
  	<insert id="addCert"> <!-- public int addCert(SitCertDTO sitcert); -->
  	<selectKey keyProperty="cert_reg_id" resultType="String" order="BEFORE">
-		SELECT 'SCER' || LPAD(SCER_SEQ.NEXTVAL, 4, '0') 
+		SELECT 'SCER' || LPAD(SEQ_SCER.NEXTVAL, 4, '0') 
 		FROM DUAL
 	</selectKey>
 	 	INSERT INTO CERT_REG(CERT_REG_ID, CERT_TYPE_ID, SIT_REG_ID, FILE_PATH)

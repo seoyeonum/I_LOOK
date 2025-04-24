@@ -312,7 +312,7 @@
 	<!-- ① 시터 백업 삽입 (addBackup) -->
 	<insert id="addBackup" parameterType="com.team1.dto.SitDTO">
 	<selectKey keyProperty="sit_backup_id" resultType="String" order="BEFORE">
-		SELECT 'SBAC' || LPAD(SBAC_SEQ.NEXTVAL, 4, '0') 
+		SELECT 'SBAC' || LPAD(SEQ_SBAC.NEXTVAL, 4, '0') 
 		FROM DUAL
 	</selectKey>
 		INSERT INTO SIT_BACKUP (SIT_BACKUP_ID, ID, REG_DATE)
@@ -322,7 +322,7 @@
 	<!-- ② 시터 백업 코드로 SIT_REG 확인 및 회원 등록 -->
 	<insert id="add" parameterType="com.team1.dto.SitDTO">
 	<selectKey keyProperty="sit_reg_id" resultType="String" order="BEFORE">
-		SELECT 'SREG' || LPAD(SREG_SEQ.NEXTVAL, 4, '0') 
+		SELECT 'SREG' || LPAD(SEQ_SREG.NEXTVAL, 4, '0') 
 		FROM DUAL
 	</selectKey>
 		INSERT INTO SIT_REG (SIT_REG_ID, SIT_BACKUP_ID, PW, NAME, 
