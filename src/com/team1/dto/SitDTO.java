@@ -68,7 +68,7 @@ public class SitDTO
 		this.id = id;
 	}
 
-	public String getSit_reg_id()
+	public String getSit_reg_id() 
 	{
 		return sit_reg_id;
 	}

@@ -234,9 +234,9 @@
 			<div class="form-group">
 			은행 종류: &nbsp;
 			<select>
-				<option value="000">은행을 선택하세요</option>
+				<option value="000" selected="selected">은행을 선택하세요</option>
 				<c:forEach var="acctdto" items="${banklist }" >
-					<option value="${acctdto.bank_type_id }" selected="selected" ${acctdto.type == bank.bank_type ? 'selected="selected"' : '' }>${acctdto.type }</option>
+					<option value="${acctdto.bank_type_id }" ${acctdto.type == bank.bank_type ? 'selected="selected"' : '' }>${acctdto.type }</option>
 				</c:forEach>
 			</select>			
 			<br />
