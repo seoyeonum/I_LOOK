@@ -15,6 +15,7 @@ public class GenReqDTO
 	private String status;
 	private String par_name;
 	private String pay_status;
+	private String par_backup_id;
 
 	// 결제 관련
 	private String gen_pay_rec_id, gen_point_used_id;
@@ -277,4 +278,18 @@ public class GenReqDTO
 	{
 		this.work_hours = work_hours;
 	}
+
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
+	}
+	
+	
+	
+	
 }

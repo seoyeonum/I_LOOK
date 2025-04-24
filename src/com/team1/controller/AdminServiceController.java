@@ -266,6 +266,12 @@ public class AdminServiceController
 		AdminDTO dto = getLoginAdmin(session);
 		model.addAttribute("loginAdmin", dto);
 		
+		IGenReqDAO dao = sqlSession.getMapper(IGenReqDAO.class);
+		
+		GenReqDTO genReq = dao.adminSearch(gen_req_id);
+		
+		model.addAttribute("genReq", genReq);
+		
 		return "WEB-INF/view/adminGenReqDetail.jsp";
 	}
 	

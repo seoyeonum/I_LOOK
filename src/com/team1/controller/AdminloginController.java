@@ -30,7 +30,7 @@ public class AdminloginController
         if (admin != null)
         {
             session.setAttribute("loginAdmin", admin);
-            return "WEB-INF/view/adminMain.jsp";
+            return "redirect:/adminmain.action";
         }
         else 
         {

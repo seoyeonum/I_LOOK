@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.team1.dto.ParDTO;
 import com.team1.dto.ParWithdrawedDTO;
-import com.team1.dto.SitDTO;
+
 
 public interface IParDAO
 {
