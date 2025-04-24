@@ -37,6 +37,7 @@ import com.team1.mybatis.IChildDAO;
 import com.team1.mybatis.IGenPayDAO;
 import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGenReqDAO;
+import com.team1.mybatis.IGenReviewDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.IParDAO;
 import com.team1.mybatis.ISitCertDAO;
@@ -308,21 +309,30 @@ public class GenReqController
 		// (이전 페이지에서 건네 받은) 근무 등록 코드로 시터 선호 돌봄 연령대 조회
 		ArrayList<String> preferedAge = regDao.listSitPreferedAge(genRegId);
 				
-				
 		// (시터 백업 코드로) 시터 보유 자격증 조회
 		String sitBackupId = genDetail.getSit_backup_id();
 		ISitCertDAO certDao = sqlSession.getMapper(ISitCertDAO.class);
         ArrayList<String> listSitCert = certDao.listSitCert(sitBackupId);
         
+        // (시터 백업 코드로) 시터 객관식 리뷰 조회
+        IGenReviewDAO genReviewDao = sqlSession.getMapper(IGenReviewDAO.class);
+        ArrayList<String> listReview = genReviewDao.listReviewByBackupId(sitBackupId);
+        
+        // 확인
+        //System.out.println(preferedRegion.isEmpty());
+        //System.out.println(preferedAge.isEmpty());
+        //System.out.println(listSitCert.isEmpty());
+        
         
 		// 다음 페이지로 넘겨주는 값
 		// → 근무 등록 코드, 특정 근무 등록 정보
-		//    , 시터 선호 근무 지역, 시터 선호 돌봄 연령대, 시터 보유 자격증
+		//    , 시터 선호 근무 지역, 시터 선호 돌봄 연령대, 시터 보유 자격증, 객관식 리뷰 조회
 		model.addAttribute("genRegId", genRegId);
 		model.addAttribute("genDetail", genDetail);
 		model.addAttribute("preferedRegion", preferedRegion);
 		model.addAttribute("preferedAge", preferedAge);
 		model.addAttribute("listSitCert", listSitCert);
+		model.addAttribute("listReview", listReview);
 		
 		// (추가로 세션에 필터 값 저장)
 		session.setAttribute("genRegId", genRegId);
@@ -544,9 +554,10 @@ public class GenReqController
 			int timeStart = (Integer) session.getAttribute("timeStart");
 			int timeEnd = (Integer) session.getAttribute("timeEnd");
 			
-			System.out.println(childBackupId);
-			System.out.println(dateStart);
-			System.out.println(dateEnd);
+			// 확인
+			//System.out.println(childBackupId);
+			//System.out.println(dateStart);
+			//System.out.println(dateEnd);
 			
 			genReqDto.setGen_reg_id(genRegId);
 			genReqDto.setChild_backup_id(childBackupId);
@@ -556,7 +567,6 @@ public class GenReqController
 			genReqDto.setStart_time(timeStart);
 			genReqDto.setEnd_time(timeEnd);
 			
-			// 테스트 시 주석 풀기
 			IGenReqDAO genReqDao = sqlSession.getMapper(IGenReqDAO.class);
 			genReqDao.add(genReqDto);
 			
@@ -573,7 +583,6 @@ public class GenReqController
 			genReqDto.setPay_amount(payAmount);
 			genReqDto.setPg_code(pgCode);
 			
-			// 테스트 시 주석 풀기
 			IGenPayDAO genPayDao = sqlSession.getMapper(IGenPayDAO.class);
 			genPayDao.addGenPayRec(genReqDto);
 			

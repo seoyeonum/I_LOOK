@@ -37,5 +37,14 @@
 	    FROM PAR_REG
 	    WHERE PAR_BACKUP_ID = #{par_backup_id}
 	</select>
+	
+	
+    <!-- 부모 회원가입 중복 체크 -->
+	<select id="checkId" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+		FROM PAR_BACKUP
+		WHERE ID = #{id}
+	</select>
+	
 
 </mapper>

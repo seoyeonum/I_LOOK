@@ -36,7 +36,6 @@ import com.team1.mybatis.IGenRegDAO;
 import com.team1.mybatis.IGradesDAO;
 import com.team1.mybatis.ISitAcctDAO;
 import com.team1.mybatis.ISitCareListDAO;
-import com.team1.mybatis.ISitCertDAO;
 import com.team1.mybatis.ISitDAO;
 import com.team1.mybatis.IWorkRegionPreferedDAO;
 

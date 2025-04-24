@@ -15,7 +15,7 @@ import com.team1.mybatis.IParLoginDAO;
 import com.team1.mybatis.IParWithdrawedDAO;
 
 @Controller
-public class ParentloginController
+public class ParentLoginController
 {
     @Autowired
     private SqlSession sqlSession;
@@ -28,15 +28,15 @@ public class ParentloginController
                               HttpServletRequest request)
     {
         IParLoginDAO dao = sqlSession.getMapper(IParLoginDAO.class);
-
-        // 1️. ID → PAR_BACKUP_ID 조회
         ParDTO parentBackup = dao.findById(id);  
 
-        if (parentBackup == null)
-        {
-            request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "/WEB-INF/view/logIn.jsp";
-        }
+        // 1️. ID → PAR_BACKUP_ID 조회
+
+        //if (parentBackup == null)
+        //{
+        //    request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+        //    return "/WEB-INF/view/logIn.jsp";
+        //}
 
         String par_backup_id = parentBackup.getPar_backup_id();
 

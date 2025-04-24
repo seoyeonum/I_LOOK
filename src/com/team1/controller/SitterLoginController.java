@@ -1,4 +1,4 @@
-/*package com.team1.controller;
+package com.team1.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,11 +15,11 @@ import com.team1.mybatis.ISitLoginDAO;
 import com.team1.mybatis.ISitWithdrawedDAO;
 
 @Controller
-public class SitterloginController
+public class SitterLoginController
 {
     @Autowired
     private SqlSession sqlSession;
-
+    
     // 시터 로그인 처리
     @RequestMapping(value = "/sitterlogin.action", method = RequestMethod.POST)
     public String sitterLogin(@RequestParam("id") String id,
@@ -28,16 +28,17 @@ public class SitterloginController
                                HttpServletRequest request)
     {
         ISitLoginDAO dao = sqlSession.getMapper(ISitLoginDAO.class);
-        SitDTO sitter = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
+        SitDTO sitterBackup = dao.loginCheck(id, pw); // 로그인 체크 후 SitDTO 반환
 
         
-        if (sitter != null) // 로그인 성공
-        {
-            session.setAttribute("loginSitter", sitter);
-            return "forward:/emgmain.action";
-        }
-
-        String sit_backup_id = sitterBackup.getSit_backup_id();
+        // 1️. 정상 로그인 가능 여부 확인
+        //if (sitterBackup == null)
+        //{
+        //	request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+        //    return "/WEB-INF/view/logIn.jsp";
+        //}
+        
+        String sit_backup_id = dao.findById(id);
 
         // 2️. 탈퇴 여부 확인
         ISitWithdrawedDAO withdrawedDao = sqlSession.getMapper(ISitWithdrawedDAO.class);
@@ -57,10 +58,13 @@ public class SitterloginController
             request.setAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
             return "/WEB-INF/view/logIn.jsp";
         }
+        
+        // 4. 시터 회원 승인 여부 확인 필요
 
         // 🔓 정상 로그인
         session.setAttribute("loginSitter", sitterBackup);
         session.setAttribute("sit_backup_id", sit_backup_id);
         return "forward:/sitterMain.action";  // 시터 메인 페이지로 이동
     }
-}*/
+    
+}

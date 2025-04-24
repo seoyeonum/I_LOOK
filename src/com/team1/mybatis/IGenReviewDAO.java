@@ -38,10 +38,13 @@ public interface IGenReviewDAO
 	public ArrayList<GenReviewDTO> list();
 	
 	// 일반 돌봄 리뷰 전체 수
-	public int countRevies();
+	public int countReviews();
 	
 	// 아이디로 특정 리뷰 확인
 	public GenReviewDTO findByRequestId(String gen_review_id);
+	
+	// [일반] 시터 백업 아이디로 객관식 응답 확인
+	public ArrayList<String> listReviewByBackupId(String sit_back_id);
 	
 	// 객관식 응답 리스트
 

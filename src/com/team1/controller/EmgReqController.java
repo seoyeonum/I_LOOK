@@ -4,8 +4,6 @@
 
 package com.team1.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,9 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.team1.dto.ChildDTO;
 import com.team1.dto.SitDTO;
-import com.team1.mybatis.IChildDAO;
 
 @Controller
 public class EmgReqController

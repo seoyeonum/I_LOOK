@@ -82,7 +82,5 @@ public interface ISitDAO
 	// [시터 회원가입 ▶ 회원 등록]
 	public int add(SitDTO sitter);
 	
-	// [시터 회원 가입 중복 체크
-	public int checkId(String sit_reg_id);
 
 }
