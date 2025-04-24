@@ -5,6 +5,7 @@
 
 <mapper namespace="com.team1.mybatis.IGenReviewDAO">
 
+<<<<<<< HEAD
     <!-- ⭐ 일반 돌봄 리뷰 등록 -->
 <insert id="addGenReviews">
     INSERT INTO GEN_REVIEWS (
@@ -149,5 +150,35 @@
     WHERE GEN_CONFIRMED_ID = #{gen_confirmed_id}
 </select>
 
-
+	<!-- 일반 돌봄 리뷰 전체 수 -->
+	<select id="countReviwes" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GEN_REVIEWS
+	</select>
+	
+	<!-- 돌봄 확정 아이디로 특정 리뷰 확인 -->
+<!-- 	<select id="findByRequestId" resultType="com.team1.dto.GenReviewDTO">
+		SELECT GEN_REVIEW_ID, GEN_CONFIRMED_ID, RATING, REVIEWED_DATE
+		, POINT, POINT_SUBJECT, USED_TIME, PAR_READ_DATE
+		FROM GEN_REVIEWS
+		WHERE GEN_REVIEW_ID = #{gen_review_id}
+	</select> -->
+	
+	<!-- [일반] 시터 백업 아이디로 객관식 응답 확인 -->
+	<select id="listReviewByBackupId" resultType="java.lang.String">
+		SELECT DISTINCT GMT.TYPE AS TYPE
+		FROM GEN_MULTIPLE_REVIEWS GMR JOIN GEN_MULTIPLE_TYPES GMT
+		ON GMR.GEN_MULTIPLE_TYPE_ID = GMT.GEN_MULTIPLE_TYPE_ID
+		    JOIN GEN_REVIEWS GRV
+		    ON GRV.GEN_REVIEW_ID  = GMR.GEN_REVIEW_ID
+		        JOIN gen_confirmed GC
+		        ON GRV.GEN_CONFIRMED_ID = gc.gen_confirmed_id
+		            JOIN GEN_REQ GQ
+		            ON GC.GEN_REQ_ID = GQ.GEN_REQ_ID
+		                JOIN GEN_REG GR
+		                ON GQ.GEN_REG_ID = GR.GEN_REG_ID
+		                    JOIN SIT_BACKUP S
+		                    ON S.SIT_BACKUP_ID = GR.SIT_BACKUP_ID
+		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
+	</select>
 </mapper>

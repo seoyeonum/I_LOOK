@@ -30,6 +30,9 @@ public interface IGenReqDAO
     // 특정 아이디의 예약 등록건 찾기
     public int search(GenReqDTO gen_req);
     
+    // [관리자] 예약 신청 상세정보 조회
+    public GenReqDTO adminSearch(String gen_req_id);
+    
     // 부모 기준 예약 내역 조회 (최근 이용 내역 및 이용 상태 표시용) ✅ 수정 완료!
     public ArrayList<GenReqDTO> findByParent(String par_backup_id);
 }

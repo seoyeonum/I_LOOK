@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IAdminMainDAO">
+
+	<!-- 일일 회원가입 수 -->
+	<select id="countReg" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS countReg
+		FROM ADMIN_SIT_REG_VIEW
+	</select>
+	
+	<!-- 일일 일반돌봄 예약 수 -->
+	<select id="countGenReq" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS countGenReq
+		FROM ADMIN_GEN_REQ_VIEW
+		WHERE REQ_DATE = SYSDATE
+	</select>
+	
+	
+</mapper>

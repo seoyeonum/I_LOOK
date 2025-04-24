@@ -1,34 +1,47 @@
 package com.team1.controller;
 
-import com.team1.mybatis.ISitDAO;
+import com.team1.mybatis.ISitLoginDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class SiterAjaxController
 {
     @Autowired
-    private ISitDAO sitDao;
+    private ISitLoginDAO sitLoginDao;
 
     @RequestMapping(value = "/sitcheckid.action", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, Object> checkId(@RequestParam("userId") String id) 
+    public void checkId(@RequestParam("userId") String id, HttpServletResponse response) throws IOException 
     {
-    	Map<String, Object> response = new HashMap<>();
-    	try
-    	{
-            int count = sitDao.checkId(id);		//-- checkId : 아이디로 조회
-            response.put("exists", count > 0); 	//-- 조회 결과 1 이상 → exist 속성 추가(기본 false)
-            									//   (true면 중복, false면 사용가능)
+        // 응답 형식 설정
+        response.setContentType("text/plain;charset=UTF-8");
+        
+        try
+        {
+            int count = sitLoginDao.checkId(id);
+            
+            // 간단한 텍스트 응답으로 결과 전송
+            //-- 200(요청성공), 400(잘못된 요청), 404(리소스를 찾을 수 없음), 500(서버 내부 오류)
+            
+            if (count > 0)										//-- 중복 아이디 존재 시
+            {
+            	response.setStatus(200);
+                response.getWriter().write("duplicate");		//-- 응답 데이터에 "duplicate"
+            }
+            else												//-- 중복 아이디 없을 시
+            {
+            	response.setStatus(200);
+                response.getWriter().write("available");		//-- 응답 데이터에 "available"
+            }
         }
-    	catch (Exception e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
-            response.put("exists", true); 		//-- 에러 발생 시에는 → 중복으로 처리
+            response.setStatus(500);
+            response.getWriter().write("error");
         }
-        return response;
     }
 }

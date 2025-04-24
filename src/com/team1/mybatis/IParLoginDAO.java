@@ -25,6 +25,10 @@ public interface IParLoginDAO
 	// ID로 부모 정보 가져오기 (비밀번호 X)
 	public ParDTO findById(String id);                // ID로 PAR_BACKUP_ID 조회
 	public ParDTO findPwByBackupId(String par_backup_id); // 백업 ID로 비밀번호 확인
+	
+	// ■ 회원가입 시 ID(=ID) 중복 체크
+	public int checkId(String par_reg_id);
 
+		
 
 }

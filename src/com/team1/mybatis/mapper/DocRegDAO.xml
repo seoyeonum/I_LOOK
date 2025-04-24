@@ -7,8 +7,12 @@
  	
  	
  	<insert id="addDoc"> <!-- // [시터] 서류 등록 public int addDoc(DocRegDTO docreg); -->
+	<selectKey keyProperty="doc_reg_id" resultType="String" order="BEFORE">
+		SELECT 'SDOC' || LPAD(SEQ_SDOC.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
 	 	INSERT INTO DOC_REG(DOC_REG_ID, DOC_TYPE_ID, SIT_REG_ID, FILE_PATH)
-		VALUES(#{doc_reg_id}, #{doc_type_id}, #{sit_reg_id}, #{file_path});
+		VALUES(#{doc_reg_id}, #{doc_type_id}, #{sit_reg_id}, #{file_path})
  	</insert> 
  	
  	

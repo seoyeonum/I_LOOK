@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 
-public class membershipController 
+public class MembershipController 
 {
 	// 회원 유형 선택 페이지로 이동
 	@RequestMapping(value = "/membership.action", method = RequestMethod.GET)

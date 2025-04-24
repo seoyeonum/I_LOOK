@@ -39,7 +39,7 @@
 	    FROM (
 	        SELECT V.*, ROWNUM AS RN
 	        FROM (
-	            SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, PAR_NAME, NAME,
+	            SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, PAR_NAME, CHILD_NAME,
 	                   START_DATE, END_DATE, START_TIME, END_TIME, REQ_DATE, STATUS
 	            FROM ADMIN_GEN_REQ_VIEW
 	            WHERE 1=1
@@ -96,6 +96,14 @@
 	    
 	</select>
 
+	
+	<!-- [관리자] 예약 신청 상세정보 조회 -->
+	<select id="adminSearch" resultType="com.team1.dto.GenReqDTO">
+		SELECT *
+		FROM ADMIN_GEN_REQ_VIEW
+		WHERE GEN_REQ_ID = #{gen_req_id}
+	</select>
+	
 	
 	<!-- 특정 아이디의 예약 등록건 찾기 -->
 	<select id="search" resultType="com.team1.dto.GenReqDTO">

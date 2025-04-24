@@ -1,39 +1,52 @@
 package com.team1.controller;
 
-import com.team1.mybatis.IParDAO;
+import com.team1.mybatis.IParLoginDAO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
-public class ParentAjaxController {
+public class ParentAjaxController
+{
 
-    @Autowired
-    private IParDAO parDao;
+	@Autowired
+    private IParLoginDAO parLoginDao;
 
-    @RequestMapping(value = "/checkId.action", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, String> checkId(@RequestParam("userId") String id) 
+    @RequestMapping(value = "/parcheckid.action", method = RequestMethod.GET)
+    public void checkId(@RequestParam("userId") String id, HttpServletResponse response) throws IOException 
     {
-        Map<String, String> response = new HashMap<>();
-        try {
-            int count = parDao.checkId(id);
-            if (count > 0) {
-                response.put("status", "duplicate");
-                response.put("message", "이미 사용 중인 아이디입니다.");
-            } else {
-                response.put("status", "available");
-                response.put("message", "사용 가능한 아이디입니다.");
+        // 응답 형식 설정
+        response.setContentType("text/plain;charset=UTF-8");
+        
+        try
+        {
+            int count = parLoginDao.checkId(id);
+            
+            // 간단한 텍스트 응답으로 결과 전송
+            //-- 200(요청성공), 400(잘못된 요청), 404(리소스를 찾을 수 없음), 500(서버 내부 오류)
+            
+            if (count > 0)										//-- 중복 아이디 존재 시
+            {
+            	response.setStatus(200);
+                response.getWriter().write("duplicate");		//-- 응답 데이터에 "duplicate"
             }
-        } catch (Exception e) {
-            response.put("status", "error");
-            response.put("message", "서버 오류가 발생했습니다.");
+            else												//-- 중복 아이디 없을 시
+            {
+            	response.setStatus(200);
+                response.getWriter().write("available");		//-- 응답 데이터에 "available"
+            }
         }
-        return response;
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            response.setStatus(500);
+            response.getWriter().write("error");
+        }
     }
 
 }

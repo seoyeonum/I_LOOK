@@ -24,5 +24,4 @@
 	    FROM ADMIN_REG
 	    WHERE ADMIN_REG_ID = #{admin_reg_id}
 	</select>
-
 </mapper>

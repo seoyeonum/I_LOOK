@@ -125,19 +125,30 @@
             margin-top: 10px;
         }
     </style>
+    
+    <!-- 로그아웃 메시지 -->
     <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
     <script>
         alert("로그아웃이 완료되었습니다.");
+    </script>
+	<% } %>
         
-        // 로그아웃 메시지
-        <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
-            alert("로그아웃이 완료되었습니다.");
-        <% } %>
-
-        // 탈퇴 완료 메시지
-        <% if (request.getParameter("message") != null) { %>
-            alert("<%= request.getParameter("message") %>");
-        <% } %>
+    <!-- 탈퇴 완료 메시지 -->
+    <% if (request.getParameter("message") != null) { %>
+    <script>
+        alert("<%= request.getParameter("message") %>");
+    </script>
+    <% } %>
+	
+	<% if (request.getParameter("sitterinsert") != null && request.getParameter("sitterinsert").equals("success")) { %>
+    <script>
+        alert("시터 회원 요청이 완료되었습니다.");
+    </script>
+	<% } %>
+	
+	<% if (request.getParameter("parentinsert") != null && request.getParameter("parentinsert").equals("success")) { %>
+    <script>
+        alert("부모 회원 가입이 완료되었습니다.");
     </script>
 	<% } %>
 
