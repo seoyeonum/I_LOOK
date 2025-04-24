@@ -12,6 +12,18 @@
 <title>돌봄 완료 내역</title>
 <link rel="stylesheet" href="css/CareCompleted.css">
 <script type="text/javascript">
+
+	document.addEventListener('DOMContentLoaded', function () {
+	    var firstButton = document.querySelector('.menuBtn.presentPage');
+	    if (firstButton) {
+	        firstButton.classList.remove('presentPage');
+	    }
+	    var button = document.querySelector('#gen');
+	    if (button) {
+	        button.classList.add('presentPage');
+	    }
+	});
+    
     let currentPage = 1;
     const itemsPerPage = 8;
 
@@ -67,7 +79,7 @@
 </div>
  
 <div class="sidebar">
-    <c:import url="/action"/>
+    <c:import url="/WEB-INF/view/parentSidebar.jsp"/>
 </div>
  
 <div id="finish-header"><h2>돌봄 완료 내역</h2></div>

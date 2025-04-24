@@ -97,4 +97,14 @@ public class HeaderController
 	    
 	    return result;
 	}
+	
+	@RequestMapping(value="/parentsidebar.action", method = RequestMethod.GET)
+	public String parentSidebar(Model model, HttpSession session)
+	{
+		String result = null;
+		
+	    result = "WEB-INF/view/parentSidebar.jsp";
+	    
+	    return result;
+	}
 }

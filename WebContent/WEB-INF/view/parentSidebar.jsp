@@ -51,7 +51,7 @@
 		</a>
 		<div class="submenu">
 			<a href="<%=cp%>/sitterusehistory.action">현재 이용 내역</a>
-			<a href="<%=cp%>/parentmypage.action">이용 완료 내역</a>		<!-- → ○○○.action 수정 필요 -->
+			<a href="<%=cp%>/parentcaredone.action">이용 완료 내역</a>	
 		</div>
 	</div>
 
