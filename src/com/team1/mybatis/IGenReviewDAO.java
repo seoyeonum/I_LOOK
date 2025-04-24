@@ -66,4 +66,6 @@ public interface IGenReviewDAO
 
     // ⭐ 예약 확정 ID로 일한 시간(used_time / work_hours) 조회
     public int getWorkHoursByConfirmedId(@Param("gen_confirmed_id") String gen_confirmed_id);
+
+	public ArrayList<String> listReviewByBackupId(String sitBackupId);
 }
