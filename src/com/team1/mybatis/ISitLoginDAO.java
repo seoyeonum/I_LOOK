@@ -21,4 +21,10 @@ public interface ISitLoginDAO
 	// public SitDTO loginCheck(@Param("id") String id, @Param("pw") String pw);
 	public SitDTO loginCheck(@Param("id") String id, @Param("pw") String pw);
 
+	public String findById(String id);  // ID로 백업 코드 조회
+	public SitDTO findPwByBackupId(String sit_backup_id);  // PW 확인용
+
+	// 시터 회원 가입 중복 체크
+	public int checkId(String sit_reg_id);
+
 }

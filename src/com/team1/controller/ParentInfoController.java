@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 public class ParentInfoController
 {
@@ -40,4 +39,3 @@ public class ParentInfoController
         return "/WEB-INF/view/ParentInfo.jsp"; 
     }
 }
-

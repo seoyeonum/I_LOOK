@@ -105,33 +105,26 @@
         <c:choose>
             <c:when test="${not empty careDoneList}">
                 <c:forEach var="item" items="${careDoneList}" varStatus="status">
-                    <c:if test="${item.status eq '돌봄 완료'}">
-                        <div class="booking-item">
-                            <div class="column">${status.index + 1}</div>
-                            <div class="column">${item.sitter_name}</div>
-                            <div class="column">
-                                <fmt:parseDate var="start" value="${item.start_date}" pattern="yyyy-MM-dd" />
-                                <fmt:parseDate var="end" value="${item.end_date}" pattern="yyyy-MM-dd" />
-                                <fmt:formatDate value="${start}" pattern="yyyy년 MM월 dd일" /> ~
-                                <fmt:formatDate value="${end}" pattern="yyyy년 MM월 dd일" />
-                            </div>
-                            <div class="column">${item.work_hours}시간</div>
-                            <div class="column">
-                                <c:choose>
-                                    <c:when test="${item.care_type eq 'GEN'}">일반돌봄 완료</c:when>
-                                    <c:when test="${item.care_type eq 'EMG'}">긴급돌봄 완료</c:when>
-                                </c:choose>
-                            </div>
-                            <div class="column">
-                                <button type="button" onclick="location.href='reviewform.action?req_id=${item.req_id}&care_type=${item.care_type}'">리뷰</button>
-                            </div>
+                    <div class="booking-item">
+                        <div class="column">${status.index + 1}</div>
+                        <div class="column">${item.sitter_name}</div>
+                        <div class="column">
+                            <fmt:parseDate var="start" value="${item.start_date}" pattern="yyyy-MM-dd" />
+                            <fmt:parseDate var="end" value="${item.end_date}" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${start}" pattern="yyyy년 MM월 dd일" /> ~
+                            <fmt:formatDate value="${end}" pattern="yyyy년 MM월 dd일" />
                         </div>
-                    </c:if>
+                        <div class="column">${item.work_hours}시간</div>
+                        <div class="column">${item.care_status}</div>
+                        <div class="column">
+                            <button type="button" onclick="location.href='reviewform.action?gen_req_id=${item.gen_req_id}&care_type=${item.care_type}'">리뷰 작성</button>
+                        </div>
+                    </div>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <div class="booking-item">
-                    <div class="column" colspan="6" style="text-align:center;">완료된 돌봄 내역이 없습니다.</div>
+                    <div class="column" style="width:100%; text-align:center;">완료된 돌봄 내역이 없습니다.</div>
                 </div>
             </c:otherwise>
         </c:choose>

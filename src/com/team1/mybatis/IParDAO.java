@@ -26,9 +26,6 @@ public interface IParDAO
 	// ■ 부모 정보 조회 (PAR_BACKUP_ID 기준, JOIN 사용)
 	public ParDTO search(String par_backup_id);
 
-	// ■ 회원가입 시 ID(=PAR_REG_ID) 중복 체크
-	public int checkId(String par_reg_id);
-
 	// ■ 부모 회원 수정 (update 사용)
 	public int update(ParDTO par); // ✅ 이 메서드만 사용 (modify는 삭제 또는 미사용)
 
@@ -53,6 +50,11 @@ public interface IParDAO
 	// (아이 백업 코드로) 부모 백업 코드 조회
 	public String seachParBackupId(String child_backup_id);
 	
+
+	// 부모 정보 삭제 (탈퇴 시)
+	public int delete(String par_backup_id);
+	
+
 	// [관리자] 부모 전체 목록 조회 
 	public List<ParDTO> adminListPar(@Param("start") int start
 							 , @Param("end") int end
@@ -63,6 +65,6 @@ public interface IParDAO
 	public int adminCountPar(@Param("searchKey") String searchKey
 						, @Param("searchValue") String searchValue);
 	
-     
+    
 
 }

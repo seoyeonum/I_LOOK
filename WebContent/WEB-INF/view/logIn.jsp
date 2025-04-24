@@ -125,13 +125,44 @@
             margin-top: 10px;
         }
     </style>
+    
+    <!-- 로그아웃 메시지 -->
     <% if (request.getParameter("logout") != null && request.getParameter("logout").equals("success")) { %>
     <script>
         alert("로그아웃이 완료되었습니다.");
     </script>
 	<% } %>
+        
+    <!-- 탈퇴 완료 메시지 -->
+    <% if (request.getParameter("message") != null) { %>
+    <script>
+        alert("<%= request.getParameter("message") %>");
+    </script>
+    <% } %>
+	
+	<% if (request.getParameter("sitterinsert") != null && request.getParameter("sitterinsert").equals("success")) { %>
+    <script>
+        alert("시터 회원 요청이 완료되었습니다.");
+    </script>
+	<% } %>
+	
+	<% if (request.getParameter("parentinsert") != null && request.getParameter("parentinsert").equals("success")) { %>
+    <script>
+        alert("부모 회원 가입이 완료되었습니다.");
+    </script>
+	<% } %>
+
 </head>
 <body>
+<!-- 탈퇴 후 재로그인 안되는 메세지 -->
+<% if (request.getAttribute("message") != null) { %>
+    <script>
+        alert("<%= request.getAttribute("message") %>");
+    </script>
+<% } %>
+
+
+
 <main>
     <!-- 로고 이미지 -->
     <div class="logoImg">

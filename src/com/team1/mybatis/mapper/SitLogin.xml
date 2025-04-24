@@ -28,4 +28,27 @@
 		WHERE B.ID = #{id}
 		    AND R.PW = #{pw}
 	</select>
+	
+	<select id="findPwByBackupId" parameterType="String" resultType="com.team1.dto.SitDTO">
+	    SELECT 
+	        PW
+	    FROM SIT_REG
+	    WHERE SIT_BACKUP_ID = #{sit_backup_id}
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="java.lang.String">
+	    SELECT 
+	        B.SIT_BACKUP_ID AS SIT_BACKUP_ID
+	        <!-- , B.ID AS ID -->
+	    FROM SIT_BACKUP B
+	    WHERE B.ID = #{id}
+	</select>
+
+	<!-- 시터 회원 가입 중복 체크 -->
+	<select id="checkId" resultType="java.lang.Integer">
+	<!-- 여기에 중복 가입 여부 체크 쿼리 필요 -->
+		SELECT COUNT(*) AS COUNT
+		FROM SIT_BACKUP
+		WHERE ID = #{id}
+	</select>
 </mapper>

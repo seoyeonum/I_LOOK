@@ -151,29 +151,33 @@
     <div class="history-section">
         <h2 class="page-list-title">이용 내역</h2>
         <div class="history-list-container">
-            <div class="history-item header">
-                <span class="history-number">번호</span>
-                <span class="history-date">이용날짜</span>
-                <span class="history-time">이용시간</span>
-                <span class="history-child-name">아이 이름</span>
-                <span class="history-sitter-name">시터 이름</span>
-                <span class="history-btn">상세보기</span>
-            </div>
-            <div id="history-table" class="history-list-container">
-                <c:forEach var="item" items="${useList}" varStatus="status">
-                    <div class="history-item">
-                        <span class="history-number">${status.index + 1}</span>
-                        <span class="history-date">
-                            <span class="start-date">${item.start_date} ~ </span><br>
-                            <span class="end-date">${item.end_date}</span>
-                        </span>
-                        <span class="history-time">${item.total_hours}시간</span>
-                        <span class="history-child-name">${item.child_name}</span>
-                        <span class="history-sitter-name">${item.sitter_name}</span>
-                        <button class="details-btn">상세보기</button>
-                    </div>
-                </c:forEach>
-            </div>
+<div class="history-item header">
+    <span class="history-number">번호</span>
+    <span class="history-date">이용날짜</span>
+    <span class="history-time">이용시간</span>
+    <span class="history-child-name">아이 이름</span>
+    <span class="history-sitter-name">시터 이름</span>
+    <span class="history-status">이용 상태</span> <!-- ✅ 추가 -->
+    <span class="history-btn">상세보기</span>
+</div>
+
+<div id="history-table" class="history-list-container">
+    <c:forEach var="item" items="${useList}" varStatus="status">
+        <div class="history-item">
+            <span class="history-number">${status.index + 1}</span>
+            <span class="history-date">
+                <span class="start-date">${item.start_date} ~ </span><br>
+                <span class="end-date">${item.end_date}</span>
+            </span>
+            <span class="history-time">${item.work_hours}시간</span> <!-- ✅ work_hours 사용 -->
+            <span class="history-child-name">${item.child_name}</span>
+            <span class="history-sitter-name">${item.sitter_name}</span>
+            <span class="history-status">${item.care_status}</span> <!-- ✅ 이용 상태 표시 -->
+            <button class="details-btn">상세보기</button>
+        </div>
+    </c:forEach>
+</div>
+
             <div id="paginationContainer" class="pagination-controls"></div>
         </div>
     </div>

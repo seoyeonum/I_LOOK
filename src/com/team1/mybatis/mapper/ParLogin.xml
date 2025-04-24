@@ -25,4 +25,26 @@
 		  WHERE B.ID = #{id}
 		    AND R.PW = #{pw}
 	</select>
+	<select id="findById" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT PAR_BACKUP_ID, ID
+	    FROM PAR_BACKUP
+	    WHERE ID = #{id}
+	</select>
+	
+	<select id="findPwByBackupId" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT 
+	        PW
+	    FROM PAR_REG
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+	
+	
+    <!-- 부모 회원가입 중복 체크 -->
+	<select id="checkId" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+		FROM PAR_BACKUP
+		WHERE ID = #{id}
+	</select>
+	
+
 </mapper>

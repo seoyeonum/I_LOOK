@@ -36,5 +36,8 @@ public interface IGenConfirmedDAO
 	
 	// 일반 돌봄 부모 기록(메모) 리스트
 	public ArrayList<GenConfirmedDTO> parMemolist();
+
+	public ArrayList<GenConfirmedDTO> findByParent(String par_backup_id);
+	
 	
 }

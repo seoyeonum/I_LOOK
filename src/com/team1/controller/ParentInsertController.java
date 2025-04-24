@@ -15,7 +15,7 @@ import com.team1.dto.ParDTO;
 import com.team1.mybatis.IParDAO;
 
 @Controller
-public class parentInsertController
+public class ParentInsertController
 {
 	@Autowired 
 	private SqlSession sqlSession;
@@ -33,7 +33,7 @@ public class parentInsertController
 		dao.add(parent);
 		
 		// 3. 성공 후 로그인 페이지로 이동
-		return "redirect:/iLook.action";
+		return "redirect:/iLook.action?parentinsert=success";
 	}
 	
 	/*
