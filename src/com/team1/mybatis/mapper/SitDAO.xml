@@ -199,7 +199,7 @@
 		, TEL AS TEL
 		, FILE_PATH AS FILE_PATH
 		FROM V_ADMIN_SIT_ALL
-		WHERE SIT_BACKUP_ID = #{sit_backup_id}
+		WHERE SIT_BACKUP_ID = #{sit_backup_id, jdbcType=VARCHAR}
 	</select>
 	
 	<select id="searchGrades" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 등급 찾기 public SitDTO searchGrades(String id); -->

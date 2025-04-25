@@ -34,7 +34,7 @@
 		    
 		    if (filePath)
 			{
-				var fullUrl = "<%=cp%>/images/"" + folder + "/" + filePath;
+		    	var fullUrl = "<%=cp%>/images/" + folder + "/" + filePath;
 				
 				// 팝업창 사이즈
 		        var popupWidth = 800;
@@ -97,7 +97,9 @@
 				<div class="content-body">
 					<div class="left-section">
 						<div class="profile">
-							<img src="<%=cp%>/images/pictures/${sitInfo.file_path}" onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';" style="width: 200px; height: auto;">
+							<img src="<%=cp %>/images/pictures/${sitInfo.file_path}" 
+						     onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';"
+						     style="width: 100%; height: 100%;">
 						</div>
 						<!-- 자격증 정보를 프로필 아래에 배치 -->
 						<div class="category-row">

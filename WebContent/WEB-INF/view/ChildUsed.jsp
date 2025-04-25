@@ -106,7 +106,7 @@ String cp = request.getContextPath();
 				<div class="recent-sitter-profile">
 					<div class="sitter-photo-container">
 						<img
-							src="<%= cp %>/${currentUse.file_path}.jpg"
+							src="<%= cp %>/images/pictures/${currentUse.file_path}"
 							alt="시터 사진"
 							onerror="this.onerror=null;this.src='<%= cp %>/resources/uploads/default_sitter.jpg';">
 					</div>

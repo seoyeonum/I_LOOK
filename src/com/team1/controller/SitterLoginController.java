@@ -51,7 +51,7 @@ import org.springframework.web.bind.annotation.RequestParam;
          }
  
          // 3️. 비밀번호 확인 (SIT_REG)
-         SitDTO sitterReg = dao.findPwByBackupId(sit_backup_id);
+         SitDTO sitterReg = dao.loginCheck(id, pw);
  
          if (sitterReg == null || !sitterReg.getPw().equals(pw))
          {

@@ -8,18 +8,18 @@
 	<!-- 시터 로그인 -->
 	<select id="loginCheck" resultType="com.team1.dto.SitDTO">
 		SELECT 
-		    R.SIT_REG_ID,
-		    R.SIT_BACKUP_ID,
-		    B.ID,
-		    R.PW,
-		    R.NAME,
-		    R.SSN_FIRST,
-		    R.SSN_SECOND,
-		    R.ROAD_ADDR,
-		    R.DETAILED_ADDR,
-		    R.ZIP_CODE, 
-		    R.TEL,
-		    R.FILE_PATH
+		    R.SIT_REG_ID AS sit_reg_id,
+	        R.SIT_BACKUP_ID AS sit_backup_id,
+	        B.ID AS id,
+	        R.PW AS pw,
+	        R.NAME AS name,
+	        R.SSN_FIRST AS ssn_first,
+	        R.SSN_SECOND AS ssn_second,
+	        R.ROAD_ADDR AS road_addr,
+	        R.DETAILED_ADDR AS detailed_addr,
+	        R.ZIP_CODE AS zip_code, 
+	        R.TEL AS tel,
+	        R.FILE_PATH AS file_path
 		FROM SIT_REG R
 		JOIN SIT_BACKUP B 
 		ON B.SIT_BACKUP_ID = R.SIT_BACKUP_ID

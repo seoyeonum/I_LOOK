@@ -64,9 +64,9 @@ public class SitterInsertController
         
         
         // 2. 파일 저장 경로
-        String uploadPathPics = request.getServletContext().getRealPath("//WebContent/images/pictures");			// 저장경로 - 시터사진
-        String uploadPathDoc = request.getServletContext().getRealPath("//WebContent/images/documents");			// 저장경로 - 검증서류
-        String uploadPathCert = request.getServletContext().getRealPath("//WebContent/images/certificates");		// 저장경로 - 자격증
+        String uploadPathPics = request.getServletContext().getRealPath("/images/pictures");			// 저장경로 - 시터사진
+        String uploadPathDoc = request.getServletContext().getRealPath("/images/documents");			// 저장경로 - 검증서류
+        String uploadPathCert = request.getServletContext().getRealPath("/images/certificates");		// 저장경로 - 자격증
 
         
         // 3. 시터 사진 저장 및 경로 (SIR_REG 의 FILE_PATH)
@@ -80,11 +80,12 @@ public class SitterInsertController
     	
         File filePhoto = new File(uploadPathPics, filePhotoName);						// 파일 객체 생성
         sitPhoto.transferTo(filePhoto);													// (서버에) 파일 저장
+        System.out.println("▶ 시터 사진 저장 경로: " + filePhoto.getAbsolutePath());
         
-        String pathPic = filePhoto.getAbsolutePath();									//-- 시터 파일 저장 경로
-        sitter.setFile_path(pathPic);
+        													//-- 시터 파일 저장 경로
+        sitter.setFile_path(filePhotoName);
         
-        
+
         
         // 4. SIT_REG 등록 → sit_reg_id 자동 생성
         sitdao.add(sitter);
@@ -109,6 +110,7 @@ public class SitterInsertController
         doc001.setSit_reg_id(sitter.getSit_reg_id());
         doc001.setFile_path(fileHealthCertName);
         docdao.addDoc(doc001);
+        System.out.println("▶ 보건증 저장 경로: " + fileHealthCert.getAbsolutePath());
 
 
         // 5-2. 범죄이력 업로드 (DOC_TYPE_ID: "002")
