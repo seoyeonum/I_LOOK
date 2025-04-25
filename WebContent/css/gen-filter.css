@@ -1,0 +1,1334 @@
+@charset "UTF-8";
+
+/* gen-filter.css */
+
+/* ========== 전체 적용 ========== */
+@font-face
+{
+	font-family: 'NoonnuBasicGothicRegular';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+*
+{
+    box-sizing: border-box;				/* 요소의 전체 크기(패딩 등 포함)로 표시 */
+    margin: 0;
+    padding: 0;
+    font-family: 'NoonnuBasicGothicRegular';
+}
+
+/* ========== 메인 제목 ========== */
+h1
+{
+	font-size: 24px;
+	padding: 20px;
+	white-space: nowrap; 				/* 텍스트가 줄 바꿈 없이 한 줄로 유지 */
+}
+
+.main-subject h1
+{
+	margin-right: 1000px; 				   /* 기본적으로 우측에 1000px 간격 */
+}
+
+
+/* ========== 서브 제목 ========== */
+h2
+{
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #333;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.sub-subject h2
+{
+	margin-right: 900px; 				   /* 기본적으로 우측에 900px 간격 */
+}
+
+/* ========== 본문 ========== */
+body
+{
+    /* background-color: #f8f9fa; */	/* 미색으로 보이는 게 나을지? */
+    color: #333;
+}
+
+#body-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px 10px;						/* 첫 번째 값은 수직 간격, 두 번째 값은 수평 간격 */
+}
+
+
+.label
+{
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+input, select
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/*
+.sitter-form
+{
+	width: 760px;
+}
+
+ */
+/* ========== 박스(box) 형태 ========== */
+/* 1차 필터 박스*/
+.box-filter
+{
+	background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px ;
+    box-shadow: 2px 2px 0 #e5e5e5;		/* 그림자 속성: (수평) (수직) (블러) (색상) */
+    width: 1100px;
+}
+
+/* 2차 필터(사이드 바) 박스 */
+.box-side
+{
+    width: 280px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    height: fit-content;				/* 내용물에 맞춰 높이 설정 */
+    position: sticky;					/* top: 20px 이후부터 고정 */
+    top: 20px;
+    /* display: none; 기본적으로 숨겨져 있음 */
+}
+
+/* 일반 돌봄 메인 페이지 하단 박스 */
+.box-main
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 545px;
+    height: 300px;
+}
+
+/* 일반 돌봄 시터 간단 정보 박스 */
+.box-preview
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 돌봄 상세 정보 박스 */
+.box-detail
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 600px;
+}
+
+/* 돌봄 신청 박스 */
+.box-req
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 결제 완료 박스 */
+.box-req-complete
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: inline;
+    text-align: center;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 800px;
+}
+
+/* 긴급 돌봄 각 등록 박스 */
+.box-emg
+{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+#primary-filter-form
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+}
+
+.form-group
+{
+    /* margin-bottom: 15px; */
+    padding: 10px;
+}
+
+.form-group-confirm
+{
+	margin-bottom: 0px;
+    padding: 10px;
+    display: inline;
+}
+
+
+
+/* 돌봄 희망 날짜 , 돌봄 희망 시간 */
+.date-range, .time-range
+{
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    margin-bottom: 8px;
+    /* align-items: center; */
+}
+
+.date-range input
+{
+    flex: 1;
+}
+
+.time-range select
+{
+    flex: 1;
+}
+
+
+/* 시간 설정 경고 문구 */
+.warning
+{
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;					/* 기본 none 으로 설정 바꾸어야 함! */
+}
+
+
+/* ========== 버튼 ========== */
+.btn
+{
+    background-color: #e28c99;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;					/* 마우스 커서가 손 모양(포인터) */
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;	/* CSS 속성값의 변화에 애니메이션 효과를 추가 */
+    /* margin-bottom: 20px; */
+}
+
+.btn:hover
+{
+    background-color: #febdb4;
+}
+
+.btn-large
+{
+	margin-bottom: 20px;
+}
+
+.gen-btn-small
+{
+	font-size: 12px;
+}
+
+.emg-btn-small
+{
+	font-size: 12px;
+	position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* 상세 보기 버튼 정렬 */
+.btn-area
+{
+	width: 600px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.btn-area-large
+{
+	width: 800px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+
+/* ========== 체크박스 ========== */
+.checkbox-group
+{
+    margin-bottom: 10px;
+}
+
+.checkbox-label
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.checkbox-label input
+{
+    width: auto;
+}
+
+.range-group
+{
+    margin-bottom: 10px;
+}
+
+.range-label
+{
+	display: flex;
+	justify-content: space-between;			/* 요소를 양 끝에 두고 간격 동일 */
+    margin-top: 5px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    gap: 0 30px;
+}
+
+#wrapper-body
+{
+	display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px 10px;	
+    width: 1100px;
+}
+
+.sub-body-form
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 1070px;
+}
+
+.sidebar
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 240px;
+}
+
+
+/* 일반 돌봄 검색 결과 */
+.gen-results
+{
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	width: 800px;
+}
+
+.gen-results-detail, .emg-results-detail
+{
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	width: 600px;
+}
+
+/* 긴급 돌봄 검색 결과 */
+.emg-results
+{
+	display: flex;
+	flex: 1;
+	gap: 10px 10px;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 1070px;
+}
+
+/* 시터 사진 */
+.sitter-photo
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;		/* 사진 원형으로 만들기 */
+    overflow: hidden;		/* 지정한 크기 초과 시 초과분 hidden */
+}
+
+.sitter-photo img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;		/* 이미지를 영역에 꽉 채우기, 비율 유지, 초과분 hidden */
+}
+
+/* 시터 정보, 일반 돌봄 등록 정보, 긴급 돌봄 등록 정보 */
+.sitter-info, .gen-info, .emg-info
+{
+    flex: 1;
+    text-align: right;
+}
+
+/* 
+.gen-info-normal
+{	
+	flex: 1;
+
+}
+ */
+.result-info
+{
+	 display: inline-flex;
+	 justify-content: center;
+	 flex: 1;
+}
+
+
+.sitter-title, .sitter-name, .child-name, .name
+{
+	display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.sitter-status
+{
+	font-size: 16px;
+	/* border-radius: 5px; */
+	color: #d9534f;
+	/* background-color: #e28c99; */
+	display: inline;					/* 기본 none 으로 설정 바꾸어야 함! */
+}
+
+.sitter-grade-img
+{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;		/* 사진 원형으로 만들기 */
+    overflow: hidden;		/* 지정한 크기 초과 시 초과분 hidden */
+}
+
+.sitter-grade-img img
+{
+	width: 100%;
+    height: 100%;
+    object-fit: cover;		/* 이미지를 영역에 꽉 채우기, 비율 유지, 초과분 hidden */
+	
+}
+
+
+.sitter-details, .gen-details, .emg-details
+{
+    display: inline;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.sitter-details div, .gen-details div, .emg-details div
+{
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.parent-id
+{
+	display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.gen-details input
+{
+	flex: 1;
+    /* width: 500px; */
+    margin: 5px;
+    font-weight: normal;
+    font-size: 14px;
+}
+/* 
+.payment
+{
+	font-size: 18px;
+	margin: 10px;
+}
+ */
+#check-payment
+{
+	height: 20px;
+	width: 20px;
+}
+
+.hidden
+{
+	display: none;
+}
+
+.row-items
+{
+	display: flex;
+	justify-content: row;
+	align-items: center;
+	gap: 10px;
+}
+
+#search-name
+{
+	width: 300px;
+	margin: 0 10px;
+}
+
+.child-has
+{
+	display: inline;
+}
+
+.child-has ul
+{
+	padding: 5px 10px;
+	margin-left: 10px;
+	text-align: left;
+	list-style-type: disc;
+	
+}
+
+ul
+{
+	list-style-type: none;
+}
+
+/* 뱃지 형태의 정보 표시 */
+.badge
+{
+    display: flex;
+    background-color: #dcb9ff;
+    color: #560d7d;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.male
+{
+	background-color: #aad5ff;
+    color: #1f6c96;
+}
+
+.female
+{
+	background-color: #febdb4;
+    color: #d9534f;
+}
+
+.star
+{
+	display: flex;
+    color: #d9534f;
+    font-size: 12px;
+}
+
+/* 로고 이미지 */
+.logo-complete
+{
+	width: 300px;
+	height: 300px;
+	overflow: hidden;		/* 지정한 크기 초과 시 초과분 hidden */
+}
+
+.logo-complete img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;		/* 이미지를 영역에 꽉 채우기, 비율 유지, 초과분 hidden */
+}
+
+.complete-subject
+{
+	font-size: 20px;
+}
+
+.complete-details
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 10px;
+}
+
+/* 페이징 처리 관련 css */
+.page
+{
+	text-align: center; /* 페이지 숫자 가운데 정렬 */
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 800px;
+}
+
+.page a, .page strong
+{
+	display: inline-block;
+	margin: 0 5px;
+	padding: 5px 10px;
+	text-decoration: none;		/* 밑줄 제거 */
+	color: #333; 				/* 기본 상태는 회색 */
+	border-radius: 3px;
+	transition: all 0.2s ease-in-out;
+}
+
+.page a:hover
+{
+	color: #febdb4;
+}
+
+.page strong
+{
+	color: #e28c99;
+	font-weight: bold;
+}
+
+/* 페이지 이동 폼 스타일 */
+#pageForm
+{
+	display: none; /* 숨김 처리 */
+}
+
+/* 페이지 버튼 스타일 */
+.page button
+{
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 5px 10px;
+	color: #888;
+	font-size: 1em;
+}
+
+.page button:hover
+{
+	color: #f0f0f0;
+}
+
+/* 캐러셀 관련 스타일 */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 300%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    width: 33.33%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.carousel-item h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.carousel-item p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background-color: white;
+}
+
+/* 첫 번째 슬라이드: 분홍색 계열 */
+.carousel-item:nth-child(1) {
+    background: linear-gradient(135deg, #e28c99, #d05475);
+}
+
+/* 두 번째 슬라이드: 보라색 계열 */
+.carousel-item:nth-child(2) {
+    background: linear-gradient(135deg, #dcb9ff, #8265b5);
+}
+
+/* 세 번째 슬라이드: 파란색 계열 */
+.carousel-item:nth-child(3) {
+    background: linear-gradient(135deg, #aad5ff, #5199e4);
+}
+
+/* 추천 시터 섹션 */
+.sitter-carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.sitter-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.sitter-item {
+    min-width: 100%;
+    display: flex;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    box-sizing: border-box;
+    gap: 0 20px;
+}
+
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(226, 140, 153, 0.7);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-btn:hover {
+    background: rgba(226, 140, 153, 1);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* 공지사항 리스트 스타일 */
+.notice-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notice-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+.notice-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #555;
+}
+
+.notice-date {
+    color: #999;
+    font-size: 0.9em;
+    margin-left: 15px;
+}
+
+.notice-badge {
+    background-color: #e28c99;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+/* 공지사항과 시터검색 컨테이너 */
+.content-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.more-link {
+    font-size: 12px;
+    color: #888;
+    margin-left: auto;
+    text-decoration: none;
+}
+
+.more-link:hover {
+    color: #e28c99;
+}
+
+.box-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 별점 표시 */
+.star-rating {
+    color: #FFD700;
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+/* 배너 섹션 */
+.banner-section {
+	background: linear-gradient(135deg, #f9f0f2, #fce8ec);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: unset;
+    box-shadow: 2px 2px 0 #e5e5e5;
+    width: 1100px;
+}
+
+.banner-content {
+    flex: 1;
+}
+
+.banner-title {
+    font-size: 22px;
+    color: #d05475;
+    margin-bottom: 10px;
+}
+
+.banner-text {
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.banner-image {
+    width: 120px;
+    height: 120px;
+    margin-left: 20px;
+    background: url('/api/placeholder/120/120') center center no-repeat;
+    background-size: contain;
+}
+
+/* 최근 이용 내역 */
+.recent-history {
+    /* margin-top: 15px; */
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.history-info {
+    flex: 1;
+}
+
+.history-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.history-sitter {
+    font-weight: bold;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.tag-regular {
+    background-color: #aad5ff;
+    color: #1f6c96;
+}
+
+.tag-emergency {
+    background-color: #febdb4;
+    color: #d9534f;
+}
+
+/* 추가 헤더 스타일 */
+.section-header {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 15px; */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.section-icon {
+    color: #e28c99;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 추가: 캐러셀 화살표 */
+.main-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.main-carousel-arrow:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.main-carousel-prev {
+    left: 10px;
+}
+
+.main-carousel-next {
+    right: 10px;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 추가 인터랙션 스타일 */
+.sitter-item:hover {
+    box-shadow: 0 5px 15px rgba(226, 140, 153, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.notice-item:hover .notice-title {
+    color: #e28c99;
+    transition: color 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* 헤더 영역 */
+.section-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.section-icon {
+    color: #e28c99;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+
+
+
+/* 긴급 돌봄 요청 리스트 */
+.emergency-requests {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.request-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #febdb4;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.request-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.request-item.urgent {
+    border-left-color: #d9534f;
+    background-color: #fff8f8;
+}
+
+.request-info {
+    flex: 1;
+}
+
+.request-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.time-left {
+    font-size: 12px;
+    color: #d9534f;
+    margin-left: 8px;
+}
+
+.request-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.request-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.request-details div {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+
+.request-details div i {
+    margin-right: 5px;
+    color: #e28c99;
+}
+
+.request-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.payment-info {
+    font-weight: bold;
+    color: #e28c99;
+}
+
+.see-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.see-more-link {
+    color: #e28c99;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}
+
+/* 스케줄 컨테이너 */
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-date {
+    font-size: 14px;
+    font-weight: bold;
+    color: #e28c99;
+    margin-top: 5px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #f9f0f2;
+}
+
+.schedule-item.active {
+    background-color: #fce8ec;
+    border-left: 3px solid #e28c99;
+}
+
+.schedule-item.upcoming {
+    background-color: #f9f9f9;
+}
+
+.schedule-time {
+    font-weight: bold;
+    color: #333;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.schedule-info {
+    flex: 1;
+}
+
+.schedule-child {
+    font-size: 14px;
+}
+
+.schedule-location {
+    font-size: 12px;
+    color: #666;
+}
+
+.schedule-status {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    background-color: #eee;
+    color: #666;
+}
+
+.schedule-item.active .schedule-status {
+    background-color: #e28c99;
+    color: white;
+}
+
+.schedule-item.upcoming .schedule-status {
+    background-color: #dcb9ff;
+    color: #560d7d;
+}
+
+/* 돌봄 팁 섹션 */
+.care-tips-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.care-tip {
+    flex: 1;
+    display: flex;
+    background-color: #f9f0f2;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.2s;
+}
+
+.care-tip:hover {
+    transform: translateY(-3px);
+}
+
+.care-tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e28c99;
+    color: white;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.care-tip-content {
+    flex: 1;
+}
+
+.care-tip-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.care-tip-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.tip-link {
+    font-size: 13px;
+    color: #e28c99;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.tip-link:hover {
+    text-decoration: underline;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1200px) {
+    .box-filter, .banner-section {
+        width: 95%;
+    }
+    
+    .care-tips-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-row {
+        flex-direction: column;
+    }
+    
+    .box-main {
+        width: 100%;
+    }
+    
+    .request-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .request-action {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+}

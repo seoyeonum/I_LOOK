@@ -1,0 +1,16 @@
+# Eclipse specific files
+.classpath
+.project
+.settings/
+.buildpath
+.tern-project
+
+# Build output folders
+/bin/
+/build/
+/target/
+
+# Maven specific
+/logs/
+dependency-reduced-pom.xml
+release.properties

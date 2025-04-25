@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IAdminLoginDAO">
+
+	<!-- 관리자 로그인 -->
+	<select id="loginCheck" resultType="com.team1.dto.AdminDTO">
+		SELECT 
+		ADMIN_REG_ID,
+		ID,
+		PW,
+		ADMIN_ACCT_CODE,
+		BANK_NAME
+		FROM ADMIN_REG
+		WHERE ID = #{id} AND PW = #{pw}
+	</select>
+<!-- 	
+	관리자 아이디 / 비밀번호 일치 여부
+	<select id="findId" parameterType="String" resultType="com.team1.dto.AdminDTO">
+		SELECT ID
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select>
+		
+	<select id="findPw" parameterType="String" resultType="com.team1.dto.AdminDTO">
+		SELECT PW
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select>
+	
+	관리자 회원가입 중복 체크
+	<select id="checkId" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select> -->
+	
+</mapper>

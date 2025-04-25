@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IGenCanceledDAO">
+
+	<!-- 취소를 위한 취소 범례 테이블 가져오기 -->
+	<select id="CanceledReason" resultType="com.team1.dto.GenCanceledDTO">
+		SELECT REASON_CANCELED_ID, TYPE
+		FROM REASONS_CANCELED
+	</select>
+	
+	<!-- 일반 돌봄 예약 취소 리스트 확인 -->
+	<select id="listAllCanceledReq" resultType="com.team1.dto.GenCanceledDTO">
+		SELECT GEN_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
+		FROM GEN_REQ_NAME_SEARCH_VIEW
+		WHERE STATUS = '예약취소'
+	</select>
+	
+	<!-- (부모 이름으로) 일반 돌봄 예약 취소 데이터 찾기 -->
+	<select id="searchNameCanceledReq" resultType="com.team1.dto.GenCanceledDTO">
+		SELECT GEN_REQ_ID, TYPE, STATUS, PAR_NAME, REQ_DATE
+		FROM GEN_REQ_NAME_SEARCH_VIEW
+		WHERE STATUS = '예약취소'
+		  AND PAR_NAME = #{par_name}
+	</select>
+	
+	<!-- (예약 신청 번호로) 일반 돌봄 예약 취소 데이터 상세 확인 -->
+	<select id="searchCanceledReqDetail" resultType="com.team1.dto.GenCanceledDTO">
+		SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, NAME
+		     , START_DATE, END_DATE, START_TIME, END_TIME
+		     , POINT, PAY_AMOUNT, MESSAGE
+		FROM GEN_REQ_DETAIL_VIEW
+		WHERE STATUS = '예약취소'
+		  AND GEN_REQ_ID = #{gen_req_id}
+	</select>
+	
+	<!-- 1-1.예약 확정 전 취소 내역 -->
+	
+	<!-- 예약 확정 전 취소 내역 추가 -->
+	<insert id="addGenCanceled" >
+	<selectKey keyProperty="gen_canceled_id" resultType="String" order="BEFORE">
+		SELECT 'GCAN' || TO_CHAR(SEQ_GCAN.NEXTVAL, 4, '0')
+		FROM DUAL
+	</selectKey>
+		<!-- PreparedStatement 작업 객체 활용 형태 -->
+		INSERT INTO GEN_CANCELED (GEN_CANCELED_ID, GEN_PAY_REC_ID, REASON_CANCELED_ID)
+		VALUES (#{gen_canceled_id}, #{gen_pay_rec_id}, #{reason_canceled_id})
+	</insert>
+	
+	
+	<!-- // 예약 확정 전 (시터의) 취소 내역 추가 + 환불 진행 -->
+	<insert id="addGenCancelAndRefund" statementType="CALLABLE" parameterType="com.team1.dto.GenCanceledDTO">
+    	 {call PRC_GCAN_INSERT(
+        #{gen_req_id, jdbcType=VARCHAR, mode=IN},
+        #{reason_canceled_id, jdbcType=VARCHAR, mode=IN}
+   			 )}
+	</insert>
+	
+	
+	
+	
+	<!-- 예약 확정 전 취소 내역 - 시터 읽은 날짜 기록 -->
+	<update id="updateGenCanceledSitRead">
+		UPDATE GEN_CANCELED
+		SET SIT_READ_DATE = TO_DATE(#{sit_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_CANCELED_ID = #{gen_canceled_id}					<!-- gen_canceled_id 를 활용 -->
+	</update>
+	
+	<!-- 예약 확정 전 취소 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenCanceledParRead">
+		UPDATE GEN_CANCELED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_CANCELED_ID = #{gen_canceled_id}					<!-- gen_canceled_id 를 활용 -->
+	</update>
+	
+	
+	<!-- 1-2. 예약 확정 후 시터의 취소 내역 -->
+	
+	<!-- 예약 확정 후 (시터의) 취소 내역 추가 -->
+	<insert id="addGenSitConfirmedCanceled">
+		INSERT INTO GEN_SIT_CONFIRMED_CANCELED (GEN_SIT_CONFIRMED_CANCELED_ID, REASON_CANCELED_ID, GEN_CONFIRMED_ID)
+		VALUES (#{gen_sit_confirmed_canceled_id}, #{reason_canceled_id}, #{gen_confirmed_id})
+	</insert>
+	
+	<!-- 예약 확정 후 (시터의) 취소 내역 - 시터 읽은 날짜 기록 -->
+	<update id="updateGenSitConfirmedCanceledSitRead">
+		UPDATE GEN_SIT_CONFIRMED_CANCELED
+		SET SIT_READ_DATE = TO_DATE(#{sit_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_SIT_CONFIRMED_CANCELED_ID = #{gen_sit_confirmed_canceled_id}					<!-- gen_sit_confirmed_canceled_id 를 활용 -->
+	</update>
+	
+	<!-- 예약 확정 후 (시터의) 취소 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenSitConfirmedCanceledParRead">
+		UPDATE GEN_SIT_CONFIRMED_CANCELED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_SIT_CONFIRMED_CANCELED_ID = #{gen_sit_confirmed_canceled_id}					<!-- gen_sit_confirmed_canceled_id 를 활용 -->
+	</update>
+
+	
+	<!-- 1-3. 예약 확정 후 부모의 취소 내역 -->
+	<!-- 예약 확정 후 (부모의) 취소 내역 추가 -->
+	<insert id="addGenParConfirmedCanceled">
+		INSERT INTO GEN_PAR_CONFIRMED_CANCELED (GEN_PAR_CONFIRMED_CANCELED_ID, REASON_CANCELED_ID, GEN_CONFIRMED_ID)
+		VALUES (#{gen_par_confirmed_canceled_id}, #{reason_canceled_id}, #{gen_confirmed_id})
+	</insert>
+	
+	<!-- 예약 확정 후 (부모의) 취소 내역 - 시터 읽은 날짜 기록 -->
+	<update id="updateGenParConfirmedCanceledSitRead">
+		UPDATE GEN_PAR_CONFIRMED_CANCELED
+		SET SIT_READ_DATE = TO_DATE(#{sit_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_PAR_CONFIRMED_CANCELED_ID = #{gen_par_confirmed_canceled_id}					<!-- gen_par_confirmed_canceled_id 를 활용 -->
+	</update>
+	
+	<!-- 예약 확정 후 (시터의) 취소 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenParConfirmedCanceledParRead">
+		UPDATE GEN_PAR_CONFIRMED_CANCELED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_PAR_CONFIRMED_CANCELED_ID = #{gen_par_confirmed_canceled_id}					<!-- gen_par_confirmed_canceled_id 를 활용 -->
+	</update>
+	
+	
+	
+	<!-- 2-1. 예약 확정 전 취소 환불 내역 -->
+	<!-- 예약 확정 전 취소 환불 내역 추가 -->
+	<insert id="addGenRefunded">
+	<selectKey keyProperty="gen_refunded_id" resultType="String" order="BEFORE">
+		SELECT 'GREF' || TO_CHAR(SEQ_GREF.NEXTVAL, 4, '0')
+		FROM DUAL
+	</selectKey>
+		INSERT INTO GEN_REFUNDED (GEN_REFUNDED_ID, GEN_CANCELED_ID, AMOUNT, REFUNDED_DATE, POINT, PG_CODE)
+		VALUES (#{gen_refunded_id}, #{gen_canceled_id}, #{amount}, #{refunded_date}, #{point}, #{pg_code})
+	</insert>
+	
+	<!-- 예약 확정 전 취소 환불 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenCanceledRefundedParRead">
+		UPDATE GEN_REFUNDED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_REFUNDED_ID = #{gen_refunded_id}					<!-- gen_refunded_id 를 활용 -->
+	</update>
+	
+	<!-- 2-2. 예약 확정 후 시터의 취소 환불 내역 -->
+	<!-- 예약 확정 후 (시터의) 취소 환불 내역 추가 -->
+	<insert id="addGenSitConfirmedRefunded">
+		INSERT INTO GEN_SIT_CONFIRMED_REFUNDED (GEN_SIR_CONFIRMED_REFUNDED_ID, GEN_SIT_CONFIRMED_CANCELED_ID, AMOUNT, REFUNDED_DATE, POINT, PG_CODE)
+		VALUES (#{gen_sit_confirmed_refunded_id}, #{gen_sit_canceled_id}, #{amount}, #{refunded_date}, #{point}, #{pg_code})
+	</insert>
+	
+	<!-- 예약 확정 후 (시터의) 취소 환불 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenSitConfirmedRefundedParRead">
+		UPDATE GEN_SIT_CONFIRMED_REFUNDED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_SIT_CONFIRMED_REFUNDED_ID = #{gen_sit_confirmed_refunded_id}					<!-- gen_sit_confirmed_refunded_id 를 활용 -->
+	</update>
+	
+	<!-- 2-3. 예약 확정 후 부모의 취소 환불 내역 -->
+	<!-- 예약 확정 후 (부모의) 취소 환불 내역 추가 -->
+	<insert id="addGenParConfirmedRefunded">
+		INSERT INTO GEN_PAR_CONFIRMED_REFUNDED (GEN_PAR_CONFIRMED_REFUNDED_ID, GEN_PAR_CONFIRMED_CANCELED_ID, AMOUNT, REFUNDED_DATE, POINT, PG_CODE)
+		VALUES (#{gen_par_confirmed_refunded_id}, #{gen_par_canceled_id}, #{amount}, #{refunded_date}, #{point}, #{pg_code})
+	</insert>
+	
+	<!-- 예약 확정 후 (부모의) 취소 환불 내역 - 부모 읽은 날짜 기록 -->
+	<update id="updateGenParConfirmedRefundedParRead">
+		UPDATE GEN_PAR_CONFIRMED_REFUNDED
+		SET PAR_READ_DATE = TO_DATE(#{par_read_date}, 'YYYY-MM-DD')
+		WHERE GEN_PAR_CONFIRMED_REFUNDED_ID = #{gen_par_confirmed_refunded_id}					<!-- gen_sit_confirmed_refunded_id 를 활용 -->
+	</update>
+	
+	
+</mapper>

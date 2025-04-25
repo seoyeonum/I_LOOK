@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IEmgPointDAO">
+	
+	<!-- 1. 관리자 입장 -->
+	
+	<!-- 모든 긴급 돌봄 포인트 적립 내역 리스트 조회 -->
+	<select id="listAllEmgPointSaved" resultType="com.team1.dto.EmgPointDTO">
+		SELECT EMG_REQ_ID, PAR_NAME, POINT, SAVED_DATE
+		FROM EMG_POINT_SAVED_VIEW
+		ORDER BY Q.SAVED_DATE
+	</select>
+	
+	<!-- (부모 이름으로) 긴급 돌봄 포인트 적립 내역 리스트 조회 -->
+	<select id="searchNameEmgPointSaved" resultType="com.team1.dto.EmgPointDTO">
+		SELECT EMG_REQ_ID, PAR_NAME, POINT, SAVED_DATE
+		FROM EMG_POINT_SAVED_VIEW
+		WHERE PR.PAR_NAME = #{par_name}
+		ORDER BY Q.SAVED_DATE
+	</select>
+	
+	<!-- 2. 시터 입장 → 별도로 존재 Ⅹ -->
+	
+	
+	<!-- 3. 부모 입장 -->
+	
+	<!-- 긴급 돌봄 포인트 적립 내역 추가 -->
+	<insert id="addEmgPoint">
+		INSERT INTO EMG_POINT (EMG_POINT_ID, EMG_CONFIRMED_ID, POINT, POINT_SUBJECT, USED_TIME)
+		SELECT #{emg_point_id}                             <!-- 긴급 돌봄 포인트 적립 코드 -->
+		     , #{emg_confirmed_id}                         <!-- 긴급 돌봄 예약 확정 코드 -->
+		     , (Q.END_DATE - Q.START_DATE + 1) * (Q.END_TIME - Q.START_TIME) * 200 AS POINT      <!-- 포인트 -->
+		     , P.PAR_BACKUP_ID AS POINT_SUBJECT       -- 포인트 적립 대상자
+		     , (Q.END_DATE - Q.START_DATE + 1) * (Q.END_TIME - Q.START_TIME) AS USED_TIME        <!-- 이용 시간 -->
+		FROM EMG_REQ Q JOIN EMG_CONFIRMED CF
+		ON Q.EMG_REQ_ID = CF.EMG_REQ_ID
+		    JOIN CHILD_BACKUP C
+		    ON Q.CHILD_BACKUP_ID = C.CHILD_BACKUP_ID
+		        JOIN PAR_BACKUP P
+		        ON C.PAR_BACKUP_ID = P.PAR_BACKUP_ID
+		WHERE CF.EMG_CONFIRMED_ID =  #{emg_confirmed_id} 				 <!-- emg_confirmed_id 활용 -->
+	</insert>
+	
+	
+	<!-- 긴급 돌봄 포인트 적립 내역 확인 -->
+	<select id="searchEmgPoint" resultType="com.team1.dto.EmgPointDTO">
+		SELECT POINT
+		FROM EMG_POINT_SAVED_VIEW
+		WHERE EMG_CONFIRMED_ID = #{emg_confirmed_id} 
+	</select>
+	
+	<!-- (현재 시점에서의) 특정 부모의 잔여 포인트 조회 -->
+	<!-- → 일반 돌봄『GenPayDAO.xml』에 명시 -->
+	
+	
+</mapper>

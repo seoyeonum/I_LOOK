@@ -1,0 +1,116 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'NoonnuBasicGothicRegular';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+#top-nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 25px;
+}
+
+header {
+	height: 150px;
+	width: 100%;
+	display: flex;
+	gap: 40px;
+	justify-content: center;
+	align-items: center;
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+}
+
+#logo {
+	position: relative;
+	top: -17px;
+	left: -90px;
+	height: 50px;
+	width: 200px;
+	cursor: pointer;
+}
+
+nav {
+	height: 45px;
+	width: 800px;
+	display: flex;
+	vertical-align: middle;
+	position: relative;
+	top: 45px;
+	left: 400px;
+}
+
+.menuBtn {
+	height: 45px;
+	font-size: 20px;
+	background: transparent;
+	border: none;
+	outline: none;
+	margin: 0 10px;
+	font-family: 'NoonnuBasicGothicRegular';
+}
+
+
+.menuBtn:hover {
+	color: rgb(226, 140, 153);
+}
+
+
+
+/* 페이징 스타일 */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    padding: 15px 0;
+}
+
+.page a, .page strong {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    padding: 8px 14px;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page a {
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+.page a:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+}
+
+.page strong {
+    background-color: #4a6baf;
+    color: white;
+    border: 1px solid #4a6baf;
+}
+
+.page a.prev, .page a.next {
+    font-weight: 500;
+}

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IGenReviewDAO">
+
+    <!-- ⭐ 일반 돌봄 리뷰 등록 -->
+	<insert id="addGenReviews">
+	    INSERT INTO GEN_REVIEWS (
+	        GEN_REVIEW_ID,
+	        GEN_CONFIRMED_ID,
+	        RATING,
+	        REVIEWED_DATE,
+	        POINT,
+	        POINT_SUBJECT,
+	        USED_TIME,
+	        PAR_READ_DATE
+	    )
+	    VALUES (
+	        #{gen_review_id},
+	        #{gen_confirmed_id},
+	        #{rating},
+	        SYSDATE,
+	        #{point_amount},
+	        #{point_subject},
+	        #{used_time},
+	        NULL
+	    )
+	</insert>
+
+    <!-- ⭐ 리뷰 삭제 -->
+    <delete id="removeGenReviews">
+        DELETE FROM GEN_REVIEWS
+        WHERE GEN_REVIEW_ID = #{gen_review_id}
+    </delete>
+
+    <!-- ⭐ 객관식 응답 등록 -->
+    <insert id="insertMultiReviews">
+        INSERT INTO GEN_MULTIPLE_REVIEWS (
+            GEN_MULTIPLE_REVIEW_ID, 
+            GEN_REVIEW_ID, 
+            GEN_MULTIPLE_TYPE_ID
+        )
+        VALUES (
+            #{gen_multiple_review_id}, 
+            #{gen_review_id}, 
+            #{gen_multiple_type_id, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- ⭐ 객관식 응답 삭제 -->
+    <delete id="removeMultiReviews">
+        DELETE FROM GEN_MULTIPLE_REVIEWS
+        WHERE GEN_MULTIPLE_REVIEW_ID = #{gen_multiple_review_id}
+    </delete>
+
+    <!-- ⭐ 객관식 응답 수정 -->
+    <update id="updateMultiReviews">
+        UPDATE GEN_MULTIPLE_REVIEWS
+        SET GEN_REVIEW_ID = #{gen_review_id},
+            GEN_MULTIPLE_TYPE_ID = #{gen_multiple_type_id}
+        WHERE GEN_MULTIPLE_REVIEW_ID = #{gen_multiple_review_id}
+    </update>
+
+    <!-- ⭐ 객관식 응답 종류 등록 -->
+    <insert id="insertMultiTypes">
+        INSERT INTO GEN_MULTIPLE_TYPES (
+            GEN_MULTIPLE_TYPE_ID, TYPE
+        )
+        VALUES (
+            #{gen_multiple_type_id}, #{type}
+        )
+    </insert>
+
+    <!-- ⭐ 객관식 응답 종류 삭제 -->
+    <delete id="removeMultiTypes">
+        DELETE FROM GEN_MULTIPLE_TYPES
+        WHERE GEN_MULTIPLE_TYPE_ID = #{gen_multiple_type_id}
+    </delete>
+
+    <!-- ⭐ 객관식 응답 종류 수정 -->
+    <update id="updateMultiTypes">
+        UPDATE GEN_MULTIPLE_TYPES
+        SET TYPE = #{type}
+        WHERE GEN_MULTIPLE_TYPE_ID = #{gen_multiple_type_id}
+    </update>
+
+    <!-- ⭐ 일반 돌봄 리뷰 리스트 -->
+    <select id="list" resultType="com.team1.dto.GenReviewDTO">
+        SELECT 
+            GEN_REVIEW_ID, 
+            GEN_CONFIRMED_ID, 
+            RATING, 
+            REVIEWED_DATE,
+            POINT, 
+            POINT_SUBJECT, 
+            USED_TIME, 
+            PAR_READ_DATE
+        FROM GEN_REVIEWS
+    </select>
+
+    <!-- ⭐ 리뷰 전체 수 -->
+    <select id="countRevies" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS COUNT
+        FROM GEN_REVIEWS
+    </select>
+
+    <!-- ⭐ 특정 리뷰 ID 조회 -->
+    <select id="findByRequestId" resultType="com.team1.dto.GenReviewDTO">
+        SELECT 
+            GEN_REVIEW_ID, 
+            GEN_CONFIRMED_ID, 
+            RATING, 
+            REVIEWED_DATE,
+            POINT, 
+            POINT_SUBJECT, 
+            USED_TIME, 
+            PAR_READ_DATE
+        FROM GEN_REVIEWS
+        WHERE GEN_REVIEW_ID = #{gen_review_id}
+    </select>
+
+    <!-- ⭐ 리뷰 중복 확인 -->
+    <select id="checkReviewExists" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM GEN_REVIEWS
+        WHERE GEN_CONFIRMED_ID = #{gen_confirmed_id}
+    </select>
+
+    <!-- ⭐ 부모 포인트 조회 -->
+    <select id="getParentCurrentPoint" resultType="java.lang.Integer">
+        SELECT NVL(SUM(POINT), 0)
+        FROM GEN_REVIEWS
+        WHERE GEN_CONFIRMED_ID = #{gen_confirmed_id}
+    </select>
+
+    <!-- ⭐ 부모 알림 읽음 처리 -->
+    <update id="updateParReadDate">
+        UPDATE GEN_REVIEWS
+        SET PAR_READ_DATE = SYSDATE
+        WHERE GEN_REVIEW_ID = #{gen_review_id}
+    </update>
+
+    <!-- ⭐ (추가!) 일반/긴급 돌봄 완료 여부 확인 -->
+<select id="isConfirmedFinished" resultType="int">
+    SELECT COUNT(*)
+    FROM GEN_CONFIRMED
+    WHERE GEN_CONFIRMED_ID = #{gen_confirmed_id}
+</select>
+
+	<!-- 일반 돌봄 리뷰 전체 수 -->
+	<select id="countReviwes" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM GEN_REVIEWS
+	</select>
+	
+	<!-- 돌봄 확정 아이디로 특정 리뷰 확인 -->
+	<!-- 	<select id="findByRequestId" resultType="com.team1.dto.GenReviewDTO">
+		SELECT GEN_REVIEW_ID, GEN_CONFIRMED_ID, RATING, REVIEWED_DATE
+		, POINT, POINT_SUBJECT, USED_TIME, PAR_READ_DATE
+		FROM GEN_REVIEWS
+		WHERE GEN_REVIEW_ID = #{gen_review_id}
+	</select> -->
+	
+	<!-- [일반] 시터 백업 아이디로 객관식 응답 확인 -->
+	<select id="listReviewByBackupId" resultType="java.lang.String">
+		SELECT DISTINCT GMT.TYPE AS TYPE
+		FROM GEN_MULTIPLE_REVIEWS GMR JOIN GEN_MULTIPLE_TYPES GMT
+		ON GMR.GEN_MULTIPLE_TYPE_ID = GMT.GEN_MULTIPLE_TYPE_ID
+		    JOIN GEN_REVIEWS GRV
+		    ON GRV.GEN_REVIEW_ID  = GMR.GEN_REVIEW_ID
+		        JOIN gen_confirmed GC
+		        ON GRV.GEN_CONFIRMED_ID = gc.gen_confirmed_id
+		            JOIN GEN_REQ GQ
+		            ON GC.GEN_REQ_ID = GQ.GEN_REQ_ID
+		                JOIN GEN_REG GR
+		                ON GQ.GEN_REG_ID = GR.GEN_REG_ID
+		                    JOIN SIT_BACKUP S
+		                    ON S.SIT_BACKUP_ID = GR.SIT_BACKUP_ID
+		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
+	</select>
+</mapper>

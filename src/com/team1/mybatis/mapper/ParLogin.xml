@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team1.mybatis.IParLoginDAO">
+
+	<!-- 부모 로그인 -->
+	<select id="loginCheck" resultType="com.team1.dto.ParDTO">
+		SELECT 
+		      R.PAR_REG_ID,
+		      R.PAR_BACKUP_ID,
+		      B.ID,
+		      R.PW,
+		      R.NAME,
+		      R.TEL,
+		      R.SSN_FIRST,
+		      R.SSN_SECOND,
+		      R.ROAD_ADDR,
+		      R.DETAILED_ADDR,
+		      R.ZIP_CODE,
+		      B.REG_DATE
+		  FROM PAR_REG R
+		  JOIN PAR_BACKUP B ON R.PAR_BACKUP_ID = B.PAR_BACKUP_ID
+		  WHERE B.ID = #{id}
+		    AND R.PW = #{pw}
+	</select>
+	<select id="findById" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT PAR_BACKUP_ID, ID
+	    FROM PAR_BACKUP
+	    WHERE ID = #{id}
+	</select>
+	
+	<select id="findPwByBackupId" parameterType="String" resultType="com.team1.dto.ParDTO">
+	    SELECT 
+	        PW
+	    FROM PAR_REG
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	</select>
+	
+	
+    <!-- 부모 회원가입 중복 체크 -->
+	<select id="checkId" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+		FROM PAR_BACKUP
+		WHERE ID = #{id}
+	</select>
+	
+
+</mapper>
