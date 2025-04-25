@@ -106,7 +106,7 @@
         </div>
 
         <div class="back-btn">
-            <a href="window.location.href='<%=cp%>/iLook.action'">로그인 화면으로 돌아가기</a>
+            <a href="<%=cp%>/iLook.action">로그인 화면으로 돌아가기</a>
         </div>
     </div>
 

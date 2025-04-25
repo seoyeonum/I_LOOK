@@ -52,7 +52,7 @@ public class LoginController
     {
        String result = "";
        
-       result = "WEB-INF/view/logIn.jsp";
+       result = "/WEB-INF/view/logIn.jsp";
        
        return result;
     }
