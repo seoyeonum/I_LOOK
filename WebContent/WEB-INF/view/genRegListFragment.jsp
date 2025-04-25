@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
-   request.setCharacterEncoding("UTF-8");
-   String cp = request.getContextPath();
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
 %>
+
 <!-- genRegListFragment.jsp -->
 <div class="sub-subject">
 	<h2>검색 결과 (${countPrimaryGenReg})</h2>
@@ -20,8 +21,7 @@ listPrimaryGenReg
 
 <div class="box-preview">
     <div class="sitter-photo">
-        <img src="<c:url value='<%=cp%>/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
-        <!-- 파일 경로 추후 수정 필요!! -->
+        <img src="<c:url value='<%= cp %>/${genReg.photo_file_path}.jpg' />" alt="시터 사진">
     </div>
     <div class="sitter-info">
         <div class="sitter-title">
@@ -32,7 +32,8 @@ listPrimaryGenReg
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="<c:url value='<%=cp%>/${genReg.grade_file_path}' />" 
+             		<img src="<c:url value='<%= cp %>/${genReg.grade_file_path}' />" 
+
              		width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}
