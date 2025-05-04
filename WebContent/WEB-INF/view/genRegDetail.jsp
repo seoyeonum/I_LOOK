@@ -54,7 +54,7 @@
         <!-- 일반 돌봄 각 등록 건 -->
         <div class="box-detail">
             <div class="sitter-photo">
-                <img src="<c:url value='/${genDetail.photo_file_path}.jpg' />" alt="시터 사진">
+                <img src="<c:url value='<%= cp %>/${genDetail.photo_file_path}.jpg' />" alt="시터 사진">
                 <!-- 파일 경로 추후 수정 필요!! -->
             </div>
             <div class="sitter-info">
@@ -63,7 +63,7 @@
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="<c:url value='/${genDetail.grade_file_path}' />" 
+             		<img src="<c:url value='<%= cp %>/${genDetail.grade_file_path}.gif' />" 
              		width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genDetail.grade} 시터 ${genDetail.name}

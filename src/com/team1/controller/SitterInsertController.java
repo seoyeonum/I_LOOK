@@ -83,7 +83,8 @@ public class SitterInsertController
         System.out.println("▶ 시터 사진 저장 경로: " + filePhoto.getAbsolutePath());
         
         													//-- 시터 파일 저장 경로
-        sitter.setFile_path(filePhotoName);
+        //sitter.setFile_path(filePhotoName);
+        sitter.setFile_path("sit_photo_" + sitBackupId);	//-- 서버에 저장하는 file_path 는 확장자 빼고 파일명만!
         
 
         

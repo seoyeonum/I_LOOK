@@ -24,7 +24,7 @@ $(document).ready(function()
 	    
 	    if (filePath)
 		{
-	    	var fullUrl = "<%=cp%>/images/"" + folder + "/" + filePath;
+	    	var fullUrl = "<%=cp%>/images/" + folder + "/" + filePath;
 			
 			// 팝업창 사이즈
 	        var popupWidth = 800;

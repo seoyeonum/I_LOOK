@@ -22,7 +22,7 @@ listPrimaryGenReg
 <div class="box-preview">
     <div class="sitter-photo">
     	<c:set var="cp" value="${pageContext.request.contextPath}" />
-        <img src="${cp}/images/pictures/${genReg.photo_file_path}" alt="시터 사진">
+        <img src="<%= cp %>/images/pictures/${genReg.photo_file_path}.jpg" alt="시터 사진">
     </div>
     <div class="sitter-info"> 
         <div class="sitter-title">
@@ -33,7 +33,7 @@ listPrimaryGenReg
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="${cp}/${genReg.grade_file_path}" 
+             		<img src="<%= cp %>/${genReg.grade_file_path}.gif" 
     				 width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}
