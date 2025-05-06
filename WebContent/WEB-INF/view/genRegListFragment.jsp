@@ -33,7 +33,7 @@ listPrimaryGenReg
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="<%= cp %>/${genReg.grade_file_path}.gif" 
+             		<img src="<%= cp %>/images/grades/${genReg.grade_file_path}.gif" 
     				 width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}

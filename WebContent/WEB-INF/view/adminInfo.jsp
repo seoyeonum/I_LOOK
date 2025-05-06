@@ -81,7 +81,8 @@ String cp = request.getContextPath();
 					<div class="info-row">
 						<div class="info-header">계좌번호</div>
 						<div class="info-cell">
-							<input type="text" class="info-input" value="${admin.admin_acct_code }" readonly>
+							<%-- <input type="text" class="info-input" value="${admin.admin_acct_code }" readonly> --%>
+							<input type="text" class="info-input" value="${admin.acct_number }" readonly>
 						</div>
 					</div>
 					

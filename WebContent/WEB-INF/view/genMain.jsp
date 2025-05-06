@@ -179,12 +179,12 @@
 		            <!-- 시터 1 -->
 		            <div class="sitter-item">
 		                <div class="sitter-photo">
-		                    <img src="<%= cp %>/images/pictures/sit_photoTEST0000.jpg" alt="김지민 시터">
+		                    <img src="<%= cp %>/images/pictures/sit_photo_SBAC0010.jpg" alt="윤지영 시터">
 		                </div>
 		                <div class="sitter-info">
-		                    <div class="sitter-name">김지민 시터 <span class="star-rating"><i class="fas fa-star"></i> 4.9</span></div>
+		                    <div class="sitter-name">윤지영 시터 <span class="star-rating"><i class="fas fa-star"></i> 4.0</span></div>
 		                    <div class="sitter-details">
-		                        <div><span class="badge female">여성</span> <span class="badge">5년 경력</span> <span class="badge">유아교육과</span></div>
+		                        <div><span class="badge female">여성</span> <span class="badge">1년 경력</span> <span class="badge">유아교육과</span></div>
 		                        <div>돌봄 가능 연령: 12개월 ~ 7세</div>
 		                        <div>주요 활동: 동화책 읽기, 유아 미술, 야외활동</div>
 		                        <div>특이사항: 영어 가능, 응급처치 자격증 보유</div>
@@ -234,7 +234,7 @@
 		        <div class="box-header">
 		            <div class="section-icon"><i class="fas fa-bullhorn"></i></div>
 		            <h2 class="section-title">공지사항</h2>
-		            <a href="/notice.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
+		            <a href="<%= cp %>/noticelist.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
 		        </div>
 		        <ul class="notice-list">
 		            <li class="notice-item">
