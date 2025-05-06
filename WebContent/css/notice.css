@@ -161,6 +161,11 @@ body
     justify-content: center;
 }
 
+.hidden
+{
+	display: none;
+}
+
 
 .board-detail
 {
@@ -178,43 +183,43 @@ body
 }
 
 
-.id { width: 8%; }
+.rnum { width: 8%; }
 .type { width: 12%; }
-.title
+.subject
 { 
     width: 43%; 
     justify-content: center;
 }
 .author { width: 12%; }
-.views { width: 10%; }
+.hitcount { width: 10%; }
 .date { width: 15%; }
 
 
 
 
-.detail-id { width: 200px; }
+.detail-rnum { width: 200px; }
 .detail-type { width: 200px; }
-.detail-title
+.detail-subject
 { 
     width: 200px; 
     justify-content: center;
 }
 .detail-author { width: 200px; }
-.detail-views { width: 200px; }
+.detail-hitcount { width: 200px; }
 .detail-date { width: 200px; }
 .detail-content { width: 1100px; }
 
 
 
-.detail-notice-id { width: 200px; }
+.detail-notice-rnum { width: 200px; }
 .detail-notice-type { width: 200px; }
-.detail-notice-title
+.detail-notice-subject
 { 
     width: 500px; 
     justify-content: center;
 }
 .detail-notice-author { width: 200px; }
-.detail-notice-views { width: 500px; }
+.detail-notice-hitcount { width: 500px; }
 .detail-notice-date { width: 500px; }
 .detail-notice-content  { width: 1100px; }
 
@@ -225,7 +230,7 @@ body
 	font-size: 14px;
 }
 
-#title-input
+#subject-input
 {
 	width: 480px;
 	height: 30px;
@@ -238,7 +243,6 @@ body
 	height: 500px;
 	font-size: 14px;
 }
-
 
 .badge-type
 {
@@ -254,6 +258,7 @@ body
     background-color: #aad5ff;
     color: #1f6c96;
 }
+
 .event
 {
     background-color: #dcb9ff;
@@ -269,6 +274,7 @@ body
 	width: 1100px;
 }
 
+/*
 .page-number
 {
     display: flex;
@@ -289,4 +295,60 @@ body
 .page-number a.active
 {
     color: #e28c99;
+}
+*/
+
+/* 페이징 처리 관련 css */
+.page
+{
+	text-align: center; /* 페이지 숫자 가운데 정렬 */
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 800px;
+}
+
+.page a, .page strong
+{
+	display: inline-block;
+	margin: 0 5px;
+	padding: 5px 10px;
+	text-decoration: none;		/* 밑줄 제거 */
+	color: #333; 				/* 기본 상태는 회색 */
+	border-radius: 3px;
+	transition: all 0.2s ease-in-out;
+}
+
+.page a:hover
+{
+	color: #febdb4;
+}
+
+.page strong
+{
+	color: #e28c99;
+	font-weight: bold;
+}
+
+/* 페이지 이동 폼 스타일 */
+#pageForm
+{
+	display: none; /* 숨김 처리 */
+}
+
+/* 페이지 버튼 스타일 */
+.page button
+{
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 5px 10px;
+	color: #888;
+	font-size: 1em;
+}
+
+.page button:hover
+{
+	color: #f0f0f0;
 }

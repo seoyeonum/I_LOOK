@@ -6,6 +6,11 @@ public class NoticeDTO
 	private String notice_type_id, type, notice_id, subject, content, noticed_date;
 	private int hitcount;
 	
+	// 속성 추가
+	private int rnum;									//-- 페이지 넘버
+	private int start;									//-- 시작 페이지
+    private int end;									//-- 끝 페이지
+	
 	// getter / setter 구성
 	public String getNotice_type_id()
 	{
@@ -63,4 +68,29 @@ public class NoticeDTO
 	{
 		this.hitcount = hitcount;
 	}
+	public int getRnum()
+	{
+		return rnum;
+	}
+	public void setRnum(int rnum)
+	{
+		this.rnum = rnum;
+	}
+	public int getStart()
+	{
+		return start;
+	}
+	public void setStart(int start)
+	{
+		this.start = start;
+	}
+	public int getEnd()
+	{
+		return end;
+	}
+	public void setEnd(int end)
+	{
+		this.end = end;
+	}
+	
 }

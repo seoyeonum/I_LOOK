@@ -138,11 +138,11 @@
 		            	</div>
 		            </div>
 		            <div class="board-list-header">
-		                <div class="board-list-cell detail-title">제목</div>
+		                <div class="board-list-cell detail-subject">제목</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-title">
-		            		<input type="text" id="title-input" placeholder="(제목을 입력하세요./최대 16자 입력 가능)"/>
+		            	<div class="board-list-cell detail-notice-subject">
+		            		<input type="text" id="subject-input" placeholder="(제목을 입력하세요./최대 16자 입력 가능)"/>
 		            	</div>
 		            </div>
 		        </div>

@@ -159,7 +159,7 @@
 		        <div class="box-header">
 		            <div class="section-icon"><i class="fas fa-bullhorn"></i></div>
 		            <h2 class="section-title">공지사항</h2>
-		            <a href="/notice.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
+		            <a href="<%= cp %>/noticelist.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
 		        </div>
 		        <ul class="notice-list">
 		            <li class="notice-item">

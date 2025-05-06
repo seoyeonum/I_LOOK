@@ -14,13 +14,13 @@ public interface INoticeDAO
 	public ArrayList<String> listType();
 	
 	// 공지사항 조회
-	public ArrayList<NoticeDTO> listNotice();
+	public ArrayList<NoticeDTO> listNotice(NoticeDTO dto);
 	
 	// 공지사항 조회 (최근 5건만)
 	public ArrayList<NoticeDTO> listNoticeLately();
 	
 	// 공지사항 상세 열람
-	public ArrayList<NoticeDTO> NoticeDetail();
+	public NoticeDTO noticeDetail(String notice_id);
 	
 	// 공지사항 데이터 추가
 	public int add(NoticeDTO notice);

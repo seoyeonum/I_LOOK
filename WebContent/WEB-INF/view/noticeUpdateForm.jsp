@@ -111,16 +111,16 @@
 	            <!-- 게시판 헤더 -->
 		        <div class="board-detail">
 		            <div class="board-list-header">
-		                <div class="board-list-cell detail-id">번호</div>
+		                <div class="board-list-cell detail-rnum">번호</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-id">5</div>
+		            	<div class="board-list-cell detail-notice-rnum">5</div>
 		            </div>
 		            <div class="board-list-header">
-		                <div class="board-list-cell detail-views">조회수</div>
+		                <div class="board-list-cell detail-hitcount">조회수</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-views">128</div>
+		            	<div class="board-list-cell detail-notice-hitcount">128</div>
 		            </div>
 		        </div>
 		         
@@ -154,11 +154,11 @@
 		            	</div>
 		            </div>
 		            <div class="board-list-header">
-		                <div class="board-list-cell detail-title">제목</div>
+		                <div class="board-list-cell detail-subject">제목</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-title">
-		            		<input type="text" id="title-input" value="사이트 점검 안내"/>
+		            	<div class="board-list-cell detail-notice-subject">
+		            		<input type="text" id="subject-input" value="사이트 점검 안내"/>
 		            	</div>
 		            </div>
 		        </div>
