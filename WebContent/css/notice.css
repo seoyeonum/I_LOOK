@@ -223,25 +223,25 @@ body
 .detail-notice-date { width: 500px; }
 .detail-notice-content  { width: 1100px; }
 
-#type-input
+.type-input
 {
 	width: 180px;
 	height: 30px;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 #subject-input
 {
 	width: 480px;
 	height: 30px;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 #content-input
 {
 	width: 1000px;
 	height: 500px;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .badge-type

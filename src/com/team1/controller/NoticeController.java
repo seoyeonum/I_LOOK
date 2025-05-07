@@ -4,7 +4,9 @@
 
 package com.team1.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +34,7 @@ public class NoticeController
 	private SqlSession sqlSession;
 	
 	// ● 공지사항 리스트 페이지
-	@RequestMapping(value="/noticelist.action", method = RequestMethod.GET)
+	@RequestMapping(value="/noticelist.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String noitceList(@RequestParam(value = "page", defaultValue="1") int page
 						   , HttpSession session, Model model)
 	{
@@ -82,7 +84,7 @@ public class NoticeController
 	}
 	
 	// ● 공지사항 게시물 상세 페이지
-	@RequestMapping(value="/noticeDetail.action", method = RequestMethod.GET)
+	@RequestMapping(value="/noticedetail.action", method = RequestMethod.GET)
 	public String noticeDetail(@RequestParam("noticeId") String noticeId
 							 , @RequestParam("noticeRnum") String noticeRnum
 						  	 , HttpSession session, Model model)
@@ -115,6 +117,43 @@ public class NoticeController
 		model.addAttribute("admin", admin);
 		
 		result = "WEB-INF/view/noticeDetail.jsp";
+		
+		return result;
+	}
+	
+	// ● 공지사항 게시물 등록 페이지
+	@RequestMapping(value="/noticeinsertform.action", method = RequestMethod.GET)
+	public String noticeInsertForm( HttpSession session, Model model)
+	{
+		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		AdminDTO admin = (AdminDTO) session.getAttribute("loginAdmin");
+		
+		if (admin == null)
+			return "redirect:/iLook.action";
+	
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
+		// 오늘 날짜 가져오기
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String today = dateFormat.format(calendar.getTime());
+        
+        // 확인
+        //System.out.println("오늘 날짜: " + today);
+        
+        // 공지사항 유형 리스트 조회
+     	INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+     	ArrayList<NoticeDTO> listType = noticeDao.listType();
+        
+		// 다음 페이지로 넘겨주는 값
+		// → 오늘 날짜, 공지사항 유형 리스트
+		model.addAttribute("today", today);		
+		model.addAttribute("listType", listType);		
+		
+		result = "WEB-INF/view/noticeInsertForm.jsp";
 		
 		return result;
 	}

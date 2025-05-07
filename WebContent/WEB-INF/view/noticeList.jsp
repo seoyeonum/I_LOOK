@@ -55,7 +55,7 @@
             	// PC data(게시물 번호)를 다음 페이지로 전달
                 var noticeRnum = this.querySelector('.board-list-cell.rnum').textContent;
             	
-                location.href = 'noticeDetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
+                location.href = 'noticedetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
                 
             });
             
@@ -115,7 +115,8 @@
                 <button type="button" class="btn">검색</button>
                 <c:choose>
 			        <c:when test="${not empty admin}">
-		                <button type="button" class="btn">등록</button>
+		                <button type="button" class="btn"
+		                onclick="window.location.href='<%=cp%>/noticeinsertform.action'">등록</button>
 			        </c:when>
 			        <c:otherwise>
 			            <!-- 기본 헤더 또는 아무 작업도 하지 않음 -->
@@ -215,5 +216,10 @@
 		</form>
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 </body>
 </html>

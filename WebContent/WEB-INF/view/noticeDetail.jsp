@@ -69,7 +69,8 @@
 	<div id="wrapper-body">
 		<div class="board-header">
             <div class="board-info">
-                <button type="button" id="back" class="btn">목록으로</button>
+                <button type="button" id="back" class="btn"
+                onclick="window.location.href='<%=cp%>/noticelist.action'">목록으로</button>
             </div>
             <div class="search-box">
                 <button type="button" id="update" class="btn">수정</button>
@@ -155,5 +156,10 @@
     	</form>
     </div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 </body>
 </html>

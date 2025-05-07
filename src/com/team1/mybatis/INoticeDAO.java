@@ -11,7 +11,7 @@ public interface INoticeDAO
 	// public int addType(NoticeDTO notice);
 	
 	// 공지사항 유형 조회
-	public ArrayList<String> listType();
+	public ArrayList<NoticeDTO> listType();
 	
 	// 공지사항 조회
 	public ArrayList<NoticeDTO> listNotice(NoticeDTO dto);

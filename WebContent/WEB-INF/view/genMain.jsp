@@ -42,7 +42,6 @@
 </head>
 <body>
 
-<!-- parentMainFrame.html을 삽입할 위치 -->
 <div id="header-container">
 	<c:import url="/parentheader.action"/>
 </div>
@@ -325,6 +324,12 @@
 		</div>
 	</div>
 </div>
+
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 
 </body>
 </html>
