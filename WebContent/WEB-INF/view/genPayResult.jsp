@@ -47,7 +47,7 @@
 		
 		$("#myPage").click(function()
 		{
-			window.location.href = "childused.action";
+			window.location.href = "sitterusehistory.action";
 		});
 	});
   

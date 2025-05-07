@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
@@ -106,17 +107,28 @@ String cp = request.getContextPath();
 				<div class="recent-sitter-profile">
 					<div class="sitter-photo-container">
 						<img
-							src="<%= cp %>/images/pictures/${currentUse.file_path}"
+							<%-- src="<%= cp %>/images/pictures/${currentUse.file_path}" --%>
+							src="<%= cp %>/images/pictures/${currentUse.file_path}.jpg"							
 							alt="시터 사진"
-							onerror="this.onerror=null;this.src='<%= cp %>/resources/uploads/default_sitter.jpg';">
+							onerror="this.onerror=null;this.src='<%= cp %>/resources/uploads/default_sitter.jpg';"
+							style="height: 150px; width: 150px;">
 					</div>
-					<div class="sitter-info-container">
+					<div class="sitter-info-container" style="margin-left: 100px;">
 						<div class="info-item">
 							<span class="info-label">현재 상태:</span> <span class="info-value">${currentStatus}</span>
 						</div>
 						<div class="info-item">
+							<fmt:parseDate var="startDateParsed" value="${currentUse.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<fmt:parseDate var="endDateParsed" value="${currentUse.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+							<span class="info-label">이용 날짜:</span>
+							<span class="info-value">
+								<fmt:formatDate value="${startDateParsed}" pattern="yyyy.MM.dd."/>
+								~ <fmt:formatDate value="${endDateParsed}" pattern="yyyy.MM.dd."/>
+							</span>
+							<%--
 							<span class="info-label">이용 날짜:</span> <span class="info-value">${currentUse.start_date}
 								~ ${currentUse.end_date}</span>
+							--%>
 						</div>
 						<div class="info-item">
 							<span class="info-label">아이 이름:</span> <span class="info-value">${currentUse.child_name}</span>
@@ -149,10 +161,18 @@ String cp = request.getContextPath();
 				<div id="history-table" class="history-list-container">
 					<c:forEach var="item" items="${useList}" varStatus="status">
 						<div class="history-item">
-							<span class="history-number">${status.index + 1}</span> <span
-								class="history-date"> <span class="start-date">${item.start_date}
-									~ </span><br> <span class="end-date">${item.end_date}</span>
-							</span> <span class="history-time">${item.work_hours}시간</span>
+							<span class="history-number">${status.index + 1}</span>
+							<span class="history-date">
+								<fmt:parseDate var="startDates" value="${item.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:parseDate var="endDates" value="${item.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+								<fmt:formatDate value="${startDates}" pattern="yyyy.MM.dd."/>
+								~ <fmt:formatDate value="${endDates}" pattern="yyyy.MM.dd."/>
+								<%-- 
+								<span class="start-date">${item.start_date}	~ </span><br>
+								<span class="end-date">${item.end_date}</span>
+								 --%>
+							</span>
+							<span class="history-time">${item.work_hours}시간</span>
 							<!-- ✅ work_hours 사용 -->
 							<span class="history-child-name">${item.child_name}</span> <span
 								class="history-sitter-name">${item.sitter_name}</span> <span
@@ -167,6 +187,10 @@ String cp = request.getContextPath();
 			</div>
 		</div>
 	</div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

@@ -84,10 +84,10 @@
     function checkPasswordBeforeSubmit() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
-        var passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,16}$/;
+        var passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,16}$/;
 
         if (!passwordPattern.test(password)) {
-            alert("비밀번호는 소문자와 숫자를 결합하여 6자리에서 16자리로 입력해야 합니다.");
+            alert("비밀번호는 소문자와 숫자를 결합하여 8자리에서 16자리로 입력해야 합니다.");
             return false;
         }
 

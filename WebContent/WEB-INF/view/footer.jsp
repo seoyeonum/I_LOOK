@@ -72,7 +72,7 @@
         <a href="#"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="#"><i class="fab fa-kakao"></i></a>
+        <!-- <a href="#"><i class="fab fa-kakao"></i></a> -->
     </div>
     <div class="copyright">
         &copy; 2025 I_Look All Rights Reserved.
