@@ -583,5 +583,10 @@ pageContext.setAttribute("parentSignups", 60);
         });
     });
 </script>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 </body>
 </html>

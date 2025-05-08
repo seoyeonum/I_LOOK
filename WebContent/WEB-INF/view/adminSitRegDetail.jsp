@@ -97,7 +97,8 @@
 				<div class="content-body">
 					<div class="left-section">
 						<div class="profile">
-							<img src="<%=cp %>/images/pictures/${sitInfo.file_path}" 
+							<%-- <img src="<%=cp %>/images/pictures/${sitInfo.file_path}" --%> 
+							<img src="<%=cp %>/images/pictures/${sitInfo.file_path}.jpg" 
 						     onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';"
 						     style="width: 100%; height: 100%;">
 						</div>
@@ -241,5 +242,9 @@
 	        </div>
 	    </div>
 	</div>
+	
+	<footer class="footer">
+		<c:import url="/footer.action"/>
+	</footer>
 </body>
 </html>
