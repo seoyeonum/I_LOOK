@@ -11,7 +11,9 @@
 <title>genMain.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/gen-filter.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="js/genFilter.js" defer></script>
 <script type="text/javascript">
 
@@ -85,9 +87,11 @@
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" name="start_date" id="date-start" required="required">
+				        	<input type="date" name="start_date" id="date-start"
+				        	placeholder="연도.월.일." style="width: 150px;" required="required">
 				        	<span>부터</span>
-				        	<input type="date" name="end_date" id="date-end" required="required">
+				        	<input type="date" name="end_date" id="date-end"
+				        	placeholder="연도.월.일." style="width: 150px;" required="required">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
