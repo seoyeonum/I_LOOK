@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function()
         <div><h2>시터 정보</h2></div> 
         <div class="info-item">
             <div class="info-label">이름:</div>
-            <div class="info-value">김주항</div>
+            <div class="info-value">박수빈</div>
         </div>
         <div class="info-item">
             <div class="info-label">등급:</div>
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', function()
         </div>
         <div class="info-item">
             <div class="info-label">이용 기간:</div>
-            <div class="info-value">2025년 2월 25일 ~ 2025년 3월 03일</div>
+            <div class="info-value">2025년 2월 21일 ~ 2025년 2월 28일</div>
         </div>
         <div class="info-item">
             <div class="info-label">이용 시간:</div>
-            <div class="info-value">3시간</div>
+            <div class="info-value">7시간</div>
         </div>
         <div class="info-item">
             <div class="info-label">이용 상태:</div>
@@ -77,19 +77,19 @@ document.addEventListener('DOMContentLoaded', function()
             <div><h2>결제 내역</h2></div> 
             <div class="info-item">
                 <div class="info-label">결제 금액:</div>
-                <div class="info-value" id="paymentAmount">150,000원</div> <!-- 원래 결제 금액 -->
+                <div class="info-value" id="paymentAmount">529,200원</div> <!-- 원래 결제 금액 -->
             </div>
             <div class="info-item">
                 <div class="info-label">전체 포인트:</div>
-                <div class="info-value" id="totalPoints">5000P</div> <!-- 전체 포인트 -->
+                <div class="info-value" id="totalPoints">4500P</div> <!-- 전체 포인트 -->
             </div>
             <div class="info-item">
                 <div class="info-label">차감된 포인트:</div>
-                <div class="info-value" id="deductedPoints">0P</div> <!-- 차감된 포인트 -->
+                <div class="info-value" id="deductedPoints">1500P</div> <!-- 차감된 포인트 -->
             </div>
             <div class="info-item">
                 <div class="info-label">총 결제 금액:</div>
-                <div class="info-value" id="finalAmount">150,000원</div> <!-- 최종 결제 금액 -->
+                <div class="info-value" id="finalAmount">527,700원</div> <!-- 최종 결제 금액 -->
             </div>
             <div class="info-item">
                 <div class="info-label">결제 방법:</div>
@@ -132,6 +132,11 @@ document.addEventListener('DOMContentLoaded', function()
 		</div>
 
 </div>
+
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 
 </body>

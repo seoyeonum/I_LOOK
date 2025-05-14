@@ -7,14 +7,32 @@
 
 	<!-- 일일 회원가입 수 -->
 	<select id="countReg" resultType="java.lang.Integer">
+		<!-- 
 		SELECT COUNT(*) AS countReg
 		FROM ADMIN_SIT_REG_VIEW
+		-->
+		SELECT COUNT(*) AS countReg
+		FROM
+		(
+			SELECT SIT_BACKUP_ID AS BACKUP_ID
+			FROM SIT_BACKUP
+			WHERE REG_DATE = SYSDATE
+			UNION
+			SELECT PAR_BACKUP_ID AS BACKUP_ID
+			FROM PAR_BACKUP
+			WHERE REG_DATE = SYSDATE
+		)
 	</select>
 	
 	<!-- 일일 일반돌봄 예약 수 -->
 	<select id="countGenReq" resultType="java.lang.Integer">
+		<!-- 
 		SELECT COUNT(*) AS countGenReq
 		FROM ADMIN_GEN_REQ_VIEW
+		WHERE REQ_DATE = SYSDATE
+		-->
+		SELECT COUNT(*) AS countGenReq
+		FROM GEN_REQ
 		WHERE REQ_DATE = SYSDATE
 	</select>
 	

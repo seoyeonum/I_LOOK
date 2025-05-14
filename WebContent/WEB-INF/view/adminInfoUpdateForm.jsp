@@ -282,8 +282,11 @@ String cp = request.getContextPath();
 							<div class="info-row">
 								<div class="info-header">계좌번호</div>
 								<div class="info-cell">
-									<input type="text" id="admin_acct_code" name="admin_acct_code"
+									<%-- <input type="text" id="admin_acct_code" name="admin_acct_code"
 										class="info-input" value="${admin.admin_acct_code}"
+										required="required"> --%>
+									<input type="text" id="admin_acct_code" name="admin_acct_code"
+										class="info-input" value="${admin.acct_number}"
 										required="required">
 									<div id="accountError" class="error-message">계좌번호를 입력해주세요.</div>
 								</div>
@@ -300,6 +303,10 @@ String cp = request.getContextPath();
 			</main>
 		</div>
 	</div>
+	
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

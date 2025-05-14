@@ -25,10 +25,10 @@ public class ParentInsertController
 	public String parentInsert(ParDTO parent, Model model)
 	{
 		IParDAO dao = sqlSession.getMapper(IParDAO.class);
-		
+		System.out.println("들어오고 있는지");
 		// 1. 백업 테이블 insert (par_backup_id 자동 생성)
 		dao.addBackup(parent);
-		//System.out.println("생성된 par_backup_id : " + parent.getPar_backup_id());
+		System.out.println("생성된 par_backup_id : " + parent.getPar_backup_id());
 		// 2. 부모 등록 테이블 insert (par_reg_id 생성, par_backup_id 조회)
 		dao.add(parent);
 		

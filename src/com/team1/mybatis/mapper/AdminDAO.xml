@@ -7,20 +7,34 @@
 
 	<!-- 관리자 정보 조회 -->
 	<select id="list" resultType="com.team1.dto.AdminDTO">
+		<!-- 
 		SELECT ADMIN_REG_ID, ID, PW, ADMIN_ACCT_CODE, BANK_NAME
+		FROM ADMIN_REG
+		-->
+		SELECT ADMIN_REG_ID, ID, PW, ACCT_NUMBER, BANK_NAME
 		FROM ADMIN_REG
 	</select>
 
 	<!-- 관리자 정보 수정 -->
 	<update id="update" parameterType="com.team1.dto.AdminDTO">
+		<!-- 
 		UPDATE ADMIN_REG
 		SET PW=#{pw}, ADMIN_ACCT_CODE=#{admin_acct_code}, BANK_NAME=#{bank_name}
+		WHERE ADMIN_REG_ID=#{admin_reg_id}
+		-->
+		UPDATE ADMIN_REG
+		SET PW=#{pw}, ACCT_NUMBER=#{acct_number}, BANK_NAME=#{bank_name}
 		WHERE ADMIN_REG_ID=#{admin_reg_id}
 	</update>
 	
 	<!-- 관리자 정보 찾기 -->
 	<select id="search" resultType="com.team1.dto.AdminDTO">
+		<!-- 
 		SELECT ADMIN_REG_ID, ID, PW, ADMIN_ACCT_CODE, BANK_NAME
+	    FROM ADMIN_REG
+	    WHERE ADMIN_REG_ID = #{admin_reg_id}
+	    -->
+	    SELECT ADMIN_REG_ID, ID, PW, ACCT_NUMBER, BANK_NAME
 	    FROM ADMIN_REG
 	    WHERE ADMIN_REG_ID = #{admin_reg_id}
 	</select>

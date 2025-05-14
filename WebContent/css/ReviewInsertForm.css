@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+/* 사이드바 */
 .sidebar {
   position: fixed; 
   top: 230px;      
@@ -196,8 +196,9 @@
             margin-top: 40px;
         }
         
+        
 /* 전체 내용 스타일 */
-#wrapper 
+/* #wrapper 
 {
     display: flex;
     flex-direction: column;
@@ -209,10 +210,24 @@
     height: auto;
     box-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
     gap: 30px;
-    transform: translateX(170px); /*오른쪽으로 자꾸 안가서 transform 이용*/
+    transform: translateX(170px); 오른쪽으로 자꾸 안가서 transform 이용
     margin-bottom: 100px;
 }
-
+ */
+ 
+#whole-star {
+    margin-left: 680px;   /* 400px (sidebar left) + 220px (sidebar width) + 80px(여백) */
+    padding: 40px;
+    width: 800px;
+    height: auto;
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.5);
+    gap: 30px;
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+    margin-bottom: 100px;
+    background-color: #fff;
+}
 /* 헤더 부분 */
 #review-header 
 {

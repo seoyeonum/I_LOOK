@@ -89,6 +89,8 @@ body {
 /* 메인 콘텐츠 영역 */
 #main {
     margin: 30px 0;
+    width: 1400px;
+    justify-content: center;
 }
 
 .regTitle {
@@ -532,6 +534,8 @@ input[type="file"] {
 <div id="">
 	<c:import url="/sitterheader.action"/>
 </div>
+
+<div id="wrapper">
         <!-- 본문 -->
         <div id="main">
         	<form id="genRegInsert" action="genreginsert.action" <%-- enctype="multipart/form-data" method="post" --%> method="post">
@@ -689,6 +693,5 @@ input[type="file"] {
 
         </div> <!-- end main -->
     </div> <!-- end wrapper -->
-	
 </body>
 </html>

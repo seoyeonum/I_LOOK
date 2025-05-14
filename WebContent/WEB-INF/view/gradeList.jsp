@@ -82,7 +82,7 @@
 						<div class="info-cell">${grade.daily_max_time }시간</div>
 						<div class="info-cell">${grade.grade_pay }</div>
 						<div class="info-cell">
-							<img alt="${grade.name } 이미지" src="${cp}${grade.file_path }" class="info-cell-img" width="50px" height="50px">
+							<img alt="${grade.name } 이미지" src="<%= cp %>/images/grades/${grade.file_path }.gif" class="info-cell-img" width="50px" height="50px">
 						</div>
 						<div class="info-cell">
 							<div class="action-buttons">
@@ -101,6 +101,10 @@
 		</main>
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

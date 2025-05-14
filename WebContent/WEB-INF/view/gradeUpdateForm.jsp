@@ -131,7 +131,7 @@
 						<div class="left-column">
 							<div class="image">
 								<div class="image-preview" id="imagePreview">
-									<img alt="등급 이미지 미리보기" src="${pageContext.request.contextPath}/${grade.file_path}"  id="previewImage" style="width: 100%; height: 100%;">
+									<img alt="등급 이미지 미리보기" src="<%= cp %>/images/grades/${grade.file_path }.gif"  id="previewImage" style="width: 100%; height: 100%;">
 								</div>
 							</div>
 							<div class="intro-section">
@@ -200,5 +200,10 @@
 			</main>
 		</div>
 	</div>
+	<footer class="footer">
+		<c:import url="/footer.action"/>
+	</footer>
+	
+	
 </body>
 </html>

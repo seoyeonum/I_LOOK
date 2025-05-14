@@ -11,9 +11,31 @@
 		ADMIN_REG_ID,
 		ID,
 		PW,
-		ADMIN_ACCT_CODE,
+		<!-- ADMIN_ACCT_CODE, -->
+		ACCT_NUMBER,
 		BANK_NAME
 		FROM ADMIN_REG
 		WHERE ID = #{id} AND PW = #{pw}
 	</select>
+<!-- 	
+	관리자 아이디 / 비밀번호 일치 여부
+	<select id="findId" parameterType="String" resultType="com.team1.dto.AdminDTO">
+		SELECT ID
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select>
+		
+	<select id="findPw" parameterType="String" resultType="com.team1.dto.AdminDTO">
+		SELECT PW
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select>
+	
+	관리자 회원가입 중복 체크
+	<select id="checkId" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM ADMIN_REG
+		WHERE ID = #{id}
+	</select> -->
+	
 </mapper>

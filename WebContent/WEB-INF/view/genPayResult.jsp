@@ -47,7 +47,7 @@
 		
 		$("#myPage").click(function()
 		{
-			window.location.href = "childused.action";
+			window.location.href = "sitterusehistory.action";
 		});
 	});
   
@@ -104,6 +104,10 @@
 		</div>		
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

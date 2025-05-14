@@ -213,6 +213,7 @@
     max-width: 900px;
     margin: 0 auto;
     background-color: #fff;
+    margin-left: 480px; /* ← 여기 변경! (400 + 220 + 30) */
     border-radius: 3px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     transform: translateX(200px);

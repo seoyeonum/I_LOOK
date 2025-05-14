@@ -82,7 +82,7 @@
         CARE_STATUS AS care_status
     FROM V_PAR_CARE_DONE
     WHERE PAR_BACKUP_ID = #{par_backup_id}
-      AND (CARE_STATUS = '일반돌봄 완료' OR CARE_STATUS = '긴급돌봄 완료')
+      <!-- AND (CARE_STATUS = '일반돌봄 완료' OR CARE_STATUS = '긴급돌봄 완료') -->
     ORDER BY END_DATE DESC
 </select>
 

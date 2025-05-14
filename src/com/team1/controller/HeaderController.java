@@ -98,7 +98,7 @@ public class HeaderController
 	    return result;
 	}
 	
-	@RequestMapping(value="/parentsidebar.action", method = RequestMethod.GET)
+	@RequestMapping(value="/parentsidebar.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String parentSidebar(Model model, HttpSession session)
 	{
 		String result = null;

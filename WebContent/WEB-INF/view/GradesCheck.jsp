@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정할 수 있는 경로
@@ -168,11 +169,13 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 </head>
 
 <body>
+
+<div id="header-container">
+<c:import url="/sitterheader.action"/>
+</div>
+
 <div id="wrapper">
-	<!--헤더 부분은 공용으로 모든 뷰페이지에 사용하고 메인부분만 변경하는 부분으로 생각했었어 각 뷰페이지에 헤더부분만 같아도 통일감을 가질 것 같아서-->
-	<div id="header-container">
-	<c:import url="/sitterheader.action"/>
-	</div>
+	
 	<main>
 		<div class="main container" style="display: flex;">
 			<!-- 사이드 바 컨테이너 -->
@@ -200,17 +203,32 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 			<div style="font-size:12pt; margin-bottom: 10px;">시터님의 등급을 확인하실 수 있고, 등급과 관련된 정보를 확인하실 수 있습니다.</div>
 			<div class="row grades main" style="border: 2px solid #ea9999; border-radius: 20px; display: flex; justify-content: space-around;">
 					<div class="sitter image col-md-2">
-						<img src="<%=cp %>/${list.file_path == null ? 'images/pictures/logoimg' : list.file_path }.png" alt="" height="130" /> <br />
+						<c:choose> 
+							<c:when test="${list.file_path != null}">
+								<img src="<%=cp %>/images/pictures/${list.file_path }.jpg" alt="" height="180" style="margin-top: 10px; border-radius: 5px;"/> <br />
+							</c:when>
+							<c:otherwise>
+								<img src="<%=cp %>/images/logoimg.png" alt="" height="180"/> <br />
+							</c:otherwise>
+						</c:choose> 
+						<%--
+						<img src="<%=cp %>/${list.file_path == null ? 'images/logoimg.png' : list.file_path }" alt="" height="130" /> <br />
 						시터님의 사진이 들어가는 곳입니다.
+						--%>
 					</div>
-					<div class="grades rank col-md-2" style="margin-top: 40px;">
-						<img src="<%=cp %>/${grade.file_path }" alt="" height="130" /> <br />
+					<!-- <div class="grades rank col-md-2" style="margin-top: 40px;"> -->
+					<div class="grades rank col-md-2" style="margin-top: 10px;">
+						<%-- <img src="<%=cp %>/${grade.file_path }" alt="" height="130" /> <br /> --%>
+						<img src="<%=cp %>/images/grades/${grade.file_path }.gif" alt="" height="120" style="border-radius: 60px"/> <br />
 						<div style="font-size: 14pt; margin-top: 10px;">
 						${list.name }님의 등급은 ${mygrade.grade }입니다.
 						</div>
 					</div>
-					<div class="sitters info col-md-2" style="font-size: 16pt; width: 30%; padding: 20px;">
-						가입일: ${mygrade.chk_date }<br />
+					<fmt:parseDate var="chk_date" value="${mygrade.chk_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<!-- <div class="sitters info col-md-2" style="font-size: 16pt; width: 30%; padding: 20px;"> -->
+					<div class="sitters info col-md-2" style="font-size: 14pt; width: 30%; padding: 20px 0 20px 0;">
+						가입일: <fmt:formatDate value="${chk_date}" pattern="yyyy.MM.dd."/><br />
+						<%-- 가입일: ${mygrade.chk_date }<br /> --%>
 						그동안 ${list.name }님이 맡으신 돌봄 서비스 수는 일반 ${genCareCount }개, 긴급 ${emgCareCount }개, 총합 ${genCareCount + emgCareCount }개 입니다.<br />
 						전체 평균 점수: ${totalrating }점<br />
 						최근 3개월간 평균 점수: ${month3rating }점
@@ -279,4 +297,9 @@ String cp = request.getContextPath(); //내부적으로 콘텍스트를 지정�
 		<!-- .main.container -->
 	</main>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 </html>
