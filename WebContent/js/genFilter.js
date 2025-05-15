@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function()
     maxDate.setDate(today.getDate() + 33);		// 오늘로부터 33일 후
     
     // 비활성화할 날짜 배열 → 임의의 날짜. 이후 쿼리로 얻어오기
-    var disabledDates = ["2025-05-15", "2025-05-20", "2025-05-25"];
+    var disabledDates = ["2025-05-22", "2025-05-29", "2025-05-30"];
     
     
     // 시작 날짜 선택기
