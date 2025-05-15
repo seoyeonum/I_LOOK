@@ -72,10 +72,17 @@
                 <button type="button" id="back" class="btn"
                 onclick="window.location.href='<%=cp%>/noticelist.action'">목록으로</button>
             </div>
-            <div class="search-box">
-                <button type="button" id="update" class="btn">수정</button>
-                <button type="button" id="delete" class="btn">삭제</button>
-            </div>
+            <c:choose>
+			    <c:when test="${not empty admin}">
+	            <div class="search-box">
+	                <button type="button" id="update" class="btn">수정</button>
+	                <button type="button" id="delete" class="btn">삭제</button>
+	            </div>
+	            </c:when>
+		        <c:otherwise>
+		            <!-- 기본 헤더 또는 아무 작업도 하지 않음 -->
+		        </c:otherwise>
+		    </c:choose>
         </div>
 	        
 		<form action="">

@@ -12,8 +12,9 @@
 <link rel="stylesheet" type="text/css" href="css/gen-filter.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 <script src="js/genFilter.js" defer></script>
 <script type="text/javascript">
 
@@ -100,33 +101,23 @@
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
 				        	<select name="start_time" id="time-start" required="required">
-					             <option value="">시작 시간</option>
-					             <option value="8">오전 8:00</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					    	</select>
+					            <option value="">시작 시간</option>
+				        		<c:forEach var="i" begin="8" end="11" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="18" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
+							</select>
 					      	<span>부터</span>
 					      	<select name="end_time" id="time-end" required="required">
-					             <option value="">종료 시간</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
+					            <option value="">종료 시간</option>
+				        		<c:forEach var="i" begin="9" end="11" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="19" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
 				    		</select>
 				        	<span>까지</span>
 				        </div>

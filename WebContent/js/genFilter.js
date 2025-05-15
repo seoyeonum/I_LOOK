@@ -9,15 +9,30 @@ document.addEventListener('DOMContentLoaded', function()
 	var dateStartElement = document.getElementById('date-start');
 	var dateEndElement = document.getElementById('date-end');
 	
-	// 비활성화할 날짜 배열 → 임의의 날짜. 이후 쿼리로 얻어오기.
+    // 오늘 날짜
+    var today = new Date();
+    
+    // 돌봄 희망 시작일의 최소 날짜
+    var minDate = new Date(today);
+    minDate.setDate(today.getDate()+4);			// 오늘로부터 4일 후
+    
+    // 돌봄 희망 시작일의 최대 날짜
+    var maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 33);		// 오늘로부터 33일 후
+    
+    // 비활성화할 날짜 배열 → 임의의 날짜. 이후 쿼리로 얻어오기
     var disabledDates = ["2025-05-15", "2025-05-20", "2025-05-25"];
+    
     
     // 시작 날짜 선택기
     var startDatePicker = flatpickr("#date-start", {
         dateFormat: "Y-m-d"						// 날짜 포맷
         , disable: disabledDates				// 비활성화 날짜 배열
-        , minDate: "+4d"						// 오늘로부터 4일 후
-        , maxDate: "+33d"						// 오늘로부터 33일 후
+        //, minDate: "+4d"						
+        //, maxDate: "+33d"	
+        , minDate: minDate
+        , maxDate: maxDate
+        , locale: "ko"							// 한국어 설정
         , onChange: function(selectedDates)     // 돌봄 시작일로 선택한 날짜
         {
             if (selectedDates[0])
@@ -42,8 +57,10 @@ document.addEventListener('DOMContentLoaded', function()
     var endDatePicker = flatpickr("#date-end", {
         dateFormat: "Y-m-d"						// 날짜 포맷
         , disable: disabledDates				// 비활성화 날짜 배열
-        , minDate: "+4d"						// 오늘로부터 4일 후
-    	// maxDate는 시작 날짜가 선택된 후 동적으로 설정됨
+        //, minDate: "+4d"
+        // maxDate는 시작 날짜가 선택된 후 동적으로 설정됨
+        , minDate: minDate
+        , locale: "ko"							// 한국어 설정
     });
 	
 	
