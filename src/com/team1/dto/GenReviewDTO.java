@@ -13,6 +13,9 @@ public class GenReviewDTO
 	// 돌봄 객관식 응답 종류
 	private String gen_multiple_type_id, type;
 
+	// 부모 백업 아이디
+	private String par_backup_id;
+	
 	// getter / setter 구성
 	public String getGen_review_id()
 	{
@@ -122,6 +125,16 @@ public class GenReviewDTO
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+
+	public String getPar_backup_id()
+	{
+		return par_backup_id;
+	}
+
+	public void setPar_backup_id(String par_backup_id)
+	{
+		this.par_backup_id = par_backup_id;
 	}
 	
 	

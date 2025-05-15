@@ -38,9 +38,15 @@ listPrimaryGenReg
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}
             </div>
-         	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
-            <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
-         	
+            <c:choose>
+         	<c:when test="${restrict == 0}">
+         		<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
+            	<div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
+         	</c:when>
+         	<c:otherwise>
+         		<div>(⭐<a href="parentcaredone.action">돌봄 이용 리뷰 작성</a>&nbsp;이후 평점 열람 가능)</div>
+         	</c:otherwise>
+         	</c:choose>
          	<fmt:parseDate var="startDateParsed" value="${genReg.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 			<fmt:parseDate var="endDateParsed" value="${genReg.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 			<div>돌봄 등록 일자: 📆

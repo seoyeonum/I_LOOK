@@ -206,8 +206,17 @@
 				             		</span>
 				             		&nbsp;${genDetail.grade} 시터
 				             	</div>
-			                	<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
-            					<div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
+				             	
+				             	<c:choose>
+					         	<c:when test="${restrict == 0}">
+					         		<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
+					            	<div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
+					         	</c:when>
+					         	<c:otherwise>
+					         		<div>(⭐<a href="parentcaredone.action">돌봄 이용 리뷰 작성</a>&nbsp;이후 평점 열람 가능)</div>
+					         	</c:otherwise>
+					         	</c:choose>
+            					
 			            	</div>
 		            	</div>
 		            	<!-- 아래는 접힐 내용 -->
