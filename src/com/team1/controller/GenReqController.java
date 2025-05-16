@@ -73,8 +73,12 @@ public class GenReqController
 		ArrayList<ChildDTO> listName = new ArrayList<ChildDTO>();
 		listName = childDao.listName(parBackupId);
 		
+		// 부모 id 기반으로 평점 열람 제한 여부 조회
+		IGenReviewDAO reviewDao = sqlSession.getMapper(IGenReviewDAO.class);
+		int restrict = reviewDao.checkRestrictReview(parBackupId);
+		
 		model.addAttribute("listName", listName);
-		//session.setAttribute("id", id);
+		session.setAttribute("restrict", restrict);
 		
 		result = "WEB-INF/view/genMain.jsp";
 		

@@ -21,7 +21,7 @@ listPrimaryGenReg
 
 <div class="box-preview">
     <div class="sitter-photo">
-    	<c:set var="cp" value="${pageContext.request.contextPath}" />
+    	<%-- <c:set var="cp" value="${pageContext.request.contextPath}" /> --%>
         <img src="<%= cp %>/images/pictures/${genReg.photo_file_path}.jpg" alt="시터 사진">
     </div>
     <div class="sitter-info"> 
@@ -38,9 +38,15 @@ listPrimaryGenReg
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}
             </div>
-         	<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
-            <div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
-         	
+            <c:choose>
+         	<c:when test="${restrict == 0}">
+         		<div>최근 평점 ⭐${genReg.recent_avg_rating } (${genReg.recent_review_count }건)</div>
+            	<div>전체 평점 ⭐${genReg.avg_rating } (${genReg.review_count }건)</div>
+         	</c:when>
+         	<c:otherwise>
+         		<div>(⭐<a href="parentcaredone.action">돌봄 이용 리뷰 작성</a>&nbsp;이후 평점 열람 가능)</div>
+         	</c:otherwise>
+         	</c:choose>
          	<fmt:parseDate var="startDateParsed" value="${genReg.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 			<fmt:parseDate var="endDateParsed" value="${genReg.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 			<div>돌봄 등록 일자: 📆
@@ -99,22 +105,22 @@ listPrimaryGenReg
 	<c:if test="${paging.startPage > 1}">
     <a href="javascript:void(0);" onclick="goToPage(${paging.startPage-1})">&lt;</a>
     <!-- <a href="javascript:void(0);>" → 폼 제출 방지 및 현상 유지 -->
-</c:if>
+	</c:if>
 
-<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
-    <c:choose>
-    	<c:when test="${p == paging.page}">
-        	<strong>${p}</strong>		<!-- 엘리먼트 강조 -->
-        </c:when>
-        <c:otherwise>
-        	<a href="javascript:void(0);" onclick="goToPage(${p})">${p}</a>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
+	<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
+	    <c:choose>
+	    	<c:when test="${p == paging.page}">
+	        	<strong>${p}</strong>		<!-- 엘리먼트 강조 -->
+	        </c:when>
+	        <c:otherwise>
+	        	<a href="javascript:void(0);" onclick="goToPage(${p})">${p}</a>
+	        </c:otherwise>
+	    </c:choose>
+	</c:forEach>
 
-<c:if test="${paging.endPage < paging.totalPage}">
-	<a href="javascript:void(0);" onclick="goToPage(${paging.endPage+1})">&gt;</a>
-</c:if>
+	<c:if test="${paging.endPage < paging.totalPage}">
+		<a href="javascript:void(0);" onclick="goToPage(${paging.endPage+1})">&gt;</a>
+	</c:if>
 </c:if>
 </div>
 

@@ -11,7 +11,10 @@
 <title>genMain.jsp</title>
 <link rel="stylesheet" type="text/css" href="css/gen-filter.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 <script src="js/genFilter.js" defer></script>
 <script type="text/javascript">
 
@@ -85,9 +88,11 @@
 					<div class="form-group">
 				        <div class="label">돌봄 희망 날짜</div>
 				        <div class="date-range">
-				        	<input type="date" name="start_date" id="date-start" required="required">
+				        	<input type="date" name="start_date" id="date-start"
+				        	placeholder="연도.월.일." style="width: 150px;" required="required">
 				        	<span>부터</span>
-				        	<input type="date" name="end_date" id="date-end" required="required">
+				        	<input type="date" name="end_date" id="date-end"
+				        	placeholder="연도.월.일." style="width: 150px;" required="required">
 				        	<span>까지</span>
 				    	</div>
 				    </div>
@@ -96,33 +101,23 @@
 				    	<div class="label">돌봄 희망 시간</div>
 				     	<div class="time-range">
 				        	<select name="start_time" id="time-start" required="required">
-					             <option value="">시작 시간</option>
-					             <option value="8">오전 8:00</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					    	</select>
+					            <option value="">시작 시간</option>
+				        		<c:forEach var="i" begin="8" end="11" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="18" step="1">
+							    <option value="${i}" ${i == timeStart ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
+							</select>
 					      	<span>부터</span>
 					      	<select name="end_time" id="time-end" required="required">
-					             <option value="">종료 시간</option>
-					             <option value="9">오전 9:00</option>
-					             <option value="10">오전 10:00</option>
-					             <option value="11">오전 11:00</option>
-					             <option value="12">오후 12:00</option>
-					             <option value="13">오후 1:00</option>
-					             <option value="14">오후 2:00</option>
-					             <option value="15">오후 3:00</option>
-					             <option value="16">오후 4:00</option>
-					             <option value="17">오후 5:00</option>
-					             <option value="18">오후 6:00</option>
-					             <option value="19">오후 7:00</option>
+					            <option value="">종료 시간</option>
+				        		<c:forEach var="i" begin="9" end="11" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오전 ${i}:00</option>
+								</c:forEach>
+								<c:forEach var="i" begin="12" end="19" step="1">
+							    <option value="${i}" ${i == timeEnd ? "selected" : ""}>오후 ${i==12 ? 12 : i-12}:00</option>
+								</c:forEach>
 				    		</select>
 				        	<span>까지</span>
 				        </div>
@@ -181,7 +176,16 @@
 		                    <img src="<%= cp %>/images/pictures/sit_photo_SBAC0010.jpg" alt="윤지영 시터">
 		                </div>
 		                <div class="sitter-info">
-		                    <div class="sitter-name">윤지영 시터 <span class="star-rating"><i class="fas fa-star"></i> 4.0</span></div>
+		                    <div class="sitter-name">윤지영 시터
+		                    <c:choose>
+				         	<c:when test="${restrict == 0}">
+				         		<span class="star-rating"><i class="fas fa-star"></i> 4.0</span>
+				         	</c:when>
+				         	<c:otherwise>
+				         		<div class="warning" style="display: inline;">&nbsp;★리뷰 작성 이후 평점 열람 가능</div>
+				         	</c:otherwise>
+				         	</c:choose>
+		                    </div>
 		                    <div class="sitter-details">
 		                        <div><span class="badge female">여성</span> <span class="badge">1년 경력</span> <span class="badge">유아교육과</span></div>
 		                        <div>돌봄 가능 연령: 12개월 ~ 7세</div>
@@ -197,7 +201,16 @@
 		                    <img src="/api/placeholder/100/100" alt="박서준 시터">
 		                </div>
 		                <div class="sitter-info">
-		                    <div class="sitter-name">박서준 시터 <span class="star-rating"><i class="fas fa-star"></i> 4.8</span></div>
+		                    <div class="sitter-name">박서준 시터
+		                    <c:choose>
+				         	<c:when test="${restrict == 0}">
+				         		<span class="star-rating"><i class="fas fa-star"></i> 4.8</span>
+				         	</c:when>
+				         	<c:otherwise>
+				         		<div class="warning" style="display: inline;">&nbsp;★리뷰 작성 이후 평점 열람 가능</div>
+				         	</c:otherwise>
+				         	</c:choose>
+				         	</div>
 		                    <div class="sitter-details">
 		                        <div><span class="badge male">남성</span> <span class="badge">3년 경력</span> <span class="badge">체육교육과</span></div>
 		                        <div>돌봄 가능 연령: 24개월 ~ 12세</div>
@@ -213,7 +226,16 @@
 		                    <img src="/api/placeholder/100/100" alt="이서연 시터">
 		                </div>
 		                <div class="sitter-info">
-		                    <div class="sitter-name">이서연 시터 <span class="star-rating"><i class="fas fa-star"></i> 4.9</span></div>
+		                    <div class="sitter-name">이서연 시터
+		                    <c:choose>
+				         	<c:when test="${restrict == 0}">
+				         		<span class="star-rating"><i class="fas fa-star"></i> 4.9</span>
+				         	</c:when>
+				         	<c:otherwise>
+				         		<div class="warning" style="display: inline;">&nbsp;★리뷰 작성 이후 평점 열람 가능</div>
+				         	</c:otherwise>
+				         	</c:choose>
+		                    </div>
 		                    <div class="sitter-details">
 		                        <div><span class="badge female">여성</span> <span class="badge">7년 경력</span> <span class="badge">아동심리학</span></div>
 		                        <div>돌봄 가능 연령: 6개월 ~ 10세</div>
