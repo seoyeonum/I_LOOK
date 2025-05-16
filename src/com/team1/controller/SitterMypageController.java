@@ -147,6 +147,32 @@ public class SitterMypageController
       return "/WEB-INF/view/GradesCheck.jsp";
    }
    
+   /*
+   // 스케줄러 페이지 컨트롤러
+   @RequestMapping(value = "/sitterscheduler.action", method = RequestMethod.GET)
+   public String SitScheduler(HttpSession session, Model model)
+   {
+	   String result = null;
+
+	   // 페이지 접근 권한 확인을 위해 세션에서 시터 파일을 받아 왔음 --------------------
+	   SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+
+	   if (sitter == null)
+		   return "redirect:/iLook.action";
+
+	   // -------------------------------------- 접근 권한 확인. 하기 과정을 진행합니다.
+
+	   String sit_backup_id = sitter.getSit_backup_id();
+
+	   // ==============================================================================
+	   // 밑은 내가 이미 해놓은 것들.
+	   
+	   return result;
+   }
+   */
+   
+   
+   
    // 근무 등록 폼으로 가는 링크
    @RequestMapping(value = "/genreginsertform.action", method = RequestMethod.GET)
    public String SitGenRegInsertForm(HttpSession session, Model model)
