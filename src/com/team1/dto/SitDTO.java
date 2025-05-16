@@ -36,6 +36,9 @@ public class SitDTO
 
 	// 평균별점
 	private double average_rating;
+	
+	// 행넘버
+	private int rn;
 
 	// getter / setter 구성
 	public String getSit_backup_id()
@@ -296,6 +299,16 @@ public class SitDTO
 	public void setAverage_rating(double average_rating)
 	{
 		this.average_rating = average_rating;
+	}
+
+	public int getRn()
+	{
+		return rn;
+	}
+
+	public void setRn(int rn)
+	{
+		this.rn = rn;
 	}
 	
 }

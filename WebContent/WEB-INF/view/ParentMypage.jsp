@@ -68,7 +68,7 @@ String cp = request.getContextPath();
 	<div id="header-container">
 		<c:import url="/parentheader.action" />
 	</div>
-
+<div>
 	<!-- 사이드 메뉴 -->
 	<div class="sidebar">
 		<c:import url="/parentsidebar.action" />
@@ -106,9 +106,8 @@ String cp = request.getContextPath();
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>
 	</div>
-
+	
 	<!-- 등록 버튼 -->
 	<div class="insert">
 		<button type="button" class="insert-btn" id="btn"
@@ -119,6 +118,12 @@ String cp = request.getContextPath();
 	<c:if test="${not empty sessionScope.deleteSuccess}">
 		<c:remove var="deleteSuccess" scope="session" />
 	</c:if>
+	</div>
+</div>
+	
+	<footer class="footer">
+		<c:import url="/footer.action"/>
+	</footer>
 
 </body>
 </html>

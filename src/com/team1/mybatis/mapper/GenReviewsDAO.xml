@@ -180,4 +180,36 @@
 		                    ON S.SIT_BACKUP_ID = GR.SIT_BACKUP_ID
 		WHERE S.SIT_BACKUP_ID = #{sit_backup_id}
 	</select>
+	
+	<!-- [일반] 부모 백업 아이디로 리뷰 제한 대상자 여부 확인 -->
+	<select id="checkRestrictReview" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM PAR_BACKUP P JOIN CHILD_BACKUP C
+		ON P.PAR_BACKUP_ID = C.PAR_BACKUP_ID
+		    JOIN GEN_REQ GR
+		    ON C.CHILD_BACKUP_ID = GR.CHILD_BACKUP_ID
+		        JOIN GEN_CONFIRMED GC 
+		        ON GR.GEN_REQ_ID = GC.GEN_REQ_ID
+		WHERE NOT EXISTS 
+		(
+		    SELECT 1
+		    FROM GEN_SIT_CONFIRMED_CANCELED GSCC
+		    WHERE GC.GEN_CONFIRMED_ID = GSCC.GEN_CONFIRMED_ID
+		)
+		AND NOT EXISTS
+		(
+		    SELECT 1
+		    FROM GEN_PAR_CONFIRMED_CANCELED GPCC
+		    WHERE GC.GEN_CONFIRMED_ID = GPCC.GEN_CONFIRMED_ID
+		)
+		AND NOT EXISTS
+		(
+		    SELECT 1
+		    FROM GEN_REVIEWS RV
+		    WHERE GC.GEN_CONFIRMED_ID = RV.GEN_CONFIRMED_ID
+		)
+		AND GR.END_DATE &lt; SYSDATE
+		AND SYSDATE &lt;= GR.END_DATE +7
+		AND P.PAR_BACKUP_ID = #{par_backup_id}
+	</select>
 </mapper>

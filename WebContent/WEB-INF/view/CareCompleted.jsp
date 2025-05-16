@@ -19,7 +19,7 @@ String cp = request.getContextPath();
 		{
 			firstButton.classList.remove('presentPage');
 		}
-		var button = document.querySelector('#gen');
+		var button = document.querySelector('#mypage');
 		if (button)
 		{
 			button.classList.add('presentPage');
@@ -154,6 +154,10 @@ String cp = request.getContextPath();
 
 		<div id="paginationContainer" class="pagination-controls"></div>
 	</div>
+	
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

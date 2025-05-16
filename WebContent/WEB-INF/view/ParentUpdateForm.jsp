@@ -139,8 +139,10 @@ String cp = request.getContextPath();
     </select>
     <button type="button" class="btn" onclick="withdrawConfirm();">탈퇴 확정</button>
 </div>
-
-
+</form></div></div>
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 	<!-- 주소 API -->
 	<script
@@ -158,6 +160,8 @@ String cp = request.getContextPath();
 					}).open();
 		}
 	</script>
+	
+
 
 </body>
 </html>

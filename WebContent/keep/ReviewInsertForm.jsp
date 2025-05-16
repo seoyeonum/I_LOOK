@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function()
 			{
 				firstButton.classList.remove('presentPage');
 			}
-			var button = document.querySelector('#gen');
+			var button = document.querySelector('#mypage');
 			if (button)
 			{
 				button.classList.add('presentPage');
@@ -159,6 +159,10 @@ document.addEventListener('DOMContentLoaded', function() {
         <button id="submitBtn">제출하기</button>
     </div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

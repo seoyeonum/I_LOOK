@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -277,7 +276,7 @@
 				        	<span>까지</span>
 				        </div>
 				        <div class="warning" id="max-time-warning">※일반 돌봄 하루 최대 이용시간은 8시간입니다.</div>
-				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 2시간부터 이용 가능합니다.</div>
+				        <div class="warning" id="min-time-warning">※일반 돌봄은 최소 1시간부터 이용 가능합니다.</div>
 				    </div>
 				
 				    <button type="submit" class="btn btn-large" id="primary-search-btn">시터 찾기</button>
@@ -387,6 +386,10 @@
     
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

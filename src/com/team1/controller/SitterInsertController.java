@@ -83,7 +83,8 @@ public class SitterInsertController
         System.out.println("▶ 시터 사진 저장 경로: " + filePhoto.getAbsolutePath());
         
         													//-- 시터 파일 저장 경로
-        sitter.setFile_path(filePhotoName);
+        //sitter.setFile_path(filePhotoName);
+        sitter.setFile_path("sit_photo_" + sitBackupId);	//-- 시터 사진 : 서버에 저장하는 file_path 는 확장자 빼고 파일명만!
         
 
         
@@ -108,7 +109,7 @@ public class SitterInsertController
         DocRegDTO doc001 = new DocRegDTO();
         doc001.setDoc_type_id("001");
         doc001.setSit_reg_id(sitter.getSit_reg_id());
-        doc001.setFile_path(fileHealthCertName);
+        doc001.setFile_path(fileHealthCertName);		//-- 확장자 포함 파일명 저장
         docdao.addDoc(doc001);
         System.out.println("▶ 보건증 저장 경로: " + fileHealthCert.getAbsolutePath());
 
@@ -127,7 +128,7 @@ public class SitterInsertController
         DocRegDTO doc002 = new DocRegDTO();
         doc002.setDoc_type_id("002");
         doc002.setSit_reg_id(sitter.getSit_reg_id());
-        doc002.setFile_path(filecrimeRecordName);
+        doc002.setFile_path(filecrimeRecordName);		//-- 확장자 포함 파일명 저장
         docdao.addDoc(doc002);
 
 
@@ -150,14 +151,14 @@ public class SitterInsertController
                 MultipartFile certFile = certificates.get(i);
                 String certTypeId;
                 
-                // 유형 ID가 있으면 사용, 없으면 기본값 "105"(기타 자격증) 사용
+                // 유형 ID가 있으면 사용, 없으면 기본값 "000"(기타 자격증) 사용
                 if (i < certTypeIds.size())
                 {
                     certTypeId = certTypeIds.get(i);
                 }
                 else
                 {
-                    certTypeId = "105"; // 기타 자격증으로 기본 설정
+                    certTypeId = "000"; // 기타 자격증으로 기본 설정
                 }
 
                 if (!certFile.isEmpty())
@@ -175,7 +176,7 @@ public class SitterInsertController
                     SitCertDTO cert = new SitCertDTO();
                     cert.setCert_type_id(certTypeId); // 사용자 선택
                     cert.setSit_reg_id(sitter.getSit_reg_id());
-                    cert.setFile_path(fileName);
+                    cert.setFile_path(fileName);		//-- 확장자 포함 파일명 저장
                     certdao.addCert(cert);
                 }
             }

@@ -41,7 +41,8 @@
 	        FROM (
 	            SELECT GEN_REQ_ID, GEN_REG_ID, PAR_BACKUP_ID, PAR_NAME, CHILD_NAME,
 	                   START_DATE, END_DATE, START_TIME, END_TIME, REQ_DATE, STATUS
-	            FROM ADMIN_GEN_REQ_VIEW
+	            <!-- FROM ADMIN_GEN_REQ_VIEW -->
+	            FROM GEN_REQ_DETAIL_VIEW
 	            WHERE 1=1
 			
 	            <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
@@ -72,7 +73,8 @@
 	<!-- 관리자가 보는 신청이 등록된 일반돌봄 예약 전체 개수 -->
 	<select id="adminCountGenReq" resultType="java.lang.Integer">
 	    SELECT COUNT(*) AS count
-	    FROM ADMIN_GEN_REQ_VIEW
+	    <!-- FROM ADMIN_GEN_REQ_VIEW -->
+	    FROM GEN_REQ_DETAIL_VIEW
 	    WHERE 1=1
 	
 	    <if test="statusFilter != null and statusFilter != '' and statusFilter != 'all'">
@@ -100,7 +102,8 @@
 	<!-- [관리자] 예약 신청 상세정보 조회 -->
 	<select id="adminSearch" resultType="com.team1.dto.GenReqDTO">
 		SELECT *
-		FROM ADMIN_GEN_REQ_VIEW
+		<!-- FROM ADMIN_GEN_REQ_VIEW -->
+	    FROM GEN_REQ_DETAIL_VIEW
 		WHERE GEN_REQ_ID = #{gen_req_id}
 	</select>
 	
@@ -116,25 +119,25 @@
 
 
 	<!-- 부모 기준 예약 내역 조회 -->
-<select id="findByParent" resultType="com.team1.dto.GenReqDTO">
-    SELECT
-        PAR_BACKUP_ID,
-        CHILD_BACKUP_ID,
-        CHILD_NAME,
-        SITTER_NAME,
-        START_DATE,
-        END_DATE,
-        START_TIME,
-        END_TIME,
-        CARE_STATUS,
-        CARE_TYPE,
-        WORK_HOURS,
-        SITTER_LEVEL,
-        FILE_PATH
-    FROM V_PAR_CARE
-    WHERE PAR_BACKUP_ID = #{par_backup_id}
-    ORDER BY START_DATE DESC
-</select>
+	<select id="findByParent" resultType="com.team1.dto.GenReqDTO">
+	    SELECT
+	        PAR_BACKUP_ID,
+	        CHILD_BACKUP_ID,
+	        CHILD_NAME,
+	        SITTER_NAME,
+	        START_DATE,
+	        END_DATE,
+	        START_TIME,
+	        END_TIME,
+	        CARE_STATUS,
+	        CARE_TYPE,
+	        WORK_HOURS,
+	        SITTER_LEVEL,
+	        FILE_PATH
+	    FROM V_PAR_CARE
+	    WHERE PAR_BACKUP_ID = #{par_backup_id}
+	    ORDER BY START_DATE DESC
+	</select>
 
 	<select id="listByParent" parameterType="String" resultType="com.team1.dto.ChildDTO">
 	    SELECT *

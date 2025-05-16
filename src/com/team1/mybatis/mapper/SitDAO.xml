@@ -71,12 +71,22 @@
 		SELECT *
 		FROM
 		(
-		    SELECT S.*, ROWNUM RN
+		    <!-- SELECT S.*, ROWNUM RN -->
+		    SELECT S.*
 		    FROM
 		    (
+		        <!--
 		        SELECT *
 		        FROM V_ADMIN_SIT_ALL
 		        WHERE 1=1
+		        -->
+		        SELECT ROW_NUMBER() OVER (ORDER BY SB.SIT_BACKUP_ID ASC) AS RN
+		        	 , SR.NAME, SR.TEL, G.GRADE, SB.SIT_BACKUP_ID, SB.REG_DATE 
+		        FROM SIT_REG SR JOIN SIT_BACKUP SB
+		        ON SR.SIT_BACKUP_ID = SB.SIT_BACKUP_ID
+		        	JOIN SIT_GRADE_VIEW G
+		        	ON SR.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+		        WHERE NOT EXISTS ( SELECT 1 FROM SIT_WITHDRAWED W WHERE W.SIT_BACKUP_ID = SR.SIT_BACKUP_ID) 
 		        <if test="searchKey != null and searchValue != null and searchValue != ''">
 		            <if test="searchKey == 'name'">
 		                AND NAME LIKE '%' || #{searchValue} || '%'
@@ -95,8 +105,15 @@
  	<!-- // [관리자] 전체 시터 회원 명수 확인 public int countSit(); -->
  	<select id="countSit" resultType="java.lang.Integer"> 
  		SELECT COUNT(*) AS COUNT
+		<!--
 		FROM V_ADMIN_SIT_ALL
         WHERE 1=1
+        -->
+		FROM SIT_REG SR JOIN SIT_BACKUP SB
+        ON SR.SIT_BACKUP_ID = SB.SIT_BACKUP_ID
+        	JOIN SIT_GRADE_VIEW G
+        	ON SR.SIT_BACKUP_ID = G.SIT_BACKUP_ID
+        WHERE NOT EXISTS ( SELECT 1 FROM SIT_WITHDRAWED W WHERE W.SIT_BACKUP_ID = SR.SIT_BACKUP_ID)
         <if test="searchKey != null and searchValue != null and searchValue != ''">
             <if test="searchKey == 'name'">
                 AND NAME LIKE '%' || #{searchValue} || '%'
@@ -185,6 +202,7 @@
  	
  	
  	<select id="sitIdSearch" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 백업 아이디로 자기 정보 찾기 public SitDTO sitIdSearch(String sit_backup_id); -->
+	 	<!-- 
 	 	SELECT SIT_REG_ID AS sit_reg_id
 		, SIT_BACKUP_ID AS sit_backup_id
 		, ID AS ID
@@ -200,6 +218,25 @@
 		, FILE_PATH AS FILE_PATH
 		FROM V_ADMIN_SIT_ALL
 		WHERE SIT_BACKUP_ID = #{sit_backup_id, jdbcType=VARCHAR}
+		 -->
+		SELECT SR.SIT_REG_ID AS sit_reg_id
+		, SB.SIT_BACKUP_ID AS sit_backup_id
+		, SB.ID AS ID
+		, SB.REG_DATE AS REG_DATE
+		, SR.PW AS PW
+		, SR.NAME AS NAME
+		, SR.SSN_FIRST AS SSN_FIRST
+		, SR.SSN_SECOND AS SSN_SECOND
+		, SR.ROAD_ADDR AS ROAD_ADDR
+		, SR.DETAILED_ADDR AS DETAILED_ADDR
+		, SR.ZIP_CODE AS ZIP_CODE
+		, SR.TEL AS TEL
+		, SR.FILE_PATH AS FILE_PATH
+		FROM SIT_REG SR JOIN SIT_BACKUP SB
+        ON SR.SIT_BACKUP_ID = SB.SIT_BACKUP_ID
+        WHERE SB.SIT_BACKUP_ID = #{sit_backup_id, jdbcType=VARCHAR}
+		
+		
 	</select>
 	
 	<select id="searchGrades" resultType="com.team1.dto.SitDTO"> <!-- // [시터] 자기 등급 찾기 public SitDTO searchGrades(String id); -->

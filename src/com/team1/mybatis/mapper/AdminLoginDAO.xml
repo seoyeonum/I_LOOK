@@ -11,7 +11,8 @@
 		ADMIN_REG_ID,
 		ID,
 		PW,
-		ADMIN_ACCT_CODE,
+		<!-- ADMIN_ACCT_CODE, -->
+		ACCT_NUMBER,
 		BANK_NAME
 		FROM ADMIN_REG
 		WHERE ID = #{id} AND PW = #{pw}

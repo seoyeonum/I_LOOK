@@ -6,17 +6,25 @@
 <mapper namespace="com.team1.mybatis.INoticeDAO">
 	
 	<!-- 공지사항 유형 조회 -->
-	<select id="listType">
+	<select id="listType" resultType="com.team1.dto.NoticeDTO">
 		SELECT NOTICE_TYPE_ID, TYPE
 		FROM NOTICE_TYPE
 	</select>
 	
 	<!-- 공지사항 조회 -->
 	<select id="listNotice" resultType="com.team1.dto.NoticeDTO">
-		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.HITCOUNT, N.NOTICED_DATE
-		FROM NOTICES N JOIN NOTICE_TYPE T
-		ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
-		ORDER BY N.NOTICED_DATE DESC
+		SELECT *
+		FROM (
+	        SELECT ROWNUM AS RNUM, DATA.*
+	        FROM (
+					SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.HITCOUNT, N.NOTICED_DATE
+					FROM NOTICES N JOIN NOTICE_TYPE T
+					ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+					ORDER BY N.NOTICED_DATE DESC
+			) DATA
+	        WHERE ROWNUM &lt;= #{end,jdbcType=INTEGER}
+	    ) 
+	    WHERE RNUM &gt;= #{start,jdbcType=INTEGER}
 	</select>
 	
 	<!-- 공지사항 최근 5건만 조회 -->
@@ -33,11 +41,11 @@
 	</select>
 	
 	<!-- 공지사항 상세 열람 -->
-	<select id="NoticeDetail" resultType="com.team1.dto.NoticeDTO">
+	<select id="noticeDetail" resultType="com.team1.dto.NoticeDTO">
 		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
 		FROM NOTICES N JOIN NOTICE_TYPE T
 		ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
-		WHRER N.NOTICE_ID = #{notice_id}
+		WHERE N.NOTICE_ID = #{notice_id}
 	</select>
 	
 	

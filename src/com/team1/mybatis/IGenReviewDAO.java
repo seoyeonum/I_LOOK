@@ -69,5 +69,9 @@ public interface IGenReviewDAO
     
     // [일반] 시터 백업 아이디로 객관식 응답 확인
     public ArrayList<String> listReviewByBackupId(String sit_backup_id);
+    
+    // [일반] 부모 백업 아이디로 리뷰 제한 대상자 여부 확인
+    public int checkRestrictReview(String par_backup_id);
+    
 
 }

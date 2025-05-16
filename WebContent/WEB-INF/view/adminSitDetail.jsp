@@ -24,7 +24,7 @@ $(document).ready(function()
 	    
 	    if (filePath)
 		{
-	    	var fullUrl = "<%=cp%>/images/"" + folder + "/" + filePath;
+	    	var fullUrl = "<%=cp%>/images/" + folder + "/" + filePath;
 			
 			// 팝업창 사이즈
 	        var popupWidth = 800;
@@ -78,7 +78,8 @@ $(document).ready(function()
 				<div class="content-body">
 					<div class="left-section">
 						<div class="profile">
-							<img src="<%=cp%>/${sitInfo.file_path}.jpg" onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';" style="width: 200px; height: auto;">
+							<%-- <img src="<%=cp%>/${sitInfo.file_path}.jpg" onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';" style="width: 200px; height: auto;"> --%>
+							<img src="<%=cp%>/images/pictures/${sitInfo.file_path}.jpg" onerror="this.onerror=null; this.src='<%=cp%>/images/logoimg.png';" style="width: 200px; height: auto;">
 						</div>
 						<!-- 자격증 정보를 프로필 아래에 배치 -->
 						<div class="category-row">
@@ -199,5 +200,11 @@ $(document).ready(function()
 			</main>
 		</div>
 	</div>
+	
+	<footer class="footer">
+		<c:import url="/footer.action"/>
+	</footer>
+	
+	
 </body>
 </html>

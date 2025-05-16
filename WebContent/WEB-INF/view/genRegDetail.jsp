@@ -54,7 +54,7 @@
         <!-- 일반 돌봄 각 등록 건 -->
         <div class="box-detail">
             <div class="sitter-photo">
-                <img src="<c:url value='/${genDetail.photo_file_path}.jpg' />" alt="시터 사진">
+                <img src="<%= cp %>/images/pictures/${genDetail.photo_file_path}.jpg" alt="시터 사진">
                 <!-- 파일 경로 추후 수정 필요!! -->
             </div>
             <div class="sitter-info">
@@ -63,13 +63,27 @@
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="<c:url value='/${genDetail.grade_file_path}' />" 
-             		width="20" height="20" alt="시터 등급 이미지">
+             		<img src="<%= cp %>/images/grades/${genDetail.grade_file_path}.gif" 
+    				 width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genDetail.grade} 시터 ${genDetail.name}
             </div>
-         	<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
-            <div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
+            
+         	<c:choose>
+         	<c:when test="${restrict == 0}">
+         		<div>최근 평점 ⭐${genDetail.recent_avg_rating } (${genDetail.recent_review_count }건)</div>
+            	<div>전체 평점 ⭐${genDetail.avg_rating } (${genDetail.review_count }건)</div>
+         	</c:when>
+         	<c:otherwise>
+         		<div>
+         			(⭐
+         			<a href="#" onclick="window.opener.location.href='parentcaredone.action'; window.close(); return false;">
+         				돌봄 이용 리뷰 작성
+         			</a>
+         			&nbsp;이후 평점 열람 가능)
+         		</div>
+         	</c:otherwise>
+         	</c:choose>
          	
          	<fmt:parseDate var="startDateParsed" value="${genDetail.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 			<fmt:parseDate var="endDateParsed" value="${genDetail.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
