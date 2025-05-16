@@ -33,7 +33,8 @@
 				<div class="left-column">
 					<!-- 사진 영역 -->
 					<div class="profile">
-						<img src="<%=cp%>/images/pictures/${genRegInfo.file_path}" alt="시터 사진">
+						<%-- <img src="<%=cp%>/images/pictures/${genRegInfo.file_path}" alt="시터 사진"> --%>
+						<img src="<%=cp%>/images/pictures/${genRegInfo.file_path}.jpg" alt="시터 사진" style="height: 200px;">
 					</div>
 					
 					<!-- 자기소개 영역 -->
@@ -121,5 +122,11 @@
 		</main> 
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
+
 </body>
 </html>

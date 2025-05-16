@@ -91,7 +91,7 @@
 			            <div class="request-title">내일 오전 9시부터 3시간 돌봄 요청</div>
 			            <div class="request-details">
 			                <div><i class="fas fa-map-marker-alt"></i> 서울시 서초구</div>
-			                <div><i class="fas fa-child"></i> 3세 남아, 7세 여아</div>
+			                <div><i class="fas fa-child"></i> 3세 남아</div>
 			                <div><i class="fas fa-clock"></i> 09:00 ~ 12:00</div>
 			            </div>
 			        </div>
@@ -159,7 +159,7 @@
 		        <div class="box-header">
 		            <div class="section-icon"><i class="fas fa-bullhorn"></i></div>
 		            <h2 class="section-title">공지사항</h2>
-		            <a href="/notice.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
+		            <a href="<%= cp %>/noticelist.action" class="more-link">더보기 <i class="fas fa-angle-right"></i></a>
 		        </div>
 		        <ul class="notice-list">
 		            <li class="notice-item">
@@ -263,6 +263,10 @@
 		</div>
 	</div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
 
 </body>
 </html>

@@ -183,8 +183,9 @@ public class AdminMemberController
         
 		PageHandler paging = new PageHandler(page, totalCount);
 		
-        List<SitDTO> sitList = dao.list(paging.getStart(), paging.getEnd(), searchKey, searchValue);
-        
+        //List<SitDTO> sitList = dao.list(paging.getStart(), paging.getEnd(), searchKey, searchValue);
+		List<SitDTO> sitList = dao.list(totalCount-(paging.getPage()-1)*10 -9, totalCount-(paging.getPage()-1)*10, searchKey, searchValue);
+		System.out.println(totalCount + "/" + paging.getPage());
         model.addAttribute("sitList", sitList);
         model.addAttribute("paging", paging);
         model.addAttribute("searchKey", searchKey);

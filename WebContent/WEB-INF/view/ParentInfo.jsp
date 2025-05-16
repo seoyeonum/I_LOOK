@@ -82,5 +82,10 @@ document.addEventListener('DOMContentLoaded', function()
         </form>
     </div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
 </body>
 </html>

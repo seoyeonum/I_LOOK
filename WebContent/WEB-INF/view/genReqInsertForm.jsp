@@ -201,8 +201,8 @@
 			                <div class="sitter-details">
 			                    <div class="sitter-grade">
 			                    	<span class="sitter-grade-img">
-				             			<img src="<c:url value='/${genDetail.grade_file_path}' />" 
-				             			width="20" height="20" alt="시터 등급 이미지">
+				             			<img src="<%= cp %>/images/grades/${genDetail.grade_file_path}.gif" 
+   										 width="20" height="20" alt="시터 등급 이미지">
 				             		</span>
 				             		&nbsp;${genDetail.grade} 시터
 				             	</div>

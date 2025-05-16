@@ -54,7 +54,8 @@
                     <!-- 데이터 -->
                     <c:forEach var="list" items="${sitList }" varStatus="status">
                     <div class="info-row">
-                    	<div class="info-cell">${paging.startNum - status.index}</div>
+                    	<%-- <div class="info-cell">${paging.startNum - status.index}</div> --%>
+                    	<div class="info-cell">${list.rn}</div>
                     	<div class="info-cell">${list.name }</div>
                         <div class="info-cell">${list.tel }</div>
                         <div class="info-cell">${list.grade }</div>
@@ -100,5 +101,11 @@
         </main>
     </div>
 </div>
+
+<footer class="footer">
+	<c:import url="/footer.action"/>
+</footer>
+
+
 </body>
 </html>

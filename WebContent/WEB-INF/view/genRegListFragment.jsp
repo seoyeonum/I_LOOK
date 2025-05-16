@@ -22,7 +22,7 @@ listPrimaryGenReg
 <div class="box-preview">
     <div class="sitter-photo">
     	<c:set var="cp" value="${pageContext.request.contextPath}" />
-        <img src="${cp}/images/pictures/${genReg.photo_file_path}" alt="시터 사진">
+        <img src="<%= cp %>/images/pictures/${genReg.photo_file_path}.jpg" alt="시터 사진">
     </div>
     <div class="sitter-info"> 
         <div class="sitter-title">
@@ -33,7 +33,7 @@ listPrimaryGenReg
          	
             <div class="sitter-grade">
             	<span class="sitter-grade-img">
-             		<img src="${cp}/${genReg.grade_file_path}" 
+             		<img src="<%= cp %>/images/grades/${genReg.grade_file_path}.gif" 
     				 width="20" height="20" alt="시터 등급 이미지">
              	</span>
              	&nbsp;${genReg.grade} 시터 ${genReg.name}
@@ -95,35 +95,35 @@ listPrimaryGenReg
 <!-- </form> -->
 <!-- 페이징 영역 -->
 <div class="page">
-    <c:if test="${paging.totalPage >= 1}">
-  <c:if test="${paging.startPage > 1}">
-      <a href="javascript:void(0);" onclick="goToPage(${paging.startPage-1})">&lt;</a>
-      <!-- <a href="javascript:void(0);>" → 폼 제출 방지 및 현상 유지 -->
-  </c:if>
+<c:if test="${paging.totalPage >= 1}">
+	<c:if test="${paging.startPage > 1}">
+    <a href="javascript:void(0);" onclick="goToPage(${paging.startPage-1})">&lt;</a>
+    <!-- <a href="javascript:void(0);>" → 폼 제출 방지 및 현상 유지 -->
+</c:if>
 
-  <c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
-      <c:choose>
-          <c:when test="${p == paging.page}">
-              <strong>${p}</strong>		<!-- 엘리먼트 강조 -->
-          </c:when>
-          <c:otherwise>
-              <a href="javascript:void(0);" onclick="goToPage(${p})">${p}</a>
-          </c:otherwise>
-      </c:choose>
-  </c:forEach>
+<c:forEach var="p" begin="${paging.startPage}" end="${paging.endPage}">
+    <c:choose>
+    	<c:when test="${p == paging.page}">
+        	<strong>${p}</strong>		<!-- 엘리먼트 강조 -->
+        </c:when>
+        <c:otherwise>
+        	<a href="javascript:void(0);" onclick="goToPage(${p})">${p}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
 
-  <c:if test="${paging.endPage < paging.totalPage}">
-      <a href="javascript:void(0);" onclick="goToPage(${paging.endPage+1})">&gt;</a>
-  </c:if>
+<c:if test="${paging.endPage < paging.totalPage}">
+	<a href="javascript:void(0);" onclick="goToPage(${paging.endPage+1})">&gt;</a>
+</c:if>
 </c:if>
 </div>
 
 <!-- 페이지 이동을 위한 hidden 폼 -->
 <form id="pageForm" action="gensearchresult.action" method="post">
     <input type="hidden" name="child_backup_id" value="${childBackupId}">
-<input type="hidden" name="start_date" value="${dateStart}">
-<input type="hidden" name="end_date" value="${dateEnd}">
-<input type="hidden" name="start_time" value="${timeStart}">
-<input type="hidden" name="end_time" value="${timeEnd}">
+	<input type="hidden" name="start_date" value="${dateStart}">
+	<input type="hidden" name="end_date" value="${dateEnd}">
+	<input type="hidden" name="start_time" value="${timeStart}">
+	<input type="hidden" name="end_time" value="${timeEnd}">
     <input type="hidden" name="page" id="pageInput" value="1">
 </form>

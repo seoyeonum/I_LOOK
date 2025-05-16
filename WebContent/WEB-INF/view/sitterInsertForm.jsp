@@ -136,10 +136,11 @@
                 var selectDiv = document.createElement("div");
                 selectDiv.innerHTML = '<select name="certTypeIds" class="doc_type">' +
                     '<option value="001">보육 교사 1급 (일반)</option>' +
-                    '<option value="002">보육 교사 2급 (특수)</option>' +
+                    '<option value="002">보육 교사 1급 (특수)</option>' +
                     '<option value="003">보육 교사 2급 (일반)</option>' +
-                    '<option value="004">특수 교사 자격증</option>' +
-                    '<option value="005">기타 자격증</option>' +
+                    '<option value="004">보육 교사 2급 (특수)</option>' +
+                    '<option value="005">특수 교사 자격증</option>' +
+                    '<option value="000">기타 자격증</option>' +
                     '</select>';
                 list.appendChild(selectDiv);
             }

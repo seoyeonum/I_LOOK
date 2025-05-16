@@ -99,5 +99,11 @@
 			</main>
 		</div>
 	</div>
+	
+	<footer class="footer">
+		<c:import url="/footer.action"/>
+	</footer>
+	
+	
 </body>
 </html>
