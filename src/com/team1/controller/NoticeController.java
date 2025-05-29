@@ -134,7 +134,7 @@ public class NoticeController
 	
 	// ● 공지사항 게시물 등록 페이지
 	@RequestMapping(value="/noticeinsertform.action", method = RequestMethod.GET)
-	public String noticeInsertForm( HttpSession session, Model model)
+	public String noticeInsertForm(HttpSession session, Model model)
 	{
 		String result = null;
 		
@@ -168,4 +168,39 @@ public class NoticeController
 		
 		return result;
 	}
+	
+	// ● 공지사항 게시물 등록
+	@RequestMapping(value="/noticeinsert.action", method = RequestMethod.POST)
+	public String noticeInsert(HttpSession session, Model model, NoticeDTO dto)
+	{
+		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		AdminDTO admin = (AdminDTO) session.getAttribute("loginAdmin");
+		
+		if (admin == null)
+			return "redirect:/iLook.action";
+	
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
+		// 개행 내용 살리기
+		String contentTemp = dto.getContent();
+		String content = contentTemp.replace("\n", "<br>");
+		dto.setContent(content);
+		
+		// 공지사항 등록
+     	INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+     	int num = noticeDao.add(dto);
+     	
+     	if (num != 0)
+     		System.out.println("게시물 등록 완료");
+     	else
+     		System.out.println("게시물 등록 실패");
+        
+		result = "redirect:/noticelist.action";
+		
+		return result;
+	}
+	
 }

@@ -49,11 +49,12 @@
     	// 2. 초기화 버튼 클릭 시 확인 후 초기화
     	$("#reset").click(function(e)
     	{
-    	    var userConfirmed = confirm("정말 초기화 하시겠습니까?");
+    	    var userConfirmed = confirm("작성한 내용이 초기화 됩니다.\n정말 초기화 하시겠습니까?");
     	    
     	    if (userConfirmed)
     	    {
     	        //alert("textarea 초기화 완료");
+    	        $("#subject-input").val('');
     	        $("#content-input").val('');
     	    }
     	    else
@@ -62,6 +63,22 @@
     	        return; // 추가적인 동작을 막음
     	    }
     	});
+    	
+    	// 3. 목록으로 버튼 클릭 시 확인 후 목록으로
+    	$("#back").click(function(e)
+	   	{
+	   	    var userConfirmed = confirm("작성한 내용이 저장되지 않습니다.\n정말 목록으로 돌아가시겠습니까?");
+	   	    
+	   	    if (userConfirmed)
+	   	    {
+	   	    	window.location.href='<%=cp%>/noticelist.action';
+	   	    }
+	   	    else
+	   	    {
+	   	        e.preventDefault(); // 폼 제출을 막고 현재 페이지에 머물게 함
+	   	        return; // 추가적인 동작을 막음
+	   	    }
+	   	});
         
     });
 
@@ -84,8 +101,7 @@
 	<div id="wrapper-body">
 		<div class="board-header">
             <div class="board-info">
-                <button type="button" id="back" class="btn"
-                onclick="window.location.href='<%=cp%>/noticelist.action'">목록으로</button>
+                <button type="button" id="back" class="btn">목록으로</button>
             </div>
             <div class="search-box">
                 <button type="button" id="insert" class="btn">등록</button>
@@ -93,7 +109,7 @@
             </div>
         </div>
 	        
-		<form action="/noticelist.action">
+		<form action="noticeinsert.action" method="post">
 	        <div class="board-border">
 	            <!-- 게시판 헤더 -->
 		        <div class="board-detail">
@@ -118,8 +134,8 @@
 		            </div>
 		            <div class="board-list-detail">
 		            	<div class="board-list-cell detail-notice-type">
-		            		<select name="" id="">
-		                		<option value="">유형</option>
+		            		<select name="notice_type_id" id="type-input">
+		                		<!-- <option value="">유형 선택</option> -->
 		            			<c:forEach var="type" items="${listType}">
 		                		<option value="${type.notice_type_id }" class="type-input"
 		                		${type.notice_type_id == '001' ? 'selected="selected"' : ''}>${type.type }</option>
@@ -132,7 +148,8 @@
 		            </div>
 		            <div class="board-list-detail">
 		            	<div class="board-list-cell detail-notice-subject">
-		            		<input type="text" id="subject-input" placeholder="(제목을 입력하세요./최대 16자 입력 가능)"/>
+		            		<input type="text" name="subject" id="subject-input"
+		            		placeholder="(제목을 입력하세요./최대 16자 입력 가능)"/>
 		            	</div>
 		            </div>
 		        </div>
@@ -144,7 +161,8 @@
 		        <div class="board-detail">
 		            <div class="board-list-detail">
 		            	<div class="board-list-cell detail-notice-content">
-		            		<textarea id="content-input" placeholder="(내용을 입력하세요./최대 1,000자 입력 가능)"></textarea>
+		            		<textarea name="content" id="content-input"
+		            		 placeholder="(내용을 입력하세요./최대 1,000자 입력 가능)"></textarea>
 		            	</div>
 		            </div>
 		        </div>
