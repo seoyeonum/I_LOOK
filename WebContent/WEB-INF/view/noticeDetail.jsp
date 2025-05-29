@@ -36,6 +36,16 @@
 	        button.classList.add('presentPage');
 	    }	
 	});
+	
+	// 함수. 공지사항 수정 페이지로 이동
+	function updateNotice()
+	{
+	    var noticeId = document.getElementById('notice_id').value;
+	    var noticeRnum = document.getElementById('noticeRnum').textContent;
+	    
+	    // 게시물 식별번호 및 글번호 담아 이동
+	    window.location.href = '<%=cp%>/noticeupdateform.action?notice_id=' + noticeId + '&noticeRnum=' + noticeRnum;
+	}
 
 </script>
 </head>
@@ -75,7 +85,12 @@
             <c:choose>
 			    <c:when test="${not empty admin}">
 	            <div class="search-box">
-	                <button type="button" id="update" class="btn">수정</button>
+	                <%-- 
+	                <button type="button" id="update" class="btn"
+	                onclick="window.location.href='<%=cp%>/noticeupdateform.action?notice_id=${noticeDetail.notice_id}&noticeRnum=${noticeRnum}'">수정</button>
+	                 --%>
+	                <button type="button" id="update" class="btn" 
+					onclick="updateNotice()">수정</button>
 	                <button type="button" id="delete" class="btn">삭제</button>
 	            </div>
 	            </c:when>
@@ -93,7 +108,7 @@
 		                <div class="board-list-cell detail-rnum">번호</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-rnum">${noticeRnum }</div>
+		            	<div class="board-list-cell detail-notice-rnum" id="noticeRnum">${noticeRnum }</div>
 		            </div>
 		            <div class="board-list-header">
 		                <div class="board-list-cell detail-hitcount">조회수</div>
@@ -115,10 +130,10 @@
 		                <div class="board-list-cell detail-date">작성일</div>
 		            </div>
 		            <div class="board-list-detail">
-	            	<fmt:parseDate var="noticeDateParsed" value="${noticeDetail.noticed_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
-	            	<div class="board-list-cell detail-notice-date">
-	            		<fmt:formatDate value="${noticeDateParsed}" pattern="yyyy.MM.dd."/>
-	            	</div>
+		            	<fmt:parseDate var="noticeDateParsed" value="${noticeDetail.noticed_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
+		            	<div class="board-list-cell detail-notice-date">
+		            		<fmt:formatDate value="${noticeDateParsed}" pattern="yyyy.MM.dd."/>
+		            	</div>
 		            </div>
 		        </div>
 		         
@@ -159,6 +174,9 @@
 		            	<div class="board-list-cell detail-notice-content">${noticeDetail.content}</div>
 		            </div>
 		        </div>
+		        <!-- 수정 시 필요한 게시물 식별번호 추가 -->
+		        <%-- <div class="hidden" id="notice_id">${noticeDetail.notice_id}</div> --%>
+		        <input type="hidden" name="notice_id" id="notice_id" value="${noticeDetail.notice_id}" />
 	        </div>
     	</form>
     </div>

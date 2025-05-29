@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% 
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -42,20 +43,22 @@
     	{
     	    alert("공지사항 수정이 완료되었습니다.");
     	    
-    	    // 폼 제출 → noticeList.jsp
+    	    // 폼 제출
     		$("form").submit();
     	    
     	});
      	
     	// 2. 삭제 버튼 클릭 시 확인 후 삭제
-    	$("#delete").click(function(e) {
+    	$("#delete").click(function(e)
+    	{
     	    var userConfirmed = confirm("정말 삭제하시겠습니까?");
     	    
-    	    if (userConfirmed) {
+    	    if (userConfirmed)
+    	    {
     	        alert("공지사항 삭제가 완료되었습니다.");
     	        
-    	        // 폼 제출 → noticeList.jsp
-    	        $("form").submit();
+    	        // 삭제 액션 처리
+    	        window.location.href='<%=cp%>/noticedelete.action';
     	    }
     	    else
     	    {
@@ -63,6 +66,22 @@
     	        return; // 추가적인 동작을 막음
     	    }
     	});
+    	
+    	// 3. 목록으로 버튼 클릭 시 확인 후 목록으로
+    	$("#back").click(function(e)
+	   	{
+	   	    var userConfirmed = confirm("작성한 내용이 저장되지 않습니다.\n정말 목록으로 돌아가시겠습니까?");
+	   	    
+	   	    if (userConfirmed)
+	   	    {
+	   	    	window.location.href='<%=cp%>/noticelist.action';
+	   	    }
+	   	    else
+	   	    {
+	   	        e.preventDefault(); // 폼 제출을 막고 현재 페이지에 머물게 함
+	   	        return; // 추가적인 동작을 막음
+	   	    }
+	   	});
         
     });
 
@@ -93,7 +112,7 @@
             </div>
         </div>
 	        
-		<form action="./noticeList.jsp">
+		<form action="noticeupdate.action" method="post">
 	        <div class="board-border">
 	            <!-- 게시판 헤더 -->
 		        <div class="board-detail">
@@ -101,13 +120,13 @@
 		                <div class="board-list-cell detail-rnum">번호</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-rnum">5</div>
+		            	<div class="board-list-cell detail-notice-rnum">${noticeRnum }</div>
 		            </div>
 		            <div class="board-list-header">
 		                <div class="board-list-cell detail-hitcount">조회수</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-hitcount">128</div>
+		            	<div class="board-list-cell detail-notice-hitcount">${noticeDetail.hitcount }</div>
 		            </div>
 		        </div>
 		         
@@ -123,7 +142,10 @@
 		                <div class="board-list-cell detail-date">작성일</div>
 		            </div>
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-date">2025-04-07</div>
+		            	<fmt:parseDate var="noticeDateParsed" value="${noticeDetail.noticed_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
+		            	<div class="board-list-cell detail-notice-date">
+		            		<fmt:formatDate value="${noticeDateParsed}" pattern="yyyy.MM.dd."/>
+		            	</div>
 		            </div>
 		        </div>
 		         
@@ -133,10 +155,17 @@
 		            </div>
 		            <div class="board-list-detail">
 		            	<div class="board-list-cell detail-notice-type">
-		            		<select name="" id="">
-		                		<option value="">유형</option>
-		                		<option value="1" id="type-input" selected="selected">공지사항</option>
-		                		<option value="2">이벤트</option>
+		            		<select name="notice_type_id" id="type-input">
+		            			<c:forEach var="type" items="${listType}">
+		            			<%-- 
+		                		<option value="${type.notice_type_id }" class="type-input"
+		                		${type.notice_type_id == noticeDetail.notice_type_id ? 'selected="selected"' : ''}>${type.type }</option>
+		                		--%>
+		                		
+		                		<option value="${type.notice_type_id }" class="type-input"
+		                		${type.notice_type_id eq noticeDetail.notice_type_id ? 'selected="selected"' : ''}>${type.type }</option>
+		                		
+		                		</c:forEach>
 		                	</select>
 		            	</div>
 		            </div>
@@ -145,7 +174,9 @@
 		            </div>
 		            <div class="board-list-detail">
 		            	<div class="board-list-cell detail-notice-subject">
-		            		<input type="text" id="subject-input" value="사이트 점검 안내"/>
+		            		<input type="text" name="subject" id="subject-input"
+		            		placeholder="(제목을 입력하세요./최대 16자 입력 가능)"
+		            		value="${noticeDetail.subject}"/>
 		            	</div>
 		            </div>
 		        </div>
@@ -156,11 +187,14 @@
 		        </div>
 		        <div class="board-detail">
 		            <div class="board-list-detail">
-		            	<div class="board-list-cell detail-notice-content">
-		            		<textarea id="content-input">4월 25일 02:00 ~ 04:00 사이트 점검 예정입니다.</textarea>
+		           		<div class="board-list-cell detail-notice-content">
+		            		<textarea name="content" id="content-input"
+		            		 placeholder="(내용을 입력하세요./최대 1,000자 입력 가능)">${noticeDetail.content}</textarea>
 		            	</div>
 		            </div>
 		        </div>
+		        <!-- 수정 시 필요한 게시물 식별번호 추가 -->
+        		<input type="hidden" name="notice_id" value="${noticeDetail.notice_id}" />
 	        </div>
     	</form>
     </div>

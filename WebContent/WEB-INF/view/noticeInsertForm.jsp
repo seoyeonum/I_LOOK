@@ -41,7 +41,7 @@
     	{
     	    alert("공지사항 등록이 완료되었습니다.");
     	    
-    	    // 폼 제출 → noticeList.jsp
+    	    // 폼 제출
     		$("form").submit();
     	    
     	});
