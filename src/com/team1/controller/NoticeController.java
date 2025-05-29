@@ -102,9 +102,20 @@ public class NoticeController
 		// 접근 권한 있다면 아래 내용 순차 진행
 		//----------------------------------------------------------------
 
-		// (이전 페이지에서 건네 받은) 공지사항 코드로 특정 게시물 정보 조회
+		// (이전 페이지에서 건네 받은) 공지사항 코드로
 		INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+		
+		// 조회수를 1만큼 증가
+		int num = noticeDao.increaseHit(noticeId);
+		
+		if (num != 0)
+			System.out.println("조회수 업데이트 완료");
+		else
+			System.out.println("조회수 업데이트 실패");
+		
+		// 특정 게시물 정보 조회
 		NoticeDTO noticeDetail = noticeDao.noticeDetail(noticeId);
+        
 		
 		// 다음 페이지로 넘겨주는 값
 		// → 특정 게시물 정보, 게시물 번호

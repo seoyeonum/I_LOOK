@@ -55,7 +55,7 @@
             	// PC data(게시물 번호)를 다음 페이지로 전달
                 var noticeRnum = this.querySelector('.board-list-cell.rnum').textContent;
             	
-                location.href = 'noticedetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
+            	location.href = 'noticedetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
                 
             });
             
