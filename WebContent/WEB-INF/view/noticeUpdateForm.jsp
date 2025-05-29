@@ -48,26 +48,8 @@
     	    
     	});
      	
-    	// 2. 삭제 버튼 클릭 시 확인 후 삭제
-    	$("#delete").click(function(e)
-    	{
-    	    var userConfirmed = confirm("정말 삭제하시겠습니까?");
-    	    
-    	    if (userConfirmed)
-    	    {
-    	        alert("공지사항 삭제가 완료되었습니다.");
-    	        
-    	        // 삭제 액션 처리
-    	        window.location.href='<%=cp%>/noticedelete.action';
-    	    }
-    	    else
-    	    {
-    	        e.preventDefault(); // 폼 제출을 막고 현재 페이지에 머물게 함
-    	        return; // 추가적인 동작을 막음
-    	    }
-    	});
     	
-    	// 3. 목록으로 버튼 클릭 시 확인 후 목록으로
+    	// 2. 목록으로 버튼 클릭 시 확인 후 목록으로
     	$("#back").click(function(e)
 	   	{
 	   	    var userConfirmed = confirm("작성한 내용이 저장되지 않습니다.\n정말 목록으로 돌아가시겠습니까?");
@@ -85,6 +67,26 @@
         
     });
 
+ 	// 함수2. 공지사항 삭제
+	function deleteNotice()
+	{
+		var userConfirmed = confirm("정말 삭제하시겠습니까?");
+	    
+	    if (userConfirmed)
+	    {
+	        // 삭제 액션 처리
+	        alert("공지사항 삭제가 완료되었습니다.");
+	        
+	        var noticeId = document.getElementById('notice_id').value;
+	        window.location.href='<%=cp%>/noticedelete.action?notice_id=' + noticeId;
+	    }
+	    else
+	    {
+	        e.preventDefault(); // 폼 제출을 막고 현재 페이지에 머물게 함
+	        return; // 추가적인 동작을 막음
+	    }
+	}
+ 	
 </script>
 </head>
 <body>
@@ -108,7 +110,8 @@
             </div>
             <div class="search-box">
                 <button type="button" id="update" class="btn">수정</button>
-                <button type="button" id="delete" class="btn">삭제</button>
+                <button type="button" id="delete" class="btn"
+                onclick="deleteNotice()">삭제</button>
             </div>
         </div>
 	        

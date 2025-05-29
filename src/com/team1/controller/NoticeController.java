@@ -282,4 +282,35 @@ public class NoticeController
 		return result;
 		
 	}
+	
+	// ● 공지사항 게시물 삭제
+	@RequestMapping(value="/noticedelete.action", method = RequestMethod.GET)
+	public String noticeDelete(HttpSession session, Model model
+			 				 , @RequestParam("notice_id") String noticeId)
+	{
+		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		AdminDTO admin = (AdminDTO) session.getAttribute("loginAdmin");
+		
+		if (admin == null)
+			return "redirect:/iLook.action";
+	
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+		
+		// 공지사항 삭제
+     	INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+     	int num = noticeDao.remove(noticeId);
+     	
+     	if (num != 0)
+     		System.out.println("게시물 삭제 완료");
+     	else
+     		System.out.println("게시물 삭제 실패");
+        
+		result = "redirect:/noticelist.action";
+		
+		return result;
+		
+	}
 }
