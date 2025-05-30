@@ -7,34 +7,65 @@
 
 	<!-- 일일 회원가입 수 -->
 	<select id="countReg" resultType="java.lang.Integer">
-		<!-- 
-		SELECT COUNT(*) AS countReg
-		FROM ADMIN_SIT_REG_VIEW
-		-->
-		SELECT COUNT(*) AS countReg
-		FROM
-		(
-			SELECT SIT_BACKUP_ID AS BACKUP_ID
-			FROM SIT_BACKUP
-			WHERE REG_DATE = SYSDATE
-			UNION
-			SELECT PAR_BACKUP_ID AS BACKUP_ID
-			FROM PAR_BACKUP
-			WHERE REG_DATE = SYSDATE
-		)
+		
+		<![CDATA[
+        SELECT 
+            (
+                SELECT COUNT(*) 
+                FROM ADMIN_SIT_REG_VIEW 
+                WHERE REG_DATE >= TRUNC(SYSDATE) AND REG_DATE < TRUNC(SYSDATE + 1)
+            ) 
+            + (
+                SELECT COUNT(*) 
+                FROM V_ADMIN_PAR 
+                WHERE REG_DATE >= TRUNC(SYSDATE) AND REG_DATE < TRUNC(SYSDATE + 1)
+            ) AS TOTAL_COUNT
+        FROM DUAL
+    	]]>
+		
 	</select>
 	
 	<!-- 일일 일반돌봄 예약 수 -->
-	<select id="countGenReq" resultType="java.lang.Integer">
-		<!-- 
-		SELECT COUNT(*) AS countGenReq
-		FROM ADMIN_GEN_REQ_VIEW
-		WHERE REQ_DATE = SYSDATE
-		-->
-		SELECT COUNT(*) AS countGenReq
-		FROM GEN_REQ
-		WHERE REQ_DATE = SYSDATE
+	<select id="countDayGenReq" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) AS countGenReq
+			FROM ADMIN_GEN_REQ_VIEW
+			WHERE REQ_DATE >= TRUNC(SYSDATE) AND REQ_DATE < TRUNC(SYSDATE + 1)
+		]]>
+		
 	</select>
 	
+	<!-- 월별 일반돌봄 예약 수 -->
+	<select id="countMonthGenReq" resultType="map">
+    SELECT
+        TO_CHAR(REQ_DATE, 'YYYY-MM') AS REQ_MONTH,
+        COUNT(*) AS REQ_COUNT
+	    FROM GEN_REQ
+	    GROUP BY TO_CHAR(REQ_DATE, 'YYYY-MM')
+	    ORDER BY REQ_MONTH
+	</select>
 	
+	<!-- 한달 간 부모 회원가입 수 -->
+	<select id="countMonthParReg" resultType="java.lang.Integer">
+	    SELECT COUNT(*)
+		FROM V_ADMIN_PAR
+		WHERE TO_CHAR(REG_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+	</select>
+	
+	<!-- 한달 간 시터 회원가입 수 -->
+	<select id="countMonthSitReg" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM ADMIN_SIT_REG
+		WHERE TO_CHAR(REG_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+	</select>
+	
+	<!-- 월간 매출액 -->
+	<select id="MonthPayment" resultType="java.lang.Integer">
+		SELECT NVL(SUM(PAY_AMOUNT), 0)
+	    FROM ADMIN_GEN_REQ_VIEW
+	    WHERE STATUS = 'confirmed'
+	      AND TO_CHAR(PAY_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+	      
+	</select>
+		
 </mapper>

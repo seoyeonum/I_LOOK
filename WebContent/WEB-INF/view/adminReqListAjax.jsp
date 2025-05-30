@@ -15,7 +15,6 @@
         <div class="info-cell">${list.gen_reg_id}</div>
         <div class="info-cell">${fn:substring(list.req_date, 0, 10)}</div>
         <div class="info-cell">
-        	<%-- 
             <c:choose>
                 <c:when test="${list.status eq 'request'}">예약 신청</c:when>
                 <c:when test="${list.status eq 'confirmed'}">예약 확정</c:when>
@@ -23,10 +22,7 @@
                 <c:when test="${list.status eq 'canceled'}">예약 취소</c:when>
                 <c:otherwise>-</c:otherwise>
             </c:choose>
-            --%>
-            ${list.status}
         </div>
-        <%-- <div class="info-cell">${fn:substring(list.req_date, 0, 10)}</div> --%>
         <div class="info-cell">
             <div class="action-buttons">
                 <button type="button" class="btn detail-btn"
