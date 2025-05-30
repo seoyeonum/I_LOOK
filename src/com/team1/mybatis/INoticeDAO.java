@@ -32,18 +32,27 @@ public interface INoticeDAO
 	public int remove(String notice_id);
 	
 	// 공지사항 검색(제목)
-	public NoticeDTO searchSubject(String search_text);
+	public ArrayList<NoticeDTO> searchSubject(NoticeDTO dto);
 	
 	// 공지사항 검색(내용)
-	public NoticeDTO searchContent(String search_text);
+	public ArrayList<NoticeDTO> searchContent(NoticeDTO dto);
 	
 	// 공지사항 검색(제목+내용)
-	public NoticeDTO searchSubjectOrContent(String search_text);
+	public ArrayList<NoticeDTO> searchSubjectOrContent(NoticeDTO dto);
 	
 	// 조회 수 1 씩 증가
 	public int increaseHit(String notice_id);
 	
 	// 공지사항 게시물 수 확인
 	public int count();
+	
+	// 공지사항 검색 (제목) 게시물 수 확인
+	public int countSearchSubject(String search_text);
+	
+	// 공지사항 검색 (내용) 게시물 수 확인
+	public int countSearchContent(String search_text);
+	
+	// 공지사항 검색 (제목+내용) 게시물 수 확인
+	public int countSearchSubjectOrContent(String search_text);
 
 }
