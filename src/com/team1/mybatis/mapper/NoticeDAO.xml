@@ -42,7 +42,7 @@
 	
 	<!-- 공지사항 상세 열람 -->
 	<select id="noticeDetail" resultType="com.team1.dto.NoticeDTO">
-		SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+		SELECT N.NOTICE_ID, T.NOTICE_TYPE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
 		FROM NOTICES N JOIN NOTICE_TYPE T
 		ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
 		WHERE N.NOTICE_ID = #{notice_id}
@@ -51,6 +51,10 @@
 	
 	<!-- 공지사항 데이터 추가 -->	
 	<insert id="add" parameterType="com.team1.dto.NoticeDTO">
+	<selectKey keyProperty="notice_id" resultType="String" order="BEFORE">
+		SELECT 'ANOT' || LPAD(SEQ_ANOT.NEXTVAL, 4, '0') 
+		FROM DUAL
+	</selectKey>
 		INSERT INTO NOTICES VALUES(#{notice_id}, #{notice_type_id}, #{subject}, #{content}, 0, SYSDATE)
 	</insert>
 	
@@ -70,45 +74,69 @@
 	
 	<!-- 공지사항 검색 (제목) -->	
 	<select id="searchSubject" resultType="com.team1.dto.NoticeDTO">
-	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
-	    FROM NOTICES N
-	    JOIN NOTICE_TYPE T 
-          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
-	    <where>
-	        <if test="search_text != null and search_text != ''">
-	            AND N.SUBJECT LIKE '%' || #{search_text} || '%'
-	        </if>
-	    </where>
-	    ORDER BY N.NOTICED_DATE DESC
+		SELECT *
+		FROM (
+	        SELECT ROWNUM AS RNUM, DATA.*
+	        FROM (
+				    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+				    FROM NOTICES N
+				    JOIN NOTICE_TYPE T 
+			          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+				    <where>
+				        <if test="search_text != null and search_text != ''">
+				            AND N.SUBJECT LIKE '%' || #{search_text} || '%'
+				        </if>
+				    </where>
+				    ORDER BY N.NOTICED_DATE DESC
+	   			 ) DATA
+	        WHERE ROWNUM &lt;= #{end,jdbcType=INTEGER}
+	    ) 
+	    WHERE RNUM &gt;= #{start,jdbcType=INTEGER}
 	</select>
-	
+		
 	<!-- 공지사항 검색 (내용) -->	
 	<select id="searchContent" resultType="com.team1.dto.NoticeDTO">
-	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
-	    FROM NOTICES N
-	    JOIN NOTICE_TYPE T 
-          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
-	    <where>
-	        <if test="search_text != null and search_text != ''">
-	            AND N.CONTENT LIKE '%' || #{search_text} || '%'
-	        </if>
-	    </where>
-	    ORDER BY N.NOTICED_DATE DESC
+		SELECT *
+		FROM (
+	        SELECT ROWNUM AS RNUM, DATA.*
+	        FROM (
+				    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+				    FROM NOTICES N
+				    JOIN NOTICE_TYPE T 
+			          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+				    <where>
+				        <if test="search_text != null and search_text != ''">
+				            AND N.CONTENT LIKE '%' || #{search_text} || '%'
+				        </if>
+				    </where>
+				    ORDER BY N.NOTICED_DATE DESC
+				) DATA
+	        WHERE ROWNUM &lt;= #{end,jdbcType=INTEGER}
+	    ) 
+	    WHERE RNUM &gt;= #{start,jdbcType=INTEGER}
 	</select>
 	
 	<!-- 공지사항 검색 (제목+내용) -->	
 	<select id="searchSubjectOrContent" resultType="com.team1.dto.NoticeDTO">
-	    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
-	    FROM NOTICES N
-	    JOIN NOTICE_TYPE T 
-          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
-	    <where>
-	        <if test="search_text != null and search_text != ''">
-	            AND ((N.SUBJECT LIKE '%' || #{search_text} || '%')
-	            OR (N.CONTENT LIKE '%' || #{search_text} || '%'))
-	        </if>
-	    </where>
-	    ORDER BY N.NOTICED_DATE DESC
+		SELECT *
+		FROM (
+	        SELECT ROWNUM AS RNUM, DATA.*
+	        FROM (
+				    SELECT N.NOTICE_ID, T.TYPE, N.SUBJECT, N.CONTENT, N.HITCOUNT, N.NOTICED_DATE
+				    FROM NOTICES N
+				    JOIN NOTICE_TYPE T 
+			          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+				    <where>
+				        <if test="search_text != null and search_text != ''">
+				            AND ((N.SUBJECT LIKE '%' || #{search_text} || '%')
+				            OR (N.CONTENT LIKE '%' || #{search_text} || '%'))
+				        </if>
+				    </where>
+				    ORDER BY N.NOTICED_DATE DESC
+				) DATA
+	        WHERE ROWNUM &lt;= #{end,jdbcType=INTEGER}
+	    ) 
+	    WHERE RNUM &gt;= #{start,jdbcType=INTEGER}
 	</select>
 	
     <!-- 조회 수 1 씩 증가 -->
@@ -124,4 +152,46 @@
 		FROM NOTICES
     </select>
     
+    <!-- 공지사항 검색 (제목) 게시물 수 확인 -->	
+	<select id="countSearchSubject" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM NOTICES N
+	    JOIN NOTICE_TYPE T 
+          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+	    <where>
+	        <if test="search_text != null and search_text != ''">
+	            AND N.SUBJECT LIKE '%' || #{search_text} || '%'
+	        </if>
+	    </where>
+	    ORDER BY N.NOTICED_DATE DESC
+	</select>
+	
+	<!-- 공지사항 검색 (내용) 게시물 수 확인 -->	
+	<select id="countSearchContent" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM NOTICES N
+	    JOIN NOTICE_TYPE T 
+          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+	    <where>
+	        <if test="search_text != null and search_text != ''">
+	            AND N.CONTENT LIKE '%' || #{search_text} || '%'
+	        </if>
+	    </where>
+	    ORDER BY N.NOTICED_DATE DESC
+	</select>
+	
+	<!-- 공지사항 검색 (제목+내용) 게시물 수 확인 -->	
+	<select id="countSearchSubjectOrContent" resultType="java.lang.Integer">
+	    SELECT COUNT(*) AS COUNT
+	    FROM NOTICES N
+	    JOIN NOTICE_TYPE T 
+          ON N.NOTICE_TYPE_ID = T.NOTICE_TYPE_ID
+	    <where>
+	        <if test="search_text != null and search_text != ''">
+	            AND ((N.SUBJECT LIKE '%' || #{search_text} || '%')
+	            OR (N.CONTENT LIKE '%' || #{search_text} || '%'))
+	        </if>
+	    </where>
+	    ORDER BY N.NOTICED_DATE DESC
+	</select>
 </mapper>
