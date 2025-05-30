@@ -55,7 +55,7 @@
             	// PC data(게시물 번호)를 다음 페이지로 전달
                 var noticeRnum = this.querySelector('.board-list-cell.rnum').textContent;
             	
-                location.href = 'noticedetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
+            	location.href = 'noticedetail.action?noticeId=' + noticeId + '&noticeRnum=' + noticeRnum;
                 
             });
             
@@ -68,6 +68,15 @@
 	{
 	    document.getElementById('pageInput').value = page;
 	    document.getElementById('pageForm').submit();
+	}
+	
+	// 함수 2. 공지 검색
+	function searchNotice()
+	{
+		var noticeSearchType = document.querySelector('select[name="notice_search_type"]').value;
+		var searchText = document.getElementById('search_text').value;
+				
+		location.href='<%=cp%>/noticesearch.action?notice_search_type=' + noticeSearchType + '&search_text=' + searchText;
 	}
 
 </script>
@@ -106,13 +115,14 @@
                 전체 <span>${countNotice}</span>건
             </div>
             <div class="search-box">
-                <select>
+                <select name="notice_search_type" >
                     <option value="subject">제목</option>
                     <option value="content">내용</option>
                     <option value="subject_content">제목+내용</option>
                 </select>
-                <input type="text" placeholder="검색어를 입력하세요">
-                <button type="button" class="btn">검색</button>
+                <input type="text" id="search_text" placeholder="검색어를 입력하세요">
+                <button type="button" class="btn"
+                onclick="searchNotice()">검색</button>
                 <c:choose>
 			        <c:when test="${not empty admin}">
 		                <button type="button" class="btn"
