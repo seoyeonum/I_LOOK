@@ -313,4 +313,119 @@ public class NoticeController
 		return result;
 		
 	}
+	
+	// ● 공지사항 검색 따른 리스트 페이지
+	@RequestMapping(value="/noticesearch.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String noitceSearch(@RequestParam(value = "page", defaultValue="1") int page
+						   , @RequestParam("notice_search_type") String noticeSearchType
+						   , @RequestParam("search_text") String searchText
+						   , HttpSession session, Model model)
+	{
+		String result = null;
+		
+		// 페이지 접근 권한 확인 ------------------------------------------
+		ParDTO parent = (ParDTO) session.getAttribute("loginParent");
+		SitDTO sitter = (SitDTO) session.getAttribute("loginSitter");
+		AdminDTO admin = (AdminDTO) session.getAttribute("loginAdmin");
+		
+		if (parent == null && sitter == null && admin == null)
+			return "redirect:/iLook.action";
+
+		// 접근 권한 있다면 아래 내용 순차 진행
+		//----------------------------------------------------------------
+
+		if (searchText.equals(""))
+		{
+			result = "redirect:/noticelist.action";
+			return result;
+		}
+		else if (noticeSearchType.equals("subject"))
+		{
+			// 공지사항 게시물 수
+			INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+			//int countNotice = noticeDao.count();
+			int countNotice = noticeDao.countSearchSubject(searchText);
+			
+			// 페이징 객체 생성
+			PageHandler paging = new PageHandler(page, countNotice);
+			
+			// dto 에 페이징 정보 추가
+			NoticeDTO dto = new NoticeDTO();
+			dto.setStart(paging.getStart());
+			dto.setEnd(paging.getEnd());
+			dto.setSearch_text(searchText);
+		    
+		    // 공지사항 게시물 리스트
+		    ArrayList<NoticeDTO> listNotice = new ArrayList<NoticeDTO>();
+		    listNotice = noticeDao.searchSubject(dto);
+		    
+		    // 다음 페이지로 넘겨주는 값
+			// → 공지사항 게시물 리스트, 게시물 수, 페이징 객체
+			model.addAttribute("listNotice", listNotice);
+			model.addAttribute("countNotice", countNotice);
+			model.addAttribute("paging", paging);
+		}
+		else if (noticeSearchType.equals("content"))
+		{
+			// 공지사항 게시물 수
+			INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+			//int countNotice = noticeDao.count();
+			int countNotice = noticeDao.countSearchContent(searchText);
+			
+			// 페이징 객체 생성
+		    PageHandler paging = new PageHandler(page, countNotice);
+		    
+		    // dto 에 페이징 정보 추가
+		    NoticeDTO dto = new NoticeDTO();
+		    dto.setStart(paging.getStart());
+		    dto.setEnd(paging.getEnd());
+		    dto.setSearch_text(searchText);
+		    
+		    // 공지사항 게시물 리스트
+		    ArrayList<NoticeDTO> listNotice = new ArrayList<NoticeDTO>();
+		    listNotice = noticeDao.searchContent(dto);
+		    
+		    // 다음 페이지로 넘겨주는 값
+			// → 공지사항 게시물 리스트, 게시물 수, 페이징 객체
+			model.addAttribute("listNotice", listNotice);
+			model.addAttribute("countNotice", countNotice);
+			model.addAttribute("paging", paging);
+		}
+		else if (noticeSearchType.equals("subject_content"))
+		{
+			// 공지사항 게시물 수
+			INoticeDAO noticeDao = sqlSession.getMapper(INoticeDAO.class);
+			//int countNotice = noticeDao.count();
+			int countNotice = noticeDao.countSearchSubjectOrContent(searchText);
+			
+			// 페이징 객체 생성
+		    PageHandler paging = new PageHandler(page, countNotice);
+		    
+		    // dto 에 페이징 정보 추가
+		    NoticeDTO dto = new NoticeDTO();
+		    dto.setStart(paging.getStart());
+		    dto.setEnd(paging.getEnd());
+		    dto.setSearch_text(searchText);
+		    
+		    // 공지사항 게시물 리스트
+		    ArrayList<NoticeDTO> listNotice = new ArrayList<NoticeDTO>();
+		    listNotice = noticeDao.searchSubjectOrContent(dto);
+		    
+		    // 다음 페이지로 넘겨주는 값
+			// → 공지사항 게시물 리스트, 게시물 수, 페이징 객체
+			model.addAttribute("listNotice", listNotice);
+			model.addAttribute("countNotice", countNotice);
+			model.addAttribute("paging", paging);
+		}
+		
+				
+		// → 헤더 import 를 위한 값
+		model.addAttribute("parent", parent);
+		model.addAttribute("sitter", sitter);
+		model.addAttribute("admin", admin);
+		
+		result = "WEB-INF/view/noticeList.jsp";
+		
+		return result;
+	}
 }
