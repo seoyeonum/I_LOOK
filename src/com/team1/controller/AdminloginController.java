@@ -9,7 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.team1.dto.AdminDTO;
 import com.team1.mybatis.IAdminLoginDAO;
 
@@ -25,10 +28,11 @@ public class AdminloginController
                              @RequestParam("pw") String pw, HttpSession session,
                              Model model)
     {
+    
         IAdminLoginDAO dao = sqlSession.getMapper(IAdminLoginDAO.class);
-
+        
         AdminDTO admin = dao.loginCheck(id, pw);
-
+        
         if (admin != null)
         {
             session.setAttribute("loginAdmin", admin);

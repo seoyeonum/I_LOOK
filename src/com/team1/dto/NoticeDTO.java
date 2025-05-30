@@ -10,6 +10,7 @@ public class NoticeDTO
 	private int rnum;									//-- 페이지 넘버
 	private int start;									//-- 시작 페이지
     private int end;									//-- 끝 페이지
+    private String search_text;							//-- 검색어
 	
 	// getter / setter 구성
 	public String getNotice_type_id()
@@ -92,5 +93,14 @@ public class NoticeDTO
 	{
 		this.end = end;
 	}
+	public String getSearch_text()
+	{
+		return search_text;
+	}
+	public void setSearch_text(String search_text)
+	{
+		this.search_text = search_text;
+	}
+	
 	
 }

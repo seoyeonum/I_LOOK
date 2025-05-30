@@ -29,6 +29,23 @@
 		WHERE RN BETWEEN #{start} AND #{end}
 
 	</select>
+	
+ 	<!-- 관리자 메인페이지 노출 상위 5개 -->
+	<select id="listSitRegRecent" resultType="com.team1.dto.SitDTO">
+		SELECT *
+		FROM (
+		    SELECT S.*, ROWNUM RN
+		    FROM (
+		        SELECT SIT_BACKUP_ID, REG_DATE, SIT_REG_ID, NAME
+		             , ROAD_ADDR, DETAILED_ADDR, ZIP_CODE, TEL, FILE_PATH
+		        FROM ADMIN_SIT_REG_VIEW
+		        WHERE 1=1
+		        ORDER BY SIT_BACKUP_ID DESC
+		    ) S
+		)
+		WHERE <![CDATA[ RN <= 5 ]]>
+
+	</select>
 		
 
  	<!-- // [관리자] 시터 회원 등록 요청 개수 -->
