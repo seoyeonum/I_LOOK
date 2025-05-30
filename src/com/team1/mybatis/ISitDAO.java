@@ -20,6 +20,9 @@ public interface ISitDAO
 	                             , @Param("searchKey") String searchKey
 	                             , @Param("searchValue") String searchValue);
 	
+	// [관리자] 관리자 메인페이지 노출 상위 3개
+	public List<SitDTO> listSitRegRecent();
+	
 	// [관리자] 시터 회원 등록 요청 개수 확인
 	public int countSitReg(@Param("searchKey") String searchKey
 			             , @Param("searchValue") String searchValue);

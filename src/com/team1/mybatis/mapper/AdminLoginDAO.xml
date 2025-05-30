@@ -7,16 +7,16 @@
 
 	<!-- 관리자 로그인 -->
 	<select id="loginCheck" resultType="com.team1.dto.AdminDTO">
-		SELECT 
-		ADMIN_REG_ID,
-		ID,
-		PW,
-		<!-- ADMIN_ACCT_CODE, -->
-		ACCT_NUMBER,
-		BANK_NAME
-		FROM ADMIN_REG
-		WHERE ID = #{id} AND PW = #{pw}
-	</select>
+        SELECT 
+            ADMIN_REG_ID AS admin_reg_id,
+            ID AS id,
+            PW AS pw,
+            ACCT_NUMBER AS acct_number,
+            BANK_NAME AS bank_name
+        FROM ADMIN_REG
+        WHERE ID = #{id} AND PW = #{pw}
+    </select>
+	
 <!-- 	
 	관리자 아이디 / 비밀번호 일치 여부
 	<select id="findId" parameterType="String" resultType="com.team1.dto.AdminDTO">

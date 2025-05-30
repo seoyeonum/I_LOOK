@@ -7,6 +7,9 @@ public class AdminDTO
 	// private String admin_acct_code;
 	private String acct_number;
 	
+	// 매출액
+	private int pay_amount;
+	
 
 	// getter / setter 구성
 	
@@ -49,6 +52,14 @@ public class AdminDTO
 	public void setAcct_number(String acct_number)
 	{
 		this.acct_number = acct_number;
+	}
+	public int getPay_amount()
+	{
+		return pay_amount;
+	}
+	public void setPay_amount(int pay_amount)
+	{
+		this.pay_amount = pay_amount;
 	}	
 
 	
